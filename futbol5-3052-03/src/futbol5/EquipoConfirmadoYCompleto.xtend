@@ -1,4 +1,4 @@
-
+package futbol5
 class EquipoConfirmadoYCompleto extends RuntimeException{
 		
 	private String message

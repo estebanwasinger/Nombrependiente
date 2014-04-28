@@ -1,3 +1,4 @@
+package futbol5
 
 class Condicional implements TipoInscripcion{
 	

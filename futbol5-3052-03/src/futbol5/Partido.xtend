@@ -1,4 +1,4 @@
-
+package futbol5
 
 import java.util.LinkedList
 
@@ -16,6 +16,9 @@ class Partido {
 		else{
 			jugadorAInscribir.inscribirse(this)
 		}
+	}
+	def int cantJugadores(){
+		jugadores.size;
 	}
 	
 	def void agregarJugador(Jugador jugadorAInscribir){

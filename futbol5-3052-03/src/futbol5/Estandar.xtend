@@ -1,4 +1,4 @@
-
+package futbol5
 class Estandar implements TipoInscripcion{
 	
 	def void desplazarJugadorCondicionalOSolidario(Partido partido, Jugador jugador){

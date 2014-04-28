@@ -1,4 +1,4 @@
-
+package futbol5
 class Jugador {
 	
 		@Property TipoInscripcion tipoInscripcion

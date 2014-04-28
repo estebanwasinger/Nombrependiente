@@ -1,4 +1,4 @@
-
+package futbol5
 class Solidario implements TipoInscripcion{
 	
 	def void desplazarJugadorCondicional(Partido partido, Jugador jugador){
