@@ -33,7 +33,7 @@ class Partido {
 	def int posicionEnLista(Jugador jugador){
 		jugadores.indexOf(jugador)
 	}
-	def Jugador unSolidario(){
+	def Jugador ultimoSolidario(){
 		jugadores.filter[unJugador | unJugador.tipoInscripcion.class.equals(Solidario)].last
 	}
 	def Jugador unCondicional(){

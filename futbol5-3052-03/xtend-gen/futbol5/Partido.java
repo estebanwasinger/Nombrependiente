@@ -38,7 +38,7 @@ public class Partido {
     return this.jugadores.indexOf(jugador);
   }
   
-  public Jugador unSolidario() {
+  public Jugador ultimoSolidario() {
     final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
       public Boolean apply(final Jugador unJugador) {
         TipoInscripcion _tipoInscripcion = unJugador.getTipoInscripcion();

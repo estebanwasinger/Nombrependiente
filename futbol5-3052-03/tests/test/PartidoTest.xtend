@@ -14,24 +14,29 @@ class PartidoTest {
 	Jugador jugador
 	Jugador jugadorSolidario
 	Jugador jugadorCondicional
+	Jugador jugadorCondicional2
 	Jugador jugadorSolidario2
 	Partido partido
 	Estandar estandar
 	Condicional condicional
 	Solidario solidario
 	
-	
 	@Before
 	def void setUP() {
 	jugador = new Jugador
 	jugadorSolidario = new Jugador
 	jugadorSolidario2 = new Jugador
+	jugadorCondicional = new Jugador
+	jugadorCondicional2 = new Jugador
 	partido = new Partido
 	estandar = new Estandar
 	solidario = new Solidario
+	condicional =new Condicional
 	jugador.setTipoInscripcion(estandar)
 	jugadorSolidario.setTipoInscripcion(solidario)
 	jugadorSolidario2.setTipoInscripcion(solidario)
+	jugadorCondicional.setTipoInscripcion(condicional)
+	jugadorCondicional2.setTipoInscripcion(condicional)
 	}
 	
 @Test
@@ -68,14 +73,17 @@ def void testEstandarSacaSolidario() {
 	//aca se deberia desplazar un jugador solidario o condicional	
 }			
 		
-			
+@Test	
+def void testEstandarSacaCOndicional() {
+	var int a = 0;
+	while(a<9){
+		jugadorCondicional.inscribirse(partido)
+		a = a +1
+	}
+	jugadorCondicional2.inscribirse(partido)
+	jugador.inscribirse(partido)
+	Assert.assertEquals(partido.posicionEnLista(jugador),9)			
 	}
 	
-	
-/* 
-@Test (expected = typeof(RuntimeException))
-def void testFaltanJugadores(){
-	
-}*/
-									
+	}
 	

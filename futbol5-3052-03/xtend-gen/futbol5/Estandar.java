@@ -12,13 +12,22 @@ public class Estandar implements TipoInscripcion {
     if (_lessThan) {
       partido.agregarJugador(jugador);
     } else {
-      Jugador _unSolidario = partido.unSolidario();
-      int _posicionEnLista = partido.posicionEnLista(_unSolidario);
+      Jugador _ultimoSolidario = partido.ultimoSolidario();
+      int _posicionEnLista = partido.posicionEnLista(_ultimoSolidario);
       boolean _notEquals = (_posicionEnLista != (-1));
       if (_notEquals) {
-        Jugador _unSolidario_1 = partido.unSolidario();
-        int _posicionEnLista_1 = partido.posicionEnLista(_unSolidario_1);
+        Jugador _ultimoSolidario_1 = partido.ultimoSolidario();
+        int _posicionEnLista_1 = partido.posicionEnLista(_ultimoSolidario_1);
         partido.cambiarJugador(Integer.valueOf(_posicionEnLista_1), jugador);
+      } else {
+        Jugador _unCondicional = partido.unCondicional();
+        int _posicionEnLista_2 = partido.posicionEnLista(_unCondicional);
+        boolean _notEquals_1 = (_posicionEnLista_2 != (-1));
+        if (_notEquals_1) {
+          Jugador _unCondicional_1 = partido.unCondicional();
+          int _posicionEnLista_3 = partido.posicionEnLista(_unCondicional_1);
+          partido.cambiarJugador(Integer.valueOf(_posicionEnLista_3), jugador);
+        }
       }
     }
   }
