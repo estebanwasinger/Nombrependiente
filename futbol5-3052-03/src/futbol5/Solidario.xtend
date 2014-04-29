@@ -1,7 +1,7 @@
 package futbol5
 class Solidario implements TipoInscripcion{
 	
-	def void desplazarJugadorCondicional(Partido partido, Jugador jugador){
+	/*def void desplazarJugadorCondicional(Partido partido, Jugador jugador){
 		var int posicionADesplazar = 0
 		var Jugador unJugador = null
 		
@@ -9,13 +9,15 @@ class Solidario implements TipoInscripcion{
 		partido.jugadores.set(posicionADesplazar, jugador)
 		}
 	
-	override inscribir(Partido partido, Jugador jugador) {
+	*/override inscribir(Partido partido, Jugador jugador){
+		if (partido.cantJugadores <10) 
+		partido.agregarJugador(jugador) }/* 
 		if (partido.jugadores.size < 10){
 			partido.jugadores.add(jugador)
 		}
 		else{
 			desplazarJugadorCondicional(partido,jugador)
 		}
-	}
+	}*/
 }
 		

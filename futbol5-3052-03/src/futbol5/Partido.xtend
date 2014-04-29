@@ -4,26 +4,40 @@ import java.util.LinkedList
 
 class Partido {
 	
-	@Property LinkedList<Jugador> jugadores
-	@Property String condicion // VER!
-	
-	def void inscribirJugador(Jugador jugadorAInscribir){
-		val Jugador jugador = null
-		
-		if (jugadores.filter[jugador.tipoInscripcion=="Estandar"].size == 10){ 
-			throw new EquipoConfirmadoYCompleto("No se pueden inscribir más jugadores. El equipo está completo")
+	//@Property LinkedList<Jugador> jugadores
+	//@Property String condicion // VER!
+	// No podia hacerlo andar con los propertys
+	var jugadores = new LinkedList<Jugador>
+
+
+/* 		if (jugadores.filter[jugador.tipoInscripcion=="Estandar"].size == 10){ 
+			throw new EquipoConfirmadoYCompleto("No se pueden inscribir mï¿½s jugadores. El equipo estï¿½ completo")
 		}
 		else{
 			jugadorAInscribir.inscribirse(this)
 		}
-	}
+	} 
+	La logico de la inscripcion se tiene que delegar a los tiposDeInscripcion*/
+	
+	
 	def int cantJugadores(){
-		jugadores.size;
+		jugadores.size
 	}
 	
 	def void agregarJugador(Jugador jugadorAInscribir){
 		jugadores.add(jugadorAInscribir)
 	}
-	
+	def void cambiarJugador(Integer posicionAGuardar,Jugador jugador){
+		jugadores.set(posicionAGuardar,jugador)
+	}
+	def int posicionEnLista(Jugador jugador){
+		jugadores.indexOf(jugador)
+	}
+	def Jugador unSolidario(){
+		jugadores.filter[unJugador | unJugador.tipoInscripcion.class.equals(Solidario)].last
+	}
+	def Jugador unCondicional(){
+		jugadores.filter[unJugador | unJugador.tipoInscripcion.class.equals(Condicional)].last
+	}
 	
 	}

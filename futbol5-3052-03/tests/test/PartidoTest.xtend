@@ -12,40 +12,70 @@ import futbol5.Solidario
 
 class PartidoTest {
 	Jugador jugador
-	Jugador jugador1
-	Jugador jugador2
+	Jugador jugadorSolidario
+	Jugador jugadorCondicional
+	Jugador jugadorSolidario2
 	Partido partido
 	Estandar estandar
 	Condicional condicional
 	Solidario solidario
 	
+	
 	@Before
 	def void setUP() {
 	jugador = new Jugador
+	jugadorSolidario = new Jugador
+	jugadorSolidario2 = new Jugador
 	partido = new Partido
 	estandar = new Estandar
-	condicional = new Condicional
 	solidario = new Solidario
 	jugador.setTipoInscripcion(estandar)
-	jugador1.setTipoInscripcion(condicional)
-	jugador2.setTipoInscripcion(solidario)	
+	jugadorSolidario.setTipoInscripcion(solidario)
+	jugadorSolidario2.setTipoInscripcion(solidario)
 	}
 	
-@Test(expected = typeof(RuntimeException))
-	def void test11JugadoresEstandar(){
+@Test
+	def void agregar10Personas(){
 		var int a = 0;
-		while(a<12){partido.inscribirJugador(jugador)
-			a = a +1
+		while(a<10){partido.agregarJugador(jugador)
+			a = a +1}
+			Assert.assertEquals(10,partido.cantJugadores)
 		}		
-	}
-@Test (expected = typeof(RuntimeException))	
+@Test
+	def void inscribir10Personas(){
+		var int a = 0;
+		while(a<10){jugador.inscribirse(partido)
+			a = a +1}
+			Assert.assertEquals(10,partido.cantJugadores)
+		}	
+@Test
+	def void inscribir11Personas(){
+		var int a = 0;
+		while(a<11){jugador.inscribirse(partido)
+			a = a +1}
+			Assert.assertEquals(10,partido.cantJugadores)
+		}			
+@Test	
 def void testEstandarSacaSolidario() {
-	partido.inscribirJugador(jugador)
+	var int a = 0;
+	while(a<9){
+		jugadorSolidario.inscribirse(partido)
+		a = a +1
+	}
+	jugadorSolidario2.inscribirse(partido)
+	jugador.inscribirse(partido)
+	Assert.assertEquals(partido.posicionEnLista(jugador),9)
 	//aca se deberia desplazar un jugador solidario o condicional	
-}	
+}			
+		
+			
+	}
+	
+	
+/* 
 @Test (expected = typeof(RuntimeException))
 def void testFaltanJugadores(){
 	
-}
+}*/
 									
-	}
+	

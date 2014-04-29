@@ -3,12 +3,12 @@ package futbol5
 class Condicional implements TipoInscripcion{
 	
 	override inscribir(Partido partido, Jugador jugador) {
-		if (partido.jugadores.size < 10){
+		/*if (partido.jugadores.size < 10){
 			partido.jugadores.add(jugador)
 		}
 		else{
-			throw new EquipoConfirmadoYCompleto("No se pueden inscribir más jugadores de forma condicional. No tienen prioridad")
-		}
+			throw new EquipoConfirmadoYCompleto("No se pueden inscribir mï¿½s jugadores de forma condicional. No tienen prioridad")
+		}*/
 	}
 	
 }

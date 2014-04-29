@@ -1,9 +1,19 @@
 package futbol5
 class Estandar implements TipoInscripcion{
 	
-	def void desplazarJugadorCondicionalOSolidario(Partido partido, Jugador jugador){
+	override inscribir(Partido partido, Jugador jugador){
+		if (partido.cantJugadores <10) partido.agregarJugador(jugador) else (
+		if(partido.posicionEnLista(partido.unSolidario)!= -1)(partido.cambiarJugador(partido.posicionEnLista(partido.unSolidario),jugador))
+		
+		)
+	}
+	// Hay que implementar los desplasamientos
+	
+	/*def void desplazarJugadorCondicionalOSolidario(Partido partido, Jugador jugador){
 		var int posicionADesplazar = 0 
 		var Jugador unJugador = null
+		
+		}
 		
 		if (partido.jugadores.contains(unJugador.tipoInscripcion=="Condicional")){
 			posicionADesplazar = partido.jugadores.indexOf(unJugador.tipoInscripcion=="Condicional")
@@ -16,13 +26,6 @@ class Estandar implements TipoInscripcion{
 			
 }
 	
-	override inscribir(Partido partido, Jugador jugador) {
-		if (partido.jugadores.size < 10){
-			partido.jugadores.add(jugador)
-		}
-		else{
-			desplazarJugadorCondicionalOSolidario(partido, jugador)
-		}
-	}
+	}*/
 
 }
