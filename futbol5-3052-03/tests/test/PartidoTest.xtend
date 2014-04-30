@@ -8,7 +8,7 @@ import futbol5.Partido
 import futbol5.Estandar
 import futbol5.Condicional
 import futbol5.Solidario
-
+import futbol5.PartidoConfirmadoYCompletoException
 
 class PartidoTest {
 	Jugador jugador
@@ -53,13 +53,7 @@ class PartidoTest {
 			a = a +1}
 			Assert.assertEquals(10,partido.cantJugadores)
 		}	
-@Test
-	def void inscribir11Personas(){
-		var int a = 0;
-		while(a<11){jugador.inscribirse(partido)
-			a = a +1}
-			Assert.assertEquals(10,partido.cantJugadores)
-		}			
+	
 @Test	
 def void testEstandarSacaSolidario() {
 	var int a = 0;
@@ -74,7 +68,7 @@ def void testEstandarSacaSolidario() {
 }			
 		
 @Test	
-def void testEstandarSacaCOndicional() {
+def void testEstandarSacaCondicional() {
 	var int a = 0;
 	while(a<9){
 		jugadorCondicional.inscribirse(partido)
@@ -85,5 +79,12 @@ def void testEstandarSacaCOndicional() {
 	Assert.assertEquals(partido.posicionEnLista(jugador),9)			
 	}
 	
-	}
+@Test(expected=PartidoConfirmadoYCompletoException)
+def void testNoInscripcionCuandoElPartidoEstaCompleto() {
+	this.inscribir10Personas()
+	jugador.inscribirse(partido)
+}
+
+
+}
 	

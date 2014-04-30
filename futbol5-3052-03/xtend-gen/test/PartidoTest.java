@@ -4,6 +4,7 @@ import futbol5.Condicional;
 import futbol5.Estandar;
 import futbol5.Jugador;
 import futbol5.Partido;
+import futbol5.PartidoConfirmadoYCompletoException;
 import futbol5.Solidario;
 import org.junit.Assert;
 import org.junit.Before;
@@ -87,21 +88,6 @@ public class PartidoTest {
   }
   
   @Test
-  public void inscribir11Personas() {
-    int a = 0;
-    boolean _while = (a < 11);
-    while (_while) {
-      {
-        this.jugador.inscribirse(this.partido);
-        a = (a + 1);
-      }
-      _while = (a < 11);
-    }
-    int _cantJugadores = this.partido.cantJugadores();
-    Assert.assertEquals(10, _cantJugadores);
-  }
-  
-  @Test
   public void testEstandarSacaSolidario() {
     int a = 0;
     boolean _while = (a < 9);
@@ -119,7 +105,7 @@ public class PartidoTest {
   }
   
   @Test
-  public void testEstandarSacaCOndicional() {
+  public void testEstandarSacaCondicional() {
     int a = 0;
     boolean _while = (a < 9);
     while (_while) {
@@ -133,5 +119,11 @@ public class PartidoTest {
     this.jugador.inscribirse(this.partido);
     int _posicionEnLista = this.partido.posicionEnLista(this.jugador);
     Assert.assertEquals(_posicionEnLista, 9);
+  }
+  
+  @Test(expected = PartidoConfirmadoYCompletoException.class)
+  public void testNoInscripcionCuandoElPartidoEstaCompleto() {
+    this.inscribir10Personas();
+    this.jugador.inscribirse(this.partido);
   }
 }

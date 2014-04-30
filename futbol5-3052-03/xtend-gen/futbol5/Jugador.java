@@ -26,6 +26,7 @@ public class Jugador {
   }
   
   public void inscribirse(final Partido partido) {
+    partido.partidoCompleto();
     TipoInscripcion _tipoInscripcion = this.getTipoInscripcion();
     _tipoInscripcion.inscribir(partido, this);
   }

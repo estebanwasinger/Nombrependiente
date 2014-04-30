@@ -9,25 +9,4 @@ class Estandar implements TipoInscripcion{
 		if (partido.posicionEnLista(partido.unCondicional)!= -1) (partido.cambiarJugador(partido.posicionEnLista(partido.unCondicional),jugador))
 		)
 	}
-	// Hay que implementar los desplasamientos
-	
-	/*def void desplazarJugadorCondicionalOSolidario(Partido partido, Jugador jugador){
-		var int posicionADesplazar = 0 
-		var Jugador unJugador = null
-		
-		}
-		
-		if (partido.jugadores.contains(unJugador.tipoInscripcion=="Condicional")){
-			posicionADesplazar = partido.jugadores.indexOf(unJugador.tipoInscripcion=="Condicional")
-			partido.jugadores.set(posicionADesplazar, jugador)				
-		}
-			else{
-			posicionADesplazar = partido.jugadores.indexOf(unJugador.tipoInscripcion=="Solidario")
-			partido.jugadores.set(posicionADesplazar, jugador)	
-			}
-			
-}
-	
-	}*/
-
 }

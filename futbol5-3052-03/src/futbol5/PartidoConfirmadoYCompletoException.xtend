@@ -1,5 +1,5 @@
 package futbol5
-class EquipoConfirmadoYCompleto extends RuntimeException{
+class PartidoConfirmadoYCompletoException extends RuntimeException{
 		
 	private String message
 	
