@@ -85,6 +85,29 @@ def void testNoInscripcionCuandoElPartidoEstaCompleto() {
 	jugador.inscribirse(partido)
 }
 
+@Test
+def void testElCondicionalNoDesplazaJugadores(){
+	var int a = 0;
+	while(a<5){partido.agregarJugador(jugador)
+		a = a +1}
+	while(a<10){partido.agregarJugador(jugadorSolidario)
+		a = a +1}
+	jugadorSolidario2.inscribirse(partido)
+	jugadorCondicional.inscribirse(partido)
+	Assert.assertNotEquals(partido.posicionEnLista(jugadorCondicional),10)
+	}
+
+@Test
+def void testSolidarioSacaAJugadorCondicional(){
+	var int a = 0;
+	while(a<9){
+		jugadorCondicional.inscribirse(partido)
+		a = a +1
+	}
+	jugadorCondicional2.inscribirse(partido)
+	jugadorSolidario.inscribirse(partido)
+	Assert.assertEquals(partido.posicionEnLista(jugadorSolidario),9)
+}
 
 }
 	

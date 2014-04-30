@@ -126,4 +126,46 @@ public class PartidoTest {
     this.inscribir10Personas();
     this.jugador.inscribirse(this.partido);
   }
+  
+  @Test
+  public void testElCondicionalNoDesplazaJugadores() {
+    int a = 0;
+    boolean _while = (a < 5);
+    while (_while) {
+      {
+        this.partido.agregarJugador(this.jugador);
+        a = (a + 1);
+      }
+      _while = (a < 5);
+    }
+    boolean _while_1 = (a < 10);
+    while (_while_1) {
+      {
+        this.partido.agregarJugador(this.jugadorSolidario);
+        a = (a + 1);
+      }
+      _while_1 = (a < 10);
+    }
+    this.jugadorSolidario2.inscribirse(this.partido);
+    this.jugadorCondicional.inscribirse(this.partido);
+    int _posicionEnLista = this.partido.posicionEnLista(this.jugadorCondicional);
+    Assert.assertNotEquals(_posicionEnLista, 10);
+  }
+  
+  @Test
+  public void testSolidarioSacaAJugadorCondicional() {
+    int a = 0;
+    boolean _while = (a < 9);
+    while (_while) {
+      {
+        this.jugadorCondicional.inscribirse(this.partido);
+        a = (a + 1);
+      }
+      _while = (a < 9);
+    }
+    this.jugadorCondicional2.inscribirse(this.partido);
+    this.jugadorSolidario.inscribirse(this.partido);
+    int _posicionEnLista = this.partido.posicionEnLista(this.jugadorSolidario);
+    Assert.assertEquals(_posicionEnLista, 9);
+  }
 }
