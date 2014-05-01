@@ -5,7 +5,6 @@ import futbol5.Condicional
 import futbol5.Estandar
 import futbol5.Jugador
 import futbol5.Partido
-import futbol5.PartidoConfirmadoYCompletoException
 import futbol5.Solidario
 import org.junit.Assert
 import org.junit.Before
@@ -14,9 +13,9 @@ import org.junit.Test
 class PartidoTest {
 	Jugador jugador
 	Jugador jugadorSolidario
+	Jugador jugadorSolidario2
 	Jugador jugadorCondicional
 	Jugador jugadorCondicional2
-	Jugador jugadorSolidario2
 	Partido partido
 	Estandar estandar
 	Condicional condicional
@@ -33,11 +32,18 @@ class PartidoTest {
 		estandar = new Estandar
 		solidario = new Solidario
 		condicional = new Condicional
-		jugador.setTipoInscripcion(estandar)
 		jugadorSolidario.setTipoInscripcion(solidario)
 		jugadorSolidario2.setTipoInscripcion(solidario)
 		jugadorCondicional.setTipoInscripcion(condicional)
 		jugadorCondicional2.setTipoInscripcion(condicional)
+	}
+	
+		def armarPartido(int max) {
+		var int a = 0
+		while (a < max) {
+			partido.inscribir(new Jugador)
+			a = a + 1
+		}
 	}
 
 	@Test
@@ -55,15 +61,7 @@ class PartidoTest {
 		partido.inscribir(jugador)
 		partido.inscribir(jugador)
 	}
-
-	def armarPartido(int max) {
-		var int a = 0
-		while (a < max) {
-			partido.inscribir(new Jugador)
-			a = a + 1
-		}
-	}
-
+	
 	@Test
 	def void testEstandarSacaSolidario() {
 		armarPartido(8)
@@ -77,41 +75,37 @@ class PartidoTest {
 
 	@Test
 	def void testEstandarSacaCondicional() {
-		armarPartido(9)
-		jugadorCondicional2.inscribirse(partido)
-		jugador.inscribirse(partido)
-		Assert.assertEquals(partido.posicionEnLista(jugador), 9)
+		armarPartido(8)
+		partido.inscribir(jugadorCondicional)
+		partido.inscribir(jugadorCondicional2)
+		partido.inscribir(jugador)
+		Assert.assertTrue(partido.estaInscripto(jugador))
+		Assert.assertFalse(partido.estaInscripto(jugadorCondicional))
+		Assert.assertTrue(partido.estaInscripto(jugadorCondicional2))
 	}
 
-	@Test(expected=PartidoConfirmadoYCompletoException)
+	@Test(expected=typeof(BusinessException))
 	def void testNoInscripcionCuandoElPartidoEstaCompleto() {
 		this.armarPartido(10)
-		jugador.inscribirse(partido)
+		partido.inscribir(jugador)
 	}
 
-	// TODO: Arreglar, agregan al mismo jugador
-	@Test
-	def void testElCondicionalNoDesplazaJugadores() {
-		var int a = 0
-		while (a < 5) {
-			partido.agregarJugador(jugador)
-			a = a + 1
-		}
-		while (a < 10) {
-			partido.agregarJugador(jugadorSolidario)
-			a = a + 1
-		}
-		jugadorSolidario2.inscribirse(partido)
-		jugadorCondicional.inscribirse(partido)
-		Assert.assertNotEquals(partido.posicionEnLista(jugadorCondicional), 10)
+	@Test(expected=typeof(BusinessException))
+	def void testCondicionalNoDesplazaJugadoresYSeQuedaSinCupo() {
+		armarPartido(8)
+		partido.inscribir(jugadorCondicional)
+		partido.inscribir(jugadorSolidario)		
+		partido.inscribir(jugadorCondicional2)
+		Assert.assertFalse(partido.estaInscripto(jugadorCondicional2))
 	}
 
 	@Test
 	def void testSolidarioSacaAJugadorCondicional() {
 		armarPartido(9)
-		jugadorCondicional2.inscribirse(partido)
-		jugadorSolidario.inscribirse(partido)
-		Assert.assertEquals(partido.posicionEnLista(jugadorSolidario), 9)
+		partido.inscribir(jugadorCondicional)
+		partido.inscribir(jugadorSolidario)		
+		Assert.assertTrue(partido.estaInscripto(jugadorSolidario))
+		Assert.assertFalse(partido.estaInscripto(jugadorCondicional))
 	}
 
 }

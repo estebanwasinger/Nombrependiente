@@ -14,14 +14,6 @@ class Partido {
 		jugadores.add(jugadorAInscribir)
 	}
 
-	def void cambiarJugador(Integer posicionAGuardar, Jugador jugador) {
-		jugadores.set(posicionAGuardar, jugador)
-	}
-
-	def int posicionEnLista(Jugador jugador) {
-		jugadores.indexOf(jugador)
-	}
-
 	def estaInscripto(Jugador jugador) {
 		jugadores.contains(jugador)
 	}

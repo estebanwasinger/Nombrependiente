@@ -19,14 +19,6 @@ public class Partido {
     this.jugadores.add(jugadorAInscribir);
   }
   
-  public void cambiarJugador(final Integer posicionAGuardar, final Jugador jugador) {
-    this.jugadores.set((posicionAGuardar).intValue(), jugador);
-  }
-  
-  public int posicionEnLista(final Jugador jugador) {
-    return this.jugadores.indexOf(jugador);
-  }
-  
   public boolean estaInscripto(final Jugador jugador) {
     return this.jugadores.contains(jugador);
   }

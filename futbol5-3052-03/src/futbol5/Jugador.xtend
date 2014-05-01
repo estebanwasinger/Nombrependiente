@@ -3,7 +3,6 @@ package futbol5
 class Jugador {
 
 	@Property TipoInscripcion tipoInscripcion
-	@Property Partido partido
 
 	new() {
 		tipoInscripcion = new Estandar

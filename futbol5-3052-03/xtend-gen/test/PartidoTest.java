@@ -5,7 +5,6 @@ import futbol5.Condicional;
 import futbol5.Estandar;
 import futbol5.Jugador;
 import futbol5.Partido;
-import futbol5.PartidoConfirmadoYCompletoException;
 import futbol5.Solidario;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,11 +16,11 @@ public class PartidoTest {
   
   private Jugador jugadorSolidario;
   
+  private Jugador jugadorSolidario2;
+  
   private Jugador jugadorCondicional;
   
   private Jugador jugadorCondicional2;
-  
-  private Jugador jugadorSolidario2;
   
   private Partido partido;
   
@@ -51,11 +50,23 @@ public class PartidoTest {
     this.solidario = _solidario;
     Condicional _condicional = new Condicional();
     this.condicional = _condicional;
-    this.jugador.setTipoInscripcion(this.estandar);
     this.jugadorSolidario.setTipoInscripcion(this.solidario);
     this.jugadorSolidario2.setTipoInscripcion(this.solidario);
     this.jugadorCondicional.setTipoInscripcion(this.condicional);
     this.jugadorCondicional2.setTipoInscripcion(this.condicional);
+  }
+  
+  public void armarPartido(final int max) {
+    int a = 0;
+    boolean _while = (a < max);
+    while (_while) {
+      {
+        Jugador _jugador = new Jugador();
+        this.partido.inscribir(_jugador);
+        a = (a + 1);
+      }
+      _while = (a < max);
+    }
   }
   
   @Test
@@ -80,19 +91,6 @@ public class PartidoTest {
     this.partido.inscribir(this.jugador);
   }
   
-  public void armarPartido(final int max) {
-    int a = 0;
-    boolean _while = (a < max);
-    while (_while) {
-      {
-        Jugador _jugador = new Jugador();
-        this.partido.inscribir(_jugador);
-        a = (a + 1);
-      }
-      _while = (a < max);
-    }
-  }
-  
   @Test
   public void testEstandarSacaSolidario() {
     this.armarPartido(8);
@@ -109,28 +107,42 @@ public class PartidoTest {
   
   @Test
   public void testEstandarSacaCondicional() {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method inscribirse is undefined for the type PartidoTest"
-      + "\nThe method inscribirse is undefined for the type PartidoTest");
+    this.armarPartido(8);
+    this.partido.inscribir(this.jugadorCondicional);
+    this.partido.inscribir(this.jugadorCondicional2);
+    this.partido.inscribir(this.jugador);
+    boolean _estaInscripto = this.partido.estaInscripto(this.jugador);
+    Assert.assertTrue(_estaInscripto);
+    boolean _estaInscripto_1 = this.partido.estaInscripto(this.jugadorCondicional);
+    Assert.assertFalse(_estaInscripto_1);
+    boolean _estaInscripto_2 = this.partido.estaInscripto(this.jugadorCondicional2);
+    Assert.assertTrue(_estaInscripto_2);
   }
   
-  @Test(expected = PartidoConfirmadoYCompletoException.class)
+  @Test(expected = BusinessException.class)
   public void testNoInscripcionCuandoElPartidoEstaCompleto() {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method inscribirse is undefined for the type PartidoTest");
+    this.armarPartido(10);
+    this.partido.inscribir(this.jugador);
   }
   
-  @Test
-  public void testElCondicionalNoDesplazaJugadores() {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method inscribirse is undefined for the type PartidoTest"
-      + "\nThe method inscribirse is undefined for the type PartidoTest");
+  @Test(expected = BusinessException.class)
+  public void testCondicionalNoDesplazaJugadoresYSeQuedaSinCupo() {
+    this.armarPartido(8);
+    this.partido.inscribir(this.jugadorCondicional);
+    this.partido.inscribir(this.jugadorSolidario);
+    this.partido.inscribir(this.jugadorCondicional2);
+    boolean _estaInscripto = this.partido.estaInscripto(this.jugadorCondicional2);
+    Assert.assertFalse(_estaInscripto);
   }
   
   @Test
   public void testSolidarioSacaAJugadorCondicional() {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method inscribirse is undefined for the type PartidoTest"
-      + "\nThe method inscribirse is undefined for the type PartidoTest");
+    this.armarPartido(9);
+    this.partido.inscribir(this.jugadorCondicional);
+    this.partido.inscribir(this.jugadorSolidario);
+    boolean _estaInscripto = this.partido.estaInscripto(this.jugadorSolidario);
+    Assert.assertTrue(_estaInscripto);
+    boolean _estaInscripto_1 = this.partido.estaInscripto(this.jugadorCondicional);
+    Assert.assertFalse(_estaInscripto_1);
   }
 }
