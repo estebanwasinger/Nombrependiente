@@ -16,6 +16,8 @@ import org.junit.Test;
 public class PartidoTest {
   private Jugador jugador;
   
+  private Jugador jugador1;
+  
   private Jugador jugadorSolidario;
   
   private Jugador jugadorSolidario2;
@@ -44,18 +46,24 @@ public class PartidoTest {
   public void setUP() {
     Jugador _jugador = new Jugador();
     this.jugador = _jugador;
+    this.jugador.setEdad(18);
     Jugador _jugador_1 = new Jugador();
-    this.jugadorSolidario = _jugador_1;
+    this.jugador1 = _jugador_1;
+    this.jugador1.setEdad(18);
     Jugador _jugador_2 = new Jugador();
-    this.jugadorSolidario2 = _jugador_2;
+    this.jugadorSolidario = _jugador_2;
+    this.jugadorSolidario.setEdad(19);
     Jugador _jugador_3 = new Jugador();
-    this.jugadorCondicional = _jugador_3;
+    this.jugadorSolidario2 = _jugador_3;
+    this.jugadorSolidario2.setEdad(16);
     Jugador _jugador_4 = new Jugador();
-    this.jugadorCondicional2 = _jugador_4;
+    this.jugadorCondicional = _jugador_4;
     Jugador _jugador_5 = new Jugador();
-    this.jugadorCondicional3 = _jugador_5;
+    this.jugadorCondicional2 = _jugador_5;
     Jugador _jugador_6 = new Jugador();
-    this.jugadorCondicional4 = _jugador_6;
+    this.jugadorCondicional3 = _jugador_6;
+    Jugador _jugador_7 = new Jugador();
+    this.jugadorCondicional4 = _jugador_7;
     Partido _partido = new Partido("CABA");
     this.partido = _partido;
     Partido _partido_1 = new Partido("CABA");
@@ -66,7 +74,7 @@ public class PartidoTest {
     this.condicionLocalidadCABA = _condicionPartidoEnLocalidad;
     CondicionPartidoEnLocalidad _condicionPartidoEnLocalidad_1 = new CondicionPartidoEnLocalidad("GBA");
     this.condicionLocalidadGBA = _condicionPartidoEnLocalidad_1;
-    CondicionJugadoresPorEdad _condicionJugadoresPorEdad = new CondicionJugadoresPorEdad(5, 20);
+    CondicionJugadoresPorEdad _condicionJugadoresPorEdad = new CondicionJugadoresPorEdad(3, 20);
     this.condicionEdad = _condicionJugadoresPorEdad;
     Estandar _estandar = new Estandar();
     this.jugador.setTipoInscripcion(_estandar);
@@ -82,18 +90,6 @@ public class PartidoTest {
     this.jugadorCondicional3.setTipoInscripcion(_condicional_2);
     Condicional _condicional_3 = new Condicional(this.partido2, this.condicionLocalidadCABA);
     this.jugadorCondicional4.setTipoInscripcion(_condicional_3);
-  }
-  
-  @Test
-  public void testCondicionalSePuedeInscribirAPartidoSegunLocalidad() {
-    this.partido2.inscribir(this.jugadorCondicional2);
-    boolean _estaInscripto = this.partido2.estaInscripto(this.jugadorCondicional2);
-    Assert.assertTrue(_estaInscripto);
-  }
-  
-  @Test(expected = BusinessException.class)
-  public void testCondicionalNoSePuedeInscribirAPartidoSegunLocalidad() {
-    this.partido3.inscribir(this.jugadorCondicional2);
   }
   
   public void armarPartido(final int max) {
@@ -184,5 +180,34 @@ public class PartidoTest {
     Assert.assertTrue(_estaInscripto);
     boolean _estaInscripto_1 = this.partido.estaInscripto(this.jugadorCondicional2);
     Assert.assertFalse(_estaInscripto_1);
+  }
+  
+  @Test
+  public void testCondicionalSePuedeInscribirAPartidoSegunEdad() {
+    this.partido.inscribir(this.jugador);
+    this.partido.inscribir(this.jugadorCondicional);
+    boolean _estaInscripto = this.partido.estaInscripto(this.jugadorCondicional);
+    Assert.assertTrue(_estaInscripto);
+  }
+  
+  @Test(expected = BusinessException.class)
+  public void testCondicionalNoSePuedeInscribirAPartidoSegunEdad() {
+    this.partido.inscribir(this.jugador);
+    this.partido.inscribir(this.jugador1);
+    this.partido.inscribir(this.jugadorSolidario);
+    this.partido.inscribir(this.jugadorSolidario2);
+    this.partido.inscribir(this.jugadorCondicional);
+  }
+  
+  @Test
+  public void testCondicionalSePuedeInscribirAPartidoSegunLocalidad() {
+    this.partido2.inscribir(this.jugadorCondicional2);
+    boolean _estaInscripto = this.partido2.estaInscripto(this.jugadorCondicional2);
+    Assert.assertTrue(_estaInscripto);
+  }
+  
+  @Test(expected = BusinessException.class)
+  public void testCondicionalNoSePuedeInscribirAPartidoSegunLocalidad() {
+    this.partido3.inscribir(this.jugadorCondicional2);
   }
 }

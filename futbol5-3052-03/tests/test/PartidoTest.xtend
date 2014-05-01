@@ -14,6 +14,7 @@ import org.junit.Test
 
 class PartidoTest {
 	Jugador jugador 
+	Jugador jugador1
 	Jugador jugadorSolidario
 	Jugador jugadorSolidario2
 	Jugador jugadorCondicional 
@@ -30,8 +31,13 @@ class PartidoTest {
 	@Before
 	def void setUP() {
 		jugador = new Jugador
+		jugador.edad = 18
+		jugador1 =new Jugador
+		jugador1.edad = 18
 		jugadorSolidario = new Jugador
+		jugadorSolidario.edad = 19
 		jugadorSolidario2 = new Jugador
+		jugadorSolidario2.edad = 16
 		jugadorCondicional = new Jugador
 		jugadorCondicional2 = new Jugador
 		jugadorCondicional3 = new Jugador
@@ -42,7 +48,7 @@ class PartidoTest {
 		
 		condicionLocalidadCABA = new CondicionPartidoEnLocalidad("CABA")
 		condicionLocalidadGBA = new CondicionPartidoEnLocalidad("GBA")
-		condicionEdad = new CondicionJugadoresPorEdad(5,20)
+		condicionEdad = new CondicionJugadoresPorEdad(3,20)
 		
 		jugador.setTipoInscripcion(new Estandar)
 		jugadorSolidario.setTipoInscripcion(new Solidario)
@@ -52,19 +58,7 @@ class PartidoTest {
 		jugadorCondicional3.setTipoInscripcion(new Condicional(partido3, condicionLocalidadCABA))		
 		jugadorCondicional4.setTipoInscripcion(new Condicional(partido2, condicionLocalidadCABA))
 	}
-	
-	@Test
-	def void testCondicionalSePuedeInscribirAPartidoSegunLocalidad(){ //partido en CABA, condicional CABA
-		partido2.inscribir(jugadorCondicional2)
-		Assert.assertTrue(partido2.estaInscripto(jugadorCondicional2))
-	}
-	
-	@Test (expected=typeof(BusinessException))
-	def void testCondicionalNoSePuedeInscribirAPartidoSegunLocalidad() { //partido en GBA, condicional CABA
-		partido3.inscribir(jugadorCondicional2)
-}
-	
-		def armarPartido(int max) {
+	def armarPartido(int max) {
 		var int a = 0
 		while (a < max) {
 			partido.inscribir(new Jugador)
@@ -134,4 +128,30 @@ class PartidoTest {
 		Assert.assertFalse(partido.estaInscripto(jugadorCondicional2))
 	}
 
+	@Test
+	def void testCondicionalSePuedeInscribirAPartidoSegunEdad(){
+		partido.inscribir(jugador) // un jugador menor a 20
+		partido.inscribir(jugadorCondicional)
+		Assert.assertTrue(partido.estaInscripto(jugadorCondicional))
+	}
+	
+	@Test(expected=typeof(BusinessException))
+	def void testCondicionalNoSePuedeInscribirAPartidoSegunEdad(){
+		partido.inscribir(jugador) 
+		partido.inscribir(jugador1)
+		partido.inscribir(jugadorSolidario) 
+		partido.inscribir(jugadorSolidario2) // tres jugadores menor a 20, ya no se puede inscribir
+		partido.inscribir(jugadorCondicional)
+	}
+	
+	@Test
+	def void testCondicionalSePuedeInscribirAPartidoSegunLocalidad(){ //partido en CABA, condicional CABA
+		partido2.inscribir(jugadorCondicional2)
+		Assert.assertTrue(partido2.estaInscripto(jugadorCondicional2))
+	}
+	
+	@Test (expected=typeof(BusinessException))
+	def void testCondicionalNoSePuedeInscribirAPartidoSegunLocalidad() { //partido en GBA, condicional CABA
+		partido3.inscribir(jugadorCondicional2)
+	}	
 }
