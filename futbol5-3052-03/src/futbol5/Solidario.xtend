@@ -6,4 +6,8 @@ class Solidario implements TipoInscripcion {
 		2
 	}
 	
+	override cumpleCondicion(Jugador jugador, Partido partido) {
+		true
+	}
+	
 }

@@ -15,9 +15,24 @@ public class Jugador {
     this._tipoInscripcion = tipoInscripcion;
   }
   
+  private int _edad;
+  
+  public int getEdad() {
+    return this._edad;
+  }
+  
+  public void setEdad(final int edad) {
+    this._edad = edad;
+  }
+  
   public Jugador() {
     Estandar _estandar = new Estandar();
     this.setTipoInscripcion(_estandar);
+  }
+  
+  public boolean menorA(final int edad) {
+    int _edad = this.getEdad();
+    return (_edad < edad);
   }
   
   public boolean tieneMasPrioridadQue(final Jugador jugador) {

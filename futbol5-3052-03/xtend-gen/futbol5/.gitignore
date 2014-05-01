@@ -20,3 +20,10 @@
 /.BusinessException.java._trace
 /BusinessException.java
 /PartidoConfirmadoYCompletoException.java
+/.Condicion.java._trace
+/.JugadoresPorEdad.java._trace
+/.JugadoresPorBarrio.java._trace
+/.CondicionJugadoresEnElBarrio.java._trace
+/.CondicionJugadoresPorEdad.java._trace
+/.CondicionPartidoEnBarrio.java._trace
+/.CondicionPartidoEnLocalidad.java._trace

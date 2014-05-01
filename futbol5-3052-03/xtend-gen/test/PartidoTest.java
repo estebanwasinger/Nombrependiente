@@ -1,6 +1,8 @@
 package test;
 
 import futbol5.BusinessException;
+import futbol5.CondicionJugadoresPorEdad;
+import futbol5.CondicionPartidoEnLocalidad;
 import futbol5.Condicional;
 import futbol5.Estandar;
 import futbol5.Jugador;
@@ -22,13 +24,21 @@ public class PartidoTest {
   
   private Jugador jugadorCondicional2;
   
+  private Jugador jugadorCondicional3;
+  
+  private Jugador jugadorCondicional4;
+  
   private Partido partido;
   
-  private Estandar estandar;
+  private Partido partido2;
   
-  private Condicional condicional;
+  private Partido partido3;
   
-  private Solidario solidario;
+  private CondicionJugadoresPorEdad condicionEdad;
+  
+  private CondicionPartidoEnLocalidad condicionLocalidadCABA;
+  
+  private CondicionPartidoEnLocalidad condicionLocalidadGBA;
   
   @Before
   public void setUP() {
@@ -42,18 +52,48 @@ public class PartidoTest {
     this.jugadorCondicional = _jugador_3;
     Jugador _jugador_4 = new Jugador();
     this.jugadorCondicional2 = _jugador_4;
-    Partido _partido = new Partido();
+    Jugador _jugador_5 = new Jugador();
+    this.jugadorCondicional3 = _jugador_5;
+    Jugador _jugador_6 = new Jugador();
+    this.jugadorCondicional4 = _jugador_6;
+    Partido _partido = new Partido("CABA");
     this.partido = _partido;
+    Partido _partido_1 = new Partido("CABA");
+    this.partido2 = _partido_1;
+    Partido _partido_2 = new Partido("GBA");
+    this.partido3 = _partido_2;
+    CondicionPartidoEnLocalidad _condicionPartidoEnLocalidad = new CondicionPartidoEnLocalidad("CABA");
+    this.condicionLocalidadCABA = _condicionPartidoEnLocalidad;
+    CondicionPartidoEnLocalidad _condicionPartidoEnLocalidad_1 = new CondicionPartidoEnLocalidad("GBA");
+    this.condicionLocalidadGBA = _condicionPartidoEnLocalidad_1;
+    CondicionJugadoresPorEdad _condicionJugadoresPorEdad = new CondicionJugadoresPorEdad(5, 20);
+    this.condicionEdad = _condicionJugadoresPorEdad;
     Estandar _estandar = new Estandar();
-    this.estandar = _estandar;
+    this.jugador.setTipoInscripcion(_estandar);
     Solidario _solidario = new Solidario();
-    this.solidario = _solidario;
-    Condicional _condicional = new Condicional();
-    this.condicional = _condicional;
-    this.jugadorSolidario.setTipoInscripcion(this.solidario);
-    this.jugadorSolidario2.setTipoInscripcion(this.solidario);
-    this.jugadorCondicional.setTipoInscripcion(this.condicional);
-    this.jugadorCondicional2.setTipoInscripcion(this.condicional);
+    this.jugadorSolidario.setTipoInscripcion(_solidario);
+    Solidario _solidario_1 = new Solidario();
+    this.jugadorSolidario2.setTipoInscripcion(_solidario_1);
+    Condicional _condicional = new Condicional(this.partido, this.condicionEdad);
+    this.jugadorCondicional.setTipoInscripcion(_condicional);
+    Condicional _condicional_1 = new Condicional(this.partido2, this.condicionLocalidadCABA);
+    this.jugadorCondicional2.setTipoInscripcion(_condicional_1);
+    Condicional _condicional_2 = new Condicional(this.partido3, this.condicionLocalidadCABA);
+    this.jugadorCondicional3.setTipoInscripcion(_condicional_2);
+    Condicional _condicional_3 = new Condicional(this.partido2, this.condicionLocalidadCABA);
+    this.jugadorCondicional4.setTipoInscripcion(_condicional_3);
+  }
+  
+  @Test
+  public void testCondicionalSePuedeInscribirAPartidoSegunLocalidad() {
+    this.partido2.inscribir(this.jugadorCondicional2);
+    boolean _estaInscripto = this.partido2.estaInscripto(this.jugadorCondicional2);
+    Assert.assertTrue(_estaInscripto);
+  }
+  
+  @Test(expected = BusinessException.class)
+  public void testCondicionalNoSePuedeInscribirAPartidoSegunLocalidad() {
+    this.partido3.inscribir(this.jugadorCondicional2);
   }
   
   public void armarPartido(final int max) {
@@ -108,12 +148,12 @@ public class PartidoTest {
   @Test
   public void testEstandarSacaCondicional() {
     this.armarPartido(8);
-    this.partido.inscribir(this.jugadorCondicional);
+    this.partido.inscribir(this.jugadorCondicional4);
     this.partido.inscribir(this.jugadorCondicional2);
     this.partido.inscribir(this.jugador);
     boolean _estaInscripto = this.partido.estaInscripto(this.jugador);
     Assert.assertTrue(_estaInscripto);
-    boolean _estaInscripto_1 = this.partido.estaInscripto(this.jugadorCondicional);
+    boolean _estaInscripto_1 = this.partido.estaInscripto(this.jugadorCondicional4);
     Assert.assertFalse(_estaInscripto_1);
     boolean _estaInscripto_2 = this.partido.estaInscripto(this.jugadorCondicional2);
     Assert.assertTrue(_estaInscripto_2);
@@ -138,11 +178,11 @@ public class PartidoTest {
   @Test
   public void testSolidarioSacaAJugadorCondicional() {
     this.armarPartido(9);
-    this.partido.inscribir(this.jugadorCondicional);
+    this.partido.inscribir(this.jugadorCondicional2);
     this.partido.inscribir(this.jugadorSolidario);
     boolean _estaInscripto = this.partido.estaInscripto(this.jugadorSolidario);
     Assert.assertTrue(_estaInscripto);
-    boolean _estaInscripto_1 = this.partido.estaInscripto(this.jugadorCondicional);
+    boolean _estaInscripto_1 = this.partido.estaInscripto(this.jugadorCondicional2);
     Assert.assertFalse(_estaInscripto_1);
   }
 }
