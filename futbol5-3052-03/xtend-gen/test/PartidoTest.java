@@ -1,5 +1,6 @@
 package test;
 
+import futbol5.BusinessException;
 import futbol5.Condicional;
 import futbol5.Estandar;
 import futbol5.Jugador;
@@ -63,7 +64,8 @@ public class PartidoTest {
     boolean _while = (a < 10);
     while (_while) {
       {
-        this.partido.agregarJugador(this.jugador);
+        Jugador _jugador = new Jugador();
+        this.partido.agregarJugador(_jugador);
         a = (a + 1);
       }
       _while = (a < 10);
@@ -72,100 +74,63 @@ public class PartidoTest {
     Assert.assertEquals(10, _cantJugadores);
   }
   
-  @Test
-  public void inscribir10Personas() {
+  @Test(expected = BusinessException.class)
+  public void inscribirALaMismaPersonaMasDeUnaVez() {
+    this.partido.inscribir(this.jugador);
+    this.partido.inscribir(this.jugador);
+  }
+  
+  public void armarPartido(final int max) {
     int a = 0;
-    boolean _while = (a < 10);
+    boolean _while = (a < max);
     while (_while) {
       {
-        this.jugador.inscribirse(this.partido);
+        Jugador _jugador = new Jugador();
+        this.partido.inscribir(_jugador);
         a = (a + 1);
       }
-      _while = (a < 10);
+      _while = (a < max);
     }
-    int _cantJugadores = this.partido.cantJugadores();
-    Assert.assertEquals(10, _cantJugadores);
   }
   
   @Test
   public void testEstandarSacaSolidario() {
-    int a = 0;
-    boolean _while = (a < 9);
-    while (_while) {
-      {
-        this.jugadorSolidario.inscribirse(this.partido);
-        a = (a + 1);
-      }
-      _while = (a < 9);
-    }
-    this.jugadorSolidario2.inscribirse(this.partido);
-    this.jugador.inscribirse(this.partido);
-    int _posicionEnLista = this.partido.posicionEnLista(this.jugador);
-    Assert.assertEquals(_posicionEnLista, 9);
+    this.armarPartido(8);
+    this.partido.inscribir(this.jugadorSolidario);
+    this.partido.inscribir(this.jugadorSolidario2);
+    this.partido.inscribir(this.jugador);
+    boolean _estaInscripto = this.partido.estaInscripto(this.jugador);
+    Assert.assertTrue(_estaInscripto);
+    boolean _estaInscripto_1 = this.partido.estaInscripto(this.jugadorSolidario);
+    Assert.assertFalse(_estaInscripto_1);
+    boolean _estaInscripto_2 = this.partido.estaInscripto(this.jugadorSolidario2);
+    Assert.assertTrue(_estaInscripto_2);
   }
   
   @Test
   public void testEstandarSacaCondicional() {
-    int a = 0;
-    boolean _while = (a < 9);
-    while (_while) {
-      {
-        this.jugadorCondicional.inscribirse(this.partido);
-        a = (a + 1);
-      }
-      _while = (a < 9);
-    }
-    this.jugadorCondicional2.inscribirse(this.partido);
-    this.jugador.inscribirse(this.partido);
-    int _posicionEnLista = this.partido.posicionEnLista(this.jugador);
-    Assert.assertEquals(_posicionEnLista, 9);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method inscribirse is undefined for the type PartidoTest"
+      + "\nThe method inscribirse is undefined for the type PartidoTest");
   }
   
   @Test(expected = PartidoConfirmadoYCompletoException.class)
   public void testNoInscripcionCuandoElPartidoEstaCompleto() {
-    this.inscribir10Personas();
-    this.jugador.inscribirse(this.partido);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method inscribirse is undefined for the type PartidoTest");
   }
   
   @Test
   public void testElCondicionalNoDesplazaJugadores() {
-    int a = 0;
-    boolean _while = (a < 5);
-    while (_while) {
-      {
-        this.partido.agregarJugador(this.jugador);
-        a = (a + 1);
-      }
-      _while = (a < 5);
-    }
-    boolean _while_1 = (a < 10);
-    while (_while_1) {
-      {
-        this.partido.agregarJugador(this.jugadorSolidario);
-        a = (a + 1);
-      }
-      _while_1 = (a < 10);
-    }
-    this.jugadorSolidario2.inscribirse(this.partido);
-    this.jugadorCondicional.inscribirse(this.partido);
-    int _posicionEnLista = this.partido.posicionEnLista(this.jugadorCondicional);
-    Assert.assertNotEquals(_posicionEnLista, 10);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method inscribirse is undefined for the type PartidoTest"
+      + "\nThe method inscribirse is undefined for the type PartidoTest");
   }
   
   @Test
   public void testSolidarioSacaAJugadorCondicional() {
-    int a = 0;
-    boolean _while = (a < 9);
-    while (_while) {
-      {
-        this.jugadorCondicional.inscribirse(this.partido);
-        a = (a + 1);
-      }
-      _while = (a < 9);
-    }
-    this.jugadorCondicional2.inscribirse(this.partido);
-    this.jugadorSolidario.inscribirse(this.partido);
-    int _posicionEnLista = this.partido.posicionEnLista(this.jugadorSolidario);
-    Assert.assertEquals(_posicionEnLista, 9);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method inscribirse is undefined for the type PartidoTest"
+      + "\nThe method inscribirse is undefined for the type PartidoTest");
   }
 }

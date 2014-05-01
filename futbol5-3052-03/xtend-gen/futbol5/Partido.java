@@ -1,34 +1,15 @@
 package futbol5;
 
-import futbol5.Condicional;
-import futbol5.Estandar;
+import futbol5.BusinessException;
 import futbol5.Jugador;
-import futbol5.PartidoConfirmadoYCompletoException;
-import futbol5.Solidario;
-import futbol5.TipoInscripcion;
 import java.util.LinkedList;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public class Partido {
   private LinkedList<Jugador> jugadores = new LinkedList<Jugador>();
-  
-  public void partidoCompleto() {
-    final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
-      public Boolean apply(final Jugador unJugador) {
-        TipoInscripcion _tipoInscripcion = unJugador.getTipoInscripcion();
-        Class<? extends TipoInscripcion> _class = _tipoInscripcion.getClass();
-        return Boolean.valueOf(_class.equals(Estandar.class));
-      }
-    };
-    Iterable<Jugador> _filter = IterableExtensions.<Jugador>filter(this.jugadores, _function);
-    int _size = IterableExtensions.size(_filter);
-    boolean _equals = (_size == 10);
-    if (_equals) {
-      throw new PartidoConfirmadoYCompletoException("No se pueden inscribir mas jugadores. El equipo esta completo");
-    }
-  }
   
   public int cantJugadores() {
     return this.jugadores.size();
@@ -46,27 +27,45 @@ public class Partido {
     return this.jugadores.indexOf(jugador);
   }
   
-  public Jugador ultimoSolidario() {
-    final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
-      public Boolean apply(final Jugador unJugador) {
-        TipoInscripcion _tipoInscripcion = unJugador.getTipoInscripcion();
-        Class<? extends TipoInscripcion> _class = _tipoInscripcion.getClass();
-        return Boolean.valueOf(_class.equals(Solidario.class));
-      }
-    };
-    Iterable<Jugador> _filter = IterableExtensions.<Jugador>filter(this.jugadores, _function);
-    return IterableExtensions.<Jugador>last(_filter);
+  public boolean estaInscripto(final Jugador jugador) {
+    return this.jugadores.contains(jugador);
   }
   
-  public Jugador unCondicional() {
-    final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
-      public Boolean apply(final Jugador unJugador) {
-        TipoInscripcion _tipoInscripcion = unJugador.getTipoInscripcion();
-        Class<? extends TipoInscripcion> _class = _tipoInscripcion.getClass();
-        return Boolean.valueOf(_class.equals(Condicional.class));
+  public void inscribir(final Jugador jugador) {
+    try {
+      boolean _estaInscripto = this.estaInscripto(jugador);
+      if (_estaInscripto) {
+        throw new BusinessException("El jugador ya se inscribió");
       }
-    };
-    Iterable<Jugador> _filter = IterableExtensions.<Jugador>filter(this.jugadores, _function);
-    return IterableExtensions.<Jugador>last(_filter);
+      int _cantJugadores = this.cantJugadores();
+      boolean _lessThan = (_cantJugadores < 10);
+      if (_lessThan) {
+        this.agregarJugador(jugador);
+        return;
+      }
+      final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
+        public Boolean apply(final Jugador inscripto) {
+          return Boolean.valueOf(jugador.tieneMasPrioridadQue(inscripto));
+        }
+      };
+      boolean _exists = IterableExtensions.<Jugador>exists(this.jugadores, _function);
+      boolean _not = (!_exists);
+      if (_not) {
+        throw new BusinessException("No hay más cupo");
+      }
+      final Function1<Jugador,Boolean> _function_1 = new Function1<Jugador,Boolean>() {
+        public Boolean apply(final Jugador unJugador) {
+          int _prioridad = unJugador.prioridad();
+          int _prioridad_1 = jugador.prioridad();
+          return Boolean.valueOf((_prioridad > _prioridad_1));
+        }
+      };
+      Iterable<Jugador> _filter = IterableExtensions.<Jugador>filter(this.jugadores, _function_1);
+      final Jugador quien = IterableExtensions.<Jugador>head(_filter);
+      this.jugadores.remove(quien);
+      this.agregarJugador(jugador);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
 }

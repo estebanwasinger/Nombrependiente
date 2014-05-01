@@ -1,5 +1,6 @@
 package futbol5;
 
+import futbol5.Estandar;
 import futbol5.Partido;
 import futbol5.TipoInscripcion;
 
@@ -25,9 +26,19 @@ public class Jugador {
     this._partido = partido;
   }
   
-  public void inscribirse(final Partido partido) {
-    partido.partidoCompleto();
+  public Jugador() {
+    Estandar _estandar = new Estandar();
+    this.setTipoInscripcion(_estandar);
+  }
+  
+  public boolean tieneMasPrioridadQue(final Jugador jugador) {
+    int _prioridad = this.prioridad();
+    int _prioridad_1 = jugador.prioridad();
+    return (_prioridad < _prioridad_1);
+  }
+  
+  public int prioridad() {
     TipoInscripcion _tipoInscripcion = this.getTipoInscripcion();
-    _tipoInscripcion.inscribir(partido, this);
+    return _tipoInscripcion.prioridad();
   }
 }

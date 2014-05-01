@@ -1,12 +1,20 @@
 package futbol5
+
 class Jugador {
-	
+
 	@Property TipoInscripcion tipoInscripcion
-	@Property Partido partido 
-		
-	def void inscribirse(Partido partido){ 
-		partido.partidoCompleto
-		tipoInscripcion.inscribir(partido, this)
+	@Property Partido partido
+
+	new() {
+		tipoInscripcion = new Estandar
+	}
+
+	def tieneMasPrioridadQue(Jugador jugador) {
+		this.prioridad < jugador.prioridad
+	}
+
+	def int prioridad() {
+		tipoInscripcion.prioridad()
 	}
 
 }
