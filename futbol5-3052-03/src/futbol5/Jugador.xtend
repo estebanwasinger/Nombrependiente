@@ -1,12 +1,22 @@
 package futbol5
 
+import java.util.List
+import java.util.ArrayList
+
 class Jugador {
 
 	@Property TipoInscripcion tipoInscripcion
 	@Property int edad
+	@Property String email
+	@Property List<Infraccion> infracciones
+	@Property List<Jugador> amigos
+	@Property Administrador administrador
 	
 	new() {
 		tipoInscripcion = new Estandar
+		amigos = new ArrayList<Jugador>
+		infracciones = new ArrayList<Infraccion>
+		administrador = Administrador::getInstance()
 	}
 	
 	def boolean menorA (int edad) {
@@ -19,6 +29,11 @@ class Jugador {
 
 	def int prioridad() {
 		tipoInscripcion.prioridad()
+	}
+	
+	/*ARREGLAR "nos interesa poder discriminar infracciones de diferentes momentos y por distintos motivos"*/
+	def nuevaInfraccion() {
+		this.infracciones.add(new Infraccion)
 	}
 
 }

@@ -27,3 +27,11 @@
 /.CondicionJugadoresPorEdad.java._trace
 /.CondicionPartidoEnBarrio.java._trace
 /.CondicionPartidoEnLocalidad.java._trace
+/.MailObserver.java._trace
+/.Infraccion.java._trace
+/.InscripcionObserver.java._trace
+/.MessageSender.java._trace
+/.Mail.java._trace
+/.Notificacion.java._trace
+/.EquipoCompletoObserver.java._trace
+/.EquipoIncompletoObserver.java._trace

@@ -1,7 +1,11 @@
 package futbol5;
 
+import futbol5.Administrador;
 import futbol5.Estandar;
+import futbol5.Infraccion;
 import futbol5.TipoInscripcion;
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("all")
 public class Jugador {
@@ -25,9 +29,55 @@ public class Jugador {
     this._edad = edad;
   }
   
+  private String _email;
+  
+  public String getEmail() {
+    return this._email;
+  }
+  
+  public void setEmail(final String email) {
+    this._email = email;
+  }
+  
+  private List<Infraccion> _infracciones;
+  
+  public List<Infraccion> getInfracciones() {
+    return this._infracciones;
+  }
+  
+  public void setInfracciones(final List<Infraccion> infracciones) {
+    this._infracciones = infracciones;
+  }
+  
+  private List<Jugador> _amigos;
+  
+  public List<Jugador> getAmigos() {
+    return this._amigos;
+  }
+  
+  public void setAmigos(final List<Jugador> amigos) {
+    this._amigos = amigos;
+  }
+  
+  private Administrador _administrador;
+  
+  public Administrador getAdministrador() {
+    return this._administrador;
+  }
+  
+  public void setAdministrador(final Administrador administrador) {
+    this._administrador = administrador;
+  }
+  
   public Jugador() {
     Estandar _estandar = new Estandar();
     this.setTipoInscripcion(_estandar);
+    ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
+    this.setAmigos(_arrayList);
+    ArrayList<Infraccion> _arrayList_1 = new ArrayList<Infraccion>();
+    this.setInfracciones(_arrayList_1);
+    Administrador _instance = Administrador.getInstance();
+    this.setAdministrador(_instance);
   }
   
   public boolean menorA(final int edad) {
@@ -44,5 +94,14 @@ public class Jugador {
   public int prioridad() {
     TipoInscripcion _tipoInscripcion = this.getTipoInscripcion();
     return _tipoInscripcion.prioridad();
+  }
+  
+  /**
+   * ARREGLAR "nos interesa poder discriminar infracciones de diferentes momentos y por distintos motivos"
+   */
+  public boolean nuevaInfraccion() {
+    List<Infraccion> _infracciones = this.getInfracciones();
+    Infraccion _infraccion = new Infraccion();
+    return _infracciones.add(_infraccion);
   }
 }

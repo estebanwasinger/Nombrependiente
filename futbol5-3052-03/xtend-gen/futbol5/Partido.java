@@ -1,9 +1,14 @@
 package futbol5;
 
+import futbol5.Administrador;
 import futbol5.BusinessException;
 import futbol5.Jugador;
+import futbol5.MailObserver;
 import futbol5.TipoInscripcion;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
@@ -30,10 +35,60 @@ public class Partido {
     this._jugadores = jugadores;
   }
   
+  private List<MailObserver> _mailObservers;
+  
+  public List<MailObserver> getMailObservers() {
+    return this._mailObservers;
+  }
+  
+  public void setMailObservers(final List<MailObserver> mailObservers) {
+    this._mailObservers = mailObservers;
+  }
+  
+  private Administrador _administrador;
+  
+  public Administrador getAdministrador() {
+    return this._administrador;
+  }
+  
+  public void setAdministrador(final Administrador administrador) {
+    this._administrador = administrador;
+  }
+  
+  private boolean _previamenteCompleto;
+  
+  public boolean isPreviamenteCompleto() {
+    return this._previamenteCompleto;
+  }
+  
+  public void setPreviamenteCompleto(final boolean previamenteCompleto) {
+    this._previamenteCompleto = previamenteCompleto;
+  }
+  
   public Partido(final String localidad) {
     this.setLocalidad(localidad);
     LinkedList<Jugador> _linkedList = new LinkedList<Jugador>();
     this.setJugadores(_linkedList);
+    ArrayList<MailObserver> _arrayList = new ArrayList<MailObserver>();
+    this.setMailObservers(_arrayList);
+    Administrador _instance = Administrador.getInstance();
+    this.setAdministrador(_instance);
+    this.setPreviamenteCompleto(false);
+  }
+  
+  public void notificar(final Jugador jugador) {
+    List<MailObserver> _mailObservers = this.getMailObservers();
+    boolean _isEmpty = _mailObservers.isEmpty();
+    boolean _not = (!_isEmpty);
+    if (_not) {
+      List<MailObserver> _mailObservers_1 = this.getMailObservers();
+      final Consumer<MailObserver> _function = new Consumer<MailObserver>() {
+        public void accept(final MailObserver observador) {
+          observador.enviarNotificacion(Partido.this, jugador);
+        }
+      };
+      _mailObservers_1.forEach(_function);
+    }
   }
   
   public int cantJugadores() {
@@ -46,9 +101,67 @@ public class Partido {
     _jugadores.add(jugador);
   }
   
+  public void eliminarJugador(final Jugador jugador) {
+    LinkedList<Jugador> _jugadores = this.getJugadores();
+    _jugadores.remove(jugador);
+  }
+  
   public boolean estaInscripto(final Jugador jugador) {
     LinkedList<Jugador> _jugadores = this.getJugadores();
     return _jugadores.contains(jugador);
+  }
+  
+  public boolean agregarObserver(final MailObserver observer) {
+    List<MailObserver> _mailObservers = this.getMailObservers();
+    return _mailObservers.add(observer);
+  }
+  
+  public boolean quitarObserver(final MailObserver observer) {
+    List<MailObserver> _mailObservers = this.getMailObservers();
+    return _mailObservers.remove(observer);
+  }
+  
+  public void bajaConReemplazo(final Jugador jugador, final Jugador reemplazo) {
+    try {
+      boolean _estaInscripto = this.estaInscripto(jugador);
+      boolean _not = (!_estaInscripto);
+      if (_not) {
+        throw new BusinessException("El jugador no está inscripto en este partido, no se puede dar de baja");
+      }
+      boolean _estaInscripto_1 = this.estaInscripto(reemplazo);
+      if (_estaInscripto_1) {
+        throw new BusinessException("El reemplazo ya está inscripto en el partido");
+      }
+      this.eliminarJugador(jugador);
+      this.inscribir(reemplazo);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  public boolean bajaSinReemplazo(final Jugador jugador) {
+    try {
+      boolean _xblockexpression = false;
+      {
+        boolean _estaInscripto = this.estaInscripto(jugador);
+        boolean _not = (!_estaInscripto);
+        if (_not) {
+          throw new BusinessException("El jugador no está inscripto en este partido, no se puede dar de baja");
+        }
+        int _cantJugadores = this.cantJugadores();
+        boolean _equals = (_cantJugadores == 10);
+        if (_equals) {
+          this.setPreviamenteCompleto(true);
+        }
+        LinkedList<Jugador> _jugadores = this.getJugadores();
+        _jugadores.remove(jugador);
+        this.notificar(jugador);
+        _xblockexpression = jugador.nuevaInfraccion();
+      }
+      return _xblockexpression;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   public void inscribir(final Jugador jugador) {
@@ -67,6 +180,7 @@ public class Partido {
       boolean _lessThan = (_cantJugadores < 10);
       if (_lessThan) {
         this.agregarJugador(jugador);
+        this.notificar(jugador);
         return;
       }
       LinkedList<Jugador> _jugadores = this.getJugadores();
