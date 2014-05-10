@@ -15,7 +15,7 @@ class InscripcionObserver extends MailObserver{
 		var notificacion = new Notificacion
 		notificacion.from = emisor.email
 		notificacion.to = receptor.email
-		notificacion.title=	"Inscripción de un amigo"
+		notificacion.subject=	"Inscripción de un amigo"
 		notificacion.message="Me inscribi al partido"
 		return notificacion
 	}

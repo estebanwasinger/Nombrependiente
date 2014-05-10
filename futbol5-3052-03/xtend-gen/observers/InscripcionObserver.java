@@ -22,7 +22,7 @@ public class InscripcionObserver extends MailObserver {
     notificacion.setFrom(_email);
     String _email_1 = receptor.getEmail();
     notificacion.setTo(_email_1);
-    notificacion.setTitle("Inscripción de un amigo");
+    notificacion.setSubject("Inscripción de un amigo");
     notificacion.setMessage("Me inscribi al partido");
     return notificacion;
   }

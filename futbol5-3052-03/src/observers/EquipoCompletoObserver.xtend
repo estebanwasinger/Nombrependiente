@@ -16,7 +16,7 @@ class EquipoCompletoObserver extends MailObserver{
         	var Notificacion notificacion = new Notificacion
         	notificacion.from = "info@opf5.com.ar"
         	notificacion.to = partido.administrador.email
-        	notificacion.title = "Partido confirmado"
+        	notificacion.subject = "Partido confirmado"
         	notificacion.message = "El equipo tiene 10 jugadores a la fecha"
         	
         	messageSender.send (notificacion)
@@ -26,7 +26,7 @@ class EquipoCompletoObserver extends MailObserver{
         	var Notificacion notificacion = new Notificacion
         	notificacion.from = "info@opf5.com.ar"
         	notificacion.to = partido.administrador.email
-        	notificacion.title = "Partido incompleto"
+        	notificacion.subject = "Partido incompleto"
         	notificacion.message = "Se dio de baja un jugador del partido y no dejo un reemplazo. El equipo esta incompleto (9 jugadores)"
         	
         	messageSender.send (notificacion)

@@ -1,16 +1,12 @@
 package test;
 
-import auxiliares.MessageSender;
 import futbol5.Jugador;
 import futbol5.Partido;
 import inscripciones.Estandar;
 import java.util.List;
-import observers.EquipoCompletoObserver;
-import observers.InscripcionObserver;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 @SuppressWarnings("all")
 public class NotificacionesTest {
@@ -18,11 +14,11 @@ public class NotificacionesTest {
   
   private Partido partido;
   
-  private MessageSender mockMessageSender = Mockito.<MessageSender>mock(MessageSender.class);
+  private Object mockMessageSender /* Skipped initializer because of errors */;
   
-  private InscripcionObserver mockInscripcionObserver = Mockito.<InscripcionObserver>mock(InscripcionObserver.class);
+  private Object mockInscripcionObserver /* Skipped initializer because of errors */;
   
-  private EquipoCompletoObserver mockEquipoCompletoObserver = Mockito.<EquipoCompletoObserver>mock(EquipoCompletoObserver.class);
+  private Object mockEquipoCompletoObserver /* Skipped initializer because of errors */;
   
   @Before
   public void setUP() {

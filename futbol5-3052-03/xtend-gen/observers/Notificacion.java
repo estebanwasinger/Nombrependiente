@@ -22,6 +22,16 @@ public class Notificacion {
     this._to = to;
   }
   
+  private String _subject;
+  
+  public String getSubject() {
+    return this._subject;
+  }
+  
+  public void setSubject(final String subject) {
+    this._subject = subject;
+  }
+  
   private String _message;
   
   public String getMessage() {
@@ -30,15 +40,5 @@ public class Notificacion {
   
   public void setMessage(final String message) {
     this._message = message;
-  }
-  
-  private String _title;
-  
-  public String getTitle() {
-    return this._title;
-  }
-  
-  public void setTitle(final String title) {
-    this._title = title;
   }
 }

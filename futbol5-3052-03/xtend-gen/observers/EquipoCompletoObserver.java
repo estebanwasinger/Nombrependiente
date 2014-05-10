@@ -24,7 +24,7 @@ public class EquipoCompletoObserver extends MailObserver {
       Administrador _administrador = partido.getAdministrador();
       String _email = _administrador.getEmail();
       notificacion.setTo(_email);
-      notificacion.setTitle("Partido confirmado");
+      notificacion.setSubject("Partido confirmado");
       notificacion.setMessage("El equipo tiene 10 jugadores a la fecha");
       this.messageSender.send(notificacion);
     }
@@ -35,7 +35,7 @@ public class EquipoCompletoObserver extends MailObserver {
       Administrador _administrador_1 = partido.getAdministrador();
       String _email_1 = _administrador_1.getEmail();
       notificacion_1.setTo(_email_1);
-      notificacion_1.setTitle("Partido incompleto");
+      notificacion_1.setSubject("Partido incompleto");
       notificacion_1.setMessage("Se dio de baja un jugador del partido y no dejo un reemplazo. El equipo esta incompleto (9 jugadores)");
       this.messageSender.send(notificacion_1);
     }
