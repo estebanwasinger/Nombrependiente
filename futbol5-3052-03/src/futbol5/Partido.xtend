@@ -3,6 +3,8 @@ package futbol5
 import java.util.List
 import java.util.LinkedList
 import java.util.ArrayList
+import observers.MailObserver
+import excepciones.BusinessException
 
 class Partido {
 
@@ -58,7 +60,6 @@ class Partido {
 		this.mailObservers.remove(observer)
 	}
 	
-	/** 
 	
 					/*******************************/
 					/*CASO DE USO: BAJA DE UN JUGADOR*/

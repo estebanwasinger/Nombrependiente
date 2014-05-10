@@ -1,13 +1,13 @@
 package test
 
-import futbol5.BusinessException
-import futbol5.Condicional
-import futbol5.Estandar
 import futbol5.Jugador
 import futbol5.Partido
-import futbol5.Solidario
-import futbol5.CondicionJugadoresPorEdad
-import futbol5.CondicionPartidoEnLocalidad
+import condiciones.CondicionJugadoresPorEdad
+import condiciones.CondicionPartidoEnLocalidad
+import inscripciones.Estandar
+import inscripciones.Solidario
+import inscripciones.Condicional
+import excepciones.BusinessException
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -58,6 +58,7 @@ class PartidoTest {
 		jugadorCondicional3.setTipoInscripcion(new Condicional(partido3, condicionLocalidadCABA))		
 		jugadorCondicional4.setTipoInscripcion(new Condicional(partido2, condicionLocalidadCABA))
 	}
+	
 	def armarPartido(int max) {
 		var int a = 0
 		while (a < max) {
@@ -154,4 +155,34 @@ class PartidoTest {
 	def void testCondicionalNoSePuedeInscribirAPartidoSegunLocalidad() { //partido en GBA, condicional CABA
 		partido3.inscribir(jugadorCondicional2)
 	}	
+	
+	@Test(expected=typeof(BusinessException))
+	def void testBajaJugadorQueNoEstaInscripto(){
+		partido.bajaSinReemplazo(jugador)		
+	}
+	
+	@Test (expected=typeof(BusinessException))
+	def void testBajaJugadorConReemplazoYaInscripto(){
+		partido.inscribir(jugador)
+		partido.inscribir(jugador1)
+		partido.bajaConReemplazo(jugador1, jugador)
+	}
+	
+	@Test
+	def void testBajaJugadorConReemplazo(){
+		partido.inscribir(jugador)
+		partido.bajaConReemplazo(jugador, jugador1)
+		Assert.assertFalse(partido.estaInscripto(jugador))
+		Assert.assertTrue(partido.estaInscripto(jugador1))
+		Assert.assertEquals(1, partido.cantJugadores)
+	}
+	
+		@Test
+	def void testBajaJugadorSinReemplazo(){
+		partido.inscribir(jugador)
+		partido.bajaSinReemplazo(jugador)	
+		Assert.assertFalse(partido.estaInscripto(jugador))
+		Assert.assertEquals(1, jugador.infracciones.size)
+	}
+	
 }

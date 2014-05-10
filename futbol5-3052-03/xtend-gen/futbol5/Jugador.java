@@ -1,9 +1,9 @@
 package futbol5;
 
 import futbol5.Administrador;
-import futbol5.Estandar;
-import futbol5.Infraccion;
-import futbol5.TipoInscripcion;
+import infracciones.Infraccion;
+import inscripciones.Estandar;
+import inscripciones.TipoInscripcion;
 import java.util.ArrayList;
 import java.util.List;
 

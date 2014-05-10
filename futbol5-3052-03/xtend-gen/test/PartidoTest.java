@@ -1,13 +1,15 @@
 package test;
 
-import futbol5.BusinessException;
-import futbol5.CondicionJugadoresPorEdad;
-import futbol5.CondicionPartidoEnLocalidad;
-import futbol5.Condicional;
-import futbol5.Estandar;
+import condiciones.CondicionJugadoresPorEdad;
+import condiciones.CondicionPartidoEnLocalidad;
+import excepciones.BusinessException;
 import futbol5.Jugador;
 import futbol5.Partido;
-import futbol5.Solidario;
+import infracciones.Infraccion;
+import inscripciones.Condicional;
+import inscripciones.Estandar;
+import inscripciones.Solidario;
+import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -209,5 +211,40 @@ public class PartidoTest {
   @Test(expected = BusinessException.class)
   public void testCondicionalNoSePuedeInscribirAPartidoSegunLocalidad() {
     this.partido3.inscribir(this.jugadorCondicional2);
+  }
+  
+  @Test(expected = BusinessException.class)
+  public void testBajaJugadorQueNoEstaInscripto() {
+    this.partido.bajaSinReemplazo(this.jugador);
+  }
+  
+  @Test(expected = BusinessException.class)
+  public void testBajaJugadorConReemplazoYaInscripto() {
+    this.partido.inscribir(this.jugador);
+    this.partido.inscribir(this.jugador1);
+    this.partido.bajaConReemplazo(this.jugador1, this.jugador);
+  }
+  
+  @Test
+  public void testBajaJugadorConReemplazo() {
+    this.partido.inscribir(this.jugador);
+    this.partido.bajaConReemplazo(this.jugador, this.jugador1);
+    boolean _estaInscripto = this.partido.estaInscripto(this.jugador);
+    Assert.assertFalse(_estaInscripto);
+    boolean _estaInscripto_1 = this.partido.estaInscripto(this.jugador1);
+    Assert.assertTrue(_estaInscripto_1);
+    int _cantJugadores = this.partido.cantJugadores();
+    Assert.assertEquals(1, _cantJugadores);
+  }
+  
+  @Test
+  public void testBajaJugadorSinReemplazo() {
+    this.partido.inscribir(this.jugador);
+    this.partido.bajaSinReemplazo(this.jugador);
+    boolean _estaInscripto = this.partido.estaInscripto(this.jugador);
+    Assert.assertFalse(_estaInscripto);
+    List<Infraccion> _infracciones = this.jugador.getInfracciones();
+    int _size = _infracciones.size();
+    Assert.assertEquals(1, _size);
   }
 }

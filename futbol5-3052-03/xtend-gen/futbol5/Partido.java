@@ -1,14 +1,14 @@
 package futbol5;
 
+import excepciones.BusinessException;
 import futbol5.Administrador;
-import futbol5.BusinessException;
 import futbol5.Jugador;
-import futbol5.MailObserver;
-import futbol5.TipoInscripcion;
+import inscripciones.TipoInscripcion;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
+import observers.MailObserver;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;

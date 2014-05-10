@@ -2,6 +2,9 @@ package futbol5
 
 import java.util.List
 import java.util.ArrayList
+import inscripciones.TipoInscripcion
+import inscripciones.Estandar
+import infracciones.Infraccion
 
 class Jugador {
 
