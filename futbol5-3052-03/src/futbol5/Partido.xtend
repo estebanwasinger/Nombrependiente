@@ -10,7 +10,7 @@ class Partido {
 
 	@Property var String localidad
 	@Property var LinkedList<Jugador> jugadores
-	@Property var List<NotificacionObserver> mailObservers
+	@Property var List<NotificacionObserver> notificacionObservers
 	@Property var Administrador administrador
 	@Property var boolean previamenteCompleto
 	
@@ -21,7 +21,7 @@ class Partido {
 	new(String localidad) {
 		this.localidad = localidad
 		jugadores = new LinkedList<Jugador>
-		mailObservers = new ArrayList<NotificacionObserver>	
+		notificacionObservers = new ArrayList<NotificacionObserver>	
 		administrador = Administrador::getInstance()
 		this.previamenteCompleto = false
 	}
@@ -31,8 +31,8 @@ class Partido {
 					/********************/
 
 	def notificar(Jugador jugador){
-		if (!(this.mailObservers.isEmpty())){
-			mailObservers.forEach [ observador  | observador.enviarNotificacion(this, jugador) ]
+		if (!(this.notificacionObservers.isEmpty())){
+			notificacionObservers.forEach [ observador  | observador.enviarNotificacion(this, jugador) ]
 		}
 	}
 
@@ -53,11 +53,11 @@ class Partido {
 	}
 	
 	def agregarObserver(NotificacionObserver observer){
-		this.mailObservers.add(observer)
+		this.notificacionObservers.add(observer)
 	}
 	
 	def quitarObserver(NotificacionObserver observer){
-		this.mailObservers.remove(observer)
+		this.notificacionObservers.remove(observer)
 	}
 	
 	

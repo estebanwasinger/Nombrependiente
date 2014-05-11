@@ -35,14 +35,14 @@ public class Partido {
     this._jugadores = jugadores;
   }
   
-  private List<NotificacionObserver> _mailObservers;
+  private List<NotificacionObserver> _notificacionObservers;
   
-  public List<NotificacionObserver> getMailObservers() {
-    return this._mailObservers;
+  public List<NotificacionObserver> getNotificacionObservers() {
+    return this._notificacionObservers;
   }
   
-  public void setMailObservers(final List<NotificacionObserver> mailObservers) {
-    this._mailObservers = mailObservers;
+  public void setNotificacionObservers(final List<NotificacionObserver> notificacionObservers) {
+    this._notificacionObservers = notificacionObservers;
   }
   
   private Administrador _administrador;
@@ -70,24 +70,24 @@ public class Partido {
     LinkedList<Jugador> _linkedList = new LinkedList<Jugador>();
     this.setJugadores(_linkedList);
     ArrayList<NotificacionObserver> _arrayList = new ArrayList<NotificacionObserver>();
-    this.setMailObservers(_arrayList);
+    this.setNotificacionObservers(_arrayList);
     Administrador _instance = Administrador.getInstance();
     this.setAdministrador(_instance);
     this.setPreviamenteCompleto(false);
   }
   
   public void notificar(final Jugador jugador) {
-    List<NotificacionObserver> _mailObservers = this.getMailObservers();
-    boolean _isEmpty = _mailObservers.isEmpty();
+    List<NotificacionObserver> _notificacionObservers = this.getNotificacionObservers();
+    boolean _isEmpty = _notificacionObservers.isEmpty();
     boolean _not = (!_isEmpty);
     if (_not) {
-      List<NotificacionObserver> _mailObservers_1 = this.getMailObservers();
+      List<NotificacionObserver> _notificacionObservers_1 = this.getNotificacionObservers();
       final Consumer<NotificacionObserver> _function = new Consumer<NotificacionObserver>() {
         public void accept(final NotificacionObserver observador) {
           observador.enviarNotificacion(Partido.this, jugador);
         }
       };
-      _mailObservers_1.forEach(_function);
+      _notificacionObservers_1.forEach(_function);
     }
   }
   
@@ -112,13 +112,13 @@ public class Partido {
   }
   
   public boolean agregarObserver(final NotificacionObserver observer) {
-    List<NotificacionObserver> _mailObservers = this.getMailObservers();
-    return _mailObservers.add(observer);
+    List<NotificacionObserver> _notificacionObservers = this.getNotificacionObservers();
+    return _notificacionObservers.add(observer);
   }
   
   public boolean quitarObserver(final NotificacionObserver observer) {
-    List<NotificacionObserver> _mailObservers = this.getMailObservers();
-    return _mailObservers.remove(observer);
+    List<NotificacionObserver> _notificacionObservers = this.getNotificacionObservers();
+    return _notificacionObservers.remove(observer);
   }
   
   public void bajaConReemplazo(final Jugador jugador, final Jugador reemplazo) {
