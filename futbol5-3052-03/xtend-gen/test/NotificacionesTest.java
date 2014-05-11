@@ -1,7 +1,6 @@
 package test;
 
 import auxiliares.MessageSender;
-import futbol5.Administrador;
 import futbol5.Jugador;
 import futbol5.Partido;
 import inscripciones.Estandar;
@@ -16,8 +15,6 @@ import org.mockito.verification.VerificationMode;
 
 @SuppressWarnings("all")
 public class NotificacionesTest {
-  private Administrador administrador;
-  
   private Jugador jugador;
   
   private Jugador amigo1;
@@ -30,23 +27,16 @@ public class NotificacionesTest {
   
   @Before
   public void setUP() {
-    Administrador _instance = Administrador.getInstance();
-    this.administrador = _instance;
-    this.administrador.setEmail("administradorprueba@partidodeprueba.net");
     Jugador _jugador = new Jugador();
     this.jugador = _jugador;
     Estandar _estandar = new Estandar();
     this.jugador.setTipoInscripcion(_estandar);
-    this.jugador.setEmail("jugadordeprueba@partidodeprueba.net");
     Jugador _jugador_1 = new Jugador();
     this.amigo1 = _jugador_1;
-    this.amigo1.setEmail("amigo1@partidodeprueba.net");
     Jugador _jugador_2 = new Jugador();
     this.amigo2 = _jugador_2;
-    this.amigo2.setEmail("amigo2@partidodeprueba.net");
     Jugador _jugador_3 = new Jugador();
     this.amigo3 = _jugador_3;
-    this.amigo3.setEmail("amigo3@partidodeprueba.net");
     this.jugador.agregarAmigo(this.amigo1);
     this.jugador.agregarAmigo(this.amigo2);
     this.jugador.agregarAmigo(this.amigo3);

@@ -11,10 +11,8 @@ import observers.EquipoCompletoObserver
 import auxiliares.MessageSender
 import observers.Notificacion
 import observers.InscripcionObserver
-import futbol5.Administrador
 
 class NotificacionesTest {
-		Administrador administrador
 		Jugador jugador 
 		Jugador amigo1
 		Jugador amigo2
@@ -23,17 +21,11 @@ class NotificacionesTest {
 		
 	@Before
 	def void setUP() {
-			administrador = Administrador::getInstance()
-			administrador.email="administradorprueba@partidodeprueba.net"
 			jugador = new Jugador
 			jugador.setTipoInscripcion(new Estandar)
-			jugador.email="jugadordeprueba@partidodeprueba.net"
 			amigo1 = new Jugador
-			amigo1.email ="amigo1@partidodeprueba.net"
 			amigo2 = new Jugador
-			amigo2.email ="amigo2@partidodeprueba.net"
 			amigo3 = new Jugador
-			amigo3.email ="amigo3@partidodeprueba.net"
 			jugador.agregarAmigo(amigo1)
 			jugador.agregarAmigo(amigo2)
 			jugador.agregarAmigo(amigo3)			
