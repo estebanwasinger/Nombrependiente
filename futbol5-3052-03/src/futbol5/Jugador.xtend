@@ -22,6 +22,10 @@ class Jugador {
 		administrador = Administrador::getInstance()
 	}
 	
+	def agregarAmigo(Jugador jugador) {
+		this.amigos.add(jugador)
+	}
+	
 	def boolean menorA (int edad) {
 		this.edad < edad
 	}

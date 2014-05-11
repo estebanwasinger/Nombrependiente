@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
-import observers.MailObserver;
+import observers.NotificacionObserver;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
@@ -35,13 +35,13 @@ public class Partido {
     this._jugadores = jugadores;
   }
   
-  private List<MailObserver> _mailObservers;
+  private List<NotificacionObserver> _mailObservers;
   
-  public List<MailObserver> getMailObservers() {
+  public List<NotificacionObserver> getMailObservers() {
     return this._mailObservers;
   }
   
-  public void setMailObservers(final List<MailObserver> mailObservers) {
+  public void setMailObservers(final List<NotificacionObserver> mailObservers) {
     this._mailObservers = mailObservers;
   }
   
@@ -69,7 +69,7 @@ public class Partido {
     this.setLocalidad(localidad);
     LinkedList<Jugador> _linkedList = new LinkedList<Jugador>();
     this.setJugadores(_linkedList);
-    ArrayList<MailObserver> _arrayList = new ArrayList<MailObserver>();
+    ArrayList<NotificacionObserver> _arrayList = new ArrayList<NotificacionObserver>();
     this.setMailObservers(_arrayList);
     Administrador _instance = Administrador.getInstance();
     this.setAdministrador(_instance);
@@ -77,13 +77,13 @@ public class Partido {
   }
   
   public void notificar(final Jugador jugador) {
-    List<MailObserver> _mailObservers = this.getMailObservers();
+    List<NotificacionObserver> _mailObservers = this.getMailObservers();
     boolean _isEmpty = _mailObservers.isEmpty();
     boolean _not = (!_isEmpty);
     if (_not) {
-      List<MailObserver> _mailObservers_1 = this.getMailObservers();
-      final Consumer<MailObserver> _function = new Consumer<MailObserver>() {
-        public void accept(final MailObserver observador) {
+      List<NotificacionObserver> _mailObservers_1 = this.getMailObservers();
+      final Consumer<NotificacionObserver> _function = new Consumer<NotificacionObserver>() {
+        public void accept(final NotificacionObserver observador) {
           observador.enviarNotificacion(Partido.this, jugador);
         }
       };
@@ -111,13 +111,13 @@ public class Partido {
     return _jugadores.contains(jugador);
   }
   
-  public boolean agregarObserver(final MailObserver observer) {
-    List<MailObserver> _mailObservers = this.getMailObservers();
+  public boolean agregarObserver(final NotificacionObserver observer) {
+    List<NotificacionObserver> _mailObservers = this.getMailObservers();
     return _mailObservers.add(observer);
   }
   
-  public boolean quitarObserver(final MailObserver observer) {
-    List<MailObserver> _mailObservers = this.getMailObservers();
+  public boolean quitarObserver(final NotificacionObserver observer) {
+    List<NotificacionObserver> _mailObservers = this.getMailObservers();
     return _mailObservers.remove(observer);
   }
   

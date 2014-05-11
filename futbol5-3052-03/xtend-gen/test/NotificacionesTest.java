@@ -1,43 +1,66 @@
 package test;
 
+import auxiliares.MessageSender;
+import futbol5.Administrador;
 import futbol5.Jugador;
 import futbol5.Partido;
 import inscripciones.Estandar;
-import java.util.List;
-import org.junit.Assert;
+import observers.EquipoCompletoObserver;
+import observers.InscripcionObserver;
+import observers.Notificacion;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Matchers;
+import org.mockito.Mockito;
+import org.mockito.verification.VerificationMode;
 
 @SuppressWarnings("all")
 public class NotificacionesTest {
+  private Administrador administrador;
+  
   private Jugador jugador;
+  
+  private Jugador amigo1;
+  
+  private Jugador amigo2;
+  
+  private Jugador amigo3;
   
   private Partido partido;
   
-  private Object mockMessageSender /* Skipped initializer because of errors */;
-  
-  private Object mockInscripcionObserver /* Skipped initializer because of errors */;
-  
-  private Object mockEquipoCompletoObserver /* Skipped initializer because of errors */;
-  
   @Before
   public void setUP() {
+    Administrador _instance = Administrador.getInstance();
+    this.administrador = _instance;
+    this.administrador.setEmail("administradorprueba@partidodeprueba.net");
     Jugador _jugador = new Jugador();
     this.jugador = _jugador;
     Estandar _estandar = new Estandar();
     this.jugador.setTipoInscripcion(_estandar);
+    this.jugador.setEmail("jugadordeprueba@partidodeprueba.net");
+    Jugador _jugador_1 = new Jugador();
+    this.amigo1 = _jugador_1;
+    this.amigo1.setEmail("amigo1@partidodeprueba.net");
+    Jugador _jugador_2 = new Jugador();
+    this.amigo2 = _jugador_2;
+    this.amigo2.setEmail("amigo2@partidodeprueba.net");
+    Jugador _jugador_3 = new Jugador();
+    this.amigo3 = _jugador_3;
+    this.amigo3.setEmail("amigo3@partidodeprueba.net");
+    this.jugador.agregarAmigo(this.amigo1);
+    this.jugador.agregarAmigo(this.amigo2);
+    this.jugador.agregarAmigo(this.amigo3);
     Partido _partido = new Partido("Berazategui");
     this.partido = _partido;
   }
   
-  public void agregarAmigos(final int max) {
+  public void armarPartido(final int max) {
     int a = 0;
     boolean _while = (a < max);
     while (_while) {
       {
-        List<Jugador> _amigos = this.jugador.getAmigos();
         Jugador _jugador = new Jugador();
-        _amigos.add(_jugador);
+        this.partido.inscribir(_jugador);
         a = (a + 1);
       }
       _while = (a < max);
@@ -45,10 +68,69 @@ public class NotificacionesTest {
   }
   
   @Test
-  public void agregar4Amigos() {
-    this.agregarAmigos(4);
-    List<Jugador> _amigos = this.jugador.getAmigos();
-    int _size = _amigos.size();
-    Assert.assertEquals(4, _size);
+  public void testJugadorSeInscribeYSeNotificaASusAmigos() {
+    MessageSender mockMessageSender = Mockito.<MessageSender>mock(MessageSender.class);
+    InscripcionObserver _inscripcionObserver = new InscripcionObserver(mockMessageSender);
+    this.partido.agregarObserver(_inscripcionObserver);
+    VerificationMode _times = Mockito.times(0);
+    MessageSender _verify = Mockito.<MessageSender>verify(mockMessageSender, _times);
+    Notificacion _any = Matchers.<Notificacion>any(Notificacion.class);
+    _verify.send(_any);
+    this.partido.inscribir(this.jugador);
+    VerificationMode _times_1 = Mockito.times(3);
+    MessageSender _verify_1 = Mockito.<MessageSender>verify(mockMessageSender, _times_1);
+    Notificacion _any_1 = Matchers.<Notificacion>any(Notificacion.class);
+    _verify_1.send(_any_1);
+  }
+  
+  @Test
+  public void testSeInscribeDecimoJugadorYSeNotificaAAdministrador() {
+    MessageSender mockMessageSender = Mockito.<MessageSender>mock(MessageSender.class);
+    EquipoCompletoObserver _equipoCompletoObserver = new EquipoCompletoObserver(mockMessageSender);
+    this.partido.agregarObserver(_equipoCompletoObserver);
+    VerificationMode _times = Mockito.times(0);
+    MessageSender _verify = Mockito.<MessageSender>verify(mockMessageSender, _times);
+    Notificacion _any = Matchers.<Notificacion>any(Notificacion.class);
+    _verify.send(_any);
+    this.armarPartido(9);
+    this.partido.inscribir(this.jugador);
+    VerificationMode _times_1 = Mockito.times(1);
+    MessageSender _verify_1 = Mockito.<MessageSender>verify(mockMessageSender, _times_1);
+    Notificacion _any_1 = Matchers.<Notificacion>any(Notificacion.class);
+    _verify_1.send(_any_1);
+  }
+  
+  @Test
+  public void testSeInscribeUnJugadorYNoSeNotificaAAdministrador() {
+    MessageSender mockMessageSender = Mockito.<MessageSender>mock(MessageSender.class);
+    EquipoCompletoObserver _equipoCompletoObserver = new EquipoCompletoObserver(mockMessageSender);
+    this.partido.agregarObserver(_equipoCompletoObserver);
+    this.partido.inscribir(this.jugador);
+    VerificationMode _times = Mockito.times(0);
+    MessageSender _verify = Mockito.<MessageSender>verify(mockMessageSender, _times);
+    Notificacion _any = Matchers.<Notificacion>any(Notificacion.class);
+    _verify.send(_any);
+  }
+  
+  @Test
+  public void testPartidoCon10JugadoresYSeBaja1() {
+    MessageSender mockMessageSender = Mockito.<MessageSender>mock(MessageSender.class);
+    EquipoCompletoObserver _equipoCompletoObserver = new EquipoCompletoObserver(mockMessageSender);
+    this.partido.agregarObserver(_equipoCompletoObserver);
+    VerificationMode _times = Mockito.times(0);
+    MessageSender _verify = Mockito.<MessageSender>verify(mockMessageSender, _times);
+    Notificacion _any = Matchers.<Notificacion>any(Notificacion.class);
+    _verify.send(_any);
+    this.armarPartido(9);
+    this.partido.inscribir(this.jugador);
+    VerificationMode _times_1 = Mockito.times(1);
+    MessageSender _verify_1 = Mockito.<MessageSender>verify(mockMessageSender, _times_1);
+    Notificacion _any_1 = Matchers.<Notificacion>any(Notificacion.class);
+    _verify_1.send(_any_1);
+    this.partido.bajaSinReemplazo(this.jugador);
+    VerificationMode _times_2 = Mockito.times(2);
+    MessageSender _verify_2 = Mockito.<MessageSender>verify(mockMessageSender, _times_2);
+    Notificacion _any_2 = Matchers.<Notificacion>any(Notificacion.class);
+    _verify_2.send(_any_2);
   }
 }

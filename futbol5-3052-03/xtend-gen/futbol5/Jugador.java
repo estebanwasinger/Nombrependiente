@@ -80,6 +80,11 @@ public class Jugador {
     this.setAdministrador(_instance);
   }
   
+  public boolean agregarAmigo(final Jugador jugador) {
+    List<Jugador> _amigos = this.getAmigos();
+    return _amigos.add(jugador);
+  }
+  
   public boolean menorA(final int edad) {
     int _edad = this.getEdad();
     return (_edad < edad);

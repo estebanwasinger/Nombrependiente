@@ -5,11 +5,11 @@ import futbol5.Jugador;
 import futbol5.Partido;
 import java.util.List;
 import java.util.function.Consumer;
-import observers.MailObserver;
 import observers.Notificacion;
+import observers.NotificacionObserver;
 
 @SuppressWarnings("all")
-public class InscripcionObserver extends MailObserver {
+public class InscripcionObserver extends NotificacionObserver {
   private MessageSender messageSender;
   
   public InscripcionObserver(final MessageSender unMessageSender) {

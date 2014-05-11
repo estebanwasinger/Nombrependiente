@@ -4,11 +4,11 @@ import auxiliares.MessageSender;
 import futbol5.Administrador;
 import futbol5.Jugador;
 import futbol5.Partido;
-import observers.MailObserver;
 import observers.Notificacion;
+import observers.NotificacionObserver;
 
 @SuppressWarnings("all")
-public class EquipoCompletoObserver extends MailObserver {
+public class EquipoCompletoObserver extends NotificacionObserver {
   private MessageSender messageSender;
   
   public EquipoCompletoObserver(final MessageSender unMessageSender) {
@@ -20,7 +20,7 @@ public class EquipoCompletoObserver extends MailObserver {
     boolean _equals = (_cantJugadores == 10);
     if (_equals) {
       Notificacion notificacion = new Notificacion();
-      notificacion.setFrom("info@opf5.com.ar");
+      notificacion.setFrom("info@opf5.net");
       Administrador _administrador = partido.getAdministrador();
       String _email = _administrador.getEmail();
       notificacion.setTo(_email);
@@ -31,7 +31,7 @@ public class EquipoCompletoObserver extends MailObserver {
     boolean _isPreviamenteCompleto = partido.isPreviamenteCompleto();
     if (_isPreviamenteCompleto) {
       Notificacion notificacion_1 = new Notificacion();
-      notificacion_1.setFrom("info@opf5.com.ar");
+      notificacion_1.setFrom("info@opf5.net");
       Administrador _administrador_1 = partido.getAdministrador();
       String _email_1 = _administrador_1.getEmail();
       notificacion_1.setTo(_email_1);

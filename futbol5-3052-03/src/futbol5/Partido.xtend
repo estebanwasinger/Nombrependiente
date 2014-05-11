@@ -3,14 +3,14 @@ package futbol5
 import java.util.List
 import java.util.LinkedList
 import java.util.ArrayList
-import observers.MailObserver
 import excepciones.BusinessException
+import observers.NotificacionObserver
 
 class Partido {
 
 	@Property var String localidad
 	@Property var LinkedList<Jugador> jugadores
-	@Property var List<MailObserver> mailObservers
+	@Property var List<NotificacionObserver> mailObservers
 	@Property var Administrador administrador
 	@Property var boolean previamenteCompleto
 	
@@ -21,7 +21,7 @@ class Partido {
 	new(String localidad) {
 		this.localidad = localidad
 		jugadores = new LinkedList<Jugador>
-		mailObservers = new ArrayList<MailObserver>	
+		mailObservers = new ArrayList<NotificacionObserver>	
 		administrador = Administrador::getInstance()
 		this.previamenteCompleto = false
 	}
@@ -52,11 +52,11 @@ class Partido {
 		this.jugadores.contains(jugador)
 	}
 	
-	def agregarObserver(MailObserver observer){
+	def agregarObserver(NotificacionObserver observer){
 		this.mailObservers.add(observer)
 	}
 	
-	def quitarObserver(MailObserver observer){
+	def quitarObserver(NotificacionObserver observer){
 		this.mailObservers.remove(observer)
 	}
 	

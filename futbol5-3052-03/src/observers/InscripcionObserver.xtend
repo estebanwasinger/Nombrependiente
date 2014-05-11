@@ -4,7 +4,7 @@ import auxiliares.MessageSender
 import futbol5.Jugador
 import futbol5.Partido
 
-class InscripcionObserver extends MailObserver{
+class InscripcionObserver extends NotificacionObserver{
 	 MessageSender messageSender
 	
 	new(MessageSender unMessageSender) {
