@@ -20,7 +20,7 @@ public class EquipoCompletoObserver extends NotificacionObserver {
     boolean _equals = (_cantJugadores == 10);
     if (_equals) {
       Notificacion notificacion = new Notificacion();
-      notificacion.setFrom("info@opf5.net");
+      notificacion.setFrom("damaradona@gmail.com");
       Administrador _administrador = partido.getAdministrador();
       String _email = _administrador.getEmail();
       notificacion.setTo(_email);
@@ -31,7 +31,7 @@ public class EquipoCompletoObserver extends NotificacionObserver {
     boolean _isPreviamenteCompleto = partido.isPreviamenteCompleto();
     if (_isPreviamenteCompleto) {
       Notificacion notificacion_1 = new Notificacion();
-      notificacion_1.setFrom("info@opf5.net");
+      notificacion_1.setFrom("damaradona@gmail.com");
       Administrador _administrador_1 = partido.getAdministrador();
       String _email_1 = _administrador_1.getEmail();
       notificacion_1.setTo(_email_1);
