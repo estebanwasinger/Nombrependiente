@@ -35,3 +35,6 @@
 /.Notificacion.java._trace
 /.EquipoCompletoObserver.java._trace
 /.EquipoIncompletoObserver.java._trace
+/.InterfazPartido.java._trace
+/.PartidoDecorator.java._trace
+/.NotificarAmigosDecorator.java._trace

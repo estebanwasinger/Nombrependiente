@@ -2,6 +2,7 @@ package futbol5;
 
 import excepciones.BusinessException;
 import futbol5.Administrador;
+import futbol5.InterfazPartido;
 import futbol5.Jugador;
 import inscripciones.TipoInscripcion;
 import java.util.LinkedList;
@@ -10,7 +11,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
-public class Partido {
+public class Partido implements InterfazPartido {
   private String _localidad;
   
   public String getLocalidad() {
@@ -98,25 +99,21 @@ public class Partido {
     }
   }
   
-  public boolean bajaSinReemplazo(final Jugador jugador) {
+  public void bajaSinReemplazo(final Jugador jugador) {
     try {
-      boolean _xblockexpression = false;
-      {
-        boolean _estaInscripto = this.estaInscripto(jugador);
-        boolean _not = (!_estaInscripto);
-        if (_not) {
-          throw new BusinessException("El jugador no est� inscripto en este partido, no se puede dar de baja");
-        }
-        int _cantJugadores = this.cantJugadores();
-        boolean _equals = (_cantJugadores == 10);
-        if (_equals) {
-          this.setPreviamenteCompleto(true);
-        }
-        LinkedList<Jugador> _jugadores = this.getJugadores();
-        _jugadores.remove(jugador);
-        _xblockexpression = jugador.nuevaInfraccion();
+      boolean _estaInscripto = this.estaInscripto(jugador);
+      boolean _not = (!_estaInscripto);
+      if (_not) {
+        throw new BusinessException("El jugador no est� inscripto en este partido, no se puede dar de baja");
       }
-      return _xblockexpression;
+      int _cantJugadores = this.cantJugadores();
+      boolean _equals = (_cantJugadores == 10);
+      if (_equals) {
+        this.setPreviamenteCompleto(true);
+      }
+      LinkedList<Jugador> _jugadores = this.getJugadores();
+      _jugadores.remove(jugador);
+      jugador.nuevaInfraccion();
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

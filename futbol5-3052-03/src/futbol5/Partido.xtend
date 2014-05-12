@@ -1,11 +1,9 @@
 package futbol5
 
-import java.util.List
 import java.util.LinkedList
-import java.util.ArrayList
 import excepciones.BusinessException
 
-class Partido {
+class Partido implements InterfazPartido {
 
 	@Property var String localidad
 	@Property var LinkedList<Jugador> jugadores
@@ -27,7 +25,7 @@ class Partido {
 					/*METODOS AUXILIARES*/
 					/********************/
 
-	def int cantJugadores() {
+	override def int cantJugadores() {
 		jugadores.size
 	}
 
@@ -62,7 +60,7 @@ class Partido {
 		this.inscribir(reemplazo)
 	}
 	
-	def bajaSinReemplazo (Jugador jugador){
+	override def bajaSinReemplazo (Jugador jugador){
 		if (!this.estaInscripto(jugador)){
 			throw new BusinessException("El jugador no est� inscripto en este partido, no se puede dar de baja")
 		}
@@ -77,7 +75,7 @@ class Partido {
 					/*CASO DE USO: INSCRIPCION DE UN JUGADOR */
 					/**************************************/
 					
-	def inscribir(Jugador jugador) {
+	override def inscribir(Jugador jugador) {
 		if (this.estaInscripto(jugador)) {
 			throw new BusinessException("El jugador ya se inscribi�")
 		}
