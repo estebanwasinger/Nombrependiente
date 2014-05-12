@@ -14,12 +14,6 @@ public class NotificacionesTest {
   
   private Partido partido;
   
-  private Object mockMessageSender /* Skipped initializer because of errors */;
-  
-  private Object mockInscripcionObserver /* Skipped initializer because of errors */;
-  
-  private Object mockEquipoCompletoObserver /* Skipped initializer because of errors */;
-  
   @Before
   public void setUP() {
     Jugador _jugador = new Jugador();

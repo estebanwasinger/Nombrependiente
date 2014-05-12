@@ -3,14 +3,12 @@ package futbol5
 import java.util.List
 import java.util.LinkedList
 import java.util.ArrayList
-import observers.MailObserver
 import excepciones.BusinessException
 
 class Partido {
 
 	@Property var String localidad
 	@Property var LinkedList<Jugador> jugadores
-	@Property var List<MailObserver> mailObservers
 	@Property var Administrador administrador
 	@Property var boolean previamenteCompleto
 	
@@ -20,8 +18,7 @@ class Partido {
 					
 	new(String localidad) {
 		this.localidad = localidad
-		jugadores = new LinkedList<Jugador>
-		mailObservers = new ArrayList<MailObserver>	
+		jugadores = new LinkedList<Jugador>	
 		administrador = Administrador::getInstance()
 		this.previamenteCompleto = false
 	}
@@ -29,12 +26,6 @@ class Partido {
 					/********************/
 					/*METODOS AUXILIARES*/
 					/********************/
-
-	def notificar(Jugador jugador){
-		if (!(this.mailObservers.isEmpty())){
-			mailObservers.forEach [ observador  | observador.enviarNotificacion(this, jugador) ]
-		}
-	}
 
 	def int cantJugadores() {
 		jugadores.size
@@ -52,13 +43,7 @@ class Partido {
 		this.jugadores.contains(jugador)
 	}
 	
-	def agregarObserver(MailObserver observer){
-		this.mailObservers.add(observer)
-	}
-	
-	def quitarObserver(MailObserver observer){
-		this.mailObservers.remove(observer)
-	}
+
 	
 	
 					/*******************************/
@@ -67,10 +52,10 @@ class Partido {
 					
 	def bajaConReemplazo (Jugador jugador, Jugador reemplazo){
 		if (!this.estaInscripto(jugador)){
-			throw new BusinessException("El jugador no está inscripto en este partido, no se puede dar de baja")
+			throw new BusinessException("El jugador no estï¿½ inscripto en este partido, no se puede dar de baja")
 		}
 		if (this.estaInscripto(reemplazo)){
-			throw new BusinessException("El reemplazo ya está inscripto en el partido")
+			throw new BusinessException("El reemplazo ya estï¿½ inscripto en el partido")
 		}		
 		this.eliminarJugador(jugador)
 		/*this.notificar(jugador) no deberia notificar porque elimino un jugador pero inmediatamente inscribo otro*/
@@ -79,13 +64,12 @@ class Partido {
 	
 	def bajaSinReemplazo (Jugador jugador){
 		if (!this.estaInscripto(jugador)){
-			throw new BusinessException("El jugador no está inscripto en este partido, no se puede dar de baja")
+			throw new BusinessException("El jugador no estï¿½ inscripto en este partido, no se puede dar de baja")
 		}
 		if (this.cantJugadores==10){
 			this.previamenteCompleto = true
 		}
 		this.jugadores.remove(jugador)
-		this.notificar(jugador)
 		jugador.nuevaInfraccion()
 	}
 
@@ -95,18 +79,17 @@ class Partido {
 					
 	def inscribir(Jugador jugador) {
 		if (this.estaInscripto(jugador)) {
-			throw new BusinessException("El jugador ya se inscribió")
+			throw new BusinessException("El jugador ya se inscribiï¿½")
 		}
 		if(!jugador.tipoInscripcion.cumpleCondicion(jugador,this)){
-			throw new BusinessException("El jugador no cumple con la condición, no se puede inscribir")
+			throw new BusinessException("El jugador no cumple con la condiciï¿½n, no se puede inscribir")
 		}
 		if (this.cantJugadores < 10){
 			this.agregarJugador(jugador)
-			this.notificar(jugador)
 			return
 		}
 		if (!this.jugadores.exists[ inscripto | jugador.tieneMasPrioridadQue(inscripto) ]) {
-			throw new BusinessException("No hay más cupo")
+			throw new BusinessException("No hay mï¿½s cupo")
 		}
 		
 		val quien = this.jugadores.filter [ unJugador | unJugador.prioridad > jugador.prioridad ].head
