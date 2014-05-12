@@ -69,6 +69,7 @@ class Partido {
 		if (!this.estaInscripto(jugador)){
 			throw new BusinessException("El jugador no está inscripto en este partido, no se puede dar de baja")
 		}
+		/*Ojo que no es necesario que este inscripto en el partido sino que el jugador lo puede "recomendar" */
 		if (this.estaInscripto(reemplazo)){
 			throw new BusinessException("El reemplazo ya está inscripto en el partido")
 		}		

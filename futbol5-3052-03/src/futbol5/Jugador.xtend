@@ -37,7 +37,9 @@ class Jugador {
 	def int prioridad() {
 		tipoInscripcion.prioridad()
 	}
-	
+	/*def propongoAJugador(){
+		administrador.jugadorProponeA(unJugador)
+	}*/
 	/*ARREGLAR "nos interesa poder discriminar infracciones de diferentes momentos y por distintos motivos"*/
 	def nuevaInfraccion() {
 		this.infracciones.add(new Infraccion)
