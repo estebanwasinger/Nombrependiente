@@ -1,31 +1,25 @@
 package observers
 
-import auxiliares.MessageSender
 import futbol5.Jugador
 import futbol5.Partido
+import auxiliares.MessageSender
 
-class InscripcionObserver extends NotificacionObserver{
-	 MessageSender messageSender
+class InscripcionObserver extends PartidoObserver{
 	
 	new(MessageSender unMessageSender) {
-		messageSender = unMessageSender
+		super(unMessageSender)
 	}
 	
-	def Notificacion armarNotificacion(Jugador emisor, Jugador receptor){
+	def  avisarle(Jugador emisor, Jugador receptor){
 		var notificacion = new Notificacion
 		notificacion.from = emisor.email
 		notificacion.to = receptor.email
 		notificacion.subject=	"Inscripción de un amigo"
 		notificacion.message="Me inscribi al partido"
-		return notificacion
+		super.enviarNotificacion(notificacion)
 	}
 	
-	override enviarNotificacion(Partido partido, Jugador jugador) {
-        if (partido.estaInscripto(jugador)){
-        	jugador.amigos.forEach[ amigo | messageSender.send(this.armarNotificacion(jugador, amigo)) ]
+	override hacerLoSuyo(Partido partido, Jugador jugador) {
+        	jugador.amigos.forEach[ amigo | (this.avisarle(jugador, amigo)) ]
 		}
 	}
-	
-
-	
-}

@@ -8,14 +8,14 @@ import observers.Notificacion;
 import observers.PartidoObserver;
 
 @SuppressWarnings("all")
-public class EquipoCompletoObserver extends PartidoObserver {
-  public EquipoCompletoObserver(final MessageSender unMessageSender) {
+public class EquipoIncompletoObserver extends PartidoObserver {
+  public EquipoIncompletoObserver(final MessageSender unMessageSender) {
     super(unMessageSender);
   }
   
   public void hacerLoSuyo(final Partido partido, final Jugador jugador) {
     int _cantJugadores = partido.cantJugadores();
-    boolean _equals = (_cantJugadores == 10);
+    boolean _equals = (_cantJugadores == 9);
     if (_equals) {
       Notificacion notificacion = new Notificacion();
       String _email = jugador.getEmail();
@@ -23,8 +23,8 @@ public class EquipoCompletoObserver extends PartidoObserver {
       Administrador _administrador = jugador.getAdministrador();
       String _email_1 = _administrador.getEmail();
       notificacion.setTo(_email_1);
-      notificacion.setSubject("Partido confirmado");
-      notificacion.setMessage("El equipo tiene 10 jugadores a la fecha");
+      notificacion.setSubject("Partido incompleto");
+      notificacion.setMessage("Se dio de baja un jugador del partido y no dejo un reemplazo. El equipo esta incompleto (9 jugadores)");
       super.enviarNotificacion(notificacion);
     }
   }

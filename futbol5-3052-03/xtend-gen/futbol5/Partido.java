@@ -1,14 +1,14 @@
 package futbol5;
 
+import com.google.common.base.Objects;
 import excepciones.BusinessException;
 import futbol5.Administrador;
 import futbol5.Jugador;
 import inscripciones.TipoInscripcion;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
-import observers.NotificacionObserver;
+import observers.PartidoObserver;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
@@ -35,14 +35,24 @@ public class Partido {
     this._jugadores = jugadores;
   }
   
-  private List<NotificacionObserver> _notificacionObservers;
+  private List<PartidoObserver> _altasObservers;
   
-  public List<NotificacionObserver> getNotificacionObservers() {
-    return this._notificacionObservers;
+  public List<PartidoObserver> getAltasObservers() {
+    return this._altasObservers;
   }
   
-  public void setNotificacionObservers(final List<NotificacionObserver> notificacionObservers) {
-    this._notificacionObservers = notificacionObservers;
+  public void setAltasObservers(final List<PartidoObserver> altasObservers) {
+    this._altasObservers = altasObservers;
+  }
+  
+  private List<PartidoObserver> _bajasObservers;
+  
+  public List<PartidoObserver> getBajasObservers() {
+    return this._bajasObservers;
+  }
+  
+  public void setBajasObservers(final List<PartidoObserver> bajasObservers) {
+    this._bajasObservers = bajasObservers;
   }
   
   private Administrador _administrador;
@@ -69,25 +79,42 @@ public class Partido {
     this.setLocalidad(localidad);
     LinkedList<Jugador> _linkedList = new LinkedList<Jugador>();
     this.setJugadores(_linkedList);
-    ArrayList<NotificacionObserver> _arrayList = new ArrayList<NotificacionObserver>();
-    this.setNotificacionObservers(_arrayList);
+    LinkedList<PartidoObserver> _linkedList_1 = new LinkedList<PartidoObserver>();
+    this.setAltasObservers(_linkedList_1);
+    LinkedList<PartidoObserver> _linkedList_2 = new LinkedList<PartidoObserver>();
+    this.setBajasObservers(_linkedList_2);
     Administrador _instance = Administrador.getInstance();
     this.setAdministrador(_instance);
     this.setPreviamenteCompleto(false);
   }
   
-  public void notificar(final Jugador jugador) {
-    List<NotificacionObserver> _notificacionObservers = this.getNotificacionObservers();
-    boolean _isEmpty = _notificacionObservers.isEmpty();
+  public void notificarInscripcion(final Jugador jugador) {
+    List<PartidoObserver> _altasObservers = this.getAltasObservers();
+    boolean _isEmpty = _altasObservers.isEmpty();
     boolean _not = (!_isEmpty);
     if (_not) {
-      List<NotificacionObserver> _notificacionObservers_1 = this.getNotificacionObservers();
-      final Consumer<NotificacionObserver> _function = new Consumer<NotificacionObserver>() {
-        public void accept(final NotificacionObserver observador) {
-          observador.enviarNotificacion(Partido.this, jugador);
+      List<PartidoObserver> _altasObservers_1 = this.getAltasObservers();
+      final Consumer<PartidoObserver> _function = new Consumer<PartidoObserver>() {
+        public void accept(final PartidoObserver observador) {
+          observador.hacerLoSuyo(Partido.this, jugador);
         }
       };
-      _notificacionObservers_1.forEach(_function);
+      _altasObservers_1.forEach(_function);
+    }
+  }
+  
+  public void notificarBaja(final Jugador jugador) {
+    List<PartidoObserver> _bajasObservers = this.getBajasObservers();
+    boolean _isEmpty = _bajasObservers.isEmpty();
+    boolean _not = (!_isEmpty);
+    if (_not) {
+      List<PartidoObserver> _bajasObservers_1 = this.getBajasObservers();
+      final Consumer<PartidoObserver> _function = new Consumer<PartidoObserver>() {
+        public void accept(final PartidoObserver observador) {
+          observador.hacerLoSuyo(Partido.this, jugador);
+        }
+      };
+      _bajasObservers_1.forEach(_function);
     }
   }
   
@@ -99,11 +126,13 @@ public class Partido {
   public void agregarJugador(final Jugador jugador) {
     LinkedList<Jugador> _jugadores = this.getJugadores();
     _jugadores.add(jugador);
+    this.notificarInscripcion(jugador);
   }
   
   public void eliminarJugador(final Jugador jugador) {
     LinkedList<Jugador> _jugadores = this.getJugadores();
     _jugadores.remove(jugador);
+    this.notificarBaja(jugador);
   }
   
   public boolean estaInscripto(final Jugador jugador) {
@@ -111,54 +140,51 @@ public class Partido {
     return _jugadores.contains(jugador);
   }
   
-  public boolean agregarObserver(final NotificacionObserver observer) {
-    List<NotificacionObserver> _notificacionObservers = this.getNotificacionObservers();
-    return _notificacionObservers.add(observer);
+  public boolean agregarObserverAlta(final PartidoObserver observer) {
+    List<PartidoObserver> _altasObservers = this.getAltasObservers();
+    return _altasObservers.add(observer);
   }
   
-  public boolean quitarObserver(final NotificacionObserver observer) {
-    List<NotificacionObserver> _notificacionObservers = this.getNotificacionObservers();
-    return _notificacionObservers.remove(observer);
+  public boolean agregarObserverBaja(final PartidoObserver observer) {
+    List<PartidoObserver> _bajasObservers = this.getBajasObservers();
+    return _bajasObservers.add(observer);
   }
   
-  public void bajaConReemplazo(final Jugador jugador, final Jugador reemplazo) {
+  public boolean quitarObserverAlta(final PartidoObserver observer) {
+    List<PartidoObserver> _altasObservers = this.getAltasObservers();
+    return _altasObservers.remove(observer);
+  }
+  
+  public boolean quitarObserverBaja(final PartidoObserver observer) {
+    List<PartidoObserver> _bajasObservers = this.getBajasObservers();
+    return _bajasObservers.remove(observer);
+  }
+  
+  public void agregarReemplazo(final Jugador jugador, final Jugador reemplazo) {
+    jugador.setReemplazo(reemplazo);
+  }
+  
+  public void baja(final Jugador jugador) {
     try {
       boolean _estaInscripto = this.estaInscripto(jugador);
       boolean _not = (!_estaInscripto);
       if (_not) {
         throw new BusinessException("El jugador no está inscripto en este partido, no se puede dar de baja");
       }
-      boolean _estaInscripto_1 = this.estaInscripto(reemplazo);
-      if (_estaInscripto_1) {
-        throw new BusinessException("El reemplazo ya está inscripto en el partido");
-      }
-      this.eliminarJugador(jugador);
-      this.inscribir(reemplazo);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
-  public boolean bajaSinReemplazo(final Jugador jugador) {
-    try {
-      boolean _xblockexpression = false;
-      {
-        boolean _estaInscripto = this.estaInscripto(jugador);
-        boolean _not = (!_estaInscripto);
-        if (_not) {
-          throw new BusinessException("El jugador no está inscripto en este partido, no se puede dar de baja");
+      Jugador _reemplazo = jugador.getReemplazo();
+      boolean _notEquals = (!Objects.equal(_reemplazo, null));
+      if (_notEquals) {
+        Jugador _reemplazo_1 = jugador.getReemplazo();
+        boolean _estaInscripto_1 = this.estaInscripto(_reemplazo_1);
+        if (_estaInscripto_1) {
+          throw new BusinessException("El reemplazo ya está inscripto en el partido");
         }
-        int _cantJugadores = this.cantJugadores();
-        boolean _equals = (_cantJugadores == 10);
-        if (_equals) {
-          this.setPreviamenteCompleto(true);
-        }
-        LinkedList<Jugador> _jugadores = this.getJugadores();
-        _jugadores.remove(jugador);
-        this.notificar(jugador);
-        _xblockexpression = jugador.nuevaInfraccion();
+        this.eliminarJugador(jugador);
+        Jugador _reemplazo_2 = jugador.getReemplazo();
+        this.inscribir(_reemplazo_2);
+      } else {
+        this.eliminarJugador(jugador);
       }
-      return _xblockexpression;
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -180,7 +206,6 @@ public class Partido {
       boolean _lessThan = (_cantJugadores < 10);
       if (_lessThan) {
         this.agregarJugador(jugador);
-        this.notificar(jugador);
         return;
       }
       LinkedList<Jugador> _jugadores = this.getJugadores();
@@ -204,8 +229,7 @@ public class Partido {
       };
       Iterable<Jugador> _filter = IterableExtensions.<Jugador>filter(_jugadores_1, _function_1);
       final Jugador quien = IterableExtensions.<Jugador>head(_filter);
-      LinkedList<Jugador> _jugadores_2 = this.getJugadores();
-      _jugadores_2.remove(quien);
+      this.eliminarJugador(quien);
       this.agregarJugador(jugador);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);

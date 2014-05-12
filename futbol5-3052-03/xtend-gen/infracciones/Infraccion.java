@@ -1,14 +1,16 @@
 package infracciones;
 
+import java.util.Date;
+
 @SuppressWarnings("all")
 public class Infraccion {
-  private int _fecha;
+  private Date _fecha;
   
-  public int getFecha() {
+  public Date getFecha() {
     return this._fecha;
   }
   
-  public void setFecha(final int fecha) {
+  public void setFecha(final Date fecha) {
     this._fecha = fecha;
   }
   
@@ -20,5 +22,10 @@ public class Infraccion {
   
   public void setMotivo(final String motivo) {
     this._motivo = motivo;
+  }
+  
+  public Infraccion() {
+    Date _date = new Date();
+    this.setFecha(_date);
   }
 }

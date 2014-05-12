@@ -34,6 +34,8 @@ class PartidoTest {
 		jugador.edad = 18
 		jugador1 =new Jugador
 		jugador1.edad = 18
+		jugador1.reemplazo = jugador
+		jugador.reemplazo = jugador1
 		jugadorSolidario = new Jugador
 		jugadorSolidario.edad = 19
 		jugadorSolidario2 = new Jugador
@@ -158,31 +160,23 @@ class PartidoTest {
 	
 	@Test(expected=typeof(BusinessException))
 	def void testBajaJugadorQueNoEstaInscripto(){
-		partido.bajaSinReemplazo(jugador)		
+		partido.baja(jugador)		
 	}
 	
 	@Test (expected=typeof(BusinessException))
 	def void testBajaJugadorConReemplazoYaInscripto(){
 		partido.inscribir(jugador)
 		partido.inscribir(jugador1)
-		partido.bajaConReemplazo(jugador1, jugador)
+		partido.baja(jugador1)
 	}
 	
 	@Test
 	def void testBajaJugadorConReemplazo(){
 		partido.inscribir(jugador)
-		partido.bajaConReemplazo(jugador, jugador1)
+		partido.baja(jugador)
 		Assert.assertFalse(partido.estaInscripto(jugador))
 		Assert.assertTrue(partido.estaInscripto(jugador1))
 		Assert.assertEquals(1, partido.cantJugadores)
 	}
-	
-		@Test
-	def void testBajaJugadorSinReemplazo(){
-		partido.inscribir(jugador)
-		partido.bajaSinReemplazo(jugador)	
-		Assert.assertFalse(partido.estaInscripto(jugador))
-		Assert.assertEquals(1, jugador.infracciones.size)
-	}
-	
+		
 }

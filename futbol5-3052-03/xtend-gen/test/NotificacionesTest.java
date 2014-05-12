@@ -3,8 +3,13 @@ package test;
 import auxiliares.MessageSender;
 import futbol5.Jugador;
 import futbol5.Partido;
+import infracciones.Infraccion;
 import inscripciones.Estandar;
+import java.util.List;
+import junit.framework.Assert;
+import observers.BajaSinReemplazoObserver;
 import observers.EquipoCompletoObserver;
+import observers.EquipoIncompletoObserver;
 import observers.InscripcionObserver;
 import observers.Notificacion;
 import org.junit.Before;
@@ -61,7 +66,7 @@ public class NotificacionesTest {
   public void testJugadorSeInscribeYSeNotificaASusAmigos() {
     MessageSender mockMessageSender = Mockito.<MessageSender>mock(MessageSender.class);
     InscripcionObserver _inscripcionObserver = new InscripcionObserver(mockMessageSender);
-    this.partido.agregarObserver(_inscripcionObserver);
+    this.partido.agregarObserverAlta(_inscripcionObserver);
     VerificationMode _times = Mockito.times(0);
     MessageSender _verify = Mockito.<MessageSender>verify(mockMessageSender, _times);
     Notificacion _any = Matchers.<Notificacion>any(Notificacion.class);
@@ -77,7 +82,7 @@ public class NotificacionesTest {
   public void testSeInscribeDecimoJugadorYSeNotificaAAdministrador() {
     MessageSender mockMessageSender = Mockito.<MessageSender>mock(MessageSender.class);
     EquipoCompletoObserver _equipoCompletoObserver = new EquipoCompletoObserver(mockMessageSender);
-    this.partido.agregarObserver(_equipoCompletoObserver);
+    this.partido.agregarObserverAlta(_equipoCompletoObserver);
     VerificationMode _times = Mockito.times(0);
     MessageSender _verify = Mockito.<MessageSender>verify(mockMessageSender, _times);
     Notificacion _any = Matchers.<Notificacion>any(Notificacion.class);
@@ -94,7 +99,7 @@ public class NotificacionesTest {
   public void testSeInscribeUnJugadorYNoSeNotificaAAdministrador() {
     MessageSender mockMessageSender = Mockito.<MessageSender>mock(MessageSender.class);
     EquipoCompletoObserver _equipoCompletoObserver = new EquipoCompletoObserver(mockMessageSender);
-    this.partido.agregarObserver(_equipoCompletoObserver);
+    this.partido.agregarObserverAlta(_equipoCompletoObserver);
     this.partido.inscribir(this.jugador);
     VerificationMode _times = Mockito.times(0);
     MessageSender _verify = Mockito.<MessageSender>verify(mockMessageSender, _times);
@@ -104,23 +109,42 @@ public class NotificacionesTest {
   
   @Test
   public void testPartidoCon10JugadoresYSeBaja1() {
-    MessageSender mockMessageSender = Mockito.<MessageSender>mock(MessageSender.class);
-    EquipoCompletoObserver _equipoCompletoObserver = new EquipoCompletoObserver(mockMessageSender);
-    this.partido.agregarObserver(_equipoCompletoObserver);
+    MessageSender mockMessageSenderAlta = Mockito.<MessageSender>mock(MessageSender.class);
+    MessageSender mockMessageSenderBaja = Mockito.<MessageSender>mock(MessageSender.class);
+    MessageSender mockMessageSenderInfraccion = Mockito.<MessageSender>mock(MessageSender.class);
+    EquipoIncompletoObserver _equipoIncompletoObserver = new EquipoIncompletoObserver(mockMessageSenderBaja);
+    this.partido.agregarObserverBaja(_equipoIncompletoObserver);
+    EquipoIncompletoObserver _equipoIncompletoObserver_1 = new EquipoIncompletoObserver(mockMessageSenderAlta);
+    this.partido.agregarObserverAlta(_equipoIncompletoObserver_1);
+    BajaSinReemplazoObserver _bajaSinReemplazoObserver = new BajaSinReemplazoObserver(mockMessageSenderInfraccion);
+    this.partido.agregarObserverBaja(_bajaSinReemplazoObserver);
     VerificationMode _times = Mockito.times(0);
-    MessageSender _verify = Mockito.<MessageSender>verify(mockMessageSender, _times);
+    MessageSender _verify = Mockito.<MessageSender>verify(mockMessageSenderAlta, _times);
     Notificacion _any = Matchers.<Notificacion>any(Notificacion.class);
     _verify.send(_any);
-    this.armarPartido(9);
-    this.partido.inscribir(this.jugador);
-    VerificationMode _times_1 = Mockito.times(1);
-    MessageSender _verify_1 = Mockito.<MessageSender>verify(mockMessageSender, _times_1);
+    VerificationMode _times_1 = Mockito.times(0);
+    MessageSender _verify_1 = Mockito.<MessageSender>verify(mockMessageSenderBaja, _times_1);
     Notificacion _any_1 = Matchers.<Notificacion>any(Notificacion.class);
     _verify_1.send(_any_1);
-    this.partido.bajaSinReemplazo(this.jugador);
-    VerificationMode _times_2 = Mockito.times(2);
-    MessageSender _verify_2 = Mockito.<MessageSender>verify(mockMessageSender, _times_2);
+    this.armarPartido(9);
+    this.partido.inscribir(this.jugador);
+    VerificationMode _times_2 = Mockito.times(1);
+    MessageSender _verify_2 = Mockito.<MessageSender>verify(mockMessageSenderAlta, _times_2);
     Notificacion _any_2 = Matchers.<Notificacion>any(Notificacion.class);
     _verify_2.send(_any_2);
+    VerificationMode _times_3 = Mockito.times(0);
+    MessageSender _verify_3 = Mockito.<MessageSender>verify(mockMessageSenderBaja, _times_3);
+    Notificacion _any_3 = Matchers.<Notificacion>any(Notificacion.class);
+    _verify_3.send(_any_3);
+    this.partido.baja(this.jugador);
+    VerificationMode _times_4 = Mockito.times(1);
+    MessageSender _verify_4 = Mockito.<MessageSender>verify(mockMessageSenderBaja, _times_4);
+    Notificacion _any_4 = Matchers.<Notificacion>any(Notificacion.class);
+    _verify_4.send(_any_4);
+    boolean _estaInscripto = this.partido.estaInscripto(this.jugador);
+    Assert.assertFalse(_estaInscripto);
+    List<Infraccion> _infracciones = this.jugador.getInfracciones();
+    int _size = _infracciones.size();
+    Assert.assertEquals(1, _size);
   }
 }

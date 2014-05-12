@@ -11,6 +11,9 @@ import observers.EquipoCompletoObserver
 import auxiliares.MessageSender
 import observers.Notificacion
 import observers.InscripcionObserver
+import junit.framework.Assert
+import observers.EquipoIncompletoObserver
+import observers.BajaSinReemplazoObserver
 
 class NotificacionesTest {
 		Jugador jugador 
@@ -43,7 +46,7 @@ class NotificacionesTest {
 	@Test
 	def testJugadorSeInscribeYSeNotificaASusAmigos(){
 		var mockMessageSender = mock(typeof(MessageSender))
-		partido.agregarObserver(new InscripcionObserver(mockMessageSender))
+		partido.agregarObserverAlta(new InscripcionObserver(mockMessageSender))
 		
 		verify(mockMessageSender, times(0)).send(any(typeof(Notificacion)))
 		partido.inscribir(jugador)
@@ -53,7 +56,7 @@ class NotificacionesTest {
 		@Test
 	def testSeInscribeDecimoJugadorYSeNotificaAAdministrador(){
 		var mockMessageSender = mock(typeof(MessageSender))
-		partido.agregarObserver(new EquipoCompletoObserver(mockMessageSender))
+		partido.agregarObserverAlta(new EquipoCompletoObserver(mockMessageSender))
 		
 		verify(mockMessageSender, times(0)).send(any(typeof(Notificacion)))
 		armarPartido(9)
@@ -64,7 +67,7 @@ class NotificacionesTest {
 	@Test
 	def testSeInscribeUnJugadorYNoSeNotificaAAdministrador(){
 		var mockMessageSender = mock(typeof(MessageSender))
-		partido.agregarObserver(new EquipoCompletoObserver(mockMessageSender))
+		partido.agregarObserverAlta(new EquipoCompletoObserver(mockMessageSender))
 		
 		partido.inscribir(jugador)
 		verify(mockMessageSender, times(0)).send(any(typeof(Notificacion))) // no se debe enviar notificacion
@@ -72,14 +75,23 @@ class NotificacionesTest {
 
 	@Test
 	def void testPartidoCon10JugadoresYSeBaja1(){
-		var mockMessageSender = mock(typeof(MessageSender))
-		partido.agregarObserver(new EquipoCompletoObserver(mockMessageSender))
+		var mockMessageSenderAlta = mock(typeof(MessageSender))
+		var mockMessageSenderBaja = mock(typeof(MessageSender))
+		var mockMessageSenderInfraccion = mock(typeof(MessageSender)) //se crea pero no se necesita. arreglar!
 		
-		verify(mockMessageSender, times(0)).send(any(typeof(Notificacion)))
+		partido.agregarObserverBaja(new EquipoIncompletoObserver(mockMessageSenderBaja))
+		partido.agregarObserverAlta(new EquipoIncompletoObserver(mockMessageSenderAlta))
+		partido.agregarObserverBaja(new BajaSinReemplazoObserver(mockMessageSenderInfraccion))
+		
+		verify(mockMessageSenderAlta, times(0)).send(any(typeof(Notificacion))) //sin notificar
+		verify(mockMessageSenderBaja, times(0)).send(any(typeof(Notificacion))) //sin notificar
 		armarPartido(9)
 		partido.inscribir(jugador)
-		verify(mockMessageSender, times(1)).send(any(typeof(Notificacion)))
-		partido.bajaSinReemplazo(jugador)
-		verify(mockMessageSender, times(2)).send(any(typeof(Notificacion))) 
+		verify(mockMessageSenderAlta, times(1)).send(any(typeof(Notificacion))) //notificar partido completo
+		verify(mockMessageSenderBaja, times(0)).send(any(typeof(Notificacion))) //sin notificar
+		partido.baja(jugador)
+		verify(mockMessageSenderBaja, times(1)).send(any(typeof(Notificacion))) //notificar partido incompleto
+		Assert.assertFalse(partido.estaInscripto(jugador))
+		Assert.assertEquals(1, jugador.infracciones.size)
 		}
-	}
+}

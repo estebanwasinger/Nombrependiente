@@ -4,3 +4,8 @@
 /.Notificacion.java._trace
 /.StubMessageSender.java._trace
 /.NotificacionObserver.java._trace
+/.EquipoIncompletoObserver.java._trace
+/.BajaSinReemplazoObserver.java._trace
+/.PartidoObserver.java._trace
+/.AltasObserver.java._trace
+/.BajasObserver.java._trace

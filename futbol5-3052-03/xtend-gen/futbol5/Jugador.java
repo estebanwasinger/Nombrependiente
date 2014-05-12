@@ -69,6 +69,16 @@ public class Jugador {
     this._administrador = administrador;
   }
   
+  private Jugador _reemplazo;
+  
+  public Jugador getReemplazo() {
+    return this._reemplazo;
+  }
+  
+  public void setReemplazo(final Jugador reemplazo) {
+    this._reemplazo = reemplazo;
+  }
+  
   public Jugador() {
     Estandar _estandar = new Estandar();
     this.setTipoInscripcion(_estandar);
@@ -99,14 +109,5 @@ public class Jugador {
   public int prioridad() {
     TipoInscripcion _tipoInscripcion = this.getTipoInscripcion();
     return _tipoInscripcion.prioridad();
-  }
-  
-  /**
-   * ARREGLAR "nos interesa poder discriminar infracciones de diferentes momentos y por distintos motivos"
-   */
-  public boolean nuevaInfraccion() {
-    List<Infraccion> _infracciones = this.getInfracciones();
-    Infraccion _infraccion = new Infraccion();
-    return _infracciones.add(_infraccion);
   }
 }
