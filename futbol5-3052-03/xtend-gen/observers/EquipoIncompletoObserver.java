@@ -4,7 +4,6 @@ import auxiliares.MessageSender;
 import futbol5.Administrador;
 import futbol5.Jugador;
 import futbol5.Partido;
-import observers.Notificacion;
 import observers.PartidoObserver;
 
 @SuppressWarnings("all")
@@ -17,15 +16,11 @@ public class EquipoIncompletoObserver extends PartidoObserver {
     int _cantJugadores = partido.cantJugadores();
     boolean _equals = (_cantJugadores == 9);
     if (_equals) {
-      Notificacion notificacion = new Notificacion();
-      String _email = jugador.getEmail();
-      notificacion.setFrom(_email);
       Administrador _administrador = jugador.getAdministrador();
-      String _email_1 = _administrador.getEmail();
-      notificacion.setTo(_email_1);
-      notificacion.setSubject("Partido incompleto");
-      notificacion.setMessage("Se dio de baja un jugador del partido y no dejo un reemplazo. El equipo esta incompleto (9 jugadores)");
-      super.enviarNotificacion(notificacion);
+      final String adminMail = _administrador.getEmail();
+      final String asunto = "Partido incompleto";
+      final String mensaje = "Se dio de baja un jugador del partido y no dejo un reemplazo. El equipo esta incompleto (9 jugadores)";
+      super.enviarNotificacion(adminMail, asunto, mensaje);
     }
   }
 }

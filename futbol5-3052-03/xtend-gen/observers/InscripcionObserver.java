@@ -5,7 +5,6 @@ import futbol5.Jugador;
 import futbol5.Partido;
 import java.util.List;
 import java.util.function.Consumer;
-import observers.Notificacion;
 import observers.PartidoObserver;
 
 @SuppressWarnings("all")
@@ -15,14 +14,11 @@ public class InscripcionObserver extends PartidoObserver {
   }
   
   public void avisarle(final Jugador emisor, final Jugador receptor) {
-    Notificacion notificacion = new Notificacion();
+    final String asunto = "Inscripción de un amigo";
     String _email = emisor.getEmail();
-    notificacion.setFrom(_email);
+    final String mensaje = (_email + "se inscribió al partido");
     String _email_1 = receptor.getEmail();
-    notificacion.setTo(_email_1);
-    notificacion.setSubject("Inscripción de un amigo");
-    notificacion.setMessage("Me inscribi al partido");
-    super.enviarNotificacion(notificacion);
+    super.enviarNotificacion(_email_1, asunto, mensaje);
   }
   
   public void hacerLoSuyo(final Partido partido, final Jugador jugador) {

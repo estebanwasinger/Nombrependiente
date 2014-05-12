@@ -11,12 +11,9 @@ class InscripcionObserver extends PartidoObserver{
 	}
 	
 	def  avisarle(Jugador emisor, Jugador receptor){
-		var notificacion = new Notificacion
-		notificacion.from = emisor.email
-		notificacion.to = receptor.email
-		notificacion.subject=	"Inscripción de un amigo"
-		notificacion.message="Me inscribi al partido"
-		super.enviarNotificacion(notificacion)
+		val asunto=	"Inscripción de un amigo"
+		val mensaje= emisor.email + "se inscribió al partido"
+		super.enviarNotificacion(receptor.email, asunto, mensaje)
 	}
 	
 	override hacerLoSuyo(Partido partido, Jugador jugador) {

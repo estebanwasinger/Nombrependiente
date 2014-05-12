@@ -13,7 +13,12 @@ public class PartidoObserver {
     this.messageSender = unMessageSender;
   }
   
-  public void enviarNotificacion(final Notificacion notificacion) {
+  public void enviarNotificacion(final String para, final String asunto, final String mensaje) {
+    Notificacion notificacion = new Notificacion();
+    notificacion.setFrom("info@organizacionpartido5.com.ar");
+    notificacion.setTo(para);
+    notificacion.setSubject(asunto);
+    notificacion.setMessage(mensaje);
     this.messageSender.send(notificacion);
   }
   
