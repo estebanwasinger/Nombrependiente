@@ -69,6 +69,16 @@ public class Jugador {
     this._administrador = administrador;
   }
   
+  private int _diasDeInfraccion;
+  
+  public int getDiasDeInfraccion() {
+    return this._diasDeInfraccion;
+  }
+  
+  public void setDiasDeInfraccion(final int diasDeInfraccion) {
+    this._diasDeInfraccion = diasDeInfraccion;
+  }
+  
   public Jugador() {
     Estandar _estandar = new Estandar();
     this.setTipoInscripcion(_estandar);
@@ -78,6 +88,7 @@ public class Jugador {
     this.setInfracciones(_arrayList_1);
     Administrador _instance = Administrador.getInstance();
     this.setAdministrador(_instance);
+    this.setDiasDeInfraccion(0);
   }
   
   public boolean menorA(final int edad) {
@@ -99,9 +110,7 @@ public class Jugador {
   /**
    * ARREGLAR "nos interesa poder discriminar infracciones de diferentes momentos y por distintos motivos"
    */
-  public boolean nuevaInfraccion() {
-    List<Infraccion> _infracciones = this.getInfracciones();
-    Infraccion _infraccion = new Infraccion();
-    return _infracciones.add(_infraccion);
+  public void nuevaInfraccion(final int cantidadDeDias) {
+    this.setDiasDeInfraccion(cantidadDeDias);
   }
 }

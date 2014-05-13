@@ -14,12 +14,16 @@ class Jugador {
 	@Property List<Infraccion> infracciones
 	@Property List<Jugador> amigos
 	@Property Administrador administrador
+	@Property int diasDeInfraccion
+	
+
 	
 	new() {
 		tipoInscripcion = new Estandar
 		amigos = new ArrayList<Jugador>
 		infracciones = new ArrayList<Infraccion>
 		administrador = Administrador::getInstance()
+		diasDeInfraccion = 0
 	}
 	
 	def boolean menorA (int edad) {
@@ -35,8 +39,8 @@ class Jugador {
 	}
 	
 	/*ARREGLAR "nos interesa poder discriminar infracciones de diferentes momentos y por distintos motivos"*/
-	def nuevaInfraccion() {
-		this.infracciones.add(new Infraccion)
+	def nuevaInfraccion(int cantidadDeDias) {
+		this.diasDeInfraccion = cantidadDeDias
 	}
 
 }

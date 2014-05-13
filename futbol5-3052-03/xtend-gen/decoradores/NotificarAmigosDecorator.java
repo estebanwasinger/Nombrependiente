@@ -18,7 +18,7 @@ public class NotificarAmigosDecorator extends PartidoDecorator {
     this.notificarAmigos(_amigos);
   }
   
-  public Object notificarAmigos(final List<Jugador> jugadors) {
+  public Object notificarAmigos(final List<Jugador> jugadores) {
     return null;
   }
 }

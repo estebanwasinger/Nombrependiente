@@ -68,7 +68,7 @@ class Partido implements InterfazPartido {
 			this.previamenteCompleto = true
 		}
 		this.jugadores.remove(jugador)
-		jugador.nuevaInfraccion()
+		//jugador.nuevaInfraccion(cantidad)
 	}
 
 					/**************************************/

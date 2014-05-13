@@ -113,7 +113,6 @@ public class Partido implements InterfazPartido {
       }
       LinkedList<Jugador> _jugadores = this.getJugadores();
       _jugadores.remove(jugador);
-      jugador.nuevaInfraccion();
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

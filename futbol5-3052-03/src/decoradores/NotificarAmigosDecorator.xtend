@@ -16,7 +16,7 @@ class NotificarAmigosDecorator extends PartidoDecorator {
 		notificarAmigos(jugador.amigos)
 	}
 	
-	def notificarAmigos(List<Jugador> jugadors) {
+	def notificarAmigos(List<Jugador> jugadores) {
 	}
 	
 }
