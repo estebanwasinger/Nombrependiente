@@ -1,6 +1,7 @@
 package futbol5;
 
 import futbol5.Administrador;
+import helper.Notificacion;
 import infracciones.Infraccion;
 import inscripciones.Estandar;
 import inscripciones.TipoInscripcion;
@@ -17,6 +18,16 @@ public class Jugador {
   
   public void setTipoInscripcion(final TipoInscripcion tipoInscripcion) {
     this._tipoInscripcion = tipoInscripcion;
+  }
+  
+  private String _nombre;
+  
+  public String getNombre() {
+    return this._nombre;
+  }
+  
+  public void setNombre(final String nombre) {
+    this._nombre = nombre;
   }
   
   private int _edad;
@@ -59,6 +70,16 @@ public class Jugador {
     this._amigos = amigos;
   }
   
+  private List<Notificacion> _notificaciones;
+  
+  public List<Notificacion> getNotificaciones() {
+    return this._notificaciones;
+  }
+  
+  public void setNotificaciones(final List<Notificacion> notificaciones) {
+    this._notificaciones = notificaciones;
+  }
+  
   private Administrador _administrador;
   
   public Administrador getAdministrador() {
@@ -89,6 +110,11 @@ public class Jugador {
     Administrador _instance = Administrador.getInstance();
     this.setAdministrador(_instance);
     this.setDiasDeInfraccion(0);
+  }
+  
+  public Jugador(final TipoInscripcion inscripcion, final String pNombre) {
+    this.setTipoInscripcion(inscripcion);
+    this.setNombre(pNombre);
   }
   
   public boolean menorA(final int edad) {

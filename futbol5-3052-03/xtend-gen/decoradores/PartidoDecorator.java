@@ -2,6 +2,7 @@ package decoradores;
 
 import futbol5.InterfazPartido;
 import futbol5.Jugador;
+import helper.NotificationSender;
 
 @SuppressWarnings("all")
 public class PartidoDecorator implements InterfazPartido {
@@ -15,8 +16,22 @@ public class PartidoDecorator implements InterfazPartido {
     this._decorado = decorado;
   }
   
+  private NotificationSender _notificationSender;
+  
+  public NotificationSender getNotificationSender() {
+    return this._notificationSender;
+  }
+  
+  public void setNotificationSender(final NotificationSender notificationSender) {
+    this._notificationSender = notificationSender;
+  }
+  
   public PartidoDecorator(final InterfazPartido partido) {
     this.setDecorado(partido);
+  }
+  
+  public PartidoDecorator(final InterfazPartido partido, final NotificationSender nuevoNotificationSender) {
+    this.setNotificationSender(nuevoNotificationSender);
   }
   
   public int cantJugadores() {

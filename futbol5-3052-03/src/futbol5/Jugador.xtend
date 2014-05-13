@@ -5,19 +5,20 @@ import java.util.ArrayList
 import inscripciones.TipoInscripcion
 import inscripciones.Estandar
 import infracciones.Infraccion
+import helper.Notificacion
 
 class Jugador {
 
 	@Property TipoInscripcion tipoInscripcion
+	@Property String nombre
 	@Property int edad
 	@Property String email
 	@Property List<Infraccion> infracciones
 	@Property List<Jugador> amigos
+	@Property List<Notificacion> notificaciones
 	@Property Administrador administrador
 	@Property int diasDeInfraccion
-	
 
-	
 	new() {
 		tipoInscripcion = new Estandar
 		amigos = new ArrayList<Jugador>
@@ -25,8 +26,13 @@ class Jugador {
 		administrador = Administrador::getInstance()
 		diasDeInfraccion = 0
 	}
-	
-	def boolean menorA (int edad) {
+
+	new(TipoInscripcion inscripcion, String pNombre) {
+		tipoInscripcion = inscripcion
+		nombre = pNombre
+	}
+
+	def boolean menorA(int edad) {
 		this.edad < edad
 	}
 
@@ -37,7 +43,7 @@ class Jugador {
 	def int prioridad() {
 		tipoInscripcion.prioridad()
 	}
-	
+
 	/*ARREGLAR "nos interesa poder discriminar infracciones de diferentes momentos y por distintos motivos"*/
 	def nuevaInfraccion(int cantidadDeDias) {
 		this.diasDeInfraccion = cantidadDeDias
