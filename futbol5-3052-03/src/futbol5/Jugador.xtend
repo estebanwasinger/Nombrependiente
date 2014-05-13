@@ -46,7 +46,7 @@ class Jugador {
 
 	/*ARREGLAR "nos interesa poder discriminar infracciones de diferentes momentos y por distintos motivos"*/
 	def nuevaInfraccion(int cantidadDeDias) {
-		this.diasDeInfraccion = cantidadDeDias
+		this.diasDeInfraccion = cantidadDeDias 
 	}
 
 }

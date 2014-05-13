@@ -10,7 +10,7 @@ class YaNoSon10Decorator extends PartidoDecorator {
 		super(partido)
 	}
 
-	override inscribir(Jugador jugador) {
+	override bajaSinReemplazo(Jugador jugador) {
 		decorado.bajaSinReemplazo(jugador)
 		if (decorado.cantJugadores() == 9) {
 			notificarAdministrador(jugador.administrador)
