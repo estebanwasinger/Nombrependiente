@@ -19,7 +19,13 @@ class Jugador {
 	@Property Administrador administrador
 	@Property int diasDeInfraccion
 
-	new() {
+	def initialize() {
+		amigos = new ArrayList<Jugador>
+		infracciones = new ArrayList<Infraccion>
+		administrador = Administrador::getInstance()
+		diasDeInfraccion = 0
+	}
+	def initialize2() {
 		tipoInscripcion = new Estandar
 		amigos = new ArrayList<Jugador>
 		infracciones = new ArrayList<Infraccion>
@@ -28,8 +34,12 @@ class Jugador {
 	}
 
 	new(TipoInscripcion inscripcion, String pNombre) {
+		initialize
 		tipoInscripcion = inscripcion
 		nombre = pNombre
+	}
+	new(){
+		initialize2
 	}
 
 	def boolean menorA(int edad) {

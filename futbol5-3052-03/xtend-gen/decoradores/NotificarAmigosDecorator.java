@@ -25,7 +25,15 @@ public class NotificarAmigosDecorator extends PartidoDecorator {
     final Consumer<Jugador> _function = new Consumer<Jugador>() {
       public void accept(final Jugador jugadorAmigo) {
         NotificationSender _notificationSender = NotificarAmigosDecorator.this.getNotificationSender();
-        Notificacion _notificacion = new Notificacion("Amigo", "Jugador", "Asunto", "Contenido");
+        String _nombre = jugador.getNombre();
+        String _nombre_1 = jugadorAmigo.getNombre();
+        String _nombre_2 = jugadorAmigo.getNombre();
+        String _plus = ("Hola " + _nombre_2);
+        String _plus_1 = (_plus + ",les queremos notificar que su amigo ");
+        String _nombre_3 = jugador.getNombre();
+        String _plus_2 = (_plus_1 + _nombre_3);
+        String _plus_3 = (_plus_2 + " se ha inscripto a un partido");
+        Notificacion _notificacion = new Notificacion(_nombre, _nombre_1, "Un amigo tuyo se inscribio a un partido", _plus_3);
         _notificationSender.send(_notificacion);
       }
     };

@@ -106,11 +106,6 @@ public class Partido implements InterfazPartido {
       if (_not) {
         throw new BusinessException("El jugador no est� inscripto en este partido, no se puede dar de baja");
       }
-      int _cantJugadores = this.cantJugadores();
-      boolean _equals = (_cantJugadores == 10);
-      if (_equals) {
-        this.setPreviamenteCompleto(true);
-      }
       LinkedList<Jugador> _jugadores = this.getJugadores();
       _jugadores.remove(jugador);
     } catch (Throwable _e) {

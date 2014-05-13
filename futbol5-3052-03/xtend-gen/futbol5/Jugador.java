@@ -100,7 +100,17 @@ public class Jugador {
     this._diasDeInfraccion = diasDeInfraccion;
   }
   
-  public Jugador() {
+  public void initialize() {
+    ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
+    this.setAmigos(_arrayList);
+    ArrayList<Infraccion> _arrayList_1 = new ArrayList<Infraccion>();
+    this.setInfracciones(_arrayList_1);
+    Administrador _instance = Administrador.getInstance();
+    this.setAdministrador(_instance);
+    this.setDiasDeInfraccion(0);
+  }
+  
+  public void initialize2() {
     Estandar _estandar = new Estandar();
     this.setTipoInscripcion(_estandar);
     ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
@@ -113,8 +123,13 @@ public class Jugador {
   }
   
   public Jugador(final TipoInscripcion inscripcion, final String pNombre) {
+    this.initialize();
     this.setTipoInscripcion(inscripcion);
     this.setNombre(pNombre);
+  }
+  
+  public Jugador() {
+    this.initialize2();
   }
   
   public boolean menorA(final int edad) {

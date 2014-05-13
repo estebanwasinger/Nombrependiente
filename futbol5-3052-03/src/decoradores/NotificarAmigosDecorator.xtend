@@ -18,7 +18,7 @@ class NotificarAmigosDecorator extends PartidoDecorator {
 	}
 
 	def notificarAmigos(Jugador jugador, List<Jugador> jugadores) {
-		jugadores.forEach[jugadorAmigo |notificationSender.send(new Notificacion("Amigo","Jugador","Asunto","Contenido"))]
+		jugadores.forEach[jugadorAmigo |notificationSender.send(new Notificacion(jugador.nombre,jugadorAmigo.nombre,"Un amigo tuyo se inscribio a un partido","Hola " + jugadorAmigo.nombre + ",les queremos notificar que su amigo " + jugador.nombre + " se ha inscripto a un partido"))]
 	}
 	
 }

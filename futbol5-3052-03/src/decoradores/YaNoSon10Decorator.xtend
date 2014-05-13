@@ -3,11 +3,13 @@ package decoradores
 import futbol5.InterfazPartido
 import futbol5.Jugador
 import futbol5.Administrador
+import helper.NotificationSender
+import helper.Notificacion
 
 class YaNoSon10Decorator extends PartidoDecorator {
 
-	new(InterfazPartido partido) {
-		super(partido)
+	new(InterfazPartido partido, NotificationSender nuevoNotificationSender) {
+		super(partido, nuevoNotificationSender)
 	}
 
 	override bajaSinReemplazo(Jugador jugador) {
@@ -19,6 +21,7 @@ class YaNoSon10Decorator extends PartidoDecorator {
 	}
 
 	def notificarAdministrador(Administrador administrador) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		notificationSender.send(
+			new Notificacion("Partido", "Admin", "Partido incompleto", "Se bajo un jugador, el partido no esta completo"))
 	}
 }

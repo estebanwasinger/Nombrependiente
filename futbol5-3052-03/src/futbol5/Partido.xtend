@@ -64,9 +64,6 @@ class Partido implements InterfazPartido {
 		if (!this.estaInscripto(jugador)){
 			throw new BusinessException("El jugador no est� inscripto en este partido, no se puede dar de baja")
 		}
-		if (this.cantJugadores==10){
-			this.previamenteCompleto = true
-		}
 		this.jugadores.remove(jugador)
 	}
 

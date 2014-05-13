@@ -31,6 +31,7 @@ public class PartidoDecorator implements InterfazPartido {
   }
   
   public PartidoDecorator(final InterfazPartido partido, final NotificationSender nuevoNotificationSender) {
+    this.setDecorado(partido);
     this.setNotificationSender(nuevoNotificationSender);
   }
   

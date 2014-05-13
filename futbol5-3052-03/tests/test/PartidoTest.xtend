@@ -182,7 +182,6 @@ class PartidoTest {
 		partido.inscribir(jugador)
 		partido.bajaSinReemplazo(jugador)	
 		Assert.assertFalse(partido.estaInscripto(jugador))
-		Assert.assertEquals(1, jugador.infracciones.size)
 	}
 	
 }

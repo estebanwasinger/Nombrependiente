@@ -14,6 +14,7 @@ class PartidoDecorator implements InterfazPartido {
 	}
 	
 	new(InterfazPartido partido, NotificationSender nuevoNotificationSender) {
+		decorado = partido
 		notificationSender = nuevoNotificationSender
 	}
 	

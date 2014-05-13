@@ -5,11 +5,9 @@ import condiciones.CondicionPartidoEnLocalidad;
 import excepciones.BusinessException;
 import futbol5.Jugador;
 import futbol5.Partido;
-import infracciones.Infraccion;
 import inscripciones.Condicional;
 import inscripciones.Estandar;
 import inscripciones.Solidario;
-import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -243,8 +241,5 @@ public class PartidoTest {
     this.partido.bajaSinReemplazo(this.jugador);
     boolean _estaInscripto = this.partido.estaInscripto(this.jugador);
     Assert.assertFalse(_estaInscripto);
-    List<Infraccion> _infracciones = this.jugador.getInfracciones();
-    int _size = _infracciones.size();
-    Assert.assertEquals(1, _size);
   }
 }
