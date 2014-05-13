@@ -12,7 +12,6 @@ class Partido {
 	@Property var List<PartidoObserver> altasObservers
 	@Property var List<PartidoObserver>bajasObservers
 	@Property var Administrador administrador
-	@Property var boolean previamenteCompleto
 		
 					/****************/
 					/*CONSTRUCTORES*/
@@ -24,7 +23,6 @@ class Partido {
 		altasObservers = new LinkedList<PartidoObserver>	
 		bajasObservers = new LinkedList<PartidoObserver>	
 		administrador = Administrador::getInstance()
-		this.previamenteCompleto = false
 		
 	}
 	
@@ -50,12 +48,10 @@ class Partido {
 
 	def void agregarJugador(Jugador jugador) {
 		this.jugadores.add(jugador)
-		this.notificarInscripcion(jugador)
 	}
 	
 	def void eliminarJugador(Jugador jugador){
 		this.jugadores.remove(jugador)
-		notificarBaja(jugador)
 	}
 
 	def estaInscripto(Jugador jugador) {
@@ -77,31 +73,31 @@ class Partido {
 	def quitarObserverBaja(PartidoObserver observer){
 		this.bajasObservers.remove(observer)
 	}
-	
-	def agregarReemplazo(Jugador jugador, Jugador reemplazo){
-		jugador.reemplazo = reemplazo
-	}
-	
-	
+		
+
 					/*******************************/
 					/*CASO DE USO: BAJA DE UN JUGADOR*/
 					/*******************************/
 					
-	def baja(Jugador jugador){
+	def bajaConReemplazo (Jugador jugador, Jugador reemplazo){
+		if (!estaInscripto(jugador)){
+			throw new BusinessException("El jugador no está inscripto en este partido, no se puede dar de baja")
+		}
+		if (this.estaInscripto(reemplazo)){
+			throw new BusinessException("El reemplazo ya está inscripto en el partido")
+		}		
+		eliminarJugador(jugador) //no se notifica baja  porque tiene reemplazo y se va a agregar otro jugador
+		jugadores.add(reemplazo)
+		notificarInscripcion(reemplazo)
+	}
+
+ def bajaSinReemplazo (Jugador jugador){
 		if (!this.estaInscripto(jugador)){
 			throw new BusinessException("El jugador no está inscripto en este partido, no se puede dar de baja")
-		}		
-		if (jugador.reemplazo!=null){
-				if (this.estaInscripto(jugador.reemplazo)){
-					throw new BusinessException("El reemplazo ya está inscripto en el partido")
-				}	
-				this.eliminarJugador(jugador)
-				this.inscribir(jugador.reemplazo)
-			}else{
-				this.eliminarJugador(jugador)
-			}
+		}
+		eliminarJugador(jugador)
+		notificarBaja(jugador)
 	}
-	
 	
 					/**************************************/
 					/*CASO DE USO: INSCRIPCION DE UN JUGADOR */
@@ -116,6 +112,7 @@ class Partido {
 		}
 		if (this.cantJugadores < 10){
 			this.agregarJugador(jugador)
+			notificarInscripcion(jugador)		
 			return
 		}
 		if (!this.jugadores.exists[ inscripto | jugador.tieneMasPrioridadQue(inscripto) ]) {
@@ -123,7 +120,8 @@ class Partido {
 		}
 		
 		val quien = this.jugadores.filter [ unJugador | unJugador.prioridad > jugador.prioridad ].head
-		this.eliminarJugador(quien)
+		this.eliminarJugador(quien) //no se notifica baja porque si queda con 9, al reemplazar vuelve a 10 y es por reemplazo
 		this.agregarJugador(jugador)
+		this.notificarInscripcion(jugador)		
 	}
 }

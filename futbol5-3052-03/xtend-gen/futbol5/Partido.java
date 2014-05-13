@@ -1,6 +1,5 @@
 package futbol5;
 
-import com.google.common.base.Objects;
 import excepciones.BusinessException;
 import futbol5.Administrador;
 import futbol5.Jugador;
@@ -65,16 +64,6 @@ public class Partido {
     this._administrador = administrador;
   }
   
-  private boolean _previamenteCompleto;
-  
-  public boolean isPreviamenteCompleto() {
-    return this._previamenteCompleto;
-  }
-  
-  public void setPreviamenteCompleto(final boolean previamenteCompleto) {
-    this._previamenteCompleto = previamenteCompleto;
-  }
-  
   public Partido(final String localidad) {
     this.setLocalidad(localidad);
     LinkedList<Jugador> _linkedList = new LinkedList<Jugador>();
@@ -85,7 +74,6 @@ public class Partido {
     this.setBajasObservers(_linkedList_2);
     Administrador _instance = Administrador.getInstance();
     this.setAdministrador(_instance);
-    this.setPreviamenteCompleto(false);
   }
   
   public void notificarInscripcion(final Jugador jugador) {
@@ -126,13 +114,11 @@ public class Partido {
   public void agregarJugador(final Jugador jugador) {
     LinkedList<Jugador> _jugadores = this.getJugadores();
     _jugadores.add(jugador);
-    this.notificarInscripcion(jugador);
   }
   
   public void eliminarJugador(final Jugador jugador) {
     LinkedList<Jugador> _jugadores = this.getJugadores();
     _jugadores.remove(jugador);
-    this.notificarBaja(jugador);
   }
   
   public boolean estaInscripto(final Jugador jugador) {
@@ -160,31 +146,35 @@ public class Partido {
     return _bajasObservers.remove(observer);
   }
   
-  public void agregarReemplazo(final Jugador jugador, final Jugador reemplazo) {
-    jugador.setReemplazo(reemplazo);
-  }
-  
-  public void baja(final Jugador jugador) {
+  public void bajaConReemplazo(final Jugador jugador, final Jugador reemplazo) {
     try {
       boolean _estaInscripto = this.estaInscripto(jugador);
       boolean _not = (!_estaInscripto);
       if (_not) {
         throw new BusinessException("El jugador no está inscripto en este partido, no se puede dar de baja");
       }
-      Jugador _reemplazo = jugador.getReemplazo();
-      boolean _notEquals = (!Objects.equal(_reemplazo, null));
-      if (_notEquals) {
-        Jugador _reemplazo_1 = jugador.getReemplazo();
-        boolean _estaInscripto_1 = this.estaInscripto(_reemplazo_1);
-        if (_estaInscripto_1) {
-          throw new BusinessException("El reemplazo ya está inscripto en el partido");
-        }
-        this.eliminarJugador(jugador);
-        Jugador _reemplazo_2 = jugador.getReemplazo();
-        this.inscribir(_reemplazo_2);
-      } else {
-        this.eliminarJugador(jugador);
+      boolean _estaInscripto_1 = this.estaInscripto(reemplazo);
+      if (_estaInscripto_1) {
+        throw new BusinessException("El reemplazo ya está inscripto en el partido");
       }
+      this.eliminarJugador(jugador);
+      LinkedList<Jugador> _jugadores = this.getJugadores();
+      _jugadores.add(reemplazo);
+      this.notificarInscripcion(reemplazo);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  public void bajaSinReemplazo(final Jugador jugador) {
+    try {
+      boolean _estaInscripto = this.estaInscripto(jugador);
+      boolean _not = (!_estaInscripto);
+      if (_not) {
+        throw new BusinessException("El jugador no está inscripto en este partido, no se puede dar de baja");
+      }
+      this.eliminarJugador(jugador);
+      this.notificarBaja(jugador);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -206,6 +196,7 @@ public class Partido {
       boolean _lessThan = (_cantJugadores < 10);
       if (_lessThan) {
         this.agregarJugador(jugador);
+        this.notificarInscripcion(jugador);
         return;
       }
       LinkedList<Jugador> _jugadores = this.getJugadores();
@@ -231,6 +222,7 @@ public class Partido {
       final Jugador quien = IterableExtensions.<Jugador>head(_filter);
       this.eliminarJugador(quien);
       this.agregarJugador(jugador);
+      this.notificarInscripcion(jugador);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

@@ -12,10 +12,9 @@ class BajaSinReemplazoObserver extends PartidoObserver {
 	}
 	
 	override  hacerLoSuyo(Partido partido, Jugador jugador) {
-		if (jugador.reemplazo==null){
-			generarInfraccion(jugador)
-		}
+		generarInfraccion(jugador)
 	}
+	
 	def generarInfraccion(Jugador jugador) {
 		jugador.infracciones.add(new Infraccion)
 	}

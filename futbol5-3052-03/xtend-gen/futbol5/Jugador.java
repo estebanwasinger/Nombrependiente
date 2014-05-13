@@ -69,16 +69,6 @@ public class Jugador {
     this._administrador = administrador;
   }
   
-  private Jugador _reemplazo;
-  
-  public Jugador getReemplazo() {
-    return this._reemplazo;
-  }
-  
-  public void setReemplazo(final Jugador reemplazo) {
-    this._reemplazo = reemplazo;
-  }
-  
   public Jugador() {
     Estandar _estandar = new Estandar();
     this.setTipoInscripcion(_estandar);

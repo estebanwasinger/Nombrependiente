@@ -14,7 +14,6 @@ class Jugador {
 	@Property List<Infraccion> infracciones
 	@Property List<Jugador> amigos
 	@Property Administrador administrador
-	@Property Jugador reemplazo
 	
 	new() {
 		tipoInscripcion = new Estandar

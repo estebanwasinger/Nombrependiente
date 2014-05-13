@@ -19,7 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.verification.VerificationMode;
 
 @SuppressWarnings("all")
-public class NotificacionesTest {
+public class ObserversTest {
   private Jugador jugador;
   
   private Jugador amigo1;
@@ -136,7 +136,7 @@ public class NotificacionesTest {
     MessageSender _verify_3 = Mockito.<MessageSender>verify(mockMessageSenderBaja, _times_3);
     Notificacion _any_3 = Matchers.<Notificacion>any(Notificacion.class);
     _verify_3.send(_any_3);
-    this.partido.baja(this.jugador);
+    this.partido.bajaSinReemplazo(this.jugador);
     VerificationMode _times_4 = Mockito.times(1);
     MessageSender _verify_4 = Mockito.<MessageSender>verify(mockMessageSenderBaja, _times_4);
     Notificacion _any_4 = Matchers.<Notificacion>any(Notificacion.class);

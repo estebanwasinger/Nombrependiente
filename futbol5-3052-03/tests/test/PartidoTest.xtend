@@ -14,6 +14,7 @@ import org.junit.Test
 
 class PartidoTest {
 	Jugador jugador 
+	Jugador reemplazo
 	Jugador jugador1
 	Jugador jugadorSolidario
 	Jugador jugadorSolidario2
@@ -32,10 +33,9 @@ class PartidoTest {
 	def void setUP() {
 		jugador = new Jugador
 		jugador.edad = 18
+		reemplazo = new Jugador
 		jugador1 =new Jugador
 		jugador1.edad = 18
-		jugador1.reemplazo = jugador
-		jugador.reemplazo = jugador1
 		jugadorSolidario = new Jugador
 		jugadorSolidario.edad = 19
 		jugadorSolidario2 = new Jugador
@@ -160,22 +160,22 @@ class PartidoTest {
 	
 	@Test(expected=typeof(BusinessException))
 	def void testBajaJugadorQueNoEstaInscripto(){
-		partido.baja(jugador)		
+		partido.bajaConReemplazo(jugador, reemplazo)		
 	}
 	
 	@Test (expected=typeof(BusinessException))
 	def void testBajaJugadorConReemplazoYaInscripto(){
 		partido.inscribir(jugador)
-		partido.inscribir(jugador1)
-		partido.baja(jugador1)
+		partido.inscribir(reemplazo)
+		partido.bajaConReemplazo(jugador, reemplazo)
 	}
 	
 	@Test
 	def void testBajaJugadorConReemplazo(){
 		partido.inscribir(jugador)
-		partido.baja(jugador)
+		partido.bajaConReemplazo(jugador, reemplazo)
 		Assert.assertFalse(partido.estaInscripto(jugador))
-		Assert.assertTrue(partido.estaInscripto(jugador1))
+		Assert.assertTrue(partido.estaInscripto(reemplazo))
 		Assert.assertEquals(1, partido.cantJugadores)
 	}
 		

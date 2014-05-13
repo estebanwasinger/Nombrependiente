@@ -16,6 +16,8 @@ import org.junit.Test;
 public class PartidoTest {
   private Jugador jugador;
   
+  private Jugador reemplazo;
+  
   private Jugador jugador1;
   
   private Jugador jugadorSolidario;
@@ -48,24 +50,24 @@ public class PartidoTest {
     this.jugador = _jugador;
     this.jugador.setEdad(18);
     Jugador _jugador_1 = new Jugador();
-    this.jugador1 = _jugador_1;
-    this.jugador1.setEdad(18);
-    this.jugador1.setReemplazo(this.jugador);
-    this.jugador.setReemplazo(this.jugador1);
+    this.reemplazo = _jugador_1;
     Jugador _jugador_2 = new Jugador();
-    this.jugadorSolidario = _jugador_2;
-    this.jugadorSolidario.setEdad(19);
+    this.jugador1 = _jugador_2;
+    this.jugador1.setEdad(18);
     Jugador _jugador_3 = new Jugador();
-    this.jugadorSolidario2 = _jugador_3;
-    this.jugadorSolidario2.setEdad(16);
+    this.jugadorSolidario = _jugador_3;
+    this.jugadorSolidario.setEdad(19);
     Jugador _jugador_4 = new Jugador();
-    this.jugadorCondicional = _jugador_4;
+    this.jugadorSolidario2 = _jugador_4;
+    this.jugadorSolidario2.setEdad(16);
     Jugador _jugador_5 = new Jugador();
-    this.jugadorCondicional2 = _jugador_5;
+    this.jugadorCondicional = _jugador_5;
     Jugador _jugador_6 = new Jugador();
-    this.jugadorCondicional3 = _jugador_6;
+    this.jugadorCondicional2 = _jugador_6;
     Jugador _jugador_7 = new Jugador();
-    this.jugadorCondicional4 = _jugador_7;
+    this.jugadorCondicional3 = _jugador_7;
+    Jugador _jugador_8 = new Jugador();
+    this.jugadorCondicional4 = _jugador_8;
     Partido _partido = new Partido("CABA");
     this.partido = _partido;
     Partido _partido_1 = new Partido("CABA");
@@ -215,23 +217,23 @@ public class PartidoTest {
   
   @Test(expected = BusinessException.class)
   public void testBajaJugadorQueNoEstaInscripto() {
-    this.partido.baja(this.jugador);
+    this.partido.bajaConReemplazo(this.jugador, this.reemplazo);
   }
   
   @Test(expected = BusinessException.class)
   public void testBajaJugadorConReemplazoYaInscripto() {
     this.partido.inscribir(this.jugador);
-    this.partido.inscribir(this.jugador1);
-    this.partido.baja(this.jugador1);
+    this.partido.inscribir(this.reemplazo);
+    this.partido.bajaConReemplazo(this.jugador, this.reemplazo);
   }
   
   @Test
   public void testBajaJugadorConReemplazo() {
     this.partido.inscribir(this.jugador);
-    this.partido.baja(this.jugador);
+    this.partido.bajaConReemplazo(this.jugador, this.reemplazo);
     boolean _estaInscripto = this.partido.estaInscripto(this.jugador);
     Assert.assertFalse(_estaInscripto);
-    boolean _estaInscripto_1 = this.partido.estaInscripto(this.jugador1);
+    boolean _estaInscripto_1 = this.partido.estaInscripto(this.reemplazo);
     Assert.assertTrue(_estaInscripto_1);
     int _cantJugadores = this.partido.cantJugadores();
     Assert.assertEquals(1, _cantJugadores);
