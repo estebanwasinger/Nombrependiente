@@ -22,7 +22,7 @@ class NotificacionesTest {
 	NotificarAmigosDecorator partidoConNotificarAmigosDecorator
 	Son10Decorator partidoYaSon10Decorator
 	YaNoSon10Decorator partidoYaNoSon10Decorator
-	InfraccionDecorator jugadorConInfraccion
+	InfraccionDecorator jugadorConInfraccionDecorator
 
 	@Before
 	def void setUP() {
@@ -32,7 +32,7 @@ class NotificacionesTest {
 		partidoConNotificarAmigosDecorator = new NotificarAmigosDecorator(partido, notificador)
 		partidoYaSon10Decorator = new Son10Decorator(partido, notificador)
 		partidoYaNoSon10Decorator = new YaNoSon10Decorator(partido, notificador)
-		jugadorConInfraccion = new InfraccionDecorator(partido)
+		jugadorConInfraccionDecorator = new InfraccionDecorator(partido)
 	}
 
 	def agregarAmigos(int max) {
@@ -91,9 +91,10 @@ class NotificacionesTest {
 
 	@Test
 	def void generarInfraccion() {
-		jugadorConInfraccion.inscribir(jugador)
-		jugadorConInfraccion.bajaSinReemplazo(jugador)
-		Assert.assertEquals(jugador.diasDeInfraccion, 10)
+		agregarJugadores(jugadorConInfraccionDecorator,5)
+		jugadorConInfraccionDecorator.inscribir(jugador)
+		jugadorConInfraccionDecorator.bajaSinReemplazo(jugador)
+		Assert.assertEquals(5, jugador.diasDeInfraccion)
 	}
 
 	@Test

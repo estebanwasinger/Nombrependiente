@@ -8,7 +8,7 @@ import java.util.HashSet
 class StubNotificationSender implements NotificationSender {
 
 	Map<String, Set<String>> notificacionsEnviados
-	
+
 	HashMap<String, Set<String>> notificacionsRecibidos
 
 	new() {
@@ -17,13 +17,13 @@ class StubNotificationSender implements NotificationSender {
 	}
 
 	override send(Notificacion notificacion) {
-		simularEnvioNotificacion(notificacion.de,notificacion.a, notificacion.contenido)
+		simularEnvioNotificacion(notificacion.de, notificacion.a, notificacion.contenido)
 		println(
-			"Simulación envío de notificacion | Quien lo manda: " + notificacion.de + " | A quien: " + notificacion.a +
-				" Mensaje: " + notificacion.contenido)
+			"Notificación // Emisor: " + notificacion.de + " // Receptor: " + notificacion.a + "    // Mensaje: " +
+				notificacion.contenido)
 	}
 
-	def simularEnvioNotificacion(String from,String to, String message) {
+	def simularEnvioNotificacion(String from, String to, String message) {
 		var mensajes = notificacionsDe(from)
 		mensajes.add(message)
 		notificacionsEnviados.put(from, mensajes)

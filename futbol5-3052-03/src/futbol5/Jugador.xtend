@@ -22,14 +22,13 @@ class Jugador {
 	def initialize() {
 		amigos = new ArrayList<Jugador>
 		infracciones = new ArrayList<Infraccion>
-		administrador = Administrador::getInstance()
 		diasDeInfraccion = 0
 	}
-	def initialize2() {
+
+	def initializeTipoEstandar() {
 		tipoInscripcion = new Estandar
 		amigos = new ArrayList<Jugador>
 		infracciones = new ArrayList<Infraccion>
-		administrador = Administrador::getInstance()
 		diasDeInfraccion = 0
 	}
 
@@ -38,8 +37,9 @@ class Jugador {
 		tipoInscripcion = inscripcion
 		nombre = pNombre
 	}
-	new(){
-		initialize2
+
+	new() {
+		initializeTipoEstandar
 	}
 
 	def boolean menorA(int edad) {
@@ -54,9 +54,8 @@ class Jugador {
 		tipoInscripcion.prioridad()
 	}
 
-	/*ARREGLAR "nos interesa poder discriminar infracciones de diferentes momentos y por distintos motivos"*/
 	def nuevaInfraccion(int cantidadDeDias) {
-		this.diasDeInfraccion = cantidadDeDias 
+		this.diasDeInfraccion = cantidadDeDias
 	}
 
 }

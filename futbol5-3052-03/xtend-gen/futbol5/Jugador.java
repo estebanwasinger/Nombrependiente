@@ -105,20 +105,16 @@ public class Jugador {
     this.setAmigos(_arrayList);
     ArrayList<Infraccion> _arrayList_1 = new ArrayList<Infraccion>();
     this.setInfracciones(_arrayList_1);
-    Administrador _instance = Administrador.getInstance();
-    this.setAdministrador(_instance);
     this.setDiasDeInfraccion(0);
   }
   
-  public void initialize2() {
+  public void initializeTipoEstandar() {
     Estandar _estandar = new Estandar();
     this.setTipoInscripcion(_estandar);
     ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
     this.setAmigos(_arrayList);
     ArrayList<Infraccion> _arrayList_1 = new ArrayList<Infraccion>();
     this.setInfracciones(_arrayList_1);
-    Administrador _instance = Administrador.getInstance();
-    this.setAdministrador(_instance);
     this.setDiasDeInfraccion(0);
   }
   
@@ -129,7 +125,7 @@ public class Jugador {
   }
   
   public Jugador() {
-    this.initialize2();
+    this.initializeTipoEstandar();
   }
   
   public boolean menorA(final int edad) {
@@ -148,9 +144,6 @@ public class Jugador {
     return _tipoInscripcion.prioridad();
   }
   
-  /**
-   * ARREGLAR "nos interesa poder discriminar infracciones de diferentes momentos y por distintos motivos"
-   */
   public void nuevaInfraccion(final int cantidadDeDias) {
     this.setDiasDeInfraccion(cantidadDeDias);
   }

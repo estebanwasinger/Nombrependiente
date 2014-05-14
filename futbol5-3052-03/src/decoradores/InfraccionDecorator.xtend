@@ -12,6 +12,8 @@ class InfraccionDecorator extends PartidoDecorator{
 
 override bajaSinReemplazo(Jugador jugador) {
 	decorado.bajaSinReemplazo(jugador)
-	jugador.nuevaInfraccion(10)
+	
+	jugador.nuevaInfraccion(decorado.cantJugadores)
 }
+
 }

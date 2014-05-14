@@ -29,7 +29,7 @@ public class NotificacionesTest {
   
   private YaNoSon10Decorator partidoYaNoSon10Decorator;
   
-  private InfraccionDecorator jugadorConInfraccion;
+  private InfraccionDecorator jugadorConInfraccionDecorator;
   
   @Before
   public void setUP() {
@@ -47,7 +47,7 @@ public class NotificacionesTest {
     YaNoSon10Decorator _yaNoSon10Decorator = new YaNoSon10Decorator(this.partido, this.notificador);
     this.partidoYaNoSon10Decorator = _yaNoSon10Decorator;
     InfraccionDecorator _infraccionDecorator = new InfraccionDecorator(this.partido);
-    this.jugadorConInfraccion = _infraccionDecorator;
+    this.jugadorConInfraccionDecorator = _infraccionDecorator;
   }
   
   public void agregarAmigos(final int max) {
@@ -136,10 +136,11 @@ public class NotificacionesTest {
   
   @Test
   public void generarInfraccion() {
-    this.jugadorConInfraccion.inscribir(this.jugador);
-    this.jugadorConInfraccion.bajaSinReemplazo(this.jugador);
+    this.agregarJugadores(this.jugadorConInfraccionDecorator, 5);
+    this.jugadorConInfraccionDecorator.inscribir(this.jugador);
+    this.jugadorConInfraccionDecorator.bajaSinReemplazo(this.jugador);
     int _diasDeInfraccion = this.jugador.getDiasDeInfraccion();
-    Assert.assertEquals(_diasDeInfraccion, 10);
+    Assert.assertEquals(5, _diasDeInfraccion);
   }
   
   @Test

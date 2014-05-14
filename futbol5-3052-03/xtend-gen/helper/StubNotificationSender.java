@@ -28,12 +28,11 @@ public class StubNotificationSender implements NotificationSender {
     String _contenido = notificacion.getContenido();
     this.simularEnvioNotificacion(_de, _a, _contenido);
     String _de_1 = notificacion.getDe();
-    String _plus = ("Simulación envío de notificacion | Quien lo manda: " + _de_1);
-    String _plus_1 = (_plus + " | A quien: ");
+    String _plus = ("Notificación // Emisor: " + _de_1);
+    String _plus_1 = (_plus + " // Receptor: ");
     String _a_1 = notificacion.getA();
     String _plus_2 = (_plus_1 + _a_1);
-    String _plus_3 = (_plus_2 + 
-      " Mensaje: ");
+    String _plus_3 = (_plus_2 + "    // Mensaje: ");
     String _contenido_1 = notificacion.getContenido();
     String _plus_4 = (_plus_3 + _contenido_1);
     InputOutput.<String>println(_plus_4);
