@@ -2,7 +2,6 @@ package futbol5;
 
 import futbol5.Administrador;
 import helper.Notificacion;
-import infracciones.Infraccion;
 import inscripciones.Estandar;
 import inscripciones.TipoInscripcion;
 import java.util.ArrayList;
@@ -50,16 +49,6 @@ public class Jugador {
     this._email = email;
   }
   
-  private List<Infraccion> _infracciones;
-  
-  public List<Infraccion> getInfracciones() {
-    return this._infracciones;
-  }
-  
-  public void setInfracciones(final List<Infraccion> infracciones) {
-    this._infracciones = infracciones;
-  }
-  
   private List<Jugador> _amigos;
   
   public List<Jugador> getAmigos() {
@@ -103,8 +92,6 @@ public class Jugador {
   public void initialize() {
     ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
     this.setAmigos(_arrayList);
-    ArrayList<Infraccion> _arrayList_1 = new ArrayList<Infraccion>();
-    this.setInfracciones(_arrayList_1);
     this.setDiasDeInfraccion(0);
   }
   
@@ -113,8 +100,6 @@ public class Jugador {
     this.setTipoInscripcion(_estandar);
     ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
     this.setAmigos(_arrayList);
-    ArrayList<Infraccion> _arrayList_1 = new ArrayList<Infraccion>();
-    this.setInfracciones(_arrayList_1);
     this.setDiasDeInfraccion(0);
   }
   

@@ -4,7 +4,6 @@ import java.util.List
 import java.util.ArrayList
 import inscripciones.TipoInscripcion
 import inscripciones.Estandar
-import infracciones.Infraccion
 import helper.Notificacion
 
 class Jugador {
@@ -13,7 +12,6 @@ class Jugador {
 	@Property String nombre
 	@Property int edad
 	@Property String email
-	@Property List<Infraccion> infracciones
 	@Property List<Jugador> amigos
 	@Property List<Notificacion> notificaciones
 	@Property Administrador administrador
@@ -21,14 +19,12 @@ class Jugador {
 
 	def initialize() {
 		amigos = new ArrayList<Jugador>
-		infracciones = new ArrayList<Infraccion>
 		diasDeInfraccion = 0
 	}
 
 	def initializeTipoEstandar() {
 		tipoInscripcion = new Estandar
 		amigos = new ArrayList<Jugador>
-		infracciones = new ArrayList<Infraccion>
 		diasDeInfraccion = 0
 	}
 

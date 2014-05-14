@@ -17,11 +17,11 @@ public class NotificarAmigosDecorator extends PartidoDecorator {
   public void inscribir(final Jugador jugador) {
     InterfazPartido _decorado = this.getDecorado();
     _decorado.inscribir(jugador);
-    List<Jugador> _amigos = jugador.getAmigos();
-    this.notificarAmigos(jugador, _amigos);
+    this.notificarAmigos(jugador);
   }
   
-  public void notificarAmigos(final Jugador jugador, final List<Jugador> jugadores) {
+  public void notificarAmigos(final Jugador jugador) {
+    List<Jugador> _amigos = jugador.getAmigos();
     final Consumer<Jugador> _function = new Consumer<Jugador>() {
       public void accept(final Jugador jugadorAmigo) {
         NotificationSender _notificationSender = NotificarAmigosDecorator.this.getNotificationSender();
@@ -37,6 +37,6 @@ public class NotificarAmigosDecorator extends PartidoDecorator {
         _notificationSender.send(_notificacion);
       }
     };
-    jugadores.forEach(_function);
+    _amigos.forEach(_function);
   }
 }

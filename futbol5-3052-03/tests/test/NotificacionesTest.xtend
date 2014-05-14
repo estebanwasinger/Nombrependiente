@@ -99,8 +99,7 @@ class NotificacionesTest {
 
 	@Test
 	def void decoratorCombinado() {
-		var partidoConNotAmigosYPartidoCompletoDecorator = new Son10Decorator(
-		new NotificarAmigosDecorator(partido, notificador), notificador)
+		var partidoConNotAmigosYPartidoCompletoDecorator = new Son10Decorator(new NotificarAmigosDecorator(partido, notificador), notificador)
 		agregarJugadores(partidoConNotAmigosYPartidoCompletoDecorator, 9)
 		agregarLosAmigosDelFutbol(jugador)
 		partidoConNotAmigosYPartidoCompletoDecorator.inscribir(jugador)
