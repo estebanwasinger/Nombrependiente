@@ -13,8 +13,4 @@ class Administrador {
 		unico
 	}
 	
-	/*def jugadorProponeA(Jugador unJugador) {
-		
-	}*/
-	
 }

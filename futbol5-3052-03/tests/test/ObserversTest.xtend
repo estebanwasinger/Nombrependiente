@@ -77,7 +77,7 @@ class ObserversTest {
 	def void testPartidoCon10JugadoresYSeBaja1(){
 		var mockMessageSenderAlta = mock(typeof(MessageSender))
 		var mockMessageSenderBaja = mock(typeof(MessageSender))
-		var mockMessageSenderInfraccion = mock(typeof(MessageSender)) //se crea pero no se necesita. arreglar!
+		var mockMessageSenderInfraccion = mock(typeof(MessageSender)) //se crea pero no se necesita. 
 		
 		partido.agregarObserverBaja(new EquipoIncompletoObserver(mockMessageSenderBaja))
 		partido.agregarObserverAlta(new EquipoIncompletoObserver(mockMessageSenderAlta))
