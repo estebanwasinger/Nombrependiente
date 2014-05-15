@@ -14,14 +14,14 @@ public class InscripcionObserver extends PartidoObserver {
   }
   
   public void avisarle(final Jugador emisor, final Jugador receptor) {
-    final String asunto = "Inscripción de un amigo";
+    final String asunto = "Inscripciï¿½n de un amigo";
     String _email = emisor.getEmail();
-    final String mensaje = (_email + "se inscribió al partido");
+    final String mensaje = (_email + "se inscribiï¿½ al partido");
     String _email_1 = receptor.getEmail();
-    super.enviarNotificacion(_email_1, asunto, mensaje);
+    this.enviarNotificacion(_email_1, asunto, mensaje);
   }
   
-  public void hacerLoSuyo(final Partido partido, final Jugador jugador) {
+  public void notificarInscripcion(final Partido partido, final Jugador jugador) {
     List<Jugador> _amigos = jugador.getAmigos();
     final Consumer<Jugador> _function = new Consumer<Jugador>() {
       public void accept(final Jugador amigo) {

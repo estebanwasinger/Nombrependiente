@@ -10,7 +10,7 @@ class EquipoCompletoObserver extends PartidoObserver{
 		super(unMessageSender)
 	}
 	
-	override hacerLoSuyo(Partido partido, Jugador jugador){
+	override notificarInscripcion(Partido partido, Jugador jugador){
         if (partido.cantJugadores==10){
         	val adminMail = jugador.administrador.email
         	val asunto = "Partido confirmado"

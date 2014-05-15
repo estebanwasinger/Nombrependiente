@@ -12,7 +12,7 @@ public class EquipoIncompletoObserver extends PartidoObserver {
     super(unMessageSender);
   }
   
-  public void hacerLoSuyo(final Partido partido, final Jugador jugador) {
+  public void notificarBaja(final Partido partido, final Jugador jugador, final Jugador reemplazo) {
     int _cantJugadores = partido.cantJugadores();
     boolean _equals = (_cantJugadores == 9);
     if (_equals) {

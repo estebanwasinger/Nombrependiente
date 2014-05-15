@@ -217,20 +217,20 @@ public class PartidoTest {
   
   @Test(expected = BusinessException.class)
   public void testBajaJugadorQueNoEstaInscripto() {
-    this.partido.bajaConReemplazo(this.jugador, this.reemplazo);
+    this.partido.baja(this.jugador, this.reemplazo);
   }
   
   @Test(expected = BusinessException.class)
   public void testBajaJugadorConReemplazoYaInscripto() {
     this.partido.inscribir(this.jugador);
     this.partido.inscribir(this.reemplazo);
-    this.partido.bajaConReemplazo(this.jugador, this.reemplazo);
+    this.partido.baja(this.jugador, this.reemplazo);
   }
   
   @Test
   public void testBajaJugadorConReemplazo() {
     this.partido.inscribir(this.jugador);
-    this.partido.bajaConReemplazo(this.jugador, this.reemplazo);
+    this.partido.baja(this.jugador, this.reemplazo);
     boolean _estaInscripto = this.partido.estaInscripto(this.jugador);
     Assert.assertFalse(_estaInscripto);
     boolean _estaInscripto_1 = this.partido.estaInscripto(this.reemplazo);

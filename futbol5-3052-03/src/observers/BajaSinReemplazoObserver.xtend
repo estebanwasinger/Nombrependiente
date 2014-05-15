@@ -6,17 +6,19 @@ import infracciones.Infraccion
 import auxiliares.MessageSender
 
 class BajaSinReemplazoObserver extends PartidoObserver {
-	
+
 	new(MessageSender unMessageSender) {
 		super(unMessageSender)
 	}
-	
-	override  hacerLoSuyo(Partido partido, Jugador jugador) {
-		generarInfraccion(jugador)
+
+	override notificarBaja(Partido partido, Jugador jugador, Jugador reemplazo) {
+		if (reemplazo == null) {
+			generarInfraccion(jugador)
+		}
 	}
-	
+
 	def generarInfraccion(Jugador jugador) {
 		jugador.infracciones.add(new Infraccion)
 	}
-	
+
 }

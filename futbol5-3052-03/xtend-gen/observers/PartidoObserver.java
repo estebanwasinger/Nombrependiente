@@ -22,6 +22,9 @@ public class PartidoObserver {
     this.messageSender.send(notificacion);
   }
   
-  public void hacerLoSuyo(final Partido partido, final Jugador jugador) {
+  public void notificarBaja(final Partido partido, final Jugador jugador, final Jugador reemplazo) {
+  }
+  
+  public void notificarInscripcion(final Partido partido, final Jugador jugador) {
   }
 }

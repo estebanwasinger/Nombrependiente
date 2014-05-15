@@ -160,20 +160,20 @@ class PartidoTest {
 	
 	@Test(expected=typeof(BusinessException))
 	def void testBajaJugadorQueNoEstaInscripto(){
-		partido.bajaConReemplazo(jugador, reemplazo)		
+		partido.baja(jugador, reemplazo)		
 	}
 	
 	@Test (expected=typeof(BusinessException))
 	def void testBajaJugadorConReemplazoYaInscripto(){
 		partido.inscribir(jugador)
 		partido.inscribir(reemplazo)
-		partido.bajaConReemplazo(jugador, reemplazo)
+		partido.baja(jugador, reemplazo)
 	}
 	
 	@Test
 	def void testBajaJugadorConReemplazo(){
 		partido.inscribir(jugador)
-		partido.bajaConReemplazo(jugador, reemplazo)
+		partido.baja(jugador, reemplazo)
 		Assert.assertFalse(partido.estaInscripto(jugador))
 		Assert.assertTrue(partido.estaInscripto(reemplazo))
 		Assert.assertEquals(1, partido.cantJugadores)

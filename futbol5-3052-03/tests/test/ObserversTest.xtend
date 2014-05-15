@@ -80,7 +80,7 @@ class ObserversTest {
 		var mockMessageSenderInfraccion = mock(typeof(MessageSender)) //se crea pero no se necesita. 
 		
 		partido.agregarObserverBaja(new EquipoIncompletoObserver(mockMessageSenderBaja))
-		partido.agregarObserverAlta(new EquipoIncompletoObserver(mockMessageSenderAlta))
+		partido.agregarObserverAlta(new EquipoCompletoObserver(mockMessageSenderAlta))
 		partido.agregarObserverBaja(new BajaSinReemplazoObserver(mockMessageSenderInfraccion))
 		
 		verify(mockMessageSenderAlta, times(0)).send(any(typeof(Notificacion))) //sin notificar
@@ -89,9 +89,9 @@ class ObserversTest {
 		partido.inscribir(jugador)
 		verify(mockMessageSenderAlta, times(1)).send(any(typeof(Notificacion))) //notificar partido completo
 		verify(mockMessageSenderBaja, times(0)).send(any(typeof(Notificacion))) //sin notificar
-		partido.bajaSinReemplazo(jugador)
-		verify(mockMessageSenderBaja, times(1)).send(any(typeof(Notificacion))) //notificar partido incompleto
+		partido.baja(jugador, new Jugador())
+		verify(mockMessageSenderBaja, times(0)).send(any(typeof(Notificacion))) //notificar partido incompleto
 		Assert.assertFalse(partido.estaInscripto(jugador))
-		Assert.assertEquals(1, jugador.infracciones.size)
+		Assert.assertEquals(0, jugador.infracciones.size)
 		}
 }

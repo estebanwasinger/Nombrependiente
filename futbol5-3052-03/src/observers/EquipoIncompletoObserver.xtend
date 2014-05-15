@@ -10,7 +10,7 @@ class EquipoIncompletoObserver extends PartidoObserver{
 		super(unMessageSender)
 	}
 	
-	override hacerLoSuyo(Partido partido, Jugador jugador){
+	override notificarBaja(Partido partido, Jugador jugador, Jugador reemplazo){
        if (partido.cantJugadores==9){
         	val adminMail = jugador.administrador.email
         	val asunto =  "Partido incompleto"

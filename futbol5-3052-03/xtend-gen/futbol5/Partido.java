@@ -1,5 +1,6 @@
 package futbol5;
 
+import com.google.common.base.Objects;
 import excepciones.BusinessException;
 import futbol5.Administrador;
 import futbol5.Jugador;
@@ -78,32 +79,22 @@ public class Partido {
   
   public void notificarInscripcion(final Jugador jugador) {
     List<PartidoObserver> _altasObservers = this.getAltasObservers();
-    boolean _isEmpty = _altasObservers.isEmpty();
-    boolean _not = (!_isEmpty);
-    if (_not) {
-      List<PartidoObserver> _altasObservers_1 = this.getAltasObservers();
-      final Consumer<PartidoObserver> _function = new Consumer<PartidoObserver>() {
-        public void accept(final PartidoObserver observador) {
-          observador.hacerLoSuyo(Partido.this, jugador);
-        }
-      };
-      _altasObservers_1.forEach(_function);
-    }
+    final Consumer<PartidoObserver> _function = new Consumer<PartidoObserver>() {
+      public void accept(final PartidoObserver observador) {
+        observador.notificarInscripcion(Partido.this, jugador);
+      }
+    };
+    _altasObservers.forEach(_function);
   }
   
-  public void notificarBaja(final Jugador jugador) {
+  public void notificarBaja(final Jugador jugador, final Jugador reemplazo) {
     List<PartidoObserver> _bajasObservers = this.getBajasObservers();
-    boolean _isEmpty = _bajasObservers.isEmpty();
-    boolean _not = (!_isEmpty);
-    if (_not) {
-      List<PartidoObserver> _bajasObservers_1 = this.getBajasObservers();
-      final Consumer<PartidoObserver> _function = new Consumer<PartidoObserver>() {
-        public void accept(final PartidoObserver observador) {
-          observador.hacerLoSuyo(Partido.this, jugador);
-        }
-      };
-      _bajasObservers_1.forEach(_function);
-    }
+    final Consumer<PartidoObserver> _function = new Consumer<PartidoObserver>() {
+      public void accept(final PartidoObserver observador) {
+        observador.notificarBaja(Partido.this, jugador, reemplazo);
+      }
+    };
+    _bajasObservers.forEach(_function);
   }
   
   public int cantJugadores() {
@@ -146,20 +137,31 @@ public class Partido {
     return _bajasObservers.remove(observer);
   }
   
-  public void bajaConReemplazo(final Jugador jugador, final Jugador reemplazo) {
+  public void baja(final Jugador jugador, final Jugador reemplazo) {
     try {
       boolean _estaInscripto = this.estaInscripto(jugador);
       boolean _not = (!_estaInscripto);
       if (_not) {
-        throw new BusinessException("El jugador no est· inscripto en este partido, no se puede dar de baja");
+        throw new BusinessException("El jugador no est√° inscripto en este partido, no se puede dar de baja");
       }
-      boolean _estaInscripto_1 = this.estaInscripto(reemplazo);
-      if (_estaInscripto_1) {
-        throw new BusinessException("El reemplazo ya est· inscripto en el partido");
+      boolean _and = false;
+      boolean _notEquals = (!Objects.equal(reemplazo, null));
+      if (!_notEquals) {
+        _and = false;
+      } else {
+        boolean _estaInscripto_1 = this.estaInscripto(reemplazo);
+        _and = _estaInscripto_1;
+      }
+      if (_and) {
+        throw new BusinessException("El reemplazo ya est√° inscripto en el partido");
       }
       this.eliminarJugador(jugador);
-      LinkedList<Jugador> _jugadores = this.getJugadores();
-      _jugadores.add(reemplazo);
+      boolean _notEquals_1 = (!Objects.equal(reemplazo, null));
+      if (_notEquals_1) {
+        LinkedList<Jugador> _jugadores = this.getJugadores();
+        _jugadores.add(reemplazo);
+      }
+      this.notificarBaja(jugador, reemplazo);
       this.notificarInscripcion(reemplazo);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
@@ -167,30 +169,20 @@ public class Partido {
   }
   
   public void bajaSinReemplazo(final Jugador jugador) {
-    try {
-      boolean _estaInscripto = this.estaInscripto(jugador);
-      boolean _not = (!_estaInscripto);
-      if (_not) {
-        throw new BusinessException("El jugador no est· inscripto en este partido, no se puede dar de baja");
-      }
-      this.eliminarJugador(jugador);
-      this.notificarBaja(jugador);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
+    this.baja(jugador, null);
   }
   
   public void inscribir(final Jugador jugador) {
     try {
       boolean _estaInscripto = this.estaInscripto(jugador);
       if (_estaInscripto) {
-        throw new BusinessException("El jugador ya se inscribiÛ");
+        throw new BusinessException("El jugador ya se inscribi√≥");
       }
       TipoInscripcion _tipoInscripcion = jugador.getTipoInscripcion();
       boolean _cumpleCondicion = _tipoInscripcion.cumpleCondicion(jugador, this);
       boolean _not = (!_cumpleCondicion);
       if (_not) {
-        throw new BusinessException("El jugador no cumple con la condiciÛn, no se puede inscribir");
+        throw new BusinessException("El jugador no cumple con la condici√≥n, no se puede inscribir");
       }
       int _cantJugadores = this.cantJugadores();
       boolean _lessThan = (_cantJugadores < 10);
@@ -208,7 +200,7 @@ public class Partido {
       boolean _exists = IterableExtensions.<Jugador>exists(_jugadores, _function);
       boolean _not_1 = (!_exists);
       if (_not_1) {
-        throw new BusinessException("No hay m·s cupo");
+        throw new BusinessException("No hay m√°s cupo");
       }
       LinkedList<Jugador> _jugadores_1 = this.getJugadores();
       final Function1<Jugador,Boolean> _function_1 = new Function1<Jugador,Boolean>() {
