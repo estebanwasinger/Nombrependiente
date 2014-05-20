@@ -51,7 +51,7 @@ class ObserversTest {
 		verify(mockMessageSender, times(0)).send(any(typeof(Notificacion)))
 		partido.inscribir(jugador)
 		verify(mockMessageSender, times(3)).send(any(typeof(Notificacion)))
-	}
+		}
 	
 		@Test
 	def testSeInscribeDecimoJugadorYSeNotificaAAdministrador(){
@@ -62,26 +62,48 @@ class ObserversTest {
 		armarPartido(9)
 		partido.inscribir(jugador)
 		verify(mockMessageSender, times(1)).send(any(typeof(Notificacion)))
-	}
+		}
 	
 	@Test
-	def testSeInscribeUnJugadorYNoSeNotificaAAdministrador(){
+	def testSeInscribeUnJugadorQueEsElDecimoYNoSeNotificaAAdministrador(){
 		var mockMessageSender = mock(typeof(MessageSender))
 		partido.agregarObserverAlta(new EquipoCompletoObserver(mockMessageSender))
 		
 		partido.inscribir(jugador)
 		verify(mockMessageSender, times(0)).send(any(typeof(Notificacion))) // no se debe enviar notificacion
-	}
+		}
 
 	@Test
-	def void testPartidoCon10JugadoresYSeBaja1(){
+	def testBajaSinReemplazoConInfraccion(){
+		var mockMessageSenderInfraccion = mock(typeof(MessageSender))
+		partido.agregarObserverBaja(new BajaSinReemplazoObserver(mockMessageSenderInfraccion))
+		
+		partido.inscribir(jugador)
+		partido.baja(jugador, null)
+		
+		Assert.assertFalse(partido.estaInscripto(jugador))
+		Assert.assertEquals(1, jugador.infracciones.size)
+		}
+	
+	@Test
+	def testBajaConReemplazoSinInfraccion(){
+		var mockMessageSenderInfraccion = mock(typeof(MessageSender))
+		partido.agregarObserverBaja(new BajaSinReemplazoObserver(mockMessageSenderInfraccion))
+		
+		partido.inscribir(jugador)
+		partido.baja(jugador, new Jugador())
+		
+		Assert.assertFalse(partido.estaInscripto(jugador))
+		Assert.assertEquals(0, jugador.infracciones.size)
+		}
+
+	@Test
+	def void testPartidoCon10JugadoresYSeBaja1NotificaAdministrador(){
 		var mockMessageSenderAlta = mock(typeof(MessageSender))
 		var mockMessageSenderBaja = mock(typeof(MessageSender))
-		var mockMessageSenderInfraccion = mock(typeof(MessageSender)) //se crea pero no se necesita. 
 		
 		partido.agregarObserverBaja(new EquipoIncompletoObserver(mockMessageSenderBaja))
 		partido.agregarObserverAlta(new EquipoCompletoObserver(mockMessageSenderAlta))
-		partido.agregarObserverBaja(new BajaSinReemplazoObserver(mockMessageSenderInfraccion))
 		
 		verify(mockMessageSenderAlta, times(0)).send(any(typeof(Notificacion))) //sin notificar
 		verify(mockMessageSenderBaja, times(0)).send(any(typeof(Notificacion))) //sin notificar
@@ -91,7 +113,16 @@ class ObserversTest {
 		verify(mockMessageSenderBaja, times(0)).send(any(typeof(Notificacion))) //sin notificar
 		partido.baja(jugador, new Jugador())
 		verify(mockMessageSenderBaja, times(0)).send(any(typeof(Notificacion))) //notificar partido incompleto
-		Assert.assertFalse(partido.estaInscripto(jugador))
-		Assert.assertEquals(0, jugador.infracciones.size)
 		}
+
+	@Test 
+	def void testPartidoConMenosDe10JugadoresYSeBaja1NoNotificaAdministrador(){
+		var mockMessageSenderBaja = mock(typeof(MessageSender))	
+		partido.agregarObserverBaja(new EquipoIncompletoObserver(mockMessageSenderBaja))
+	
+		verify(mockMessageSenderBaja, times(0)).send(any(typeof(Notificacion)))
+		partido.inscribir(jugador)
+		verify(mockMessageSenderBaja, times(0)).send(any(typeof(Notificacion)))
+		}
+
 }

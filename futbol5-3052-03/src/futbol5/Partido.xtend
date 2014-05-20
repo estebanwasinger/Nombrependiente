@@ -73,12 +73,12 @@ class Partido {
 	/*******************************/
 	def baja(Jugador jugador, Jugador reemplazo) {
 		if (!estaInscripto(jugador)) {
-			throw new BusinessException("El jugador no está inscripto en este partido, no se puede dar de baja")
+			throw new BusinessException("El jugador no esta inscripto en este partido, no se puede dar de baja")
 		}
 		if (reemplazo != null && this.estaInscripto(reemplazo)) {
-			throw new BusinessException("El reemplazo ya está inscripto en el partido")
+			throw new BusinessException("El reemplazo ya esta inscripto en el partido")
 		}
-		eliminarJugador(jugador) //no se notifica baja  porque tiene reemplazo y se va a agregar otro jugador
+		eliminarJugador(jugador)
 		if (reemplazo != null) {
 			jugadores.add(reemplazo)
 		}
@@ -95,10 +95,10 @@ class Partido {
 	/**************************************/
 	def inscribir(Jugador jugador) {
 		if (this.estaInscripto(jugador)) {
-			throw new BusinessException("El jugador ya se inscribió")
+			throw new BusinessException("El jugador ya se inscribio")
 		}
 		if (!jugador.tipoInscripcion.cumpleCondicion(jugador, this)) {
-			throw new BusinessException("El jugador no cumple con la condición, no se puede inscribir")
+			throw new BusinessException("El jugador no cumple con la condicion, no se puede inscribir")
 		}
 		if (this.cantJugadores < 10) {
 			this.agregarJugador(jugador)
@@ -106,11 +106,11 @@ class Partido {
 			return
 		}
 		if (!this.jugadores.exists[inscripto|jugador.tieneMasPrioridadQue(inscripto)]) {
-			throw new BusinessException("No hay más cupo")
+			throw new BusinessException("No hay mas cupo")
 		}
 
 		val quien = this.jugadores.filter[unJugador|unJugador.prioridad > jugador.prioridad].head
-		this.eliminarJugador(quien) //no se notifica baja porque si queda con 9, al reemplazar vuelve a 10 y es por reemplazo
+		this.eliminarJugador(quien)
 		this.agregarJugador(jugador)
 		this.notificarInscripcion(jugador)
 	}

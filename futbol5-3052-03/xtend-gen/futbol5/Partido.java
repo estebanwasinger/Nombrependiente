@@ -142,7 +142,7 @@ public class Partido {
       boolean _estaInscripto = this.estaInscripto(jugador);
       boolean _not = (!_estaInscripto);
       if (_not) {
-        throw new BusinessException("El jugador no está inscripto en este partido, no se puede dar de baja");
+        throw new BusinessException("El jugador no esta inscripto en este partido, no se puede dar de baja");
       }
       boolean _and = false;
       boolean _notEquals = (!Objects.equal(reemplazo, null));
@@ -153,7 +153,7 @@ public class Partido {
         _and = _estaInscripto_1;
       }
       if (_and) {
-        throw new BusinessException("El reemplazo ya está inscripto en el partido");
+        throw new BusinessException("El reemplazo ya esta inscripto en el partido");
       }
       this.eliminarJugador(jugador);
       boolean _notEquals_1 = (!Objects.equal(reemplazo, null));
@@ -176,13 +176,13 @@ public class Partido {
     try {
       boolean _estaInscripto = this.estaInscripto(jugador);
       if (_estaInscripto) {
-        throw new BusinessException("El jugador ya se inscribió");
+        throw new BusinessException("El jugador ya se inscribio");
       }
       TipoInscripcion _tipoInscripcion = jugador.getTipoInscripcion();
       boolean _cumpleCondicion = _tipoInscripcion.cumpleCondicion(jugador, this);
       boolean _not = (!_cumpleCondicion);
       if (_not) {
-        throw new BusinessException("El jugador no cumple con la condición, no se puede inscribir");
+        throw new BusinessException("El jugador no cumple con la condicion, no se puede inscribir");
       }
       int _cantJugadores = this.cantJugadores();
       boolean _lessThan = (_cantJugadores < 10);
@@ -200,7 +200,7 @@ public class Partido {
       boolean _exists = IterableExtensions.<Jugador>exists(_jugadores, _function);
       boolean _not_1 = (!_exists);
       if (_not_1) {
-        throw new BusinessException("No hay más cupo");
+        throw new BusinessException("No hay mas cupo");
       }
       LinkedList<Jugador> _jugadores_1 = this.getJugadores();
       final Function1<Jugador,Boolean> _function_1 = new Function1<Jugador,Boolean>() {

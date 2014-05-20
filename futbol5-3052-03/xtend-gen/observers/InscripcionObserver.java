@@ -14,9 +14,9 @@ public class InscripcionObserver extends PartidoObserver {
   }
   
   public void avisarle(final Jugador emisor, final Jugador receptor) {
-    final String asunto = "Inscripci�n de un amigo";
+    final String asunto = "Inscripcion de un amigo";
     String _email = emisor.getEmail();
-    final String mensaje = (_email + "se inscribi� al partido");
+    final String mensaje = (_email + "se inscribio al partido");
     String _email_1 = receptor.getEmail();
     this.enviarNotificacion(_email_1, asunto, mensaje);
   }

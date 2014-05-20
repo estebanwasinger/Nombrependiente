@@ -11,8 +11,8 @@ class InscripcionObserver extends PartidoObserver{
 	}
 	
 	def  avisarle(Jugador emisor, Jugador receptor){
-		val asunto=	"Inscripci�n de un amigo"
-		val mensaje= emisor.email + "se inscribi� al partido"
+		val asunto=	"Inscripcion de un amigo"
+		val mensaje= emisor.email + "se inscribio al partido"
 		enviarNotificacion(receptor.email, asunto, mensaje)
 	}
 	
