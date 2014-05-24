@@ -15,8 +15,10 @@ class Jugador {
 	@Property List<Jugador> amigos
 	@Property List<Notificacion> notificaciones
 	@Property Administrador administrador
+	// falta coleccion de infracciones en jugador
 	@Property int diasDeInfraccion
-
+    // FALTA INFRACCION COMO ABSTRACCION
+    
 	def initialize() {
 		amigos = new ArrayList<Jugador>
 		diasDeInfraccion = 0
