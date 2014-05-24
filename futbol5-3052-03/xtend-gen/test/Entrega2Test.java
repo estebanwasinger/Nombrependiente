@@ -19,7 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.verification.VerificationMode;
 
 @SuppressWarnings("all")
-public class ObserversTest {
+public class Entrega2Test {
   private Jugador jugador;
   
   private Jugador amigo1;

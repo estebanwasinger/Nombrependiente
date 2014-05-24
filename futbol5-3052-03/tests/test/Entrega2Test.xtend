@@ -15,7 +15,7 @@ import junit.framework.Assert
 import observers.EquipoIncompletoObserver
 import observers.BajaSinReemplazoObserver
 
-class ObserversTest {
+class Entrega2Test {
 		Jugador jugador 
 		Jugador amigo1
 		Jugador amigo2

@@ -12,7 +12,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class PartidoTest {
+class Entrega1Test {
 	Jugador jugador 
 	Jugador reemplazo
 	Jugador jugador1

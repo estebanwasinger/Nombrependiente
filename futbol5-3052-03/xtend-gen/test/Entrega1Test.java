@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 @SuppressWarnings("all")
-public class PartidoTest {
+public class Entrega1Test {
   private Jugador jugador;
   
   private Jugador reemplazo;

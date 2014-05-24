@@ -1,6 +1,8 @@
 package futbol5;
 
+import auxiliares.RegistroRechazo;
 import com.google.common.base.Objects;
+import command.Decision;
 import excepciones.BusinessException;
 import futbol5.Administrador;
 import futbol5.Jugador;
@@ -65,6 +67,26 @@ public class Partido {
     this._administrador = administrador;
   }
   
+  private List<Jugador> _jugadoresAceptados;
+  
+  public List<Jugador> getJugadoresAceptados() {
+    return this._jugadoresAceptados;
+  }
+  
+  public void setJugadoresAceptados(final List<Jugador> jugadoresAceptados) {
+    this._jugadoresAceptados = jugadoresAceptados;
+  }
+  
+  private List<RegistroRechazo> _jugadoresRechazados;
+  
+  public List<RegistroRechazo> getJugadoresRechazados() {
+    return this._jugadoresRechazados;
+  }
+  
+  public void setJugadoresRechazados(final List<RegistroRechazo> jugadoresRechazados) {
+    this._jugadoresRechazados = jugadoresRechazados;
+  }
+  
   public Partido(final String localidad) {
     this.setLocalidad(localidad);
     LinkedList<Jugador> _linkedList = new LinkedList<Jugador>();
@@ -73,6 +95,10 @@ public class Partido {
     this.setAltasObservers(_linkedList_1);
     LinkedList<PartidoObserver> _linkedList_2 = new LinkedList<PartidoObserver>();
     this.setBajasObservers(_linkedList_2);
+    LinkedList<Jugador> _linkedList_3 = new LinkedList<Jugador>();
+    this.setJugadoresAceptados(_linkedList_3);
+    LinkedList<RegistroRechazo> _linkedList_4 = new LinkedList<RegistroRechazo>();
+    this.setJugadoresRechazados(_linkedList_4);
     Administrador _instance = Administrador.getInstance();
     this.setAdministrador(_instance);
   }
@@ -135,6 +161,10 @@ public class Partido {
   public boolean quitarObserverBaja(final PartidoObserver observer) {
     List<PartidoObserver> _bajasObservers = this.getBajasObservers();
     return _bajasObservers.remove(observer);
+  }
+  
+  public void jugadorProponeA(final Jugador jugador, final Decision decision, final String motivo) {
+    decision.registrarDecision(jugador, this, motivo);
   }
   
   public void baja(final Jugador jugador, final Jugador reemplazo) {
