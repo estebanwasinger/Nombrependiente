@@ -15,6 +15,7 @@ class Partido {
 	@Property var List<PartidoObserver> bajasObservers
 	@Property var Administrador administrador
 	@Property var Sistema sistema
+	@Property var LinkedList<Jugador> jugadoresRecomendados
 
 	/****************/
 	/*CONSTRUCTORES*/
@@ -24,6 +25,7 @@ class Partido {
 		jugadores = new LinkedList<Jugador>
 		altasObservers = new LinkedList<PartidoObserver>
 		bajasObservers = new LinkedList<PartidoObserver>
+		jugadoresRecomendados = new LinkedList<Jugador>
 		administrador = Administrador::getInstance()
 		sistema = new Sistema
 	}
@@ -75,10 +77,14 @@ class Partido {
 	/*CASO DE USO: NUEVOS JUGADORES */
 	/*******************************/
 def jugadorProponeA(Jugador jugador){
-		var RegistroRechazo registro
-		var String motivo 
+		this.jugadoresRecomendados.add(jugador)
+		administrador.decisionATomar(decision) /*?????????VER */
+		}
 		
-		if (decisionAdmin=true){ //hay que ver en donde va el bool true o false de la decision del admin
+		/*Este caso no se si va aca, con el cambio de listas
+		 var RegistroRechazo registro
+		var String motivo 
+		 if (decisionAdmin=true){ //hay que ver en donde va el bool true o false de la decision del admin
 			sistema.jugadoresAceptados.add(jugador)
 			inscribir(jugador)
 		}else{
@@ -86,7 +92,7 @@ def jugadorProponeA(Jugador jugador){
 			registro = new RegistroRechazo(motivo) //predeterminado (sin parametro ), tipo un string comun y listo
 			sistema.jugadoresRechazados.add(registro)
 		}
-	}
+	}*/
 		
 	/*******************************/
 	/****CASO DE USO: CALIFICACIONES ****/

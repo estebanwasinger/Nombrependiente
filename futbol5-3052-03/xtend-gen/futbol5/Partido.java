@@ -77,6 +77,16 @@ public class Partido {
     this._sistema = sistema;
   }
   
+  private LinkedList<Jugador> _jugadoresRecomendados;
+  
+  public LinkedList<Jugador> getJugadoresRecomendados() {
+    return this._jugadoresRecomendados;
+  }
+  
+  public void setJugadoresRecomendados(final LinkedList<Jugador> jugadoresRecomendados) {
+    this._jugadoresRecomendados = jugadoresRecomendados;
+  }
+  
   public Partido(final String localidad) {
     this.setLocalidad(localidad);
     LinkedList<Jugador> _linkedList = new LinkedList<Jugador>();
@@ -85,6 +95,8 @@ public class Partido {
     this.setAltasObservers(_linkedList_1);
     LinkedList<PartidoObserver> _linkedList_2 = new LinkedList<PartidoObserver>();
     this.setBajasObservers(_linkedList_2);
+    LinkedList<Jugador> _linkedList_3 = new LinkedList<Jugador>();
+    this.setJugadoresRecomendados(_linkedList_3);
     Administrador _instance = Administrador.getInstance();
     this.setAdministrador(_instance);
     Sistema _sistema = new Sistema();
@@ -151,10 +163,10 @@ public class Partido {
     return _bajasObservers.remove(observer);
   }
   
-  public Boolean jugadorProponeA(final Jugador jugador) {
+  public Object jugadorProponeA(final Jugador jugador) {
     throw new Error("Unresolved compilation problems:"
-      + "\nThe method or field decisionAdmin is undefined for the type Partido"
-      + "\nThe method motivoParaRechazarA is undefined for the type Partido");
+      + "\nThe method decisionATomar is undefined for the type Partido"
+      + "\nThe method or field decision is undefined for the type Partido");
   }
   
   public boolean calificar(final Jugador calificador, final Jugador calificado, final int nota, final String critica) {

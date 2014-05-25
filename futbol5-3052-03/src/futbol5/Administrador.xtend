@@ -12,5 +12,6 @@ class Administrador {
 		unico
 	}
 	
+	/*def decisionATomar(decision)*/
 	
 }

@@ -9,3 +9,9 @@
 /.PartidoObserver.java._trace
 /.AltasObserver.java._trace
 /.BajasObserver.java._trace
+/BajaSinReemplazoObserver.java
+/EquipoCompletoObserver.java
+/EquipoIncompletoObserver.java
+/InscripcionObserver.java
+/Notificacion.java
+/PartidoObserver.java

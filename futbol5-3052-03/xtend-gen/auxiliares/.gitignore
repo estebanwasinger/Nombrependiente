@@ -3,3 +3,5 @@
 /.StubMailSender.java._trace
 /.RegistroRechazo.java._trace
 /.RegistroAceptacion.java._trace
+/MessageSender.java
+/RegistroRechazo.java
