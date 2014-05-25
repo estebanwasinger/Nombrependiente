@@ -17,6 +17,10 @@ class Administrador {
 		}
 		unico
 	}
+	
+	new(){
+		sistema = new Sistema
+	}
 		
 	def revisarRecomendados(Partido partido) {
 		partido.jugadoresRecomendados.forEach[jugador| tomarUnaDecision(jugador, partido)]

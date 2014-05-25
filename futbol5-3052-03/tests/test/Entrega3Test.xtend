@@ -7,7 +7,6 @@ import org.junit.Before
 import org.junit.Test
 import excepciones.BusinessException
 import futbol5.Sistema
-import auxiliares.RegistroRechazo
 import futbol5.Administrador
 
 class Entrega3Test {
@@ -15,13 +14,15 @@ class Entrega3Test {
 	Partido partido
 	Administrador administrador
 	Sistema sistema
-	String motivo
 	
 	@Before
 		def void setUP() {
 			jugador = new Jugador
+			administrador = new Administrador
+			sistema = new Sistema
 			partido = new Partido("Villa Fiorito")
-			motivo = "Se rechaza porque es mujer"		
+			administrador.motivo = "Se rechaza porque es mujer"		
+			administrador.aceptar = true
 		}
 	
 	def armarPartido(int max) {
@@ -35,9 +36,11 @@ class Entrega3Test {
 	@Test
 	def void testSeProponeUnJugadorEsAceptadoYSePuedeInscribir(){
 		partido.jugadorProponeA(jugador)
-		administrador.tomarUnaDesicion(jugador)
+		administrador.tomarUnaDecision(jugador, partido)
+		
 		Assert.assertEquals(0, partido.jugadoresRecomendados.size)
 		Assert.assertEquals(1, sistema.jugadoresAceptados.size)
+		Assert.assertEquals(0, sistema.jugadoresRechazados.size)
 		Assert.assertTrue(partido.estaInscripto(jugador))
 	}
 	
@@ -45,18 +48,17 @@ class Entrega3Test {
 	def void testSeProponeUnJugadorEsAceptadoYNoSePuedeInscribir(){
 		armarPartido(10)
 		partido.jugadorProponeA(jugador)
-		administrador.tomarUnaDecision(jugador)
-		Assert.assertEquals(0, partido.jugadoresRecomendados.size)
-		Assert.assertEquals(1, sistema.jugadoresAceptados.size)
+		administrador.tomarUnaDecision(jugador, partido) //el equipo esta lleno y por eso no se lo inscribe
 	}
 	
 	@Test
 	def void testSeProponeUnJugadorYEsRechazado(){
+		administrador.aceptar = false
 		partido.jugadorProponeA(jugador)
-		administrador.tomarUnaDecision(jugador)
+		administrador.tomarUnaDecision(jugador, partido)
 		Assert.assertEquals(0, partido.jugadoresRecomendados.size)
 		Assert.assertEquals(1, sistema.jugadoresRechazados.size)
-	
+		Assert.assertEquals(0, sistema.jugadoresAceptados.size)
 		Assert.assertFalse(partido.estaInscripto(jugador))
 	}
 	

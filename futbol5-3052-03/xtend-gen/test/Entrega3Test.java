@@ -1,10 +1,14 @@
 package test;
 
+import auxiliares.RegistroRechazo;
 import excepciones.BusinessException;
 import futbol5.Administrador;
 import futbol5.Jugador;
 import futbol5.Partido;
 import futbol5.Sistema;
+import java.util.LinkedList;
+import java.util.List;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,15 +22,18 @@ public class Entrega3Test {
   
   private Sistema sistema;
   
-  private String motivo;
-  
   @Before
   public void setUP() {
     Jugador _jugador = new Jugador();
     this.jugador = _jugador;
+    Administrador _administrador = new Administrador();
+    this.administrador = _administrador;
+    Sistema _sistema = new Sistema();
+    this.sistema = _sistema;
     Partido _partido = new Partido("Villa Fiorito");
     this.partido = _partido;
-    this.motivo = "Se rechaza porque es mujer";
+    this.administrador.setMotivo("Se rechaza porque es mujer");
+    this.administrador.setAceptar(Boolean.valueOf(true));
   }
   
   public void armarPartido(final int max) {
@@ -44,19 +51,43 @@ public class Entrega3Test {
   
   @Test
   public void testSeProponeUnJugadorEsAceptadoYSePuedeInscribir() {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method tomarUnaDesicion is undefined for the type Entrega3Test");
+    this.partido.jugadorProponeA(this.jugador);
+    this.administrador.tomarUnaDecision(this.jugador, this.partido);
+    LinkedList<Jugador> _jugadoresRecomendados = this.partido.getJugadoresRecomendados();
+    int _size = _jugadoresRecomendados.size();
+    Assert.assertEquals(0, _size);
+    List<Jugador> _jugadoresAceptados = this.sistema.getJugadoresAceptados();
+    int _size_1 = _jugadoresAceptados.size();
+    Assert.assertEquals(1, _size_1);
+    List<RegistroRechazo> _jugadoresRechazados = this.sistema.getJugadoresRechazados();
+    int _size_2 = _jugadoresRechazados.size();
+    Assert.assertEquals(0, _size_2);
+    boolean _estaInscripto = this.partido.estaInscripto(this.jugador);
+    Assert.assertTrue(_estaInscripto);
   }
   
   @Test(expected = BusinessException.class)
   public void testSeProponeUnJugadorEsAceptadoYNoSePuedeInscribir() {
-    throw new Error("Unresolved compilation problems:"
-      + "\nInvalid number of arguments. The method tomarUnaDecision(Jugador, Partido) is not applicable for the arguments (Jugador)");
+    this.armarPartido(10);
+    this.partido.jugadorProponeA(this.jugador);
+    this.administrador.tomarUnaDecision(this.jugador, this.partido);
   }
   
   @Test
   public void testSeProponeUnJugadorYEsRechazado() {
-    throw new Error("Unresolved compilation problems:"
-      + "\nInvalid number of arguments. The method tomarUnaDecision(Jugador, Partido) is not applicable for the arguments (Jugador)");
+    this.administrador.setAceptar(Boolean.valueOf(false));
+    this.partido.jugadorProponeA(this.jugador);
+    this.administrador.tomarUnaDecision(this.jugador, this.partido);
+    LinkedList<Jugador> _jugadoresRecomendados = this.partido.getJugadoresRecomendados();
+    int _size = _jugadoresRecomendados.size();
+    Assert.assertEquals(0, _size);
+    List<RegistroRechazo> _jugadoresRechazados = this.sistema.getJugadoresRechazados();
+    int _size_1 = _jugadoresRechazados.size();
+    Assert.assertEquals(1, _size_1);
+    List<Jugador> _jugadoresAceptados = this.sistema.getJugadoresAceptados();
+    int _size_2 = _jugadoresAceptados.size();
+    Assert.assertEquals(0, _size_2);
+    boolean _estaInscripto = this.partido.estaInscripto(this.jugador);
+    Assert.assertFalse(_estaInscripto);
   }
 }
