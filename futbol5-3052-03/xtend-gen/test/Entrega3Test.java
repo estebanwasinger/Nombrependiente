@@ -1,14 +1,10 @@
 package test;
 
-import auxiliares.RegistroRechazo;
 import command.Aceptar;
 import command.Rechazar;
 import excepciones.BusinessException;
 import futbol5.Jugador;
 import futbol5.Partido;
-import java.util.LinkedList;
-import java.util.List;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -52,33 +48,23 @@ public class Entrega3Test {
   
   @Test
   public void testSeProponeUnJugadorEsAceptadoYSePuedeInscribir() {
-    this.partido.jugadorProponeA(this.jugador, this.decisionAceptar, this.motivo);
-    List<Jugador> _jugadoresAceptados = this.partido.getJugadoresAceptados();
-    int _size = _jugadoresAceptados.size();
-    Assert.assertEquals(1, _size);
-    LinkedList<Jugador> _jugadores = this.partido.getJugadores();
-    int _size_1 = _jugadores.size();
-    Assert.assertEquals(1, _size_1);
-    boolean _estaInscripto = this.partido.estaInscripto(this.jugador);
-    Assert.assertTrue(_estaInscripto);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method jugadorProponeA is undefined for the type Entrega3Test"
+      + "\nThe method jugadoresAceptados is undefined for the type Entrega3Test"
+      + "\nsize cannot be resolved");
   }
   
   @Test(expected = BusinessException.class)
   public void testSeProponeUnJugadorEsAceptadoYNoSePuedeInscribir() {
-    this.armarPartido(10);
-    this.partido.jugadorProponeA(this.jugador, this.decisionAceptar, this.motivo);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method jugadorProponeA is undefined for the type Entrega3Test");
   }
   
   @Test
   public void testSeProponeUnJugadorYEsRechazado() {
-    this.partido.jugadorProponeA(this.jugador, this.decisionRechazar, this.motivo);
-    List<RegistroRechazo> _jugadoresRechazados = this.partido.getJugadoresRechazados();
-    int _size = _jugadoresRechazados.size();
-    Assert.assertEquals(1, _size);
-    LinkedList<Jugador> _jugadores = this.partido.getJugadores();
-    int _size_1 = _jugadores.size();
-    Assert.assertEquals(0, _size_1);
-    boolean _estaInscripto = this.partido.estaInscripto(this.jugador);
-    Assert.assertFalse(_estaInscripto);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method jugadorProponeA is undefined for the type Entrega3Test"
+      + "\nThe method jugadoresRechazados is undefined for the type Entrega3Test"
+      + "\nsize cannot be resolved");
   }
 }

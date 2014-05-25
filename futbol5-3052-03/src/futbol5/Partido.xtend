@@ -4,8 +4,6 @@ import java.util.List
 import java.util.LinkedList
 import excepciones.BusinessException
 import observers.PartidoObserver
-import command.Decision
-import auxiliares.RegistroRechazo
 import calificaciones.Calificacion
 
 class Partido {
@@ -15,8 +13,6 @@ class Partido {
 	@Property var List<PartidoObserver> altasObservers
 	@Property var List<PartidoObserver> bajasObservers
 	@Property var Administrador administrador
-	@Property var List<Jugador> jugadoresAceptados
-	@Property var List<RegistroRechazo> jugadoresRechazados
 
 	/****************/
 	/*CONSTRUCTORES*/
@@ -26,8 +22,6 @@ class Partido {
 		jugadores = new LinkedList<Jugador>
 		altasObservers = new LinkedList<PartidoObserver>
 		bajasObservers = new LinkedList<PartidoObserver>
-		jugadoresAceptados = new LinkedList<Jugador>
-		jugadoresRechazados = new LinkedList<RegistroRechazo>
 		administrador = Administrador::getInstance()
 	}
 
@@ -73,14 +67,7 @@ class Partido {
 	def quitarObserverBaja(PartidoObserver observer) {
 		this.bajasObservers.remove(observer)
 	}
-	
-	/*******************************/
-	/*CASO DE USO: NUEVOS JUGADORES */
-	/*******************************/
-	def jugadorProponeA(Jugador jugador, Decision decision, String motivo){
-		decision.registrarDecision(jugador, this, motivo)		
-	}
-	
+		
 	/*******************************/
 	/****CASO DE USO: CALIFICACIONES ****/
 	/*******************************/
