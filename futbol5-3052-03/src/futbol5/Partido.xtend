@@ -5,6 +5,7 @@ import java.util.LinkedList
 import excepciones.BusinessException
 import observers.PartidoObserver
 import calificaciones.Calificacion
+import auxiliares.RegistroRechazo
 
 class Partido {
 
@@ -13,6 +14,7 @@ class Partido {
 	@Property var List<PartidoObserver> altasObservers
 	@Property var List<PartidoObserver> bajasObservers
 	@Property var Administrador administrador
+	@Property var Sistema sistema
 
 	/****************/
 	/*CONSTRUCTORES*/
@@ -23,6 +25,7 @@ class Partido {
 		altasObservers = new LinkedList<PartidoObserver>
 		bajasObservers = new LinkedList<PartidoObserver>
 		administrador = Administrador::getInstance()
+		sistema = new Sistema
 	}
 
 	/********************/
@@ -66,6 +69,23 @@ class Partido {
 
 	def quitarObserverBaja(PartidoObserver observer) {
 		this.bajasObservers.remove(observer)
+	}
+		
+	/*******************************/
+	/*CASO DE USO: NUEVOS JUGADORES */
+	/*******************************/
+def jugadorProponeA(Jugador jugador){
+		var RegistroRechazo registro
+		var String motivo 
+		
+		if (decisionAdmin=true){ //hay que ver en donde va el bool true o false de la decision del admin
+			sistema.jugadoresAceptados.add(jugador)
+			inscribir(jugador)
+		}else{
+			motivo = motivoParaRechazarA(jugador) //el metodo este es del admin tmb, puede ser en base al jugador como ser uno
+			registro = new RegistroRechazo(motivo) //predeterminado (sin parametro ), tipo un string comun y listo
+			sistema.jugadoresRechazados.add(registro)
+		}
 	}
 		
 	/*******************************/

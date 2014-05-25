@@ -5,6 +5,7 @@ import com.google.common.base.Objects;
 import excepciones.BusinessException;
 import futbol5.Administrador;
 import futbol5.Jugador;
+import futbol5.Sistema;
 import inscripciones.TipoInscripcion;
 import java.util.LinkedList;
 import java.util.List;
@@ -66,6 +67,16 @@ public class Partido {
     this._administrador = administrador;
   }
   
+  private Sistema _sistema;
+  
+  public Sistema getSistema() {
+    return this._sistema;
+  }
+  
+  public void setSistema(final Sistema sistema) {
+    this._sistema = sistema;
+  }
+  
   public Partido(final String localidad) {
     this.setLocalidad(localidad);
     LinkedList<Jugador> _linkedList = new LinkedList<Jugador>();
@@ -76,6 +87,8 @@ public class Partido {
     this.setBajasObservers(_linkedList_2);
     Administrador _instance = Administrador.getInstance();
     this.setAdministrador(_instance);
+    Sistema _sistema = new Sistema();
+    this.setSistema(_sistema);
   }
   
   public void notificarInscripcion(final Jugador jugador) {
@@ -136,6 +149,12 @@ public class Partido {
   public boolean quitarObserverBaja(final PartidoObserver observer) {
     List<PartidoObserver> _bajasObservers = this.getBajasObservers();
     return _bajasObservers.remove(observer);
+  }
+  
+  public Boolean jugadorProponeA(final Jugador jugador) {
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method or field decisionAdmin is undefined for the type Partido"
+      + "\nThe method motivoParaRechazarA is undefined for the type Partido");
   }
   
   public boolean calificar(final Jugador calificador, final Jugador calificado, final int nota, final String critica) {

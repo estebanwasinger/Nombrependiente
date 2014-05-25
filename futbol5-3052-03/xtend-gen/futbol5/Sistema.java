@@ -33,12 +33,4 @@ public class Sistema {
     LinkedList<RegistroRechazo> _linkedList_1 = new LinkedList<RegistroRechazo>();
     this.setJugadoresRechazados(_linkedList_1);
   }
-  
-  public Object jugadorProponeA(final Jugador jugador) {
-    return null;
-  }
-  
-  public Object decisionAdministrador(final boolean decision, final String motivo) {
-    return null;
-  }
 }

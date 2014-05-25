@@ -1,7 +1,5 @@
 package test;
 
-import command.Aceptar;
-import command.Rechazar;
 import excepciones.BusinessException;
 import futbol5.Jugador;
 import futbol5.Partido;
@@ -14,23 +12,17 @@ public class Entrega3Test {
   
   private Partido partido;
   
-  private Aceptar decisionAceptar;
+  private /* Aceptar */Object decisionAceptar;
   
-  private Rechazar decisionRechazar;
+  private /* Rechazar */Object decisionRechazar;
   
   private String motivo;
   
   @Before
   public void setUP() {
-    Jugador _jugador = new Jugador();
-    this.jugador = _jugador;
-    Partido _partido = new Partido("Villa Fiorito");
-    this.partido = _partido;
-    Aceptar _aceptar = new Aceptar();
-    this.decisionAceptar = _aceptar;
-    Rechazar _rechazar = new Rechazar();
-    this.decisionRechazar = _rechazar;
-    this.motivo = "Se rechaza porque es mujer";
+    throw new Error("Unresolved compilation problems:"
+      + "\nAceptar cannot be resolved."
+      + "\nRechazar cannot be resolved.");
   }
   
   public void armarPartido(final int max) {
@@ -49,22 +41,22 @@ public class Entrega3Test {
   @Test
   public void testSeProponeUnJugadorEsAceptadoYSePuedeInscribir() {
     throw new Error("Unresolved compilation problems:"
-      + "\nThe method jugadorProponeA is undefined for the type Entrega3Test"
       + "\nThe method jugadoresAceptados is undefined for the type Entrega3Test"
+      + "\nInvalid number of arguments. The method jugadorProponeA(Jugador) is not applicable for the arguments (Jugador,Aceptar,String)"
       + "\nsize cannot be resolved");
   }
   
   @Test(expected = BusinessException.class)
   public void testSeProponeUnJugadorEsAceptadoYNoSePuedeInscribir() {
     throw new Error("Unresolved compilation problems:"
-      + "\nThe method jugadorProponeA is undefined for the type Entrega3Test");
+      + "\nInvalid number of arguments. The method jugadorProponeA(Jugador) is not applicable for the arguments (Jugador,Aceptar,String)");
   }
   
   @Test
   public void testSeProponeUnJugadorYEsRechazado() {
     throw new Error("Unresolved compilation problems:"
-      + "\nThe method jugadorProponeA is undefined for the type Entrega3Test"
       + "\nThe method jugadoresRechazados is undefined for the type Entrega3Test"
+      + "\nInvalid number of arguments. The method jugadorProponeA(Jugador) is not applicable for the arguments (Jugador,Rechazar,String)"
       + "\nsize cannot be resolved");
   }
 }

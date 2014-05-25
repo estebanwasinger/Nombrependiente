@@ -12,12 +12,4 @@ class Sistema {
 		jugadoresAceptados = new LinkedList<Jugador>
 		jugadoresRechazados = new LinkedList<RegistroRechazo>	
 		}
-		
-	/*******************************/
-	/*CASO DE USO: NUEVOS JUGADORES */
-	/*******************************/
-	def jugadorProponeA(Jugador jugador){}
-	
-	def decisionAdministrador(boolean decision, String motivo){}
-
 }
