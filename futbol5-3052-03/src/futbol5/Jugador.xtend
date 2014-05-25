@@ -22,6 +22,7 @@ class Jugador {
 		amigos = new ArrayList<Jugador>
 		infracciones = new ArrayList<Infraccion>
 		administrador = Administrador::getInstance()
+		calificaciones = new ArrayList<Calificacion>
 	}
 	
 	def agregarAmigo(Jugador jugador) {

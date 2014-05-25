@@ -55,7 +55,7 @@ public class Calificacion {
     this._partido = partido;
   }
   
-  public void generar(final Jugador jugadorQueCalifica, final Jugador jugadorACalificar, final Integer nota, final String critica, final Partido partido) {
+  public Calificacion(final Jugador jugadorQueCalifica, final Jugador jugadorACalificar, final Integer nota, final String critica, final Partido partido) {
     this.setJugadorQueCalifica(jugadorQueCalifica);
     this.setJugadorACalificar(jugadorACalificar);
     this.setNota((nota).intValue());

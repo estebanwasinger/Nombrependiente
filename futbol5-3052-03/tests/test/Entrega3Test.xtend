@@ -12,6 +12,7 @@ import futbol5.Administrador
 
 class Entrega3Test {
 	Jugador jugador
+	Jugador jugadorcalificado
 	Partido partido
 	Administrador administrador
 	Sistema sistema
@@ -20,6 +21,7 @@ class Entrega3Test {
 	@Before
 		def void setUP() {
 			jugador = new Jugador
+			jugadorcalificado = new Jugador
 			partido = new Partido("Villa Fiorito")
 			motivo = "Se rechaza porque es mujer"		
 		}
@@ -59,5 +61,33 @@ class Entrega3Test {
 	
 		Assert.assertFalse(partido.estaInscripto(jugador))
 	}
+	
+	
+	@Test(expected=typeof(BusinessException))
+    def void testCalificacionAJugadorQueNoJugo(){
+        partido.inscribir(jugador)
+        armarPartido(9)
+        partido.calificar(jugador, jugadorcalificado, 10, "excelente")
+        
+        }
+        
+   @Test(expected=typeof(BusinessException))
+    def void testDesconocidoCalificaJugador(){
+        partido.inscribir(jugadorcalificado)
+        armarPartido(9)
+        partido.calificar(jugador,jugadorcalificado,10,"normal")
+   
+    }
+    
+@Test
+    def void testJugadorCalificaASuCompañero(){
+        partido.inscribir(jugador)
+        partido.inscribir(jugadorcalificado)
+        armarPartido(8)
+        partido.calificar(jugador,jugadorcalificado,10,"excelente")
+        Assert.assertEquals(1, jugadorcalificado.calificaciones.size)
+        
+    }
+	
 	
 	}

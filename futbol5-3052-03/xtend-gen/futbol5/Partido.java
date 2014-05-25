@@ -172,7 +172,6 @@ public class Partido {
     try {
       boolean _xblockexpression = false;
       {
-        Calificacion calificacion = null;
         boolean _estaInscripto = this.estaInscripto(calificado);
         boolean _not = (!_estaInscripto);
         if (_not) {
@@ -183,9 +182,9 @@ public class Partido {
         if (_not_1) {
           throw new BusinessException("No podes calificar a un jugador de un partido si no estas inscripto al mismo");
         }
-        calificacion.generar(calificador, calificado, Integer.valueOf(nota), critica, this);
         List<Calificacion> _calificaciones = calificado.getCalificaciones();
-        _xblockexpression = _calificaciones.add(calificacion);
+        Calificacion _calificacion = new Calificacion(calificador, calificado, Integer.valueOf(nota), critica, this);
+        _xblockexpression = _calificaciones.add(_calificacion);
       }
       return _xblockexpression;
     } catch (Throwable _e) {

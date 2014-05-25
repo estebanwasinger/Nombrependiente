@@ -83,7 +83,6 @@ def jugadorProponeA(Jugador jugador){
 	/****CASO DE USO: CALIFICACIONES ****/
 	/*******************************/
 		def calificar (Jugador calificador, Jugador calificado, int nota, String critica){
-		var Calificacion calificacion
 		
 		if (!estaInscripto(calificado)){
 				throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado")
@@ -91,8 +90,7 @@ def jugadorProponeA(Jugador jugador){
 		if (!estaInscripto(calificador)){
 				throw new BusinessException("No podes calificar a un jugador de un partido si no estas inscripto al mismo")
 				}
-		calificacion.generar(calificador, calificado, nota, critica, this)
-		calificado.calificaciones.add(calificacion)
+		calificado.calificaciones.add(new Calificacion(calificador, calificado, nota, critica, this))
 	}
 
 	/*******************************/

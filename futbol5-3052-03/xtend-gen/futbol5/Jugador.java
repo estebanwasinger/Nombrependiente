@@ -89,6 +89,8 @@ public class Jugador {
     this.setInfracciones(_arrayList_1);
     Administrador _instance = Administrador.getInstance();
     this.setAdministrador(_instance);
+    ArrayList<Calificacion> _arrayList_2 = new ArrayList<Calificacion>();
+    this.setCalificaciones(_arrayList_2);
   }
   
   public boolean agregarAmigo(final Jugador jugador) {

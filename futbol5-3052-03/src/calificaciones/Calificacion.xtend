@@ -9,8 +9,9 @@ class Calificacion {
 	@Property int nota
 	@Property String critica
 	@Property Partido partido
-	
-	def void generar(Jugador jugadorQueCalifica, Jugador jugadorACalificar, Integer nota, String critica, Partido partido) {
+
+    
+	new(Jugador jugadorQueCalifica, Jugador jugadorACalificar, Integer nota, String critica, Partido partido) {
 			this.jugadorQueCalifica = jugadorQueCalifica
 			this.jugadorACalificar = jugadorACalificar
 			this.nota = nota
