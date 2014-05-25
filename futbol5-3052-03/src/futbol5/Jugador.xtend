@@ -5,6 +5,7 @@ import java.util.ArrayList
 import inscripciones.TipoInscripcion
 import inscripciones.Estandar
 import infracciones.Infraccion
+import calificaciones.Calificacion
 
 class Jugador {
 
@@ -13,6 +14,7 @@ class Jugador {
 	@Property String email
 	@Property List<Infraccion> infracciones
 	@Property List<Jugador> amigos
+	@Property List <Calificacion> calificaciones
 	@Property Administrador administrador
 	
 	new() {
@@ -37,4 +39,5 @@ class Jugador {
 	def int prioridad() {
 		tipoInscripcion.prioridad()
 	}
+	
 }

@@ -1,6 +1,7 @@
 package futbol5;
 
 import auxiliares.RegistroRechazo;
+import calificaciones.Calificacion;
 import com.google.common.base.Objects;
 import command.Decision;
 import excepciones.BusinessException;
@@ -165,6 +166,31 @@ public class Partido {
   
   public void jugadorProponeA(final Jugador jugador, final Decision decision, final String motivo) {
     decision.registrarDecision(jugador, this, motivo);
+  }
+  
+  public boolean calificar(final Jugador calificador, final Jugador calificado, final int nota, final String critica) {
+    try {
+      boolean _xblockexpression = false;
+      {
+        Calificacion calificacion = null;
+        boolean _estaInscripto = this.estaInscripto(calificado);
+        boolean _not = (!_estaInscripto);
+        if (_not) {
+          throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado");
+        }
+        boolean _estaInscripto_1 = this.estaInscripto(calificador);
+        boolean _not_1 = (!_estaInscripto_1);
+        if (_not_1) {
+          throw new BusinessException("No podes calificar a un jugador de un partido si no estas inscripto al mismo");
+        }
+        calificacion.generar(calificador, calificado, Integer.valueOf(nota), critica, this);
+        List<Calificacion> _calificaciones = calificado.getCalificaciones();
+        _xblockexpression = _calificaciones.add(calificacion);
+      }
+      return _xblockexpression;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   public void baja(final Jugador jugador, final Jugador reemplazo) {

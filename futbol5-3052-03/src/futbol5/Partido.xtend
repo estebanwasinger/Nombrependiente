@@ -6,6 +6,7 @@ import excepciones.BusinessException
 import observers.PartidoObserver
 import command.Decision
 import auxiliares.RegistroRechazo
+import calificaciones.Calificacion
 
 class Partido {
 
@@ -78,6 +79,22 @@ class Partido {
 	/*******************************/
 	def jugadorProponeA(Jugador jugador, Decision decision, String motivo){
 		decision.registrarDecision(jugador, this, motivo)		
+	}
+	
+	/*******************************/
+	/****CASO DE USO: CALIFICACIONES ****/
+	/*******************************/
+		def calificar (Jugador calificador, Jugador calificado, int nota, String critica){
+		var Calificacion calificacion
+		
+		if (!estaInscripto(calificado)){
+				throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado")
+				}
+		if (!estaInscripto(calificador)){
+				throw new BusinessException("No podes calificar a un jugador de un partido si no estas inscripto al mismo")
+				}
+		calificacion.generar(calificador, calificado, nota, critica, this)
+		calificado.calificaciones.add(calificacion)
 	}
 
 	/*******************************/

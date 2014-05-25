@@ -24,7 +24,7 @@ public class RegistroRechazo {
     this._motivoRechazo = motivoRechazo;
   }
   
-  public void generarNuevoRechazo(final String motivo) {
+  public void generar(final String motivo) {
     Date _date = new Date();
     this.setFechaDelDia(_date);
     this.setMotivoRechazo(motivo);

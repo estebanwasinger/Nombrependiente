@@ -10,13 +10,8 @@ import java.util.List;
 public class Rechazar implements Decision {
   private RegistroRechazo registro;
   
-  public Rechazar() {
-    RegistroRechazo _registroRechazo = new RegistroRechazo();
-    this.registro = _registroRechazo;
-  }
-  
   public void registrarDecision(final Jugador jugador, final Partido partido, final String motivo) {
-    this.registro.generarNuevoRechazo(motivo);
+    this.registro.generar(motivo);
     List<RegistroRechazo> _jugadoresRechazados = partido.getJugadoresRechazados();
     _jugadoresRechazados.add(this.registro);
   }

@@ -1,5 +1,6 @@
 package futbol5;
 
+import calificaciones.Calificacion;
 import futbol5.Administrador;
 import infracciones.Infraccion;
 import inscripciones.Estandar;
@@ -57,6 +58,16 @@ public class Jugador {
   
   public void setAmigos(final List<Jugador> amigos) {
     this._amigos = amigos;
+  }
+  
+  private List<Calificacion> _calificaciones;
+  
+  public List<Calificacion> getCalificaciones() {
+    return this._calificaciones;
+  }
+  
+  public void setCalificaciones(final List<Calificacion> calificaciones) {
+    this._calificaciones = calificaciones;
   }
   
   private Administrador _administrador;
