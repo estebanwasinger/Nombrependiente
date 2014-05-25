@@ -8,7 +8,7 @@ class Rechazar implements Decision {
 	var RegistroRechazo registro
 	
 	override registrarDecision(Jugador jugador, Partido partido, String motivo) {
-		registro.generar(motivo)
+		registro = new RegistroRechazo(motivo)
 		partido.jugadoresRechazados.add(registro)
 	}
 	

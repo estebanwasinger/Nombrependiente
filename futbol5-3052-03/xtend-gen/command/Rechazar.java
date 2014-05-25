@@ -11,7 +11,8 @@ public class Rechazar implements Decision {
   private RegistroRechazo registro;
   
   public void registrarDecision(final Jugador jugador, final Partido partido, final String motivo) {
-    this.registro.generar(motivo);
+    RegistroRechazo _registroRechazo = new RegistroRechazo(motivo);
+    this.registro = _registroRechazo;
     List<RegistroRechazo> _jugadoresRechazados = partido.getJugadoresRechazados();
     _jugadoresRechazados.add(this.registro);
   }
