@@ -5,7 +5,6 @@ import java.util.LinkedList
 import excepciones.BusinessException
 import observers.PartidoObserver
 import calificaciones.Calificacion
-import auxiliares.RegistroRechazo
 
 class Partido {
 
@@ -77,7 +76,7 @@ class Partido {
 	/*CASO DE USO: NUEVOS JUGADORES */
 	/*******************************/
 def jugadorProponeA(Jugador jugador){
-		this.jugadoresRecomendados.add(jugador)
+		jugadoresRecomendados.add(jugador)
 	}
 			
 	/*******************************/

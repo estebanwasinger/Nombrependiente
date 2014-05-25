@@ -1,38 +1,42 @@
 package futbol5
 
-import java.util.LinkedList
+import auxiliares.RegistroRechazo
 
 class Administrador {
 
 	@Property String email
-	@Property Boolean decisionATomar
+	@Property Boolean aceptar
 	@Property Sistema sistema
-	@Property var LinkedList<Partido> partidos
-	
-	
-	static Administrador unico
-	
-	Boolean True
+	@Property String motivo
 		
+	static Administrador unico
+			
 	def static Administrador getInstance() {
 		if (unico == null) {
 			unico = new Administrador
 		}
 		unico
 	}
-	def tomarUnaDecision(Jugador jugador){
-		if (this.decisionATomar=True){
-			partidos.forEach[partido| partido.jugadoresRecomendados.remove(jugador)]
-			sistema.jugadoresAceptados.add(jugador)
-			}
-		else 
-			motivo = motivoDeRechazo(jugador) 
-			registro = new RegistroRechazo(motivo) 
-			partidos.forEach[partido| partido.jugadoresRecomendados.remove(jugador]
-			sistema.jugadoresRechazados.add(registro)
-		}
-	
 		
+	def revisarRecomendados(Partido partido) {
+		partido.jugadoresRecomendados.forEach[jugador| tomarUnaDecision(jugador, partido)]
+	}
+	
+	def tomarUnaDecision(Jugador jugador, Partido partido){
+		var RegistroRechazo registro
+		
+		if (aceptar){
+			sistema.jugadoresAceptados.add(jugador)
+			partido.inscribir(jugador)
+			}else{ 
+			registro = new RegistroRechazo(motivo) 
+			sistema.jugadoresRechazados.add(registro)
+			}
+		partido.jugadoresRecomendados.remove(jugador)
+ }
+	
+	
+}
 	
 
   
