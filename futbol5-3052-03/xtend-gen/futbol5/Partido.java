@@ -163,10 +163,9 @@ public class Partido {
     return _bajasObservers.remove(observer);
   }
   
-  public Object jugadorProponeA(final Jugador jugador) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method decisionATomar is undefined for the type Partido"
-      + "\nThe method or field decision is undefined for the type Partido");
+  public boolean jugadorProponeA(final Jugador jugador) {
+    LinkedList<Jugador> _jugadoresRecomendados = this.getJugadoresRecomendados();
+    return _jugadoresRecomendados.add(jugador);
   }
   
   public boolean calificar(final Jugador calificador, final Jugador calificado, final int nota, final String critica) {

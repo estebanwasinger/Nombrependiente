@@ -10,4 +10,6 @@ class RegistroRechazo {
 		fechaDelDia = new Date
 		motivoRechazo = motivo
 	}
+	
+		
 }

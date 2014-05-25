@@ -78,22 +78,8 @@ class Partido {
 	/*******************************/
 def jugadorProponeA(Jugador jugador){
 		this.jugadoresRecomendados.add(jugador)
-		administrador.decisionATomar(decision) /*?????????VER */
-		}
-		
-		/*Este caso no se si va aca, con el cambio de listas
-		 var RegistroRechazo registro
-		var String motivo 
-		 if (decisionAdmin=true){ //hay que ver en donde va el bool true o false de la decision del admin
-			sistema.jugadoresAceptados.add(jugador)
-			inscribir(jugador)
-		}else{
-			motivo = motivoParaRechazarA(jugador) //el metodo este es del admin tmb, puede ser en base al jugador como ser uno
-			registro = new RegistroRechazo(motivo) //predeterminado (sin parametro ), tipo un string comun y listo
-			sistema.jugadoresRechazados.add(registro)
-		}
-	}*/
-		
+	}
+			
 	/*******************************/
 	/****CASO DE USO: CALIFICACIONES ****/
 	/*******************************/
