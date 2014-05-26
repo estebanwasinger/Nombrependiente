@@ -28,6 +28,7 @@ class Entrega3Test {
 			partido = new Partido("Villa Fiorito")
 			administrador.motivo = "Se rechaza porque es mujer"		
 			administrador.aceptar = true
+			limpiarListasDelSistema(sistema)
 		}
 	
 	def armarPartido(int max) {
@@ -52,7 +53,6 @@ class Entrega3Test {
 		Assert.assertEquals(1, sistema.jugadoresAceptados.size)
 		Assert.assertEquals(0, sistema.jugadoresRechazados.size)
 		Assert.assertTrue(partido.estaInscripto(jugador))
-		limpiarListasDelSistema(sistema)
 	}
 	
 	@Test(expected=typeof(BusinessException))
@@ -73,7 +73,6 @@ class Entrega3Test {
 		Assert.assertEquals(1, sistema.jugadoresRechazados.size)
 		Assert.assertEquals(0, sistema.jugadoresAceptados.size)
 		Assert.assertFalse(partido.estaInscripto(jugador))
-		limpiarListasDelSistema(sistema)
 	}
 	
 	

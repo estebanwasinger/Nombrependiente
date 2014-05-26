@@ -41,6 +41,7 @@ public class Entrega3Test {
     this.partido = _partido;
     this.administrador.setMotivo("Se rechaza porque es mujer");
     this.administrador.setAceptar(Boolean.valueOf(true));
+    this.limpiarListasDelSistema(this.sistema);
   }
   
   public void armarPartido(final int max) {
@@ -78,7 +79,6 @@ public class Entrega3Test {
     Assert.assertEquals(0, _size_2);
     boolean _estaInscripto = this.partido.estaInscripto(this.jugador);
     Assert.assertTrue(_estaInscripto);
-    this.limpiarListasDelSistema(this.sistema);
   }
   
   @Test(expected = BusinessException.class)
@@ -103,7 +103,6 @@ public class Entrega3Test {
     Assert.assertEquals(0, _size_2);
     boolean _estaInscripto = this.partido.estaInscripto(this.jugador);
     Assert.assertFalse(_estaInscripto);
-    this.limpiarListasDelSistema(this.sistema);
   }
   
   @Test(expected = BusinessException.class)
