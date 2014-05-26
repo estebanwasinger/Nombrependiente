@@ -22,7 +22,6 @@ class Entrega3Test {
 		def void setUP() {
 			jugador = new Jugador
 			administrador = new Administrador
-			//sistema = new Sistema
 			sistema = Sistema::getInstance()
 			jugadorcalificado = new Jugador
 			partido = new Partido("Villa Fiorito")
