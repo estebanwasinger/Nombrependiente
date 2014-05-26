@@ -167,7 +167,7 @@ public class Partido {
     return _jugadoresRecomendados.add(jugador);
   }
   
-  public boolean tomarDesicion(final Boolean desicion, final Jugador jugador, final String motivo) {
+  public boolean tomarDecision(final Boolean desicion, final Jugador jugador, final String motivo) {
     try {
       boolean _xifexpression = false;
       LinkedList<Jugador> _jugadoresRecomendados = this.getJugadoresRecomendados();

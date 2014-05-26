@@ -16,7 +16,6 @@ class Entrega3Test {
 	Partido partido
 	Administrador administrador
 	Sistema sistema
-	String motivo
 	
 	@Before
 		def void setUP() {
@@ -47,7 +46,7 @@ class Entrega3Test {
 	def void testSeProponeUnJugadorEsAceptadoYSePuedeInscribir(){
 		partido.jugadorProponeA(jugador)
 		//administrador.tomarUnaDecision(jugador, partido)
-		partido.tomarDesicion(true,jugador,null);
+		partido.tomarDecision(true,jugador,null);
 		Assert.assertEquals(0, partido.jugadoresRecomendados.size)
 		Assert.assertEquals(1, sistema.jugadoresAceptados.size)
 		Assert.assertEquals(0, sistema.jugadoresRechazados.size)
@@ -59,7 +58,7 @@ class Entrega3Test {
 		armarPartido(10)
 		partido.jugadorProponeA(jugador)
 		//administrador.tomarUnaDecision(jugador, partido) //el equipo esta lleno y por eso no se lo inscribe
-		partido.tomarDesicion(true,jugador,null)
+		partido.tomarDecision(true,jugador,null)
 	}
 	
 	@Test
@@ -67,7 +66,7 @@ class Entrega3Test {
 		//administrador.aceptar = false
 		partido.jugadorProponeA(jugador)
 		//administrador.tomarUnaDecision(jugador, partido)
-		partido.tomarDesicion(false,jugador,"Es un jugador agresivo")
+		partido.tomarDecision(false,jugador,"Es un jugador agresivo")
 		Assert.assertEquals(0, partido.jugadoresRecomendados.size)
 		Assert.assertEquals(1, sistema.jugadoresRechazados.size)
 		Assert.assertEquals(0, sistema.jugadoresAceptados.size)

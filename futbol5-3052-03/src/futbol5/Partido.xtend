@@ -79,7 +79,7 @@ class Partido {
 		jugadoresRecomendados.add(jugador)
 	}
 
-	def tomarDesicion(Boolean desicion, Jugador jugador, String motivo) {
+	def tomarDecision(Boolean desicion, Jugador jugador, String motivo) {
 		if (jugadoresRecomendados.remove(jugador) == false) {
 			throw new BusinessException("El jugador que se desea aceptar no se encuentra en la lista de recomendados")
 		} else {
@@ -93,22 +93,21 @@ class Partido {
 		}
 	}
 
-//	def aceptarJugadorRecomendado(Jugador jugador) {
-//		if (jugadoresRecomendados.remove(jugador) == false) {
-//			throw new BusinessException("El jugador que se desea aceptar no se encuentra en la lista de recomendados")
-//		} else {
-//			this.inscribir(jugador)
-//		}
-//
-//	}
-//
-//	def rechazarJugadorRecomendado(Jugador jugador, String motivo) {
-//		if (jugadoresRecomendados.remove(jugador) == false) {
-//			throw new BusinessException("El jugador que se desea rechazar no se encuentra en la lista de recomendados")
-//		}
-//		sistema.jugadoresRechazados.add(new RegistroRechazo(jugador, motivo))
-//	}
-
+	//	def aceptarJugadorRecomendado(Jugador jugador) {
+	//		if (jugadoresRecomendados.remove(jugador) == false) {
+	//			throw new BusinessException("El jugador que se desea aceptar no se encuentra en la lista de recomendados")
+	//		} else {
+	//			this.inscribir(jugador)
+	//		}
+	//
+	//	}
+	//
+	//	def rechazarJugadorRecomendado(Jugador jugador, String motivo) {
+	//		if (jugadoresRecomendados.remove(jugador) == false) {
+	//			throw new BusinessException("El jugador que se desea rechazar no se encuentra en la lista de recomendados")
+	//		}
+	//		sistema.jugadoresRechazados.add(new RegistroRechazo(jugador, motivo))
+	//	}
 	/*******************************/
 	/****CASO DE USO: CALIFICACIONES ****/
 	/*******************************/

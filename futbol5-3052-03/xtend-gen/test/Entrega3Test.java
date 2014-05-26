@@ -25,8 +25,6 @@ public class Entrega3Test {
   
   private Sistema sistema;
   
-  private String motivo;
-  
   @Before
   public void setUP() {
     Jugador _jugador = new Jugador();
@@ -67,7 +65,7 @@ public class Entrega3Test {
   @Test
   public void testSeProponeUnJugadorEsAceptadoYSePuedeInscribir() {
     this.partido.jugadorProponeA(this.jugador);
-    this.partido.tomarDesicion(Boolean.valueOf(true), this.jugador, null);
+    this.partido.tomarDecision(Boolean.valueOf(true), this.jugador, null);
     LinkedList<Jugador> _jugadoresRecomendados = this.partido.getJugadoresRecomendados();
     int _size = _jugadoresRecomendados.size();
     Assert.assertEquals(0, _size);
@@ -85,13 +83,13 @@ public class Entrega3Test {
   public void testSeProponeUnJugadorEsAceptadoYNoSePuedeInscribir() {
     this.armarPartido(10);
     this.partido.jugadorProponeA(this.jugador);
-    this.partido.tomarDesicion(Boolean.valueOf(true), this.jugador, null);
+    this.partido.tomarDecision(Boolean.valueOf(true), this.jugador, null);
   }
   
   @Test
   public void testSeProponeUnJugadorYEsRechazado() {
     this.partido.jugadorProponeA(this.jugador);
-    this.partido.tomarDesicion(Boolean.valueOf(false), this.jugador, "Es un jugador agresivo");
+    this.partido.tomarDecision(Boolean.valueOf(false), this.jugador, "Es un jugador agresivo");
     LinkedList<Jugador> _jugadoresRecomendados = this.partido.getJugadoresRecomendados();
     int _size = _jugadoresRecomendados.size();
     Assert.assertEquals(0, _size);
