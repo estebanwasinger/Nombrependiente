@@ -1,6 +1,7 @@
 package futbol5;
 
 import auxiliares.RegistroRechazo;
+import com.google.common.base.Objects;
 import futbol5.Jugador;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,6 +26,21 @@ public class Sistema {
   
   public void setJugadoresRechazados(final List<RegistroRechazo> jugadoresRechazados) {
     this._jugadoresRechazados = jugadoresRechazados;
+  }
+  
+  private static Sistema INSTANCE = null;
+  
+  public static Sistema getInstance() {
+    Sistema _xblockexpression = null;
+    {
+      boolean _equals = Objects.equal(Sistema.INSTANCE, null);
+      if (_equals) {
+        Sistema _sistema = new Sistema();
+        Sistema.INSTANCE = _sistema;
+      }
+      _xblockexpression = Sistema.INSTANCE;
+    }
+    return _xblockexpression;
   }
   
   public Sistema() {

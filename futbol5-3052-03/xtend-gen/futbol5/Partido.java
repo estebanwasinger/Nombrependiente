@@ -1,5 +1,6 @@
 package futbol5;
 
+import auxiliares.RegistroRechazo;
 import calificaciones.Calificacion;
 import com.google.common.base.Objects;
 import excepciones.BusinessException;
@@ -97,10 +98,8 @@ public class Partido {
     this.setBajasObservers(_linkedList_2);
     LinkedList<Jugador> _linkedList_3 = new LinkedList<Jugador>();
     this.setJugadoresRecomendados(_linkedList_3);
-    Administrador _instance = Administrador.getInstance();
-    this.setAdministrador(_instance);
-    Sistema _sistema = new Sistema();
-    this.setSistema(_sistema);
+    Sistema _instance = Sistema.getInstance();
+    this.setSistema(_instance);
   }
   
   public void notificarInscripcion(final Jugador jugador) {
@@ -166,6 +165,39 @@ public class Partido {
   public boolean jugadorProponeA(final Jugador jugador) {
     LinkedList<Jugador> _jugadoresRecomendados = this.getJugadoresRecomendados();
     return _jugadoresRecomendados.add(jugador);
+  }
+  
+  public boolean tomarDesicion(final Boolean desicion, final Jugador jugador, final String motivo) {
+    try {
+      boolean _xifexpression = false;
+      LinkedList<Jugador> _jugadoresRecomendados = this.getJugadoresRecomendados();
+      boolean _remove = _jugadoresRecomendados.remove(jugador);
+      boolean _equals = (_remove == false);
+      if (_equals) {
+        throw new BusinessException("El jugador que se desea aceptar no se encuentra en la lista de recomendados");
+      } else {
+        boolean _xifexpression_1 = false;
+        if (((desicion).booleanValue() == true)) {
+          boolean _xblockexpression = false;
+          {
+            this.inscribir(jugador);
+            Sistema _sistema = this.getSistema();
+            List<Jugador> _jugadoresAceptados = _sistema.getJugadoresAceptados();
+            _xblockexpression = _jugadoresAceptados.add(jugador);
+          }
+          _xifexpression_1 = _xblockexpression;
+        } else {
+          Sistema _sistema = this.getSistema();
+          List<RegistroRechazo> _jugadoresRechazados = _sistema.getJugadoresRechazados();
+          RegistroRechazo _registroRechazo = new RegistroRechazo(jugador, motivo);
+          _xifexpression_1 = _jugadoresRechazados.add(_registroRechazo);
+        }
+        _xifexpression = _xifexpression_1;
+      }
+      return _xifexpression;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   public boolean calificar(final Jugador calificador, final Jugador calificado, final int nota, final String critica) {

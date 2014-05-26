@@ -7,9 +7,20 @@ import java.util.LinkedList
 class Sistema {
 	@Property var List<Jugador> jugadoresAceptados
 	@Property var List<RegistroRechazo> jugadoresRechazados
-	
-	new(){
-		jugadoresAceptados = new LinkedList<Jugador>
-		jugadoresRechazados = new LinkedList<RegistroRechazo>	
+
+	//static Sistema unico = null
+	private static Sistema INSTANCE = null;
+
+	def static Sistema getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new Sistema()
 		}
+		INSTANCE
+	}
+
+	new() {
+		jugadoresAceptados = new LinkedList<Jugador>
+		jugadoresRechazados = new LinkedList<RegistroRechazo>
+	}
+	
 }

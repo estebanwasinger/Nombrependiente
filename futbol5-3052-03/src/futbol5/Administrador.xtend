@@ -33,7 +33,7 @@ class Administrador {
 			sistema.jugadoresAceptados.add(jugador)
 			partido.inscribir(jugador)
 			}else{ 
-			registro = new RegistroRechazo(motivo) 
+			registro = new RegistroRechazo(jugador,motivo) 
 			sistema.jugadoresRechazados.add(registro)
 			}
 		partido.jugadoresRecomendados.remove(jugador)

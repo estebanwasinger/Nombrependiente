@@ -5,6 +5,7 @@ import java.util.LinkedList
 import excepciones.BusinessException
 import observers.PartidoObserver
 import calificaciones.Calificacion
+import auxiliares.RegistroRechazo
 
 class Partido {
 
@@ -25,8 +26,7 @@ class Partido {
 		altasObservers = new LinkedList<PartidoObserver>
 		bajasObservers = new LinkedList<PartidoObserver>
 		jugadoresRecomendados = new LinkedList<Jugador>
-		administrador = Administrador::getInstance()
-		sistema = new Sistema
+		sistema = Sistema::getInstance()
 	}
 
 	/********************/
@@ -71,25 +71,55 @@ class Partido {
 	def quitarObserverBaja(PartidoObserver observer) {
 		this.bajasObservers.remove(observer)
 	}
-		
+
 	/*******************************/
 	/*CASO DE USO: NUEVOS JUGADORES */
 	/*******************************/
-def jugadorProponeA(Jugador jugador){
+	def jugadorProponeA(Jugador jugador) {
 		jugadoresRecomendados.add(jugador)
 	}
-			
+
+	def tomarDesicion(Boolean desicion, Jugador jugador, String motivo) {
+		if (jugadoresRecomendados.remove(jugador) == false) {
+			throw new BusinessException("El jugador que se desea aceptar no se encuentra en la lista de recomendados")
+		} else {
+			if (desicion == true) {
+				this.inscribir(jugador)
+				sistema.jugadoresAceptados.add(jugador)
+			} else {
+				sistema.jugadoresRechazados.add(new RegistroRechazo(jugador, motivo))
+			}
+
+		}
+	}
+
+//	def aceptarJugadorRecomendado(Jugador jugador) {
+//		if (jugadoresRecomendados.remove(jugador) == false) {
+//			throw new BusinessException("El jugador que se desea aceptar no se encuentra en la lista de recomendados")
+//		} else {
+//			this.inscribir(jugador)
+//		}
+//
+//	}
+//
+//	def rechazarJugadorRecomendado(Jugador jugador, String motivo) {
+//		if (jugadoresRecomendados.remove(jugador) == false) {
+//			throw new BusinessException("El jugador que se desea rechazar no se encuentra en la lista de recomendados")
+//		}
+//		sistema.jugadoresRechazados.add(new RegistroRechazo(jugador, motivo))
+//	}
+
 	/*******************************/
 	/****CASO DE USO: CALIFICACIONES ****/
 	/*******************************/
-		def calificar (Jugador calificador, Jugador calificado, int nota, String critica){
-		
-		if (!estaInscripto(calificado)){
-				throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado")
-				}
-		if (!estaInscripto(calificador)){
-				throw new BusinessException("No podes calificar a un jugador de un partido si no estas inscripto al mismo")
-				}
+	def calificar(Jugador calificador, Jugador calificado, int nota, String critica) {
+
+		if (!estaInscripto(calificado)) {
+			throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado")
+		}
+		if (!estaInscripto(calificador)) {
+			throw new BusinessException("No podes calificar a un jugador de un partido si no estas inscripto al mismo")
+		}
 		calificado.calificaciones.add(new Calificacion(calificador, calificado, nota, critica, this))
 	}
 

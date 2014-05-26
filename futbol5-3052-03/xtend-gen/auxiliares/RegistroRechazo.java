@@ -1,5 +1,6 @@
 package auxiliares;
 
+import futbol5.Jugador;
 import java.util.Date;
 
 @SuppressWarnings("all")
@@ -24,9 +25,20 @@ public class RegistroRechazo {
     this._motivoRechazo = motivoRechazo;
   }
   
-  public RegistroRechazo(final String motivo) {
+  private Jugador _jugadorRechazado;
+  
+  public Jugador getJugadorRechazado() {
+    return this._jugadorRechazado;
+  }
+  
+  public void setJugadorRechazado(final Jugador jugadorRechazado) {
+    this._jugadorRechazado = jugadorRechazado;
+  }
+  
+  public RegistroRechazo(final Jugador jugador, final String motivo) {
     Date _date = new Date();
     this.setFechaDelDia(_date);
     this.setMotivoRechazo(motivo);
+    this.setJugadorRechazado(jugador);
   }
 }

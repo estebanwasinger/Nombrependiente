@@ -22,7 +22,8 @@ class Entrega3Test {
 		def void setUP() {
 			jugador = new Jugador
 			administrador = new Administrador
-			sistema = new Sistema
+			//sistema = new Sistema
+			sistema = Sistema::getInstance()
 			jugadorcalificado = new Jugador
 			partido = new Partido("Villa Fiorito")
 			administrador.motivo = "Se rechaza porque es mujer"		
@@ -37,33 +38,42 @@ class Entrega3Test {
 		}
 	}
 	
+	def limpiarListasDelSistema(Sistema sistema){
+		sistema.jugadoresRechazados.clear
+		sistema.jugadoresAceptados.clear
+	}
+	
 	@Test
 	def void testSeProponeUnJugadorEsAceptadoYSePuedeInscribir(){
 		partido.jugadorProponeA(jugador)
-		administrador.tomarUnaDecision(jugador, partido)
-		
+		//administrador.tomarUnaDecision(jugador, partido)
+		partido.tomarDesicion(true,jugador,null);
 		Assert.assertEquals(0, partido.jugadoresRecomendados.size)
 		Assert.assertEquals(1, sistema.jugadoresAceptados.size)
 		Assert.assertEquals(0, sistema.jugadoresRechazados.size)
 		Assert.assertTrue(partido.estaInscripto(jugador))
+		limpiarListasDelSistema(sistema)
 	}
 	
 	@Test(expected=typeof(BusinessException))
 	def void testSeProponeUnJugadorEsAceptadoYNoSePuedeInscribir(){
 		armarPartido(10)
 		partido.jugadorProponeA(jugador)
-		administrador.tomarUnaDecision(jugador, partido) //el equipo esta lleno y por eso no se lo inscribe
+		//administrador.tomarUnaDecision(jugador, partido) //el equipo esta lleno y por eso no se lo inscribe
+		partido.tomarDesicion(true,jugador,null)
 	}
 	
 	@Test
 	def void testSeProponeUnJugadorYEsRechazado(){
-		administrador.aceptar = false
+		//administrador.aceptar = false
 		partido.jugadorProponeA(jugador)
-		administrador.tomarUnaDecision(jugador, partido)
+		//administrador.tomarUnaDecision(jugador, partido)
+		partido.tomarDesicion(false,jugador,"Es un jugador agresivo")
 		Assert.assertEquals(0, partido.jugadoresRecomendados.size)
 		Assert.assertEquals(1, sistema.jugadoresRechazados.size)
 		Assert.assertEquals(0, sistema.jugadoresAceptados.size)
 		Assert.assertFalse(partido.estaInscripto(jugador))
+		limpiarListasDelSistema(sistema)
 	}
 	
 	
@@ -84,7 +94,7 @@ class Entrega3Test {
     }
     
 @Test
-    def void testJugadorCalificaASuCompañero(){
+    def void testJugadorCalificaASuCompanero(){
         partido.inscribir(jugador)
         partido.inscribir(jugadorcalificado)
         armarPartido(8)
