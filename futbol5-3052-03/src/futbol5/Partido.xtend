@@ -4,7 +4,7 @@ import java.util.List
 import java.util.LinkedList
 import excepciones.BusinessException
 import observers.PartidoObserver
-import calificaciones.Calificacion
+
 
 class Partido {
 
@@ -12,9 +12,7 @@ class Partido {
 	@Property var LinkedList<Jugador> jugadores
 	@Property var List<PartidoObserver> altasObservers
 	@Property var List<PartidoObserver> bajasObservers
-	@Property var Administrador administrador
-	@Property var Sistema sistema
-	@Property var LinkedList<Jugador> jugadoresRecomendados
+		
 
 	/****************/
 	/*CONSTRUCTORES*/
@@ -24,9 +22,7 @@ class Partido {
 		jugadores = new LinkedList<Jugador>
 		altasObservers = new LinkedList<PartidoObserver>
 		bajasObservers = new LinkedList<PartidoObserver>
-		jugadoresRecomendados = new LinkedList<Jugador>
-		administrador = Administrador::getInstance()
-		sistema = new Sistema
+		
 	}
 
 	/********************/
@@ -71,28 +67,7 @@ class Partido {
 	def quitarObserverBaja(PartidoObserver observer) {
 		this.bajasObservers.remove(observer)
 	}
-		
-	/*******************************/
-	/*CASO DE USO: NUEVOS JUGADORES */
-	/*******************************/
-def jugadorProponeA(Jugador jugador){
-		jugadoresRecomendados.add(jugador)
-	}
-			
-	/*******************************/
-	/****CASO DE USO: CALIFICACIONES ****/
-	/*******************************/
-		def calificar (Jugador calificador, Jugador calificado, int nota, String critica){
-		
-		if (!estaInscripto(calificado)){
-				throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado")
-				}
-		if (!estaInscripto(calificador)){
-				throw new BusinessException("No podes calificar a un jugador de un partido si no estas inscripto al mismo")
-				}
-		calificado.calificaciones.add(new Calificacion(calificador, calificado, nota, critica, this))
-	}
-
+	
 	/*******************************/
 	/*CASO DE USO: BAJA DE UN JUGADOR*/
 	/*******************************/

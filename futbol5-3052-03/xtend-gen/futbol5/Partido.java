@@ -1,11 +1,8 @@
 package futbol5;
 
-import calificaciones.Calificacion;
 import com.google.common.base.Objects;
 import excepciones.BusinessException;
-import futbol5.Administrador;
 import futbol5.Jugador;
-import futbol5.Sistema;
 import inscripciones.TipoInscripcion;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,36 +54,6 @@ public class Partido {
     this._bajasObservers = bajasObservers;
   }
   
-  private Administrador _administrador;
-  
-  public Administrador getAdministrador() {
-    return this._administrador;
-  }
-  
-  public void setAdministrador(final Administrador administrador) {
-    this._administrador = administrador;
-  }
-  
-  private Sistema _sistema;
-  
-  public Sistema getSistema() {
-    return this._sistema;
-  }
-  
-  public void setSistema(final Sistema sistema) {
-    this._sistema = sistema;
-  }
-  
-  private LinkedList<Jugador> _jugadoresRecomendados;
-  
-  public LinkedList<Jugador> getJugadoresRecomendados() {
-    return this._jugadoresRecomendados;
-  }
-  
-  public void setJugadoresRecomendados(final LinkedList<Jugador> jugadoresRecomendados) {
-    this._jugadoresRecomendados = jugadoresRecomendados;
-  }
-  
   public Partido(final String localidad) {
     this.setLocalidad(localidad);
     LinkedList<Jugador> _linkedList = new LinkedList<Jugador>();
@@ -95,12 +62,6 @@ public class Partido {
     this.setAltasObservers(_linkedList_1);
     LinkedList<PartidoObserver> _linkedList_2 = new LinkedList<PartidoObserver>();
     this.setBajasObservers(_linkedList_2);
-    LinkedList<Jugador> _linkedList_3 = new LinkedList<Jugador>();
-    this.setJugadoresRecomendados(_linkedList_3);
-    Administrador _instance = Administrador.getInstance();
-    this.setAdministrador(_instance);
-    Sistema _sistema = new Sistema();
-    this.setSistema(_sistema);
   }
   
   public void notificarInscripcion(final Jugador jugador) {
@@ -161,35 +122,6 @@ public class Partido {
   public boolean quitarObserverBaja(final PartidoObserver observer) {
     List<PartidoObserver> _bajasObservers = this.getBajasObservers();
     return _bajasObservers.remove(observer);
-  }
-  
-  public boolean jugadorProponeA(final Jugador jugador) {
-    LinkedList<Jugador> _jugadoresRecomendados = this.getJugadoresRecomendados();
-    return _jugadoresRecomendados.add(jugador);
-  }
-  
-  public boolean calificar(final Jugador calificador, final Jugador calificado, final int nota, final String critica) {
-    try {
-      boolean _xblockexpression = false;
-      {
-        boolean _estaInscripto = this.estaInscripto(calificado);
-        boolean _not = (!_estaInscripto);
-        if (_not) {
-          throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado");
-        }
-        boolean _estaInscripto_1 = this.estaInscripto(calificador);
-        boolean _not_1 = (!_estaInscripto_1);
-        if (_not_1) {
-          throw new BusinessException("No podes calificar a un jugador de un partido si no estas inscripto al mismo");
-        }
-        List<Calificacion> _calificaciones = calificado.getCalificaciones();
-        Calificacion _calificacion = new Calificacion(calificador, calificado, Integer.valueOf(nota), critica, this);
-        _xblockexpression = _calificaciones.add(_calificacion);
-      }
-      return _xblockexpression;
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
   }
   
   public void baja(final Jugador jugador, final Jugador reemplazo) {

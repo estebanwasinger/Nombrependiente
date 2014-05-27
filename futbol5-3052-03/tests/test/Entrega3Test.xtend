@@ -26,7 +26,7 @@ class Entrega3Test {
 			jugadorcalificado = new Jugador
 			partido = new Partido("Villa Fiorito")
 			administrador.motivo = "Se rechaza porque es mujer"		
-			administrador.aceptar = true
+			administrador.loAcepta = true
 		}
 	
 	def armarPartido(int max) {
@@ -39,59 +39,49 @@ class Entrega3Test {
 	
 	@Test
 	def void testSeProponeUnJugadorEsAceptadoYSePuedeInscribir(){
-		partido.jugadorProponeA(jugador)
-		administrador.tomarUnaDecision(jugador, partido)
+		jugador.jugadorProponeA(jugador)
+		administrador.tomarUnaDecision(jugador)
 		
-		Assert.assertEquals(0, partido.jugadoresRecomendados.size)
+		Assert.assertEquals(0, sistema.jugadoresRecomendados.size)
 		Assert.assertEquals(1, sistema.jugadoresAceptados.size)
 		Assert.assertEquals(0, sistema.jugadoresRechazados.size)
-		Assert.assertTrue(partido.estaInscripto(jugador))
+		
 	}
-	
+	/*ya no va.. 
 	@Test(expected=typeof(BusinessException))
 	def void testSeProponeUnJugadorEsAceptadoYNoSePuedeInscribir(){
 		armarPartido(10)
-		partido.jugadorProponeA(jugador)
-		administrador.tomarUnaDecision(jugador, partido) //el equipo esta lleno y por eso no se lo inscribe
-	}
+		jugador.jugadorProponeA(jugador)
+		administrador.tomarUnaDecision(jugador) //el equipo esta lleno y por eso no se lo inscribe*/
+	
 	
 	@Test
 	def void testSeProponeUnJugadorYEsRechazado(){
-		administrador.aceptar = false
-		partido.jugadorProponeA(jugador)
-		administrador.tomarUnaDecision(jugador, partido)
-		Assert.assertEquals(0, partido.jugadoresRecomendados.size)
+		administrador.loAcepta = false
+		jugador.jugadorProponeA(jugador)
+		administrador.tomarUnaDecision(jugador)
+		Assert.assertEquals(0, sistema.jugadoresRecomendados.size)
 		Assert.assertEquals(1, sistema.jugadoresRechazados.size)
 		Assert.assertEquals(0, sistema.jugadoresAceptados.size)
-		Assert.assertFalse(partido.estaInscripto(jugador))
+		
 	}
 	
-	
+	/*sino esta inscripto no podria calificar, creo q hay que sacar el inscribir */
 	@Test(expected=typeof(BusinessException))
     def void testCalificacionAJugadorQueNoJugo(){
-        partido.inscribir(jugador)
+        partido.inscribir(jugadorcalificado)
         armarPartido(9)
-        partido.calificar(jugador, jugadorcalificado, 10, "excelente")
+        jugador.calificar(jugadorcalificado, partido, 10, "excelente")
         
         }
-        
-   @Test(expected=typeof(BusinessException))
-    def void testDesconocidoCalificaJugador(){
+  
+	@Test
+    def void testJugadorCalificaASuCompanero(){
         partido.inscribir(jugadorcalificado)
         armarPartido(9)
-        partido.calificar(jugador,jugadorcalificado,10,"normal")
-   
-    }
-    
-@Test
-    def void testJugadorCalificaASuCompañero(){
-        partido.inscribir(jugador)
-        partido.inscribir(jugadorcalificado)
-        armarPartido(8)
-        partido.calificar(jugador,jugadorcalificado,10,"excelente")
+        jugador.calificar(jugadorcalificado,partido,10,"excelente")
         Assert.assertEquals(1, jugadorcalificado.calificaciones.size)
         
     }
+}	
 	
-	
-	}

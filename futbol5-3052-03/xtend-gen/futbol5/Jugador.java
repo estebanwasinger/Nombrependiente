@@ -1,12 +1,17 @@
 package futbol5;
 
 import calificaciones.Calificacion;
+import excepciones.BusinessException;
 import futbol5.Administrador;
+import futbol5.Partido;
+import futbol5.Sistema;
 import infracciones.Infraccion;
 import inscripciones.Estandar;
 import inscripciones.TipoInscripcion;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 
 @SuppressWarnings("all")
 public class Jugador {
@@ -80,6 +85,26 @@ public class Jugador {
     this._administrador = administrador;
   }
   
+  private Sistema _sistema;
+  
+  public Sistema getSistema() {
+    return this._sistema;
+  }
+  
+  public void setSistema(final Sistema sistema) {
+    this._sistema = sistema;
+  }
+  
+  private Partido _partido;
+  
+  public Partido getPartido() {
+    return this._partido;
+  }
+  
+  public void setPartido(final Partido partido) {
+    this._partido = partido;
+  }
+  
   public Jugador() {
     Estandar _estandar = new Estandar();
     this.setTipoInscripcion(_estandar);
@@ -89,6 +114,10 @@ public class Jugador {
     this.setInfracciones(_arrayList_1);
     Administrador _instance = Administrador.getInstance();
     this.setAdministrador(_instance);
+    Sistema _sistema = new Sistema();
+    this.setSistema(_sistema);
+    Partido _partido = new Partido("Villa Fiorito");
+    this.setPartido(_partido);
     ArrayList<Calificacion> _arrayList_2 = new ArrayList<Calificacion>();
     this.setCalificaciones(_arrayList_2);
   }
@@ -112,5 +141,30 @@ public class Jugador {
   public int prioridad() {
     TipoInscripcion _tipoInscripcion = this.getTipoInscripcion();
     return _tipoInscripcion.prioridad();
+  }
+  
+  public boolean jugadorProponeA(final Jugador jugador) {
+    Sistema _sistema = this.getSistema();
+    LinkedList<Jugador> _jugadoresRecomendados = _sistema.getJugadoresRecomendados();
+    return _jugadoresRecomendados.add(jugador);
+  }
+  
+  public boolean calificar(final Jugador calificado, final Partido partido, final int nota, final String critica) {
+    try {
+      boolean _xblockexpression = false;
+      {
+        boolean _estaInscripto = partido.estaInscripto(calificado);
+        boolean _not = (!_estaInscripto);
+        if (_not) {
+          throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado");
+        }
+        List<Calificacion> _calificaciones = this.getCalificaciones();
+        Calificacion _calificacion = new Calificacion(calificado, partido, Integer.valueOf(nota), critica);
+        _xblockexpression = _calificaciones.add(_calificacion);
+      }
+      return _xblockexpression;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
 }

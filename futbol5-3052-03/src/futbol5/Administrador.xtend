@@ -5,10 +5,12 @@ import auxiliares.RegistroRechazo
 class Administrador {
 
 	@Property String email
-	@Property Boolean aceptar
+	@Property Boolean loAcepta
 	@Property Sistema sistema
 	@Property String motivo
-		
+	@Property Jugador jugador
+	@Property Partido partido
+			
 	static Administrador unico
 			
 	def static Administrador getInstance() {
@@ -23,20 +25,19 @@ class Administrador {
 	}
 		
 	def revisarRecomendados(Partido partido) {
-		partido.jugadoresRecomendados.forEach[jugador| tomarUnaDecision(jugador, partido)]
+		sistema.jugadoresRecomendados.forEach[jugador| tomarUnaDecision(jugador)]
 	}
 	
-	def tomarUnaDecision(Jugador jugador, Partido partido){
+	def tomarUnaDecision(Jugador jugador){
 		var RegistroRechazo registro
 		
-		if (aceptar){
+		if (loAcepta){
 			sistema.jugadoresAceptados.add(jugador)
-			partido.inscribir(jugador)
 			}else{ 
 			registro = new RegistroRechazo(motivo) 
 			sistema.jugadoresRechazados.add(registro)
 			}
-		partido.jugadoresRecomendados.remove(jugador)
+		sistema.jugadoresRecomendados.remove(jugador)
  }
 	
 	

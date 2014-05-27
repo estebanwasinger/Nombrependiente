@@ -7,9 +7,11 @@ import java.util.LinkedList
 class Sistema {
 	@Property var List<Jugador> jugadoresAceptados
 	@Property var List<RegistroRechazo> jugadoresRechazados
+	@Property var LinkedList<Jugador> jugadoresRecomendados
 	
 	new(){
 		jugadoresAceptados = new LinkedList<Jugador>
 		jugadoresRechazados = new LinkedList<RegistroRechazo>	
+		jugadoresRecomendados = new LinkedList<Jugador>
 		}
 }

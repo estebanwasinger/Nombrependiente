@@ -4,17 +4,18 @@ import futbol5.Jugador
 import futbol5.Partido
 
 class Calificacion {
-	@Property Jugador jugadorQueCalifica
-	@Property Jugador jugadorACalificar
+	
+	@Property Jugador calificado
+	@Property Partido partido
 	@Property int nota
 	@Property String critica
-	@Property Partido partido
+	
 
     
-	new(Jugador jugadorQueCalifica, Jugador jugadorACalificar, Integer nota, String critica, Partido partido) {
-			this.jugadorQueCalifica = jugadorQueCalifica
-			this.jugadorACalificar = jugadorACalificar
+	new( Jugador calificado, Partido partido, Integer nota, String critica) {
+			this.calificado = calificado
+			this.partido = partido
 			this.nota = nota
 			this.critica = critica
-			this.partido = partido
-	}}
+		}
+	}

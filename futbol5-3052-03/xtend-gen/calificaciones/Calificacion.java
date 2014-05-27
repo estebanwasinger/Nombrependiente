@@ -5,24 +5,24 @@ import futbol5.Partido;
 
 @SuppressWarnings("all")
 public class Calificacion {
-  private Jugador _jugadorQueCalifica;
+  private Jugador _calificado;
   
-  public Jugador getJugadorQueCalifica() {
-    return this._jugadorQueCalifica;
+  public Jugador getCalificado() {
+    return this._calificado;
   }
   
-  public void setJugadorQueCalifica(final Jugador jugadorQueCalifica) {
-    this._jugadorQueCalifica = jugadorQueCalifica;
+  public void setCalificado(final Jugador calificado) {
+    this._calificado = calificado;
   }
   
-  private Jugador _jugadorACalificar;
+  private Partido _partido;
   
-  public Jugador getJugadorACalificar() {
-    return this._jugadorACalificar;
+  public Partido getPartido() {
+    return this._partido;
   }
   
-  public void setJugadorACalificar(final Jugador jugadorACalificar) {
-    this._jugadorACalificar = jugadorACalificar;
+  public void setPartido(final Partido partido) {
+    this._partido = partido;
   }
   
   private int _nota;
@@ -45,21 +45,10 @@ public class Calificacion {
     this._critica = critica;
   }
   
-  private Partido _partido;
-  
-  public Partido getPartido() {
-    return this._partido;
-  }
-  
-  public void setPartido(final Partido partido) {
-    this._partido = partido;
-  }
-  
-  public Calificacion(final Jugador jugadorQueCalifica, final Jugador jugadorACalificar, final Integer nota, final String critica, final Partido partido) {
-    this.setJugadorQueCalifica(jugadorQueCalifica);
-    this.setJugadorACalificar(jugadorACalificar);
+  public Calificacion(final Jugador calificado, final Partido partido, final Integer nota, final String critica) {
+    this.setCalificado(calificado);
+    this.setPartido(partido);
     this.setNota((nota).intValue());
     this.setCritica(critica);
-    this.setPartido(partido);
   }
 }

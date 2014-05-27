@@ -6,6 +6,8 @@ import inscripciones.TipoInscripcion
 import inscripciones.Estandar
 import infracciones.Infraccion
 import calificaciones.Calificacion
+import excepciones.BusinessException
+
 
 class Jugador {
 
@@ -16,13 +18,18 @@ class Jugador {
 	@Property List<Jugador> amigos
 	@Property List <Calificacion> calificaciones
 	@Property Administrador administrador
+	@Property Sistema sistema
+	@Property Partido partido 
 	
 	new() {
 		tipoInscripcion = new Estandar
 		amigos = new ArrayList<Jugador>
 		infracciones = new ArrayList<Infraccion>
 		administrador = Administrador::getInstance()
+		sistema = new Sistema
+		partido = new Partido("Villa Fiorito")
 		calificaciones = new ArrayList<Calificacion>
+		
 	}
 	
 	def agregarAmigo(Jugador jugador) {
@@ -39,6 +46,23 @@ class Jugador {
 
 	def int prioridad() {
 		tipoInscripcion.prioridad()
+	}
+	/*******************************/
+	/*CASO DE USO: NUEVOS JUGADORES */
+	/*******************************/
+def jugadorProponeA(Jugador jugador){
+		sistema.jugadoresRecomendados.add(jugador)
+	}
+	
+	/*******************************/
+	/****CASO DE USO: CALIFICACIONES ****/
+	/*******************************/
+		def calificar (Jugador calificado,Partido partido, int nota, String critica){
+		
+		if (!partido.estaInscripto(calificado)){
+				throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado")
+				}
+		calificaciones.add(new Calificacion( calificado, partido, nota, critica))
 	}
 	
 }
