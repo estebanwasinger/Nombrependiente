@@ -113,4 +113,9 @@ public class Jugador {
     TipoInscripcion _tipoInscripcion = this.getTipoInscripcion();
     return _tipoInscripcion.prioridad();
   }
+  
+  public boolean agregarCalificacion(final Calificacion calificacion) {
+    List<Calificacion> _calificaciones = this.getCalificaciones();
+    return _calificaciones.add(calificacion);
+  }
 }

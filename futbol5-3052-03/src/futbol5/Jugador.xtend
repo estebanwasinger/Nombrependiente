@@ -41,4 +41,8 @@ class Jugador {
 		tipoInscripcion.prioridad()
 	}
 	
+	def agregarCalificacion(Calificacion calificacion) {
+		calificaciones.add(calificacion)
+	}
+	
 }

@@ -1,6 +1,5 @@
 package futbol5;
 
-import auxiliares.RegistroRechazo;
 import calificaciones.Calificacion;
 import com.google.common.base.Objects;
 import excepciones.BusinessException;
@@ -78,16 +77,6 @@ public class Partido {
     this._sistema = sistema;
   }
   
-  private LinkedList<Jugador> _jugadoresRecomendados;
-  
-  public LinkedList<Jugador> getJugadoresRecomendados() {
-    return this._jugadoresRecomendados;
-  }
-  
-  public void setJugadoresRecomendados(final LinkedList<Jugador> jugadoresRecomendados) {
-    this._jugadoresRecomendados = jugadoresRecomendados;
-  }
-  
   public Partido(final String localidad) {
     this.setLocalidad(localidad);
     LinkedList<Jugador> _linkedList = new LinkedList<Jugador>();
@@ -96,8 +85,6 @@ public class Partido {
     this.setAltasObservers(_linkedList_1);
     LinkedList<PartidoObserver> _linkedList_2 = new LinkedList<PartidoObserver>();
     this.setBajasObservers(_linkedList_2);
-    LinkedList<Jugador> _linkedList_3 = new LinkedList<Jugador>();
-    this.setJugadoresRecomendados(_linkedList_3);
     Sistema _instance = Sistema.getInstance();
     this.setSistema(_instance);
   }
@@ -162,44 +149,6 @@ public class Partido {
     return _bajasObservers.remove(observer);
   }
   
-  public boolean jugadorProponeA(final Jugador jugador) {
-    LinkedList<Jugador> _jugadoresRecomendados = this.getJugadoresRecomendados();
-    return _jugadoresRecomendados.add(jugador);
-  }
-  
-  public boolean tomarDecision(final Boolean desicion, final Jugador jugador, final String motivo) {
-    try {
-      boolean _xifexpression = false;
-      LinkedList<Jugador> _jugadoresRecomendados = this.getJugadoresRecomendados();
-      boolean _remove = _jugadoresRecomendados.remove(jugador);
-      boolean _equals = (_remove == false);
-      if (_equals) {
-        throw new BusinessException("El jugador que se desea aceptar no se encuentra en la lista de recomendados");
-      } else {
-        boolean _xifexpression_1 = false;
-        if (((desicion).booleanValue() == true)) {
-          boolean _xblockexpression = false;
-          {
-            this.inscribir(jugador);
-            Sistema _sistema = this.getSistema();
-            List<Jugador> _jugadoresAceptados = _sistema.getJugadoresAceptados();
-            _xblockexpression = _jugadoresAceptados.add(jugador);
-          }
-          _xifexpression_1 = _xblockexpression;
-        } else {
-          Sistema _sistema = this.getSistema();
-          List<RegistroRechazo> _jugadoresRechazados = _sistema.getJugadoresRechazados();
-          RegistroRechazo _registroRechazo = new RegistroRechazo(jugador, motivo);
-          _xifexpression_1 = _jugadoresRechazados.add(_registroRechazo);
-        }
-        _xifexpression = _xifexpression_1;
-      }
-      return _xifexpression;
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
   public boolean calificar(final Jugador calificador, final Jugador calificado, final int nota, final String critica) {
     try {
       boolean _xblockexpression = false;
@@ -214,9 +163,8 @@ public class Partido {
         if (_not_1) {
           throw new BusinessException("No podes calificar a un jugador de un partido si no estas inscripto al mismo");
         }
-        List<Calificacion> _calificaciones = calificado.getCalificaciones();
         Calificacion _calificacion = new Calificacion(calificador, calificado, Integer.valueOf(nota), critica, this);
-        _xblockexpression = _calificaciones.add(_calificacion);
+        _xblockexpression = calificado.agregarCalificacion(_calificacion);
       }
       return _xblockexpression;
     } catch (Throwable _e) {

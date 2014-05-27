@@ -15,7 +15,6 @@ class Partido {
 	@Property var List<PartidoObserver> bajasObservers
 	@Property var Administrador administrador
 	@Property var Sistema sistema
-	@Property var LinkedList<Jugador> jugadoresRecomendados
 
 	/****************/
 	/*CONSTRUCTORES*/
@@ -25,7 +24,6 @@ class Partido {
 		jugadores = new LinkedList<Jugador>
 		altasObservers = new LinkedList<PartidoObserver>
 		bajasObservers = new LinkedList<PartidoObserver>
-		jugadoresRecomendados = new LinkedList<Jugador>
 		sistema = Sistema::getInstance()
 	}
 
@@ -72,42 +70,8 @@ class Partido {
 		this.bajasObservers.remove(observer)
 	}
 
-	/*******************************/
-	/*CASO DE USO: NUEVOS JUGADORES */
-	/*******************************/
-	def jugadorProponeA(Jugador jugador) {
-		jugadoresRecomendados.add(jugador)
-	}
 
-	def tomarDecision(Boolean desicion, Jugador jugador, String motivo) {
-		if (jugadoresRecomendados.remove(jugador) == false) {
-			throw new BusinessException("El jugador que se desea aceptar no se encuentra en la lista de recomendados")
-		} else {
-			if (desicion == true) {
-				this.inscribir(jugador)
-				sistema.jugadoresAceptados.add(jugador)
-			} else {
-				sistema.jugadoresRechazados.add(new RegistroRechazo(jugador, motivo))
-			}
 
-		}
-	}
-
-	//	def aceptarJugadorRecomendado(Jugador jugador) {
-	//		if (jugadoresRecomendados.remove(jugador) == false) {
-	//			throw new BusinessException("El jugador que se desea aceptar no se encuentra en la lista de recomendados")
-	//		} else {
-	//			this.inscribir(jugador)
-	//		}
-	//
-	//	}
-	//
-	//	def rechazarJugadorRecomendado(Jugador jugador, String motivo) {
-	//		if (jugadoresRecomendados.remove(jugador) == false) {
-	//			throw new BusinessException("El jugador que se desea rechazar no se encuentra en la lista de recomendados")
-	//		}
-	//		sistema.jugadoresRechazados.add(new RegistroRechazo(jugador, motivo))
-	//	}
 	/*******************************/
 	/****CASO DE USO: CALIFICACIONES ****/
 	/*******************************/
@@ -119,8 +83,9 @@ class Partido {
 		if (!estaInscripto(calificador)) {
 			throw new BusinessException("No podes calificar a un jugador de un partido si no estas inscripto al mismo")
 		}
-		calificado.calificaciones.add(new Calificacion(calificador, calificado, nota, critica, this))
+		calificado.agregarCalificacion(new Calificacion(calificador, calificado, nota, critica, this))
 	}
+	
 
 	/*******************************/
 	/*CASO DE USO: BAJA DE UN JUGADOR*/

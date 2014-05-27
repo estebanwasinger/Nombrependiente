@@ -7,7 +7,6 @@ import futbol5.Administrador;
 import futbol5.Jugador;
 import futbol5.Partido;
 import futbol5.Sistema;
-import java.util.LinkedList;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
@@ -64,9 +63,9 @@ public class Entrega3Test {
   
   @Test
   public void testSeProponeUnJugadorEsAceptadoYSePuedeInscribir() {
-    this.partido.jugadorProponeA(this.jugador);
-    this.partido.tomarDecision(Boolean.valueOf(true), this.jugador, null);
-    LinkedList<Jugador> _jugadoresRecomendados = this.partido.getJugadoresRecomendados();
+    this.sistema.jugadorProponeA(this.jugador);
+    this.sistema.tomarDecision(Boolean.valueOf(true), this.jugador, null);
+    List<Jugador> _jugadoresRecomendados = this.sistema.getJugadoresRecomendados();
     int _size = _jugadoresRecomendados.size();
     Assert.assertEquals(0, _size);
     List<Jugador> _jugadoresAceptados = this.sistema.getJugadoresAceptados();
@@ -75,22 +74,13 @@ public class Entrega3Test {
     List<RegistroRechazo> _jugadoresRechazados = this.sistema.getJugadoresRechazados();
     int _size_2 = _jugadoresRechazados.size();
     Assert.assertEquals(0, _size_2);
-    boolean _estaInscripto = this.partido.estaInscripto(this.jugador);
-    Assert.assertTrue(_estaInscripto);
-  }
-  
-  @Test(expected = BusinessException.class)
-  public void testSeProponeUnJugadorEsAceptadoYNoSePuedeInscribir() {
-    this.armarPartido(10);
-    this.partido.jugadorProponeA(this.jugador);
-    this.partido.tomarDecision(Boolean.valueOf(true), this.jugador, null);
   }
   
   @Test
   public void testSeProponeUnJugadorYEsRechazado() {
-    this.partido.jugadorProponeA(this.jugador);
-    this.partido.tomarDecision(Boolean.valueOf(false), this.jugador, "Es un jugador agresivo");
-    LinkedList<Jugador> _jugadoresRecomendados = this.partido.getJugadoresRecomendados();
+    this.sistema.jugadorProponeA(this.jugador);
+    this.sistema.tomarDecision(Boolean.valueOf(false), this.jugador, "Es un jugador agresivo");
+    List<Jugador> _jugadoresRecomendados = this.sistema.getJugadoresRecomendados();
     int _size = _jugadoresRecomendados.size();
     Assert.assertEquals(0, _size);
     List<RegistroRechazo> _jugadoresRechazados = this.sistema.getJugadoresRechazados();
