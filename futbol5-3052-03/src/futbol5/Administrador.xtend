@@ -13,15 +13,14 @@ class Administrador {
 	}
 
 	def tomarUnaDecision(Jugador jugador, boolean loAcepta, String motivo) {
-		if (sistema.jugadoresRecomendados.remove(jugador) == false) {
+		if (!sistema.jugadoresRecomendados.remove(jugador)) {
 			throw new BusinessException("El jugador que se desea aceptar/rechazar no se encuentra en la lista de recomendados")
-		} else {
-			if (loAcepta) {
+			}
+		if (loAcepta){
 				sistema.jugadoresAceptados.add(jugador)
 			} else {
 				sistema.jugadoresRechazados.add(new RegistroRechazo(jugador, motivo))
 			}
-		}
 
 	}
 }
