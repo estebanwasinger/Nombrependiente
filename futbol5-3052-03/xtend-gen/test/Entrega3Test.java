@@ -17,7 +17,9 @@ import org.junit.Test;
 public class Entrega3Test {
   private Jugador jugador;
   
-  private Jugador jugadorcalificado;
+  private Jugador amigo;
+  
+  private Jugador jugadorCalificado;
   
   private Partido partido;
   
@@ -25,18 +27,20 @@ public class Entrega3Test {
   
   private Sistema sistema;
   
-  private String motivo;
-  
   @Before
   public void setUP() {
     Jugador _jugador = new Jugador();
     this.jugador = _jugador;
+    Jugador _jugador_1 = new Jugador();
+    this.amigo = _jugador_1;
     Administrador _administrador = new Administrador();
     this.administrador = _administrador;
     Sistema _sistema = new Sistema();
     this.sistema = _sistema;
-    Jugador _jugador_1 = new Jugador();
-    this.jugadorcalificado = _jugador_1;
+    this.administrador.setSistema(this.sistema);
+    this.jugador.setSistema(this.sistema);
+    Jugador _jugador_2 = new Jugador();
+    this.jugadorCalificado = _jugador_2;
     Partido _partido = new Partido("Villa Fiorito");
     this.partido = _partido;
     this.administrador.setMotivo("Se rechaza porque es mujer");
@@ -58,8 +62,8 @@ public class Entrega3Test {
   
   @Test
   public void testSeProponeUnJugadorEsAceptadoYSePuedeInscribir() {
-    this.jugador.jugadorProponeA(this.jugador);
-    this.administrador.tomarUnaDecision(this.jugador);
+    this.jugador.proponerA(this.amigo);
+    this.administrador.revisarRecomendados();
     LinkedList<Jugador> _jugadoresRecomendados = this.sistema.getJugadoresRecomendados();
     int _size = _jugadoresRecomendados.size();
     Assert.assertEquals(0, _size);
@@ -71,19 +75,11 @@ public class Entrega3Test {
     Assert.assertEquals(0, _size_2);
   }
   
-  /**
-   * ya no va..
-   * @Test(expected=typeof(BusinessException))
-   * def void testSeProponeUnJugadorEsAceptadoYNoSePuedeInscribir(){
-   * armarPartido(10)
-   * jugador.jugadorProponeA(jugador)
-   * administrador.tomarUnaDecision(jugador) //el equipo esta lleno y por eso no se lo inscribe
-   */
   @Test
   public void testSeProponeUnJugadorYEsRechazado() {
     this.administrador.setLoAcepta(Boolean.valueOf(false));
-    this.jugador.jugadorProponeA(this.jugador);
-    this.administrador.tomarUnaDecision(this.jugador);
+    this.jugador.proponerA(this.amigo);
+    this.administrador.revisarRecomendados();
     LinkedList<Jugador> _jugadoresRecomendados = this.sistema.getJugadoresRecomendados();
     int _size = _jugadoresRecomendados.size();
     Assert.assertEquals(0, _size);
@@ -95,22 +91,27 @@ public class Entrega3Test {
     Assert.assertEquals(0, _size_2);
   }
   
-  /**
-   * sino esta inscripto no podria calificar, creo q hay que sacar el inscribir
-   */
   @Test(expected = BusinessException.class)
   public void testCalificacionAJugadorQueNoJugo() {
-    this.partido.inscribir(this.jugadorcalificado);
+    this.partido.inscribir(this.jugador);
     this.armarPartido(9);
-    this.jugador.calificar(this.jugadorcalificado, this.partido, 10, "excelente");
+    this.jugador.calificar(this.jugadorCalificado, this.partido, 10, "excelente");
+  }
+  
+  @Test(expected = BusinessException.class)
+  public void testCalificacionDeUnJugadorQueNoJugo() {
+    this.partido.inscribir(this.jugadorCalificado);
+    this.armarPartido(9);
+    this.jugador.calificar(this.jugadorCalificado, this.partido, 10, "excelente");
   }
   
   @Test
   public void testJugadorCalificaASuCompanero() {
-    this.partido.inscribir(this.jugadorcalificado);
-    this.armarPartido(9);
-    this.jugador.calificar(this.jugadorcalificado, this.partido, 10, "excelente");
-    List<Calificacion> _calificaciones = this.jugadorcalificado.getCalificaciones();
+    this.partido.inscribir(this.jugador);
+    this.partido.inscribir(this.jugadorCalificado);
+    this.armarPartido(8);
+    this.jugador.calificar(this.jugadorCalificado, this.partido, 10, "excelente");
+    List<Calificacion> _calificaciones = this.jugadorCalificado.getCalificaciones();
     int _size = _calificaciones.size();
     Assert.assertEquals(1, _size);
   }

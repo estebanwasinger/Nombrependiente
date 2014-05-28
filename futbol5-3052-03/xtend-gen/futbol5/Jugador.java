@@ -112,8 +112,8 @@ public class Jugador {
     this.setAmigos(_arrayList);
     ArrayList<Infraccion> _arrayList_1 = new ArrayList<Infraccion>();
     this.setInfracciones(_arrayList_1);
-    Administrador _instance = Administrador.getInstance();
-    this.setAdministrador(_instance);
+    Administrador _administrador = new Administrador();
+    this.setAdministrador(_administrador);
     Sistema _sistema = new Sistema();
     this.setSistema(_sistema);
     Partido _partido = new Partido("Villa Fiorito");
@@ -143,7 +143,7 @@ public class Jugador {
     return _tipoInscripcion.prioridad();
   }
   
-  public boolean jugadorProponeA(final Jugador jugador) {
+  public boolean proponerA(final Jugador jugador) {
     Sistema _sistema = this.getSistema();
     LinkedList<Jugador> _jugadoresRecomendados = _sistema.getJugadoresRecomendados();
     return _jugadoresRecomendados.add(jugador);
@@ -158,7 +158,12 @@ public class Jugador {
         if (_not) {
           throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado");
         }
-        List<Calificacion> _calificaciones = this.getCalificaciones();
+        boolean _estaInscripto_1 = partido.estaInscripto(this);
+        boolean _not_1 = (!_estaInscripto_1);
+        if (_not_1) {
+          throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado");
+        }
+        List<Calificacion> _calificaciones = calificado.getCalificaciones();
         Calificacion _calificacion = new Calificacion(calificado, partido, Integer.valueOf(nota), critica);
         _xblockexpression = _calificaciones.add(_calificacion);
       }

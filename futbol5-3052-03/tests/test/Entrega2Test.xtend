@@ -14,6 +14,7 @@ import observers.InscripcionObserver
 import junit.framework.Assert
 import observers.EquipoIncompletoObserver
 import observers.BajaSinReemplazoObserver
+import futbol5.Administrador
 
 class Entrega2Test {
 		Jugador jugador 
@@ -21,6 +22,7 @@ class Entrega2Test {
 		Jugador amigo2
 		Jugador amigo3
 		Partido partido	
+		Administrador administrador 
 		
 	@Before
 	def void setUP() {
@@ -33,6 +35,7 @@ class Entrega2Test {
 			jugador.agregarAmigo(amigo2)
 			jugador.agregarAmigo(amigo3)			
 			partido = new Partido("Berazategui")
+			administrador = new Administrador
 	}
 		
 	def armarPartido(int max) {

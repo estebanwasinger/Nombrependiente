@@ -25,11 +25,10 @@ class Jugador {
 		tipoInscripcion = new Estandar
 		amigos = new ArrayList<Jugador>
 		infracciones = new ArrayList<Infraccion>
-		administrador = Administrador::getInstance()
+		administrador = new Administrador
 		sistema = new Sistema
 		partido = new Partido("Villa Fiorito")
 		calificaciones = new ArrayList<Calificacion>
-		
 	}
 	
 	def agregarAmigo(Jugador jugador) {
@@ -50,7 +49,7 @@ class Jugador {
 	/*******************************/
 	/*CASO DE USO: NUEVOS JUGADORES */
 	/*******************************/
-def jugadorProponeA(Jugador jugador){
+def proponerA(Jugador jugador){
 		sistema.jugadoresRecomendados.add(jugador)
 	}
 	
@@ -62,7 +61,10 @@ def jugadorProponeA(Jugador jugador){
 		if (!partido.estaInscripto(calificado)){
 				throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado")
 				}
-		calificaciones.add(new Calificacion( calificado, partido, nota, critica))
+		if (!partido.estaInscripto(this)){
+				throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado")
+				}
+		calificado.calificaciones.add(new Calificacion(calificado, partido, nota, critica))
 	}
 	
 }

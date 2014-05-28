@@ -12,7 +12,7 @@ class Calificacion {
 	
 
     
-	new( Jugador calificado, Partido partido, Integer nota, String critica) {
+	new(Jugador calificado, Partido partido, Integer nota, String critica) {
 			this.calificado = calificado
 			this.partido = partido
 			this.nota = nota

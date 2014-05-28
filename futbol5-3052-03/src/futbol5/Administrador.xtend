@@ -8,23 +8,12 @@ class Administrador {
 	@Property Boolean loAcepta
 	@Property Sistema sistema
 	@Property String motivo
-	@Property Jugador jugador
-	@Property Partido partido
 			
-	static Administrador unico
-			
-	def static Administrador getInstance() {
-		if (unico == null) {
-			unico = new Administrador
-		}
-		unico
-	}
-	
 	new(){
 		sistema = new Sistema
 	}
 		
-	def revisarRecomendados(Partido partido) {
+	def revisarRecomendados(){
 		sistema.jugadoresRecomendados.forEach[jugador| tomarUnaDecision(jugador)]
 	}
 	
@@ -38,12 +27,6 @@ class Administrador {
 			sistema.jugadoresRechazados.add(registro)
 			}
 		sistema.jugadoresRecomendados.remove(jugador)
- }
-	
+	 }
 	
 }
-	
-
-  
-
-	

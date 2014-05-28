@@ -1,6 +1,7 @@
 package test;
 
 import auxiliares.MessageSender;
+import futbol5.Administrador;
 import futbol5.Jugador;
 import futbol5.Partido;
 import infracciones.Infraccion;
@@ -30,6 +31,8 @@ public class Entrega2Test {
   
   private Partido partido;
   
+  private Administrador administrador;
+  
   @Before
   public void setUP() {
     Jugador _jugador = new Jugador();
@@ -47,6 +50,8 @@ public class Entrega2Test {
     this.jugador.agregarAmigo(this.amigo3);
     Partido _partido = new Partido("Berazategui");
     this.partido = _partido;
+    Administrador _administrador = new Administrador();
+    this.administrador = _administrador;
   }
   
   public void armarPartido(final int max) {
