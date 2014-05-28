@@ -5,19 +5,13 @@ import auxiliares.RegistroRechazo
 class Administrador {
 
 	@Property String email
-	@Property Boolean loAcepta
 	@Property Sistema sistema
-	@Property String motivo
 			
 	new(){
 		sistema = new Sistema
 	}
 		
-	def revisarRecomendados(){
-		sistema.jugadoresRecomendados.forEach[jugador| tomarUnaDecision(jugador)]
-	}
-	
-	def tomarUnaDecision(Jugador jugador){
+	def tomarUnaDecision(Jugador jugador, boolean loAcepta, String motivo ){
 		var RegistroRechazo registro
 		
 		if (loAcepta){

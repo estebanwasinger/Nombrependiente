@@ -27,9 +27,7 @@ class Entrega3Test {
 			jugador.sistema = sistema
 			jugadorCalificado = new Jugador
 			partido = new Partido("Villa Fiorito")
-			administrador.motivo = "Se rechaza porque es mujer"		
-			administrador.loAcepta = true
-		}
+	}
 	
 	def armarPartido(int max) {
 		var int a = 0
@@ -42,7 +40,7 @@ class Entrega3Test {
 	@Test
 	def void testSeProponeUnJugadorEsAceptadoYSePuedeInscribir(){
 		jugador.proponerA(amigo)
-		administrador.revisarRecomendados()
+		administrador.tomarUnaDecision(amigo, true, null)
 		
 		Assert.assertEquals(0, sistema.jugadoresRecomendados.size)
 		Assert.assertEquals(1, sistema.jugadoresAceptados.size)
@@ -51,9 +49,8 @@ class Entrega3Test {
 	
 	@Test
 	def void testSeProponeUnJugadorYEsRechazado(){
-		administrador.loAcepta = false
 		jugador.proponerA(amigo)
-		administrador.revisarRecomendados()
+		administrador.tomarUnaDecision(amigo, false, "no me parace simpatico este chico")
 		Assert.assertEquals(0, sistema.jugadoresRecomendados.size)
 		Assert.assertEquals(1, sistema.jugadoresRechazados.size)
 		Assert.assertEquals(0, sistema.jugadoresAceptados.size)

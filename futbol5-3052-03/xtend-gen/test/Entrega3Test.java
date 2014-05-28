@@ -43,8 +43,6 @@ public class Entrega3Test {
     this.jugadorCalificado = _jugador_2;
     Partido _partido = new Partido("Villa Fiorito");
     this.partido = _partido;
-    this.administrador.setMotivo("Se rechaza porque es mujer");
-    this.administrador.setLoAcepta(Boolean.valueOf(true));
   }
   
   public void armarPartido(final int max) {
@@ -63,7 +61,7 @@ public class Entrega3Test {
   @Test
   public void testSeProponeUnJugadorEsAceptadoYSePuedeInscribir() {
     this.jugador.proponerA(this.amigo);
-    this.administrador.revisarRecomendados();
+    this.administrador.tomarUnaDecision(this.amigo, true, null);
     LinkedList<Jugador> _jugadoresRecomendados = this.sistema.getJugadoresRecomendados();
     int _size = _jugadoresRecomendados.size();
     Assert.assertEquals(0, _size);
@@ -77,9 +75,8 @@ public class Entrega3Test {
   
   @Test
   public void testSeProponeUnJugadorYEsRechazado() {
-    this.administrador.setLoAcepta(Boolean.valueOf(false));
     this.jugador.proponerA(this.amigo);
-    this.administrador.revisarRecomendados();
+    this.administrador.tomarUnaDecision(this.amigo, false, "no me parace simpatico este chico");
     LinkedList<Jugador> _jugadoresRecomendados = this.sistema.getJugadoresRecomendados();
     int _size = _jugadoresRecomendados.size();
     Assert.assertEquals(0, _size);
