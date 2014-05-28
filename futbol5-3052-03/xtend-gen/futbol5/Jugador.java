@@ -161,7 +161,7 @@ public class Jugador {
         boolean _estaInscripto_1 = partido.estaInscripto(this);
         boolean _not_1 = (!_estaInscripto_1);
         if (_not_1) {
-          throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado");
+          throw new BusinessException("El jugador no puede calificar ya que no pertenece al partido");
         }
         List<Calificacion> _calificaciones = calificado.getCalificaciones();
         Calificacion _calificacion = new Calificacion(calificado, partido, Integer.valueOf(nota), critica);

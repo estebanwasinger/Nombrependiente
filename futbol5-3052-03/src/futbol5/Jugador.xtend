@@ -62,7 +62,7 @@ def proponerA(Jugador jugador){
 				throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado")
 				}
 		if (!partido.estaInscripto(this)){
-				throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado")
+				throw new BusinessException("El jugador no puede calificar ya que no pertenece al partido")
 				}
 		calificado.calificaciones.add(new Calificacion(calificado, partido, nota, critica))
 	}

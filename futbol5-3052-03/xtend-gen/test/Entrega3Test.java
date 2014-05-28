@@ -59,7 +59,7 @@ public class Entrega3Test {
   }
   
   @Test
-  public void testSeProponeUnJugadorEsAceptadoYSePuedeInscribir() {
+  public void testSeProponeUnJugadorEsAceptador() {
     this.jugador.proponerA(this.amigo);
     this.administrador.tomarUnaDecision(this.amigo, true, null);
     LinkedList<Jugador> _jugadoresRecomendados = this.sistema.getJugadoresRecomendados();
@@ -86,6 +86,11 @@ public class Entrega3Test {
     List<Jugador> _jugadoresAceptados = this.sistema.getJugadoresAceptados();
     int _size_2 = _jugadoresAceptados.size();
     Assert.assertEquals(0, _size_2);
+  }
+  
+  @Test(expected = BusinessException.class)
+  public void testSeTrataDeAceptarUnJugadorNoRecomendado() {
+    this.administrador.tomarUnaDecision(this.amigo, false, "no me parace simpatico este chico");
   }
   
   @Test(expected = BusinessException.class)

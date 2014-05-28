@@ -38,7 +38,7 @@ class Entrega3Test {
 	}
 	
 	@Test
-	def void testSeProponeUnJugadorEsAceptadoYSePuedeInscribir(){
+	def void testSeProponeUnJugadorEsAceptador(){
 		jugador.proponerA(amigo)
 		administrador.tomarUnaDecision(amigo, true, null)
 		
@@ -54,6 +54,11 @@ class Entrega3Test {
 		Assert.assertEquals(0, sistema.jugadoresRecomendados.size)
 		Assert.assertEquals(1, sistema.jugadoresRechazados.size)
 		Assert.assertEquals(0, sistema.jugadoresAceptados.size)
+	}
+	
+	@Test(expected=typeof(BusinessException))
+	def void testSeTrataDeAceptarUnJugadorNoRecomendado() {
+		administrador.tomarUnaDecision(amigo, false, "no me parace simpatico este chico")
 	}
 
 	@Test(expected=typeof(BusinessException))
