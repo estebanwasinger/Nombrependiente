@@ -2,6 +2,7 @@ package futbol5;
 
 import com.google.common.base.Objects;
 import excepciones.BusinessException;
+import futbol5.Administrador;
 import futbol5.Jugador;
 import inscripciones.TipoInscripcion;
 import java.util.LinkedList;
@@ -54,6 +55,16 @@ public class Partido {
     this._bajasObservers = bajasObservers;
   }
   
+  private Administrador _administrador;
+  
+  public Administrador getAdministrador() {
+    return this._administrador;
+  }
+  
+  public void setAdministrador(final Administrador administrador) {
+    this._administrador = administrador;
+  }
+  
   public Partido(final String localidad) {
     this.setLocalidad(localidad);
     LinkedList<Jugador> _linkedList = new LinkedList<Jugador>();
@@ -62,6 +73,8 @@ public class Partido {
     this.setAltasObservers(_linkedList_1);
     LinkedList<PartidoObserver> _linkedList_2 = new LinkedList<PartidoObserver>();
     this.setBajasObservers(_linkedList_2);
+    Administrador _administrador = new Administrador();
+    this.setAdministrador(_administrador);
   }
   
   public void notificarInscripcion(final Jugador jugador) {

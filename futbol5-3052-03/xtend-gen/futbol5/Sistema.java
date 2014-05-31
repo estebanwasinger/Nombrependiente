@@ -1,6 +1,7 @@
 package futbol5;
 
 import auxiliares.RegistroRechazo;
+import com.google.common.base.Objects;
 import excepciones.BusinessException;
 import futbol5.Jugador;
 import java.util.LinkedList;
@@ -39,6 +40,21 @@ public class Sistema {
     this._jugadoresRecomendados = jugadoresRecomendados;
   }
   
+  private static Sistema unico;
+  
+  public static Sistema getInstance() {
+    Sistema _xblockexpression = null;
+    {
+      boolean _equals = Objects.equal(Sistema.unico, null);
+      if (_equals) {
+        Sistema _sistema = new Sistema();
+        Sistema.unico = _sistema;
+      }
+      _xblockexpression = Sistema.unico;
+    }
+    return _xblockexpression;
+  }
+  
   public Sistema() {
     LinkedList<Jugador> _linkedList = new LinkedList<Jugador>();
     this.setJugadoresAceptados(_linkedList);
@@ -46,6 +62,11 @@ public class Sistema {
     this.setJugadoresRechazados(_linkedList_1);
     LinkedList<Jugador> _linkedList_2 = new LinkedList<Jugador>();
     this.setJugadoresRecomendados(_linkedList_2);
+  }
+  
+  public boolean proponerA(final Jugador jugador) {
+    LinkedList<Jugador> _jugadoresRecomendados = this.getJugadoresRecomendados();
+    return _jugadoresRecomendados.add(jugador);
   }
   
   public boolean tomarUnaDecision(final Jugador jugador, final boolean loAcepta, final String motivo) {

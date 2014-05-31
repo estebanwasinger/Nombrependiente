@@ -17,17 +17,11 @@ class Jugador {
 	@Property List<Infraccion> infracciones
 	@Property List<Jugador> amigos
 	@Property List <Calificacion> calificaciones
-	@Property Administrador administrador
-	@Property Sistema sistema
-	@Property Partido partido 
 	
 	new() {
 		tipoInscripcion = new Estandar
 		amigos = new ArrayList<Jugador>
 		infracciones = new ArrayList<Infraccion>
-		administrador = new Administrador
-		sistema = new Sistema
-		partido = new Partido("Villa Fiorito")
 		calificaciones = new ArrayList<Calificacion>
 	}
 	
@@ -46,13 +40,7 @@ class Jugador {
 	def int prioridad() {
 		tipoInscripcion.prioridad()
 	}
-	/*******************************/
-	/*CASO DE USO: NUEVOS JUGADORES */
-	/*******************************/
-def proponerA(Jugador jugador){
-		sistema.jugadoresRecomendados.add(jugador)
-	}
-	
+		
 	/*******************************/
 	/****CASO DE USO: CALIFICACIONES ****/
 	/*******************************/

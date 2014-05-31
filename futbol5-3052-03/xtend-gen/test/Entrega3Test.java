@@ -3,7 +3,6 @@ package test;
 import auxiliares.RegistroRechazo;
 import calificaciones.Calificacion;
 import excepciones.BusinessException;
-import futbol5.Administrador;
 import futbol5.Jugador;
 import futbol5.Partido;
 import futbol5.Sistema;
@@ -23,8 +22,6 @@ public class Entrega3Test {
   
   private Partido partido;
   
-  private Administrador administrador;
-  
   private Sistema sistema;
   
   @Before
@@ -33,34 +30,17 @@ public class Entrega3Test {
     this.jugador = _jugador;
     Jugador _jugador_1 = new Jugador();
     this.amigo = _jugador_1;
-    Administrador _administrador = new Administrador();
-    this.administrador = _administrador;
-    Sistema _sistema = new Sistema();
-    this.sistema = _sistema;
-    this.administrador.setSistema(this.sistema);
-    this.jugador.setSistema(this.sistema);
+    Partido _partido = new Partido("VIlla Fiorito");
+    this.partido = _partido;
     Jugador _jugador_2 = new Jugador();
     this.jugadorCalificado = _jugador_2;
-    Partido _partido = new Partido("Villa Fiorito");
-    this.partido = _partido;
-  }
-  
-  public void armarPartido(final int max) {
-    int a = 0;
-    boolean _while = (a < max);
-    while (_while) {
-      {
-        Jugador _jugador = new Jugador();
-        this.partido.inscribir(_jugador);
-        a = (a + 1);
-      }
-      _while = (a < max);
-    }
+    Sistema _instance = Sistema.getInstance();
+    this.sistema = _instance;
   }
   
   @Test
   public void testSeProponeUnJugadorEsAceptado() {
-    this.jugador.proponerA(this.amigo);
+    this.sistema.proponerA(this.amigo);
     this.sistema.tomarUnaDecision(this.amigo, true, null);
     LinkedList<Jugador> _jugadoresRecomendados = this.sistema.getJugadoresRecomendados();
     int _size = _jugadoresRecomendados.size();
@@ -68,14 +48,11 @@ public class Entrega3Test {
     List<Jugador> _jugadoresAceptados = this.sistema.getJugadoresAceptados();
     int _size_1 = _jugadoresAceptados.size();
     Assert.assertEquals(1, _size_1);
-    List<RegistroRechazo> _jugadoresRechazados = this.sistema.getJugadoresRechazados();
-    int _size_2 = _jugadoresRechazados.size();
-    Assert.assertEquals(0, _size_2);
   }
   
   @Test
   public void testSeProponeUnJugadorYEsRechazado() {
-    this.jugador.proponerA(this.amigo);
+    this.sistema.proponerA(this.amigo);
     this.sistema.tomarUnaDecision(this.amigo, false, "no me parace simpatico este chico");
     LinkedList<Jugador> _jugadoresRecomendados = this.sistema.getJugadoresRecomendados();
     int _size = _jugadoresRecomendados.size();
@@ -83,9 +60,6 @@ public class Entrega3Test {
     List<RegistroRechazo> _jugadoresRechazados = this.sistema.getJugadoresRechazados();
     int _size_1 = _jugadoresRechazados.size();
     Assert.assertEquals(1, _size_1);
-    List<Jugador> _jugadoresAceptados = this.sistema.getJugadoresAceptados();
-    int _size_2 = _jugadoresAceptados.size();
-    Assert.assertEquals(0, _size_2);
   }
   
   @Test(expected = BusinessException.class)
@@ -96,7 +70,6 @@ public class Entrega3Test {
   @Test(expected = BusinessException.class)
   public void testCalificacionAJugadorQueNoJugo() {
     this.partido.inscribir(this.jugador);
-    this.armarPartido(9);
     this.jugadorCalificado.calificar(this.partido, 10, "excelente");
   }
   
@@ -104,7 +77,6 @@ public class Entrega3Test {
   public void testJugadorCalificaASuCompanero() {
     this.partido.inscribir(this.jugador);
     this.partido.inscribir(this.jugadorCalificado);
-    this.armarPartido(8);
     this.jugadorCalificado.calificar(this.partido, 10, "excelente");
     List<Calificacion> _calificaciones = this.jugadorCalificado.getCalificaciones();
     int _size = _calificaciones.size();

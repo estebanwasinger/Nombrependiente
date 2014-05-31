@@ -16,7 +16,7 @@ public class EquipoCompletoObserver extends PartidoObserver {
     int _cantJugadores = partido.cantJugadores();
     boolean _equals = (_cantJugadores == 10);
     if (_equals) {
-      Administrador _administrador = jugador.getAdministrador();
+      Administrador _administrador = partido.getAdministrador();
       final String adminMail = _administrador.getEmail();
       final String asunto = "Partido confirmado";
       final String mensaje = "El equipo tiene 10 jugadores a la fecha";

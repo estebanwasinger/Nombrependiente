@@ -16,7 +16,7 @@ public class EquipoIncompletoObserver extends PartidoObserver {
     int _cantJugadores = partido.cantJugadores();
     boolean _equals = (_cantJugadores == 9);
     if (_equals) {
-      Administrador _administrador = jugador.getAdministrador();
+      Administrador _administrador = partido.getAdministrador();
       final String adminMail = _administrador.getEmail();
       final String asunto = "Partido incompleto";
       final String mensaje = "Se dio de baja un jugador del partido y no dejo un reemplazo. El equipo esta incompleto (9 jugadores)";

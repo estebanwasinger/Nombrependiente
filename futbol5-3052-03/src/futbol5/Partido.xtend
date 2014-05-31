@@ -5,15 +5,14 @@ import java.util.LinkedList
 import excepciones.BusinessException
 import observers.PartidoObserver
 
-
 class Partido {
 
 	@Property var String localidad
 	@Property var LinkedList<Jugador> jugadores
 	@Property var List<PartidoObserver> altasObservers
 	@Property var List<PartidoObserver> bajasObservers
-		
-
+	@Property var Administrador administrador 
+	
 	/****************/
 	/*CONSTRUCTORES*/
 	/****************/
@@ -22,7 +21,7 @@ class Partido {
 		jugadores = new LinkedList<Jugador>
 		altasObservers = new LinkedList<PartidoObserver>
 		bajasObservers = new LinkedList<PartidoObserver>
-		
+		administrador = new Administrador
 	}
 
 	/********************/

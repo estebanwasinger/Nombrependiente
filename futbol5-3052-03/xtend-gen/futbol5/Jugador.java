@@ -2,14 +2,11 @@ package futbol5;
 
 import calificaciones.Calificacion;
 import excepciones.BusinessException;
-import futbol5.Administrador;
 import futbol5.Partido;
-import futbol5.Sistema;
 import infracciones.Infraccion;
 import inscripciones.Estandar;
 import inscripciones.TipoInscripcion;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
@@ -75,36 +72,6 @@ public class Jugador {
     this._calificaciones = calificaciones;
   }
   
-  private Administrador _administrador;
-  
-  public Administrador getAdministrador() {
-    return this._administrador;
-  }
-  
-  public void setAdministrador(final Administrador administrador) {
-    this._administrador = administrador;
-  }
-  
-  private Sistema _sistema;
-  
-  public Sistema getSistema() {
-    return this._sistema;
-  }
-  
-  public void setSistema(final Sistema sistema) {
-    this._sistema = sistema;
-  }
-  
-  private Partido _partido;
-  
-  public Partido getPartido() {
-    return this._partido;
-  }
-  
-  public void setPartido(final Partido partido) {
-    this._partido = partido;
-  }
-  
   public Jugador() {
     Estandar _estandar = new Estandar();
     this.setTipoInscripcion(_estandar);
@@ -112,12 +79,6 @@ public class Jugador {
     this.setAmigos(_arrayList);
     ArrayList<Infraccion> _arrayList_1 = new ArrayList<Infraccion>();
     this.setInfracciones(_arrayList_1);
-    Administrador _administrador = new Administrador();
-    this.setAdministrador(_administrador);
-    Sistema _sistema = new Sistema();
-    this.setSistema(_sistema);
-    Partido _partido = new Partido("Villa Fiorito");
-    this.setPartido(_partido);
     ArrayList<Calificacion> _arrayList_2 = new ArrayList<Calificacion>();
     this.setCalificaciones(_arrayList_2);
   }
@@ -141,12 +102,6 @@ public class Jugador {
   public int prioridad() {
     TipoInscripcion _tipoInscripcion = this.getTipoInscripcion();
     return _tipoInscripcion.prioridad();
-  }
-  
-  public boolean proponerA(final Jugador jugador) {
-    Sistema _sistema = this.getSistema();
-    LinkedList<Jugador> _jugadoresRecomendados = _sistema.getJugadoresRecomendados();
-    return _jugadoresRecomendados.add(jugador);
   }
   
   public boolean calificar(final Partido partido, final int nota, final String critica) {
