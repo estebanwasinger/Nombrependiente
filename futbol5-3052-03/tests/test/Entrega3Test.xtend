@@ -38,9 +38,9 @@ class Entrega3Test {
 	}
 	
 	@Test
-	def void testSeProponeUnJugadorEsAceptador(){
+	def void testSeProponeUnJugadorEsAceptado(){
 		jugador.proponerA(amigo)
-		administrador.tomarUnaDecision(amigo, true, null)
+		sistema.tomarUnaDecision(amigo, true, null)
 		
 		Assert.assertEquals(0, sistema.jugadoresRecomendados.size)
 		Assert.assertEquals(1, sistema.jugadoresAceptados.size)
@@ -50,7 +50,7 @@ class Entrega3Test {
 	@Test
 	def void testSeProponeUnJugadorYEsRechazado(){
 		jugador.proponerA(amigo)
-		administrador.tomarUnaDecision(amigo, false, "no me parace simpatico este chico")
+		sistema.tomarUnaDecision(amigo, false, "no me parace simpatico este chico")
 		Assert.assertEquals(0, sistema.jugadoresRecomendados.size)
 		Assert.assertEquals(1, sistema.jugadoresRechazados.size)
 		Assert.assertEquals(0, sistema.jugadoresAceptados.size)
@@ -58,29 +58,29 @@ class Entrega3Test {
 	
 	@Test(expected=typeof(BusinessException))
 	def void testSeTrataDeAceptarUnJugadorNoRecomendado() {
-		administrador.tomarUnaDecision(amigo, false, "no me parace simpatico este chico")
+		sistema.tomarUnaDecision(amigo, false, "no me parace simpatico este chico")
 	}
 
 	@Test(expected=typeof(BusinessException))
     def void testCalificacionAJugadorQueNoJugo(){
         partido.inscribir(jugador)
         armarPartido(9)
-        jugador.calificar(jugadorCalificado, partido, 10, "excelente")
+        jugadorCalificado.calificar(partido, 10, "excelente")
     }
     
-	@Test(expected=typeof(BusinessException))
-	    def void testCalificacionDeUnJugadorQueNoJugo(){
- 	       partido.inscribir(jugadorCalificado)
- 	       armarPartido(9)
-  	      jugador.calificar(jugadorCalificado, partido, 10, "excelente")
- 	   }  
+//	@Test(expected=typeof(BusinessException))
+//	    def void testCalificacionDeUnJugadorQueNoJugo(){
+// 	       partido.inscribir(jugadorCalificado)
+// 	       armarPartido(9)
+//  	      jugadorCalificado.calificar( partido, 10, "excelente")
+// 	   }  
   
 	@Test
     def void testJugadorCalificaASuCompanero(){
         partido.inscribir(jugador)
         partido.inscribir(jugadorCalificado)
   	    armarPartido(8)  
-        jugador.calificar(jugadorCalificado,partido,10,"excelente")
+        jugadorCalificado.calificar(partido,10,"excelente")
         Assert.assertEquals(1, jugadorCalificado.calificaciones.size)
         
     }

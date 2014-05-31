@@ -56,15 +56,12 @@ def proponerA(Jugador jugador){
 	/*******************************/
 	/****CASO DE USO: CALIFICACIONES ****/
 	/*******************************/
-		def calificar (Jugador calificado,Partido partido, int nota, String critica){
+		def calificar (Partido partido, int nota, String critica){
 		
-		if (!partido.estaInscripto(calificado)){
+		if (!partido.estaInscripto(this)){
 				throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado")
 				}
-		if (!partido.estaInscripto(this)){
-				throw new BusinessException("El jugador no puede calificar ya que no pertenece al partido")
-				}
-		calificado.calificaciones.add(new Calificacion(calificado, partido, nota, critica))
+		calificaciones.add(new Calificacion(this, partido, nota, critica))
 	}
 	
 }

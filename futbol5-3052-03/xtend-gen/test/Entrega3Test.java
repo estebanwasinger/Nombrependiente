@@ -59,9 +59,9 @@ public class Entrega3Test {
   }
   
   @Test
-  public void testSeProponeUnJugadorEsAceptador() {
+  public void testSeProponeUnJugadorEsAceptado() {
     this.jugador.proponerA(this.amigo);
-    this.administrador.tomarUnaDecision(this.amigo, true, null);
+    this.sistema.tomarUnaDecision(this.amigo, true, null);
     LinkedList<Jugador> _jugadoresRecomendados = this.sistema.getJugadoresRecomendados();
     int _size = _jugadoresRecomendados.size();
     Assert.assertEquals(0, _size);
@@ -76,7 +76,7 @@ public class Entrega3Test {
   @Test
   public void testSeProponeUnJugadorYEsRechazado() {
     this.jugador.proponerA(this.amigo);
-    this.administrador.tomarUnaDecision(this.amigo, false, "no me parace simpatico este chico");
+    this.sistema.tomarUnaDecision(this.amigo, false, "no me parace simpatico este chico");
     LinkedList<Jugador> _jugadoresRecomendados = this.sistema.getJugadoresRecomendados();
     int _size = _jugadoresRecomendados.size();
     Assert.assertEquals(0, _size);
@@ -90,21 +90,14 @@ public class Entrega3Test {
   
   @Test(expected = BusinessException.class)
   public void testSeTrataDeAceptarUnJugadorNoRecomendado() {
-    this.administrador.tomarUnaDecision(this.amigo, false, "no me parace simpatico este chico");
+    this.sistema.tomarUnaDecision(this.amigo, false, "no me parace simpatico este chico");
   }
   
   @Test(expected = BusinessException.class)
   public void testCalificacionAJugadorQueNoJugo() {
     this.partido.inscribir(this.jugador);
     this.armarPartido(9);
-    this.jugador.calificar(this.jugadorCalificado, this.partido, 10, "excelente");
-  }
-  
-  @Test(expected = BusinessException.class)
-  public void testCalificacionDeUnJugadorQueNoJugo() {
-    this.partido.inscribir(this.jugadorCalificado);
-    this.armarPartido(9);
-    this.jugador.calificar(this.jugadorCalificado, this.partido, 10, "excelente");
+    this.jugadorCalificado.calificar(this.partido, 10, "excelente");
   }
   
   @Test
@@ -112,7 +105,7 @@ public class Entrega3Test {
     this.partido.inscribir(this.jugador);
     this.partido.inscribir(this.jugadorCalificado);
     this.armarPartido(8);
-    this.jugador.calificar(this.jugadorCalificado, this.partido, 10, "excelente");
+    this.jugadorCalificado.calificar(this.partido, 10, "excelente");
     List<Calificacion> _calificaciones = this.jugadorCalificado.getCalificaciones();
     int _size = _calificaciones.size();
     Assert.assertEquals(1, _size);

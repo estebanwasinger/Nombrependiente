@@ -10,8 +10,6 @@ class Calificacion {
 	@Property int nota
 	@Property String critica
 	
-
-    
 	new(Jugador calificado, Partido partido, Integer nota, String critica) {
 			this.calificado = calificado
 			this.partido = partido

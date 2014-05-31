@@ -149,22 +149,17 @@ public class Jugador {
     return _jugadoresRecomendados.add(jugador);
   }
   
-  public boolean calificar(final Jugador calificado, final Partido partido, final int nota, final String critica) {
+  public boolean calificar(final Partido partido, final int nota, final String critica) {
     try {
       boolean _xblockexpression = false;
       {
-        boolean _estaInscripto = partido.estaInscripto(calificado);
+        boolean _estaInscripto = partido.estaInscripto(this);
         boolean _not = (!_estaInscripto);
         if (_not) {
           throw new BusinessException("El jugador que se quiere calificar no jugo el partido indicado");
         }
-        boolean _estaInscripto_1 = partido.estaInscripto(this);
-        boolean _not_1 = (!_estaInscripto_1);
-        if (_not_1) {
-          throw new BusinessException("El jugador no puede calificar ya que no pertenece al partido");
-        }
-        List<Calificacion> _calificaciones = calificado.getCalificaciones();
-        Calificacion _calificacion = new Calificacion(calificado, partido, Integer.valueOf(nota), critica);
+        List<Calificacion> _calificaciones = this.getCalificaciones();
+        Calificacion _calificacion = new Calificacion(this, partido, Integer.valueOf(nota), critica);
         _xblockexpression = _calificaciones.add(_calificacion);
       }
       return _xblockexpression;
