@@ -35,6 +35,16 @@ public class Partido {
     this._jugadores = jugadores;
   }
   
+  private LinkedList<Jugador> _jugadoresOrdenados;
+  
+  public LinkedList<Jugador> getJugadoresOrdenados() {
+    return this._jugadoresOrdenados;
+  }
+  
+  public void setJugadoresOrdenados(final LinkedList<Jugador> jugadoresOrdenados) {
+    this._jugadoresOrdenados = jugadoresOrdenados;
+  }
+  
   private List<PartidoObserver> _altasObservers;
   
   public List<PartidoObserver> getAltasObservers() {
@@ -69,10 +79,12 @@ public class Partido {
     this.setLocalidad(localidad);
     LinkedList<Jugador> _linkedList = new LinkedList<Jugador>();
     this.setJugadores(_linkedList);
-    LinkedList<PartidoObserver> _linkedList_1 = new LinkedList<PartidoObserver>();
-    this.setAltasObservers(_linkedList_1);
+    LinkedList<Jugador> _linkedList_1 = new LinkedList<Jugador>();
+    this.setJugadoresOrdenados(_linkedList_1);
     LinkedList<PartidoObserver> _linkedList_2 = new LinkedList<PartidoObserver>();
-    this.setBajasObservers(_linkedList_2);
+    this.setAltasObservers(_linkedList_2);
+    LinkedList<PartidoObserver> _linkedList_3 = new LinkedList<PartidoObserver>();
+    this.setBajasObservers(_linkedList_3);
     Administrador _administrador = new Administrador();
     this.setAdministrador(_administrador);
   }
@@ -218,5 +230,32 @@ public class Partido {
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
+  }
+  
+  public Object armarEquiposTentativos() {
+    Object _xblockexpression = null;
+    {
+      this.ordenarJugadores();
+      _xblockexpression = this.dividirEquipos();
+    }
+    return _xblockexpression;
+  }
+  
+  public Object ordenarJugadores() {
+    return null;
+  }
+  
+  /**
+   * acá hay que aplicar los criterios con un command "criteriosCommand"
+   */
+  public Object dividirEquipos() {
+    return null;
+  }
+  
+  /**
+   * acá hay que aplicar los algoritmos con un command "algoritmosCommand"
+   */
+  public Object confirmarEquipos() {
+    return null;
   }
 }

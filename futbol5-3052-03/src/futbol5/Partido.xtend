@@ -9,6 +9,7 @@ class Partido {
 
 	@Property var String localidad
 	@Property var LinkedList<Jugador> jugadores
+	@Property var LinkedList<Jugador> jugadoresOrdenados
 	@Property var List<PartidoObserver> altasObservers
 	@Property var List<PartidoObserver> bajasObservers
 	@Property var Administrador administrador 
@@ -19,6 +20,7 @@ class Partido {
 	new(String localidad) {
 		this.localidad = localidad
 		jugadores = new LinkedList<Jugador>
+		jugadoresOrdenados = new LinkedList<Jugador>
 		altasObservers = new LinkedList<PartidoObserver>
 		bajasObservers = new LinkedList<PartidoObserver>
 		administrador = new Administrador
@@ -113,4 +115,26 @@ class Partido {
 		this.agregarJugador(jugador)
 		this.notificarInscripcion(jugador)
 	}
+	
+	/***************************************/
+	/*CASO DE USO: GENERAR EQUIPOS TENTATIVOS*/
+	/***************************************/
+	def armarEquiposTentativos(){
+		ordenarJugadores()
+		dividirEquipos()
+	}
+	
+	def ordenarJugadores(){}
+		/*acá hay que aplicar los criterios con un command "criteriosCommand" */
+		//este metodo utiliza la lista de "jugadores" para ordenar segun criterio
+		//una vez ordenada, hay que ver si conviene utilizar la misma lista (no me parece) o la lista "jugadoresOrdenados"
+		
+	def dividirEquipos(){}
+		/*acá hay que aplicar los algoritmos con un command "algoritmosCommand"*/
+		//este metodo debe reccibir la lista de "jugadoresOrdenados"
+		// este metodo debe armar dos nuevas listas que contienen cada una los 5 jugadores correspondientes
+	
+	def confirmarEquipos(){}
+		/*acá hay que impedir que se puedan inscribir los jugadores si se confirma */
+		//la lista ordenada en caso de que el equipo no se confirme deberia vaciarse (ver si no hay otra opcion)
 }
