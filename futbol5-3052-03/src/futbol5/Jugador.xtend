@@ -17,6 +17,7 @@ class Jugador {
 	@Property List<Infraccion> infracciones
 	@Property List<Jugador> amigos
 	@Property List <Calificacion> calificaciones
+	@Property int nivelDeJuego
 	
 	new() {
 		tipoInscripcion = new Estandar
@@ -39,6 +40,17 @@ class Jugador {
 
 	def int prioridad() {
 		tipoInscripcion.prioridad()
+	}
+	
+	def  promedioCalificacionesUltimoPartido(){
+		var Calificacion calificacionesUltimoPartido 
+		var int sumaCalificaciones
+		
+		if (calificaciones.size==0){
+			throw new BusinessException("El jugador no fue calificado aun")
+				}		
+		calificacionesUltimoPartido = calificaciones.filter[calificacion|calificacion.partido==(calificaciones.last).partido]
+		sumaCalificaciones = calificacionesUltimoPartido.forEach[calificacion.nota|sumaCalificaciones + calificacion.nota]
 	}
 		
 	/*******************************/

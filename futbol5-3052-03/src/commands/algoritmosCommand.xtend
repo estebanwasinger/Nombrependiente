@@ -1,5 +1,0 @@
-package commands
-
-interface algoritmosCommand {
-	
-}

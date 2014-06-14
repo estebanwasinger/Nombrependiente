@@ -1,6 +1,8 @@
 package futbol5;
 
 import com.google.common.base.Objects;
+import commands.AlgoritmosCommand;
+import commands.CriteriosCommand;
 import excepciones.BusinessException;
 import futbol5.Administrador;
 import futbol5.Jugador;
@@ -232,28 +234,39 @@ public class Partido {
     }
   }
   
-  public Object armarEquiposTentativos() {
-    Object _xblockexpression = null;
-    {
-      this.ordenarJugadores();
-      _xblockexpression = this.dividirEquipos();
+  public void ordenarJugadores(final CriteriosCommand criterioOrdenamiento) {
+    try {
+      int _cantJugadores = this.cantJugadores();
+      boolean _lessThan = (_cantJugadores < 10);
+      if (_lessThan) {
+        throw new BusinessException("No se puede ordenar la lista porque no hay 10 jugadores inscriptosaún.");
+      }
+      LinkedList<Jugador> _jugadores = this.getJugadores();
+      criterioOrdenamiento.ordenar(_jugadores);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
     }
-    return _xblockexpression;
   }
   
-  public Object ordenarJugadores() {
-    return null;
+  public void dividirEquipos(final AlgoritmosCommand algoritmoDivision) {
+    try {
+      int _cantJugadores = this.cantJugadores();
+      boolean _lessThan = (_cantJugadores < 10);
+      if (_lessThan) {
+        throw new BusinessException("No se pueden armar los dos equipos porque no hay 10 jugadores inscriptos aún.");
+      }
+      LinkedList<Jugador> _jugadores = this.getJugadores();
+      algoritmoDivision.dividir(_jugadores);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   /**
-   * acá hay que aplicar los criterios con un command "criteriosCommand"
-   */
-  public Object dividirEquipos() {
-    return null;
-  }
-  
-  /**
-   * acá hay que aplicar los algoritmos con un command "algoritmosCommand"
+   * def armarEquiposTentativos(){
+   * ordenarJugadores(criterioOrdenamiento)
+   * dividirEquipos(algoritmoDivision)
+   * }
    */
   public Object confirmarEquipos() {
     return null;

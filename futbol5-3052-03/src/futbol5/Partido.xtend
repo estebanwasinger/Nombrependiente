@@ -4,6 +4,8 @@ import java.util.List
 import java.util.LinkedList
 import excepciones.BusinessException
 import observers.PartidoObserver
+import commands.AlgoritmosCommand
+import commands.CriteriosCommand
 
 class Partido {
 
@@ -12,6 +14,8 @@ class Partido {
 	@Property var LinkedList<Jugador> jugadoresOrdenados
 	@Property var List<PartidoObserver> altasObservers
 	@Property var List<PartidoObserver> bajasObservers
+//	@Property var List<CriteriosCommand> criteriosOrdenamiento
+//	@Property var List<AlgoritmosCommand> algoritmosDivision
 	@Property var Administrador administrador 
 	
 	/****************/
@@ -24,6 +28,8 @@ class Partido {
 		altasObservers = new LinkedList<PartidoObserver>
 		bajasObservers = new LinkedList<PartidoObserver>
 		administrador = new Administrador
+	//	criteriosOrdenamiento = new LinkedList<CriteriosCommand>
+	//	algoritmosDivision = new LinkedList<AlgoritmosCommand>
 	}
 
 	/********************/
@@ -68,7 +74,7 @@ class Partido {
 	def quitarObserverBaja(PartidoObserver observer) {
 		this.bajasObservers.remove(observer)
 	}
-	
+		
 	/*******************************/
 	/*CASO DE USO: BAJA DE UN JUGADOR*/
 	/*******************************/
@@ -119,20 +125,25 @@ class Partido {
 	/***************************************/
 	/*CASO DE USO: GENERAR EQUIPOS TENTATIVOS*/
 	/***************************************/
-	def armarEquiposTentativos(){
-		ordenarJugadores()
-		dividirEquipos()
-	}
-	
-	def ordenarJugadores(){}
-		/*acá hay que aplicar los criterios con un command "criteriosCommand" */
-		//este metodo utiliza la lista de "jugadores" para ordenar segun criterio
-		//una vez ordenada, hay que ver si conviene utilizar la misma lista (no me parece) o la lista "jugadoresOrdenados"
 		
-	def dividirEquipos(){}
-		/*acá hay que aplicar los algoritmos con un command "algoritmosCommand"*/
-		//este metodo debe reccibir la lista de "jugadoresOrdenados"
-		// este metodo debe armar dos nuevas listas que contienen cada una los 5 jugadores correspondientes
+	def ordenarJugadores(CriteriosCommand criterioOrdenamiento){
+		if (cantJugadores<10) {
+			throw new BusinessException("No se puede ordenar la lista porque no hay 10 jugadores inscriptosaún.")
+		}
+		criterioOrdenamiento.ordenar(jugadores)	
+	}
+		
+	def dividirEquipos(AlgoritmosCommand algoritmoDivision){
+		if (cantJugadores<10) {
+			throw new BusinessException("No se pueden armar los dos equipos porque no hay 10 jugadores inscriptos aún.")
+		}
+		algoritmoDivision.dividir(jugadores)
+	}
+		
+	/*def armarEquiposTentativos(){
+		ordenarJugadores(criterioOrdenamiento)
+		dividirEquipos(algoritmoDivision)
+	}*/
 	
 	def confirmarEquipos(){}
 		/*acá hay que impedir que se puedan inscribir los jugadores si se confirma */

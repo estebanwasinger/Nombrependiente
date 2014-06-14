@@ -72,6 +72,16 @@ public class Jugador {
     this._calificaciones = calificaciones;
   }
   
+  private int _nivelDeJuego;
+  
+  public int getNivelDeJuego() {
+    return this._nivelDeJuego;
+  }
+  
+  public void setNivelDeJuego(final int nivelDeJuego) {
+    this._nivelDeJuego = nivelDeJuego;
+  }
+  
   public Jugador() {
     Estandar _estandar = new Estandar();
     this.setTipoInscripcion(_estandar);
@@ -102,6 +112,18 @@ public class Jugador {
   public int prioridad() {
     TipoInscripcion _tipoInscripcion = this.getTipoInscripcion();
     return _tipoInscripcion.prioridad();
+  }
+  
+  public int promedioCalificacionesUltimoPartido() {
+    throw new Error("Unresolved compilation problems:"
+      + "\nno viable alternative at input \'|\'"
+      + "\nThe method forEach is undefined for the type Jugador"
+      + "\nThe method or field calificacion is undefined for the type Jugador"
+      + "\nThe method or field calificacion is undefined for the type Jugador"
+      + "\nCannot refer to the non-final variable sumaCalificaciones inside a lambda expression"
+      + "\nType mismatch: cannot convert from Iterable<Calificacion> to Calificacion"
+      + "\nnota cannot be resolved"
+      + "\nnota cannot be resolved");
   }
   
   public boolean calificar(final Partido partido, final int nota, final String critica) {
