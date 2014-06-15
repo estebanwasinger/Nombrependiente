@@ -1,10 +1,7 @@
 package commands
 
-import futbol5.Jugador
-import java.util.LinkedList
-
-class CriterioMix implements CriteriosCommand{
+class CriterioMix extends CriteriosCommand{
 	
-	override ordenar(LinkedList<Jugador> jugadores) {}
+	override criterioComparacion(){}
 
 }

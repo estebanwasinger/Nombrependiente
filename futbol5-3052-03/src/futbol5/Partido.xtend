@@ -11,7 +11,7 @@ class Partido {
 
 	@Property var String localidad
 	@Property var LinkedList<Jugador> jugadores
-	@Property var LinkedList<Jugador> jugadoresOrdenados
+//	@Property var LinkedList<Jugador> jugadoresOrdenados
 	@Property var List<PartidoObserver> altasObservers
 	@Property var List<PartidoObserver> bajasObservers
 //	@Property var List<CriteriosCommand> criteriosOrdenamiento
@@ -24,7 +24,7 @@ class Partido {
 	new(String localidad) {
 		this.localidad = localidad
 		jugadores = new LinkedList<Jugador>
-		jugadoresOrdenados = new LinkedList<Jugador>
+	//	jugadoresOrdenados = new LinkedList<Jugador>
 		altasObservers = new LinkedList<PartidoObserver>
 		bajasObservers = new LinkedList<PartidoObserver>
 		administrador = new Administrador

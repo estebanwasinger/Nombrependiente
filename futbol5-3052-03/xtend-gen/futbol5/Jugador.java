@@ -7,6 +7,7 @@ import infracciones.Infraccion;
 import inscripciones.Estandar;
 import inscripciones.TipoInscripcion;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
@@ -82,6 +83,16 @@ public class Jugador {
     this._nivelDeJuego = nivelDeJuego;
   }
   
+  private int _criterioComparacion;
+  
+  public int getCriterioComparacion() {
+    return this._criterioComparacion;
+  }
+  
+  public void setCriterioComparacion(final int criterioComparacion) {
+    this._criterioComparacion = criterioComparacion;
+  }
+  
   public Jugador() {
     Estandar _estandar = new Estandar();
     this.setTipoInscripcion(_estandar);
@@ -89,8 +100,8 @@ public class Jugador {
     this.setAmigos(_arrayList);
     ArrayList<Infraccion> _arrayList_1 = new ArrayList<Infraccion>();
     this.setInfracciones(_arrayList_1);
-    ArrayList<Calificacion> _arrayList_2 = new ArrayList<Calificacion>();
-    this.setCalificaciones(_arrayList_2);
+    LinkedList<Calificacion> _linkedList = new LinkedList<Calificacion>();
+    this.setCalificaciones(_linkedList);
   }
   
   public boolean agregarAmigo(final Jugador jugador) {
@@ -117,13 +128,23 @@ public class Jugador {
   public int promedioCalificacionesUltimoPartido() {
     throw new Error("Unresolved compilation problems:"
       + "\nno viable alternative at input \'|\'"
-      + "\nThe method forEach is undefined for the type Jugador"
+      + "\nno viable alternative at input \'|\'"
       + "\nThe method or field calificacion is undefined for the type Jugador"
       + "\nThe method or field calificacion is undefined for the type Jugador"
-      + "\nCannot refer to the non-final variable sumaCalificaciones inside a lambda expression"
-      + "\nType mismatch: cannot convert from Iterable<Calificacion> to Calificacion"
+      + "\nThe method or field calificacion is undefined for the type Jugador"
+      + "\nThe method or field sumaCalificaciones is undefined for the type Jugador"
+      + "\nThe method or field calificacion is undefined for the type Jugador"
+      + "\nType mismatch: type void is not applicable at this location"
       + "\nnota cannot be resolved"
+      + "\npartido cannot be resolved"
+      + "\n== cannot be resolved"
+      + "\nnota cannot be resolved"
+      + "\n+ cannot be resolved"
       + "\nnota cannot be resolved");
+  }
+  
+  public Object promedioNCalificaciones(final int n) {
+    return null;
   }
   
   public boolean calificar(final Partido partido, final int nota, final String critica) {

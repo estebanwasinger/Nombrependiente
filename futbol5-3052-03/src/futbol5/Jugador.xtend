@@ -7,7 +7,7 @@ import inscripciones.Estandar
 import infracciones.Infraccion
 import calificaciones.Calificacion
 import excepciones.BusinessException
-
+import java.util.LinkedList
 
 class Jugador {
 
@@ -18,12 +18,13 @@ class Jugador {
 	@Property List<Jugador> amigos
 	@Property List <Calificacion> calificaciones
 	@Property int nivelDeJuego
+	@Property int criterioComparacion
 	
 	new() {
 		tipoInscripcion = new Estandar
 		amigos = new ArrayList<Jugador>
 		infracciones = new ArrayList<Infraccion>
-		calificaciones = new ArrayList<Calificacion>
+		calificaciones = new LinkedList<Calificacion>
 	}
 	
 	def agregarAmigo(Jugador jugador) {
@@ -42,17 +43,20 @@ class Jugador {
 		tipoInscripcion.prioridad()
 	}
 	
-	def  promedioCalificacionesUltimoPartido(){
-		var Calificacion calificacionesUltimoPartido 
-		var int sumaCalificaciones
-		
+	def  int promedioCalificacionesUltimoPartido(){
+		//arreglar
 		if (calificaciones.size==0){
 			throw new BusinessException("El jugador no fue calificado aun")
 				}		
-		calificacionesUltimoPartido = calificaciones.filter[calificacion|calificacion.partido==(calificaciones.last).partido]
-		sumaCalificaciones = calificacionesUltimoPartido.forEach[calificacion.nota|sumaCalificaciones + calificacion.nota]
+		var calificacionesUltimoPartido =calificaciones.filter[calificacion.nota|calificacion.partido==(calificaciones.last).partido]
+		var sumaCalificaciones = calificacionesUltimoPartido.forEach[calificacion.nota|sumaCalificaciones + calificacion.nota]
+		return sumaCalificaciones
 	}
-		
+	
+	def promedioNCalificaciones(int n){
+		// desarrollar
+	}
+			
 	/*******************************/
 	/****CASO DE USO: CALIFICACIONES ****/
 	/*******************************/

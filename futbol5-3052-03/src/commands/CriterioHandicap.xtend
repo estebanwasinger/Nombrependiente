@@ -1,12 +1,8 @@
 package commands
 
-import futbol5.Jugador
-import java.util.LinkedList
+class CriterioHandicap extends CriteriosCommand{
+	//var criterioComparacion = "nivelDeJuego"
+	//return criterioComparacion
 
-class CriterioHandicap implements CriteriosCommand{
-	
-	override ordenar(LinkedList<Jugador> jugadores) {
-		//jugadores.forEach[]
 	}
-
 }

@@ -1,10 +1,10 @@
 package commands
 
-import futbol5.Jugador
-import java.util.LinkedList
-
-class CriterioCalifiUltimoPartido implements CriteriosCommand {
+class CriterioCalifiUltimoPartido extends CriteriosCommand {
 	
-	override ordenar(LinkedList<Jugador> jugadores) {}
-		
+	override establecerCriterio(){
+		super.ordenar
+		promedioCalificacionesUltimoPartido
+	}
+
 }

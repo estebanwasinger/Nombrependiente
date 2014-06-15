@@ -37,16 +37,6 @@ public class Partido {
     this._jugadores = jugadores;
   }
   
-  private LinkedList<Jugador> _jugadoresOrdenados;
-  
-  public LinkedList<Jugador> getJugadoresOrdenados() {
-    return this._jugadoresOrdenados;
-  }
-  
-  public void setJugadoresOrdenados(final LinkedList<Jugador> jugadoresOrdenados) {
-    this._jugadoresOrdenados = jugadoresOrdenados;
-  }
-  
   private List<PartidoObserver> _altasObservers;
   
   public List<PartidoObserver> getAltasObservers() {
@@ -81,12 +71,10 @@ public class Partido {
     this.setLocalidad(localidad);
     LinkedList<Jugador> _linkedList = new LinkedList<Jugador>();
     this.setJugadores(_linkedList);
-    LinkedList<Jugador> _linkedList_1 = new LinkedList<Jugador>();
-    this.setJugadoresOrdenados(_linkedList_1);
+    LinkedList<PartidoObserver> _linkedList_1 = new LinkedList<PartidoObserver>();
+    this.setAltasObservers(_linkedList_1);
     LinkedList<PartidoObserver> _linkedList_2 = new LinkedList<PartidoObserver>();
-    this.setAltasObservers(_linkedList_2);
-    LinkedList<PartidoObserver> _linkedList_3 = new LinkedList<PartidoObserver>();
-    this.setBajasObservers(_linkedList_3);
+    this.setBajasObservers(_linkedList_2);
     Administrador _administrador = new Administrador();
     this.setAdministrador(_administrador);
   }
