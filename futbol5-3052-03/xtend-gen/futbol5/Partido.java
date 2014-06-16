@@ -27,14 +27,24 @@ public class Partido {
     this._localidad = localidad;
   }
   
-  private LinkedList<Jugador> _jugadores;
+  private List<Jugador> _jugadores;
   
-  public LinkedList<Jugador> getJugadores() {
+  public List<Jugador> getJugadores() {
     return this._jugadores;
   }
   
-  public void setJugadores(final LinkedList<Jugador> jugadores) {
+  public void setJugadores(final List<Jugador> jugadores) {
     this._jugadores = jugadores;
+  }
+  
+  private List<Jugador> _jugadoresOrdenados;
+  
+  public List<Jugador> getJugadoresOrdenados() {
+    return this._jugadoresOrdenados;
+  }
+  
+  public void setJugadoresOrdenados(final List<Jugador> jugadoresOrdenados) {
+    this._jugadoresOrdenados = jugadoresOrdenados;
   }
   
   private List<PartidoObserver> _altasObservers;
@@ -71,10 +81,12 @@ public class Partido {
     this.setLocalidad(localidad);
     LinkedList<Jugador> _linkedList = new LinkedList<Jugador>();
     this.setJugadores(_linkedList);
-    LinkedList<PartidoObserver> _linkedList_1 = new LinkedList<PartidoObserver>();
-    this.setAltasObservers(_linkedList_1);
+    LinkedList<Jugador> _linkedList_1 = new LinkedList<Jugador>();
+    this.setJugadoresOrdenados(_linkedList_1);
     LinkedList<PartidoObserver> _linkedList_2 = new LinkedList<PartidoObserver>();
-    this.setBajasObservers(_linkedList_2);
+    this.setAltasObservers(_linkedList_2);
+    LinkedList<PartidoObserver> _linkedList_3 = new LinkedList<PartidoObserver>();
+    this.setBajasObservers(_linkedList_3);
     Administrador _administrador = new Administrador();
     this.setAdministrador(_administrador);
   }
@@ -100,22 +112,22 @@ public class Partido {
   }
   
   public int cantJugadores() {
-    LinkedList<Jugador> _jugadores = this.getJugadores();
+    List<Jugador> _jugadores = this.getJugadores();
     return _jugadores.size();
   }
   
   public void agregarJugador(final Jugador jugador) {
-    LinkedList<Jugador> _jugadores = this.getJugadores();
+    List<Jugador> _jugadores = this.getJugadores();
     _jugadores.add(jugador);
   }
   
   public void eliminarJugador(final Jugador jugador) {
-    LinkedList<Jugador> _jugadores = this.getJugadores();
+    List<Jugador> _jugadores = this.getJugadores();
     _jugadores.remove(jugador);
   }
   
   public boolean estaInscripto(final Jugador jugador) {
-    LinkedList<Jugador> _jugadores = this.getJugadores();
+    List<Jugador> _jugadores = this.getJugadores();
     return _jugadores.contains(jugador);
   }
   
@@ -160,7 +172,7 @@ public class Partido {
       this.eliminarJugador(jugador);
       boolean _notEquals_1 = (!Objects.equal(reemplazo, null));
       if (_notEquals_1) {
-        LinkedList<Jugador> _jugadores = this.getJugadores();
+        List<Jugador> _jugadores = this.getJugadores();
         _jugadores.add(reemplazo);
       }
       this.notificarBaja(jugador, reemplazo);
@@ -193,8 +205,8 @@ public class Partido {
         this.notificarInscripcion(jugador);
         return;
       }
-      LinkedList<Jugador> _jugadores = this.getJugadores();
-      final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
+      List<Jugador> _jugadores = this.getJugadores();
+      final Function1<Jugador, Boolean> _function = new Function1<Jugador, Boolean>() {
         public Boolean apply(final Jugador inscripto) {
           return Boolean.valueOf(jugador.tieneMasPrioridadQue(inscripto));
         }
@@ -204,8 +216,8 @@ public class Partido {
       if (_not_1) {
         throw new BusinessException("No hay mas cupo");
       }
-      LinkedList<Jugador> _jugadores_1 = this.getJugadores();
-      final Function1<Jugador,Boolean> _function_1 = new Function1<Jugador,Boolean>() {
+      List<Jugador> _jugadores_1 = this.getJugadores();
+      final Function1<Jugador, Boolean> _function_1 = new Function1<Jugador, Boolean>() {
         public Boolean apply(final Jugador unJugador) {
           int _prioridad = unJugador.prioridad();
           int _prioridad_1 = jugador.prioridad();
@@ -227,27 +239,19 @@ public class Partido {
       int _cantJugadores = this.cantJugadores();
       boolean _lessThan = (_cantJugadores < 10);
       if (_lessThan) {
-        throw new BusinessException("No se puede ordenar la lista porque no hay 10 jugadores inscriptosaún.");
+        throw new BusinessException("No se puede ordenar la lista porque no hay 10 jugadores inscriptos aun.");
       }
-      LinkedList<Jugador> _jugadores = this.getJugadores();
-      criterioOrdenamiento.ordenar(_jugadores);
+      List<Jugador> _jugadores = this.getJugadores();
+      List<Jugador> _ordenar = criterioOrdenamiento.ordenar(_jugadores);
+      this.setJugadoresOrdenados(_ordenar);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
   public void dividirEquipos(final AlgoritmosCommand algoritmoDivision) {
-    try {
-      int _cantJugadores = this.cantJugadores();
-      boolean _lessThan = (_cantJugadores < 10);
-      if (_lessThan) {
-        throw new BusinessException("No se pueden armar los dos equipos porque no hay 10 jugadores inscriptos aún.");
-      }
-      LinkedList<Jugador> _jugadores = this.getJugadores();
-      algoritmoDivision.dividir(_jugadores);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
+    throw new Error("Unresolved compilation problems:"
+      + "\nType mismatch: cannot convert from List<Jugador> to LinkedList<Jugador>");
   }
   
   /**

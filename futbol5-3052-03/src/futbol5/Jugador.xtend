@@ -50,7 +50,7 @@ class Jugador {
 				}		
 		var calificacionesUltimoPartido =calificaciones.filter[calificacion.nota|calificacion.partido==(calificaciones.last).partido]
 		var sumaCalificaciones = calificacionesUltimoPartido.forEach[calificacion.nota|sumaCalificaciones + calificacion.nota]
-		return sumaCalificaciones
+		return sumaCalificaciones;
 	}
 	
 	def promedioNCalificaciones(int n){

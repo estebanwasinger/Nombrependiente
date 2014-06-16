@@ -1,6 +1,9 @@
 package commands
 
-class CriterioMix extends CriteriosCommand{
+import java.util.LinkedList
+import futbol5.Jugador
+
+class CriterioMix implements CriteriosCommand{
 	
 	override criterioComparacion(){}
 

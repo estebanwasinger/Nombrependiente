@@ -3,7 +3,7 @@ package condiciones;
 import condiciones.Condicion;
 import futbol5.Jugador;
 import futbol5.Partido;
-import java.util.LinkedList;
+import java.util.List;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
@@ -42,8 +42,8 @@ public class CondicionJugadoresPorEdad implements Condicion {
   }
   
   public int cantInscriptosConEdadLimite(final Partido partido, final int edadLimite) {
-    LinkedList<Jugador> _jugadores = partido.getJugadores();
-    final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
+    List<Jugador> _jugadores = partido.getJugadores();
+    final Function1<Jugador, Boolean> _function = new Function1<Jugador, Boolean>() {
       public Boolean apply(final Jugador jugador) {
         return Boolean.valueOf(jugador.menorA(edadLimite));
       }

@@ -7,11 +7,12 @@ import observers.PartidoObserver
 import commands.AlgoritmosCommand
 import commands.CriteriosCommand
 
+
 class Partido {
 
 	@Property var String localidad
-	@Property var LinkedList<Jugador> jugadores
-//	@Property var LinkedList<Jugador> jugadoresOrdenados
+	@Property var List<Jugador> jugadores
+	@Property var List<Jugador> jugadoresOrdenados
 	@Property var List<PartidoObserver> altasObservers
 	@Property var List<PartidoObserver> bajasObservers
 //	@Property var List<CriteriosCommand> criteriosOrdenamiento
@@ -24,7 +25,7 @@ class Partido {
 	new(String localidad) {
 		this.localidad = localidad
 		jugadores = new LinkedList<Jugador>
-	//	jugadoresOrdenados = new LinkedList<Jugador>
+		jugadoresOrdenados = new LinkedList<Jugador>
 		altasObservers = new LinkedList<PartidoObserver>
 		bajasObservers = new LinkedList<PartidoObserver>
 		administrador = new Administrador
@@ -128,14 +129,15 @@ class Partido {
 		
 	def ordenarJugadores(CriteriosCommand criterioOrdenamiento){
 		if (cantJugadores<10) {
-			throw new BusinessException("No se puede ordenar la lista porque no hay 10 jugadores inscriptosaún.")
+			throw new BusinessException("No se puede ordenar la lista porque no hay 10 jugadores inscriptos aun.")
 		}
-		criterioOrdenamiento.ordenar(jugadores)	
+		
+		this.jugadoresOrdenados = criterioOrdenamiento.ordenar(jugadores);
 	}
 		
 	def dividirEquipos(AlgoritmosCommand algoritmoDivision){
 		if (cantJugadores<10) {
-			throw new BusinessException("No se pueden armar los dos equipos porque no hay 10 jugadores inscriptos aún.")
+			throw new BusinessException("No se pueden armar los dos equipos porque no hay 10 jugadores inscriptos aï¿½n.")
 		}
 		algoritmoDivision.dividir(jugadores)
 	}
@@ -146,6 +148,6 @@ class Partido {
 	}*/
 	
 	def confirmarEquipos(){}
-		/*acá hay que impedir que se puedan inscribir los jugadores si se confirma */
+		/*acï¿½ hay que impedir que se puedan inscribir los jugadores si se confirma */
 		//la lista ordenada en caso de que el equipo no se confirme deberia vaciarse (ver si no hay otra opcion)
 }
