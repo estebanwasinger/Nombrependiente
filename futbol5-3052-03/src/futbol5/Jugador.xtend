@@ -44,13 +44,13 @@ class Jugador {
 	}
 	
 	def  int promedioCalificacionesUltimoPartido(){
-		//arreglar
+		var int sumaCalificaciones;
 		if (calificaciones.size==0){
 			throw new BusinessException("El jugador no fue calificado aun")
 				}		
-		var calificacionesUltimoPartido =calificaciones.filter[calificacion.nota|calificacion.partido==(calificaciones.last).partido]
-		var sumaCalificaciones = calificacionesUltimoPartido.forEach[calificacion.nota|sumaCalificaciones + calificacion.nota]
-		return sumaCalificaciones;
+		var calificacionesUltimoPartido = calificaciones.filter[calificacion|calificacion.partido==(calificaciones.last).partido]
+		sumaCalificaciones = calificacionesUltimoPartido.map[calificacion|calificacion.nota].reduce[a,b|a+b]
+		return (sumaCalificaciones/calificacionesUltimoPartido.size);
 	}
 	
 	def promedioNCalificaciones(int n){
