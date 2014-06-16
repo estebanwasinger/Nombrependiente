@@ -4,8 +4,9 @@ import auxiliares.MessageSender;
 import futbol5.Jugador;
 import futbol5.Partido;
 import java.util.List;
-import java.util.function.Consumer;
 import observers.PartidoObserver;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 @SuppressWarnings("all")
 public class InscripcionObserver extends PartidoObserver {
@@ -23,11 +24,11 @@ public class InscripcionObserver extends PartidoObserver {
   
   public void notificarInscripcion(final Partido partido, final Jugador jugador) {
     List<Jugador> _amigos = jugador.getAmigos();
-    final Consumer<Jugador> _function = new Consumer<Jugador>() {
-      public void accept(final Jugador amigo) {
+    final Procedure1<Jugador> _function = new Procedure1<Jugador>() {
+      public void apply(final Jugador amigo) {
         InscripcionObserver.this.avisarle(jugador, amigo);
       }
     };
-    _amigos.forEach(_function);
+    IterableExtensions.<Jugador>forEach(_amigos, _function);
   }
 }

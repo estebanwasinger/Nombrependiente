@@ -8,6 +8,7 @@ import infracciones.Infraccion
 import calificaciones.Calificacion
 import excepciones.BusinessException
 import java.util.LinkedList
+import java.util.Set
 
 class Jugador {
 
@@ -43,18 +44,30 @@ class Jugador {
 		tipoInscripcion.prioridad()
 	}
 	
-	def  int promedioCalificacionesUltimoPartido(){
+	def int promedioCalificacionesUltimoPartido(){
 		var int sumaCalificaciones;
-		if (calificaciones.size==0){
+		if (calificaciones.size == 0) {
 			throw new BusinessException("El jugador no fue calificado aun")
-				}		
-		var calificacionesUltimoPartido = calificaciones.filter[calificacion|calificacion.partido==(calificaciones.last).partido]
-		sumaCalificaciones = calificacionesUltimoPartido.map[calificacion|calificacion.nota].reduce[a,b|a+b]
-		return (sumaCalificaciones/calificacionesUltimoPartido.size);
+		}
+		var calificacionesUltimoPartido = calificaciones.filter[calificacion|
+			calificacion.partido == (calificaciones.last).partido]
+		sumaCalificaciones = calificacionesUltimoPartido.map[calificacion|calificacion.nota].reduce[a, b|a + b]
+		return (sumaCalificaciones / calificacionesUltimoPartido.size);
 	}
 	
 	def promedioNCalificaciones(int n){
-		// desarrollar
+		
+		
+		
+		
+	}
+	
+	def Set<Partido> buscarNPartidos(int n){
+		var Set<Partido> partidos
+		while (partidos.size <= n ){
+		//	calificaciones.forEach[calificacion|partidos.add(calificacion.partido)]
+		}
+		return partidos
 	}
 			
 	/*******************************/

@@ -83,7 +83,7 @@ class Partido {
 		if (!estaInscripto(jugador)) {
 			throw new BusinessException("El jugador no esta inscripto en este partido, no se puede dar de baja")
 		}
-		if (reemplazo != null && this.estaInscripto(reemplazo)) {
+		if (reemplazo == null && this.estaInscripto(reemplazo)) {
 			throw new BusinessException("El reemplazo ya esta inscripto en el partido")
 		}
 		eliminarJugador(jugador)
@@ -127,6 +127,10 @@ class Partido {
 	/*CASO DE USO: GENERAR EQUIPOS TENTATIVOS*/
 	/***************************************/
 		
+	def hola(){
+		
+	}
+	
 	def ordenarJugadores(CriteriosCommand criterioOrdenamiento){
 		if (cantJugadores<10) {
 			throw new BusinessException("No se puede ordenar la lista porque no hay 10 jugadores inscriptos aun.")
@@ -139,7 +143,7 @@ class Partido {
 		if (cantJugadores<10) {
 			throw new BusinessException("No se pueden armar los dos equipos porque no hay 10 jugadores inscriptos a�n.")
 		}
-		algoritmoDivision.dividir(jugadores)
+		//algoritmoDivision.dividir(jugadores)
 	}
 		
 	/*def armarEquiposTentativos(){

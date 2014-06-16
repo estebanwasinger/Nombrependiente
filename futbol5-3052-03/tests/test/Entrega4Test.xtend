@@ -7,7 +7,7 @@ import org.junit.Before
 import org.junit.Test
 import excepciones.BusinessException
 import futbol5.Sistema
-import comandos.CriterioHandicap
+import commands.CriterioHandicap
 import java.util.LinkedList
 import java.util.List
 

@@ -1,6 +1,7 @@
 package futbol5;
 
 import calificaciones.Calificacion;
+import com.google.common.base.Objects;
 import excepciones.BusinessException;
 import futbol5.Partido;
 import infracciones.Infraccion;
@@ -9,7 +10,11 @@ import inscripciones.TipoInscripcion;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.Functions.Function2;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public class Jugador {
@@ -126,25 +131,60 @@ public class Jugador {
   }
   
   public int promedioCalificacionesUltimoPartido() {
-    throw new Error("Unresolved compilation problems:"
-      + "\nno viable alternative at input \'|\'"
-      + "\nno viable alternative at input \'|\'"
-      + "\nThe method or field calificacion is undefined for the type Jugador"
-      + "\nThe method or field calificacion is undefined for the type Jugador"
-      + "\nThe method or field calificacion is undefined for the type Jugador"
-      + "\nThe method or field sumaCalificaciones is undefined for the type Jugador"
-      + "\nThe method or field calificacion is undefined for the type Jugador"
-      + "\nType mismatch: type void is not applicable at this location"
-      + "\nnota cannot be resolved"
-      + "\npartido cannot be resolved"
-      + "\n== cannot be resolved"
-      + "\nnota cannot be resolved"
-      + "\n+ cannot be resolved"
-      + "\nnota cannot be resolved");
+    try {
+      int sumaCalificaciones = 0;
+      List<Calificacion> _calificaciones = this.getCalificaciones();
+      int _size = _calificaciones.size();
+      boolean _equals = (_size == 0);
+      if (_equals) {
+        throw new BusinessException("El jugador no fue calificado aun");
+      }
+      List<Calificacion> _calificaciones_1 = this.getCalificaciones();
+      final Function1<Calificacion,Boolean> _function = new Function1<Calificacion,Boolean>() {
+        public Boolean apply(final Calificacion calificacion) {
+          Partido _partido = calificacion.getPartido();
+          List<Calificacion> _calificaciones = Jugador.this.getCalificaciones();
+          Calificacion _last = IterableExtensions.<Calificacion>last(_calificaciones);
+          Partido _partido_1 = _last.getPartido();
+          return Boolean.valueOf(Objects.equal(_partido, _partido_1));
+        }
+      };
+      Iterable<Calificacion> calificacionesUltimoPartido = IterableExtensions.<Calificacion>filter(_calificaciones_1, _function);
+      final Function1<Calificacion,Integer> _function_1 = new Function1<Calificacion,Integer>() {
+        public Integer apply(final Calificacion calificacion) {
+          return Integer.valueOf(calificacion.getNota());
+        }
+      };
+      Iterable<Integer> _map = IterableExtensions.<Calificacion, Integer>map(calificacionesUltimoPartido, _function_1);
+      final Function2<Integer,Integer,Integer> _function_2 = new Function2<Integer,Integer,Integer>() {
+        public Integer apply(final Integer a, final Integer b) {
+          return Integer.valueOf(((a).intValue() + (b).intValue()));
+        }
+      };
+      Integer _reduce = IterableExtensions.<Integer>reduce(_map, _function_2);
+      sumaCalificaciones = (_reduce).intValue();
+      int _size_1 = IterableExtensions.size(calificacionesUltimoPartido);
+      return (sumaCalificaciones / _size_1);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   public Object promedioNCalificaciones(final int n) {
     return null;
+  }
+  
+  public Set<Partido> buscarNPartidos(final int n) {
+    Set<Partido> partidos = null;
+    int _size = partidos.size();
+    boolean _lessEqualsThan = (_size <= n);
+    boolean _while = _lessEqualsThan;
+    while (_while) {
+      int _size_1 = partidos.size();
+      boolean _lessEqualsThan_1 = (_size_1 <= n);
+      _while = _lessEqualsThan_1;
+    }
+    return partidos;
   }
   
   public boolean calificar(final Partido partido, final int nota, final String critica) {
