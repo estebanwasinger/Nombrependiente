@@ -83,7 +83,7 @@ class Partido {
 		if (!estaInscripto(jugador)) {
 			throw new BusinessException("El jugador no esta inscripto en este partido, no se puede dar de baja")
 		}
-		if (reemplazo == null && this.estaInscripto(reemplazo)) {
+		if (reemplazo != null && this.estaInscripto(reemplazo)) {
 			throw new BusinessException("El reemplazo ya esta inscripto en el partido")
 		}
 		eliminarJugador(jugador)
