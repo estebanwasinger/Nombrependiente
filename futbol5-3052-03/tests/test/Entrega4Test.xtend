@@ -11,6 +11,7 @@ import commands.CriterioHandicap
 import java.util.LinkedList
 import java.util.List
 import commands.AlgoritmoImparPar
+import commands.AlgoritmoLoco
 
 class Entrega4Test {
 	
@@ -29,6 +30,7 @@ class Entrega4Test {
 	Partido partido2
 	CriterioHandicap handicap
 	AlgoritmoImparPar algoritmoImparPar
+	AlgoritmoLoco algoritmoLoco
 
 	@Before def void setUP() {
 		jugador1 = new Jugador;
@@ -57,6 +59,7 @@ class Entrega4Test {
 		handicap = new CriterioHandicap;
 		partido2 = new Partido("CABA");
 		algoritmoImparPar = new AlgoritmoImparPar;
+		algoritmoLoco = new AlgoritmoLoco;
 		
 		
 		partido.inscribir(jugador1);
@@ -95,5 +98,6 @@ class Entrega4Test {
     def void testDividirGrupoMenor10(){
     	armarPartido(9)
   		partido2.dividirEquipos(algoritmoImparPar)
-    }   
-}
+    } 
+        }  
+

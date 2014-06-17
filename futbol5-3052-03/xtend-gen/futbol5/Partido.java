@@ -47,6 +47,26 @@ public class Partido {
     this._jugadoresOrdenados = jugadoresOrdenados;
   }
   
+  private List<Jugador> _equipoA;
+  
+  public List<Jugador> getEquipoA() {
+    return this._equipoA;
+  }
+  
+  public void setEquipoA(final List<Jugador> equipoA) {
+    this._equipoA = equipoA;
+  }
+  
+  private List<Jugador> _equipoB;
+  
+  public List<Jugador> getEquipoB() {
+    return this._equipoB;
+  }
+  
+  public void setEquipoB(final List<Jugador> equipoB) {
+    this._equipoB = equipoB;
+  }
+  
   private List<PartidoObserver> _altasObservers;
   
   public List<PartidoObserver> getAltasObservers() {
@@ -256,6 +276,10 @@ public class Partido {
       if (_lessThan) {
         throw new BusinessException("No se pueden armar los dos equipos porque no hay 10 jugadores inscriptos a�n.");
       }
+      List<Jugador> _jugadoresOrdenados = this.getJugadoresOrdenados();
+      List<Jugador> _equipoA = this.getEquipoA();
+      List<Jugador> _equipoB = this.getEquipoB();
+      algoritmoDivision.dividir(_jugadoresOrdenados, _equipoA, _equipoB);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

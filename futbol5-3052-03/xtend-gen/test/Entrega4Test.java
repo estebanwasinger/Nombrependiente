@@ -1,6 +1,7 @@
 package test;
 
 import commands.AlgoritmoImparPar;
+import commands.AlgoritmoLoco;
 import commands.CriterioHandicap;
 import excepciones.BusinessException;
 import futbol5.Jugador;
@@ -40,6 +41,8 @@ public class Entrega4Test {
   private CriterioHandicap handicap;
   
   private AlgoritmoImparPar algoritmoImparPar;
+  
+  private AlgoritmoLoco algoritmoLoco;
   
   @Before
   public void setUP() {
@@ -81,6 +84,8 @@ public class Entrega4Test {
     this.partido2 = _partido_1;
     AlgoritmoImparPar _algoritmoImparPar = new AlgoritmoImparPar();
     this.algoritmoImparPar = _algoritmoImparPar;
+    AlgoritmoLoco _algoritmoLoco = new AlgoritmoLoco();
+    this.algoritmoLoco = _algoritmoLoco;
     this.partido.inscribir(this.jugador1);
     this.partido.inscribir(this.jugador2);
     this.partido.inscribir(this.jugador3);

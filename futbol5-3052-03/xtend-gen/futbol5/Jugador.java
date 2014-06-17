@@ -136,13 +136,10 @@ public class Jugador {
   }
   
   public int promedioNPartidos(final int n) {
-    try {
-      List<Calificacion> _calificaciones = this.getCalificaciones();
-      int _size = _calificaciones.size();
-      boolean _equals = (_size == 0);
-      if (_equals) {
-        throw new BusinessException("El jugador no fue calificado aun");
-      }
+    List<Calificacion> _calificaciones = this.getCalificaciones();
+    int _size = _calificaciones.size();
+    boolean _notEquals = (_size != 0);
+    if (_notEquals) {
       int calificacionTotal = 0;
       Set<Partido> partidos = null;
       int pos = 0;
@@ -194,9 +191,8 @@ public class Jugador {
       }
       int _size_4 = partidos.size();
       return (calificacionTotal / _size_4);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
     }
+    return 0;
   }
   
   public int promedioDeUnPartido(final Partido partido) {
