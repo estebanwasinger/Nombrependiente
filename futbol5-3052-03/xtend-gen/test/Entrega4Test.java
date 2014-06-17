@@ -2,7 +2,9 @@ package test;
 
 import commands.AlgoritmoImparPar;
 import commands.AlgoritmoLoco;
+import commands.CriterioCalifiUltimoPartido;
 import commands.CriterioHandicap;
+import commands.CriterioNCalificaciones;
 import excepciones.BusinessException;
 import futbol5.Jugador;
 import futbol5.Partido;
@@ -34,15 +36,23 @@ public class Entrega4Test {
   
   private Jugador jugador10;
   
+  private Jugador jugadorCalificado;
+  
   private Partido partido;
   
   private Partido partido2;
+  
+  private Partido partido3;
   
   private CriterioHandicap handicap;
   
   private AlgoritmoImparPar algoritmoImparPar;
   
   private AlgoritmoLoco algoritmoLoco;
+  
+  private CriterioCalifiUltimoPartido criterioCalificacionUltimoPartido;
+  
+  private CriterioNCalificaciones criterioNCalificaciones;
   
   @Before
   public void setUP() {
@@ -82,10 +92,16 @@ public class Entrega4Test {
     this.handicap = _criterioHandicap;
     Partido _partido_1 = new Partido("CABA");
     this.partido2 = _partido_1;
+    Partido _partido_2 = new Partido("Burzaco");
+    this.partido3 = _partido_2;
     AlgoritmoImparPar _algoritmoImparPar = new AlgoritmoImparPar();
     this.algoritmoImparPar = _algoritmoImparPar;
     AlgoritmoLoco _algoritmoLoco = new AlgoritmoLoco();
     this.algoritmoLoco = _algoritmoLoco;
+    CriterioCalifiUltimoPartido _criterioCalifiUltimoPartido = new CriterioCalifiUltimoPartido();
+    this.criterioCalificacionUltimoPartido = _criterioCalifiUltimoPartido;
+    CriterioNCalificaciones _criterioNCalificaciones = new CriterioNCalificaciones();
+    this.criterioNCalificaciones = _criterioNCalificaciones;
     this.partido.inscribir(this.jugador1);
     this.partido.inscribir(this.jugador2);
     this.partido.inscribir(this.jugador3);
@@ -98,13 +114,15 @@ public class Entrega4Test {
     this.partido.inscribir(this.jugador10);
   }
   
-  public void armarPartido(final int max) {
+  public void armarPartido(final int max, final Partido partido) {
     int a = 0;
     boolean _while = (a < max);
     while (_while) {
       {
         Jugador _jugador = new Jugador();
-        this.partido2.inscribir(_jugador);
+        this.jugadorCalificado = _jugador;
+        partido.inscribir(this.jugadorCalificado);
+        this.jugadorCalificado.calificar(partido, 8, "muy bueno");
         a = (a + 1);
       }
       _while = (a < max);
@@ -126,13 +144,27 @@ public class Entrega4Test {
   
   @Test(expected = BusinessException.class)
   public void testOrdenarJugadoresMenoresADiez() {
-    this.armarPartido(9);
+    this.armarPartido(9, this.partido2);
     this.partido2.ordenarJugadores(this.handicap);
   }
   
   @Test(expected = BusinessException.class)
   public void testDividirGrupoMenor10() {
-    this.armarPartido(9);
+    this.armarPartido(9, this.partido2);
     this.partido2.dividirEquipos(this.algoritmoImparPar);
+  }
+  
+  @Test
+  public void testOrdenarJugadoresPorUltimoPromedio() {
+    this.armarPartido(10, this.partido2);
+    this.partido2.ordenarJugadores(this.criterioCalificacionUltimoPartido);
+  }
+  
+  @Test
+  public void testOrdenarJugadoresPorPromedioNPartidos() {
+    this.armarPartido(10, this.partido2);
+    this.armarPartido(10, this.partido);
+    this.armarPartido(10, this.partido3);
+    this.partido2.ordenarJugadores(this.criterioNCalificaciones);
   }
 }

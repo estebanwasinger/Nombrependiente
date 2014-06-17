@@ -12,6 +12,8 @@ import java.util.LinkedList
 import java.util.List
 import commands.AlgoritmoImparPar
 import commands.AlgoritmoLoco
+import commands.CriterioCalifiUltimoPartido
+import commands.CriterioNCalificaciones
 
 class Entrega4Test {
 	
@@ -26,11 +28,17 @@ class Entrega4Test {
 	Jugador jugador9
 	Jugador jugador10
 	
+	Jugador jugadorCalificado
+	
 	Partido partido
 	Partido partido2
+	Partido partido3
 	CriterioHandicap handicap
 	AlgoritmoImparPar algoritmoImparPar
 	AlgoritmoLoco algoritmoLoco
+	CriterioCalifiUltimoPartido criterioCalificacionUltimoPartido
+	CriterioNCalificaciones criterioNCalificaciones
+	
 
 	@Before def void setUP() {
 		jugador1 = new Jugador;
@@ -58,8 +66,11 @@ class Entrega4Test {
 		partido = new Partido("CABA");
 		handicap = new CriterioHandicap;
 		partido2 = new Partido("CABA");
+		partido3= new Partido("Burzaco")
 		algoritmoImparPar = new AlgoritmoImparPar;
 		algoritmoLoco = new AlgoritmoLoco;
+		criterioCalificacionUltimoPartido = new CriterioCalifiUltimoPartido
+		criterioNCalificaciones = new CriterioNCalificaciones
 		
 		
 		partido.inscribir(jugador1);
@@ -75,29 +86,48 @@ class Entrega4Test {
 	
 	}
 	
-	def armarPartido(int max) {
+	def armarPartido(int max, Partido partido) {
 		var int a = 0
 		while (a < max) {
-			partido2.inscribir(new Jugador)
+			jugadorCalificado = new Jugador
+			partido.inscribir(jugadorCalificado)
+			jugadorCalificado.calificar(partido,8,"muy bueno")
+		//	println(jugadorCalificado.calificaciones.size)
 			a = a + 1
 		}
 	}
 
-	@Test def void testPartidoOrdenaPorHandicap() {
+	@Test 
+	def void testPartidoOrdenaPorHandicap() {
 		partido.ordenarJugadores(handicap);
 		partido.jugadoresOrdenados.forEach[jugador|println(jugador.nivelDeJuego)];
 	}
 	
 	@Test(expected=typeof(BusinessException))
     def void testOrdenarJugadoresMenoresADiez(){
-  	armarPartido(9)
+  	armarPartido(9, partido2)
   	partido2.ordenarJugadores(handicap)
   	
     }
  	@Test(expected=typeof(BusinessException))
     def void testDividirGrupoMenor10(){
-    	armarPartido(9)
+    	armarPartido(9, partido2)
   		partido2.dividirEquipos(algoritmoImparPar)
     } 
+  
+	@Test  //NO FUNCIONA TODAVIA
+	def void testOrdenarJugadoresPorUltimoPromedio(){
+	armarPartido(10, partido2)
+	partido2.ordenarJugadores(criterioCalificacionUltimoPartido)
+	}  
+	
+	@Test //NO FUNCIONA TODAVIA
+	def void testOrdenarJugadoresPorPromedioNPartidos(){
+		armarPartido(10, partido2)
+		armarPartido(10, partido)
+		armarPartido(10,partido3)
+		partido2.ordenarJugadores(criterioNCalificaciones)
+	
+	}
         }  
 
