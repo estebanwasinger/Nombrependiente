@@ -1,8 +1,10 @@
 package commands
 
+import futbol5.Jugador
+
 class CriterioNCalificaciones extends CriteriosCommand{
 	
-	override criterioComparacion(){
-//		return "promedioNCalificaciones" //debe recibir un n
+	def criterioComparacion(int n){
+	this.criterio = [Jugador jugador | jugador.promedioNPartidos(n)];
 	}
 }

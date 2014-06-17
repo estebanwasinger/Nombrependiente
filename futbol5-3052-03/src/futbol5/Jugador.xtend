@@ -49,10 +49,10 @@ class Jugador {
 	}
 
 	def promedioNPartidos(int n) {
-		if (calificaciones.size == 0) {
-			throw new BusinessException("El jugador no fue calificado aun")
-		}
-		
+//		if (calificaciones.size == 0) {
+//			throw new BusinessException("El jugador no fue calificado aun")
+//		}
+		if (calificaciones.size != 0){
 		var int calificacionTotal
 		var Set<Partido> partidos
 		var int pos = 0;
@@ -65,7 +65,10 @@ class Jugador {
 		}
 
 		return calificacionTotal / partidos.size
-	}
+		}
+		return 0
+		}
+		
 	def promedioDeUnPartido(Partido partido){
 		var calificacionesUltimoPartido = calificaciones.filter[calificacion|calificacion.partido== partido]
 		var sumaCalificaciones = calificacionesUltimoPartido.map[calificacion|calificacion.nota].reduce[a, b|a + b]

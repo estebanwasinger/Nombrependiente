@@ -13,6 +13,8 @@ class Partido {
 	@Property var String localidad
 	@Property var List<Jugador> jugadores
 	@Property var List<Jugador> jugadoresOrdenados
+	@Property var List<Jugador> equipoA
+	@Property var List<Jugador> equipoB
 	@Property var List<PartidoObserver> altasObservers
 	@Property var List<PartidoObserver> bajasObservers
 //	@Property var List<CriteriosCommand> criteriosOrdenamiento
@@ -140,7 +142,7 @@ class Partido {
 		if (cantJugadores<10) {
 			throw new BusinessException("No se pueden armar los dos equipos porque no hay 10 jugadores inscriptos a�n.")
 		}
-		//algoritmoDivision.dividir(jugadores)
+		algoritmoDivision.dividir(jugadoresOrdenados,equipoA,equipoB)
 	}
 		
 	/*def armarEquiposTentativos(){
