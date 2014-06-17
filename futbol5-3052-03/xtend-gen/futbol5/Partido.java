@@ -9,11 +9,11 @@ import futbol5.Jugador;
 import inscripciones.TipoInscripcion;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 import observers.PartidoObserver;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 @SuppressWarnings("all")
 public class Partido {
@@ -93,22 +93,22 @@ public class Partido {
   
   public void notificarInscripcion(final Jugador jugador) {
     List<PartidoObserver> _altasObservers = this.getAltasObservers();
-    final Procedure1<PartidoObserver> _function = new Procedure1<PartidoObserver>() {
-      public void apply(final PartidoObserver observador) {
+    final Consumer<PartidoObserver> _function = new Consumer<PartidoObserver>() {
+      public void accept(final PartidoObserver observador) {
         observador.notificarInscripcion(Partido.this, jugador);
       }
     };
-    IterableExtensions.<PartidoObserver>forEach(_altasObservers, _function);
+    _altasObservers.forEach(_function);
   }
   
   public void notificarBaja(final Jugador jugador, final Jugador reemplazo) {
     List<PartidoObserver> _bajasObservers = this.getBajasObservers();
-    final Procedure1<PartidoObserver> _function = new Procedure1<PartidoObserver>() {
-      public void apply(final PartidoObserver observador) {
+    final Consumer<PartidoObserver> _function = new Consumer<PartidoObserver>() {
+      public void accept(final PartidoObserver observador) {
         observador.notificarBaja(Partido.this, jugador, reemplazo);
       }
     };
-    IterableExtensions.<PartidoObserver>forEach(_bajasObservers, _function);
+    _bajasObservers.forEach(_function);
   }
   
   public int cantJugadores() {
@@ -159,8 +159,8 @@ public class Partido {
         throw new BusinessException("El jugador no esta inscripto en este partido, no se puede dar de baja");
       }
       boolean _and = false;
-      boolean _equals = Objects.equal(reemplazo, null);
-      if (!_equals) {
+      boolean _notEquals = (!Objects.equal(reemplazo, null));
+      if (!_notEquals) {
         _and = false;
       } else {
         boolean _estaInscripto_1 = this.estaInscripto(reemplazo);
@@ -170,8 +170,8 @@ public class Partido {
         throw new BusinessException("El reemplazo ya esta inscripto en el partido");
       }
       this.eliminarJugador(jugador);
-      boolean _notEquals = (!Objects.equal(reemplazo, null));
-      if (_notEquals) {
+      boolean _notEquals_1 = (!Objects.equal(reemplazo, null));
+      if (_notEquals_1) {
         List<Jugador> _jugadores = this.getJugadores();
         _jugadores.add(reemplazo);
       }
@@ -206,7 +206,7 @@ public class Partido {
         return;
       }
       List<Jugador> _jugadores = this.getJugadores();
-      final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
+      final Function1<Jugador, Boolean> _function = new Function1<Jugador, Boolean>() {
         public Boolean apply(final Jugador inscripto) {
           return Boolean.valueOf(jugador.tieneMasPrioridadQue(inscripto));
         }
@@ -217,7 +217,7 @@ public class Partido {
         throw new BusinessException("No hay mas cupo");
       }
       List<Jugador> _jugadores_1 = this.getJugadores();
-      final Function1<Jugador,Boolean> _function_1 = new Function1<Jugador,Boolean>() {
+      final Function1<Jugador, Boolean> _function_1 = new Function1<Jugador, Boolean>() {
         public Boolean apply(final Jugador unJugador) {
           int _prioridad = unJugador.prioridad();
           int _prioridad_1 = jugador.prioridad();

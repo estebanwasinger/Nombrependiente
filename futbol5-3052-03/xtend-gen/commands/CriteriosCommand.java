@@ -7,13 +7,13 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public abstract class CriteriosCommand {
-  private Function1<? super Jugador,? extends Integer> _criterio;
+  private Function1<? super Jugador, ? extends Integer> _criterio;
   
-  public Function1<? super Jugador,? extends Integer> getCriterio() {
+  public Function1<? super Jugador, ? extends Integer> getCriterio() {
     return this._criterio;
   }
   
-  public void setCriterio(final Function1<? super Jugador,? extends Integer> criterio) {
+  public void setCriterio(final Function1<? super Jugador, ? extends Integer> criterio) {
     this._criterio = criterio;
   }
   
@@ -22,7 +22,7 @@ public abstract class CriteriosCommand {
   
   public List<Jugador> ordenar(final List<Jugador> jugadores) {
     this.criterioComparacion();
-    Function1<? super Jugador,? extends Integer> _criterio = this.getCriterio();
+    Function1<? super Jugador, ? extends Integer> _criterio = this.getCriterio();
     return IterableExtensions.sortBy(jugadores, _criterio);
   }
 }

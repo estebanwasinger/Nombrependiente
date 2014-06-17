@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.Functions.Function2;
@@ -131,60 +132,96 @@ public class Jugador {
   }
   
   public int promedioCalificacionesUltimoPartido() {
+    return this.promedioNPartidos(1);
+  }
+  
+  public int promedioNPartidos(final int n) {
     try {
-      int sumaCalificaciones = 0;
       List<Calificacion> _calificaciones = this.getCalificaciones();
       int _size = _calificaciones.size();
       boolean _equals = (_size == 0);
       if (_equals) {
         throw new BusinessException("El jugador no fue calificado aun");
       }
-      List<Calificacion> _calificaciones_1 = this.getCalificaciones();
-      final Function1<Calificacion,Boolean> _function = new Function1<Calificacion,Boolean>() {
-        public Boolean apply(final Calificacion calificacion) {
-          Partido _partido = calificacion.getPartido();
-          List<Calificacion> _calificaciones = Jugador.this.getCalificaciones();
-          Calificacion _last = IterableExtensions.<Calificacion>last(_calificaciones);
-          Partido _partido_1 = _last.getPartido();
-          return Boolean.valueOf(Objects.equal(_partido, _partido_1));
+      int calificacionTotal = 0;
+      Set<Partido> partidos = null;
+      int pos = 0;
+      boolean _and = false;
+      int _size_1 = partidos.size();
+      boolean _lessEqualsThan = (_size_1 <= n);
+      if (!_lessEqualsThan) {
+        _and = false;
+      } else {
+        List<Calificacion> _calificaciones_1 = this.getCalificaciones();
+        int _size_2 = _calificaciones_1.size();
+        boolean _lessEqualsThan_1 = (pos <= _size_2);
+        _and = _lessEqualsThan_1;
+      }
+      boolean _while = _and;
+      while (_while) {
+        {
+          List<Calificacion> _calificaciones_2 = this.getCalificaciones();
+          Calificacion _get = _calificaciones_2.get(pos);
+          Partido _partido = _get.getPartido();
+          partidos.add(_partido);
+          pos++;
         }
-      };
-      Iterable<Calificacion> calificacionesUltimoPartido = IterableExtensions.<Calificacion>filter(_calificaciones_1, _function);
-      final Function1<Calificacion,Integer> _function_1 = new Function1<Calificacion,Integer>() {
-        public Integer apply(final Calificacion calificacion) {
-          return Integer.valueOf(calificacion.getNota());
+        boolean _and_1 = false;
+        int _size_3 = partidos.size();
+        boolean _lessEqualsThan_2 = (_size_3 <= n);
+        if (!_lessEqualsThan_2) {
+          _and_1 = false;
+        } else {
+          List<Calificacion> _calificaciones_2 = this.getCalificaciones();
+          int _size_4 = _calificaciones_2.size();
+          boolean _lessEqualsThan_3 = (pos <= _size_4);
+          _and_1 = _lessEqualsThan_3;
         }
-      };
-      Iterable<Integer> _map = IterableExtensions.<Calificacion, Integer>map(calificacionesUltimoPartido, _function_1);
-      final Function2<Integer,Integer,Integer> _function_2 = new Function2<Integer,Integer,Integer>() {
-        public Integer apply(final Integer a, final Integer b) {
-          return Integer.valueOf(((a).intValue() + (b).intValue()));
-        }
-      };
-      Integer _reduce = IterableExtensions.<Integer>reduce(_map, _function_2);
-      sumaCalificaciones = (_reduce).intValue();
-      int _size_1 = IterableExtensions.size(calificacionesUltimoPartido);
-      return (sumaCalificaciones / _size_1);
+        _while = _and_1;
+      }
+      int _size_3 = partidos.size();
+      boolean _lessEqualsThan_2 = (pos <= _size_3);
+      boolean _while_1 = _lessEqualsThan_2;
+      while (_while_1) {
+        int _calificacionTotal = calificacionTotal;
+        final Set<Partido> _converted_partidos = (Set<Partido>)partidos;
+        Partido _get = ((Partido[])Conversions.unwrapArray(_converted_partidos, Partido.class))[pos];
+        int _promedioDeUnPartido = this.promedioDeUnPartido(_get);
+        calificacionTotal = (_calificacionTotal + _promedioDeUnPartido);
+        int _size_4 = partidos.size();
+        boolean _lessEqualsThan_3 = (pos <= _size_4);
+        _while_1 = _lessEqualsThan_3;
+      }
+      int _size_4 = partidos.size();
+      return (calificacionTotal / _size_4);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
-  public Object promedioNCalificaciones(final int n) {
-    return null;
-  }
-  
-  public Set<Partido> buscarNPartidos(final int n) {
-    Set<Partido> partidos = null;
-    int _size = partidos.size();
-    boolean _lessEqualsThan = (_size <= n);
-    boolean _while = _lessEqualsThan;
-    while (_while) {
-      int _size_1 = partidos.size();
-      boolean _lessEqualsThan_1 = (_size_1 <= n);
-      _while = _lessEqualsThan_1;
-    }
-    return partidos;
+  public int promedioDeUnPartido(final Partido partido) {
+    List<Calificacion> _calificaciones = this.getCalificaciones();
+    final Function1<Calificacion, Boolean> _function = new Function1<Calificacion, Boolean>() {
+      public Boolean apply(final Calificacion calificacion) {
+        Partido _partido = calificacion.getPartido();
+        return Boolean.valueOf(Objects.equal(_partido, partido));
+      }
+    };
+    Iterable<Calificacion> calificacionesUltimoPartido = IterableExtensions.<Calificacion>filter(_calificaciones, _function);
+    final Function1<Calificacion, Integer> _function_1 = new Function1<Calificacion, Integer>() {
+      public Integer apply(final Calificacion calificacion) {
+        return Integer.valueOf(calificacion.getNota());
+      }
+    };
+    Iterable<Integer> _map = IterableExtensions.<Calificacion, Integer>map(calificacionesUltimoPartido, _function_1);
+    final Function2<Integer, Integer, Integer> _function_2 = new Function2<Integer, Integer, Integer>() {
+      public Integer apply(final Integer a, final Integer b) {
+        return Integer.valueOf(((a).intValue() + (b).intValue()));
+      }
+    };
+    Integer sumaCalificaciones = IterableExtensions.<Integer>reduce(_map, _function_2);
+    int _size = IterableExtensions.size(calificacionesUltimoPartido);
+    return ((sumaCalificaciones).intValue() / _size);
   }
   
   public boolean calificar(final Partido partido, final int nota, final String critica) {

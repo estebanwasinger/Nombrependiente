@@ -4,9 +4,8 @@ import commands.CriterioHandicap;
 import futbol5.Jugador;
 import futbol5.Partido;
 import java.util.List;
+import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.InputOutput;
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -88,12 +87,12 @@ public class Entrega4Test {
   public void testPartidoOrdenaPorHandicap() {
     this.partido.ordenarJugadores(this.handicap);
     List<Jugador> _jugadoresOrdenados = this.partido.getJugadoresOrdenados();
-    final Procedure1<Jugador> _function = new Procedure1<Jugador>() {
-      public void apply(final Jugador jugador) {
+    final Consumer<Jugador> _function = new Consumer<Jugador>() {
+      public void accept(final Jugador jugador) {
         int _nivelDeJuego = jugador.getNivelDeJuego();
         InputOutput.<Integer>println(Integer.valueOf(_nivelDeJuego));
       }
     };
-    IterableExtensions.<Jugador>forEach(_jugadoresOrdenados, _function);
+    _jugadoresOrdenados.forEach(_function);
   }
 }
