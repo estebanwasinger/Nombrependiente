@@ -44,31 +44,34 @@ class Jugador {
 		tipoInscripcion.prioridad()
 	}
 	
-	def int promedioCalificacionesUltimoPartido(){
-		var int sumaCalificaciones;
+	def int promedioCalificacionesUltimoPartido() {
+		promedioNPartidos(1)
+	}
+
+	def promedioNPartidos(int n) {
 		if (calificaciones.size == 0) {
 			throw new BusinessException("El jugador no fue calificado aun")
 		}
-		var calificacionesUltimoPartido = calificaciones.filter[calificacion|
-			calificacion.partido == (calificaciones.last).partido]
-		sumaCalificaciones = calificacionesUltimoPartido.map[calificacion|calificacion.nota].reduce[a, b|a + b]
+		
+		var int calificacionTotal
+		var Set<Partido> partidos
+		var int pos = 0;
+		while (partidos.size <= n && pos <= calificaciones.size) {
+			partidos.add(calificaciones.get(pos).partido)
+			pos++
+		}
+		while (pos <= partidos.size) {
+			calificacionTotal += promedioDeUnPartido(partidos.get(pos))
+		}
+
+		return calificacionTotal / partidos.size
+	}
+	def promedioDeUnPartido(Partido partido){
+		var calificacionesUltimoPartido = calificaciones.filter[calificacion|calificacion.partido== partido]
+		var sumaCalificaciones = calificacionesUltimoPartido.map[calificacion|calificacion.nota].reduce[a, b|a + b]
 		return (sumaCalificaciones / calificacionesUltimoPartido.size);
 	}
-	
-	def promedioNCalificaciones(int n){
-		
-		
-		
-		
-	}
-	
-	def Set<Partido> buscarNPartidos(int n){
-		var Set<Partido> partidos
-		while (partidos.size <= n ){
-		//	calificaciones.forEach[calificacion|partidos.add(calificacion.partido)]
-		}
-		return partidos
-	}
+
 			
 	/*******************************/
 	/****CASO DE USO: CALIFICACIONES ****/
