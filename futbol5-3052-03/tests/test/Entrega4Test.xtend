@@ -10,6 +10,7 @@ import futbol5.Sistema
 import commands.CriterioHandicap
 import java.util.LinkedList
 import java.util.List
+import commands.AlgoritmoImparPar
 
 class Entrega4Test {
 	
@@ -23,60 +24,76 @@ class Entrega4Test {
 	Jugador jugador8
 	Jugador jugador9
 	Jugador jugador10
+	
 	Partido partido
+	Partido partido2
 	CriterioHandicap handicap
-	
-	
-@Before
-	def void setUP() {
-	jugador1 = new Jugador;
-	jugador2 = new Jugador;	
-	jugador3 = new Jugador;
-	jugador4 = new Jugador;
-	jugador5 = new Jugador;
-	jugador6 = new Jugador;
-	jugador7 = new Jugador;
-	jugador8 = new Jugador;
-	jugador9 = new Jugador;
-	jugador10 = new Jugador;
+	AlgoritmoImparPar algoritmoImparPar
 
-	jugador1.nivelDeJuego = 5;
-	jugador2.nivelDeJuego = 9;	
-	jugador3.nivelDeJuego = 10;
-	jugador4.nivelDeJuego = 7; 
-	jugador5.nivelDeJuego = 8; 
-	jugador6.nivelDeJuego =6;
-	jugador7.nivelDeJuego = 7;
-	jugador8.nivelDeJuego = 4;
-	jugador9.nivelDeJuego = 8;
-	jugador10.nivelDeJuego = 3;
-
-	partido = new Partido("CABA");
-	
-	handicap = new CriterioHandicap;
-	
-	partido.inscribir(jugador1);
-	partido.inscribir(jugador2);
-	partido.inscribir(jugador3);
-	partido.inscribir(jugador4);
-	partido.inscribir(jugador5);
-	partido.inscribir(jugador6);
-	partido.inscribir(jugador7);
-	partido.inscribir(jugador8);
-	partido.inscribir(jugador9);
-	partido.inscribir(jugador10);
+	@Before def void setUP() {
+		jugador1 = new Jugador;
+		jugador2 = new Jugador;
+		jugador3 = new Jugador;
+		jugador4 = new Jugador;
+		jugador5 = new Jugador;
+		jugador6 = new Jugador;
+		jugador7 = new Jugador;
+		jugador8 = new Jugador;
+		jugador9 = new Jugador;
+		jugador10 = new Jugador;
+		
+		jugador1.nivelDeJuego = 5;
+		jugador2.nivelDeJuego = 9;
+		jugador3.nivelDeJuego = 10;
+		jugador4.nivelDeJuego = 7;
+		jugador5.nivelDeJuego = 8;
+		jugador6.nivelDeJuego = 6;
+		jugador7.nivelDeJuego = 7;
+		jugador8.nivelDeJuego = 4;
+		jugador9.nivelDeJuego = 8;
+		jugador10.nivelDeJuego = 3;
+		
+		partido = new Partido("CABA");
+		handicap = new CriterioHandicap;
+		partido2 = new Partido("CABA");
+		algoritmoImparPar = new AlgoritmoImparPar;
+		
+		
+		partido.inscribir(jugador1);
+		partido.inscribir(jugador2);
+		partido.inscribir(jugador3);
+		partido.inscribir(jugador4);
+		partido.inscribir(jugador5);
+		partido.inscribir(jugador6);
+		partido.inscribir(jugador7);
+		partido.inscribir(jugador8);
+		partido.inscribir(jugador9);
+		partido.inscribir(jugador10);
 	
 	}
-
-
-@Test
-def void testPartidoOrdenaPorHandicap(){
 	
-	partido.ordenarJugadores(handicap);
-	partido.jugadoresOrdenados.forEach[jugador | println(jugador.nivelDeJuego)];
-
+	def armarPartido(int max) {
+		var int a = 0
+		while (a < max) {
+			partido2.inscribir(new Jugador)
+			a = a + 1
+		}
 	}
+
+	@Test def void testPartidoOrdenaPorHandicap() {
+		partido.ordenarJugadores(handicap);
+		partido.jugadoresOrdenados.forEach[jugador|println(jugador.nivelDeJuego)];
+	}
+	
+	@Test(expected=typeof(BusinessException))
+    def void testOrdenarJugadoresMenoresADiez(){
+  	armarPartido(9)
+  	partido2.ordenarJugadores(handicap)
+  	
+    }
+ 	@Test(expected=typeof(BusinessException))
+    def void testDividirGrupoMenor10(){
+    	armarPartido(9)
+  		partido2.dividirEquipos(algoritmoImparPar)
+    }   
 }
-
-
-

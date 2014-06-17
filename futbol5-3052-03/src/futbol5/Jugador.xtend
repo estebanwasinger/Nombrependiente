@@ -58,10 +58,10 @@ class Jugador {
 		var int pos = 0;
 		while (partidos.size <= n && pos <= calificaciones.size) {
 			partidos.add(calificaciones.get(pos).partido)
-			pos++
+			pos= pos +1
 		}
 		while (pos <= partidos.size) {
-			calificacionTotal += promedioDeUnPartido(partidos.get(pos))
+			calificacionTotal = calificacionTotal + promedioDeUnPartido(partidos.get(pos))
 		}
 
 		return calificacionTotal / partidos.size

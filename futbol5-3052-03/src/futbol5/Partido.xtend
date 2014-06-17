@@ -126,10 +126,7 @@ class Partido {
 	/***************************************/
 	/*CASO DE USO: GENERAR EQUIPOS TENTATIVOS*/
 	/***************************************/
-		
-	def hola(){
-		
-	}
+
 	
 	def ordenarJugadores(CriteriosCommand criterioOrdenamiento){
 		if (cantJugadores<10) {

@@ -164,7 +164,7 @@ public class Jugador {
           Calificacion _get = _calificaciones_2.get(pos);
           Partido _partido = _get.getPartido();
           partidos.add(_partido);
-          pos++;
+          pos = (pos + 1);
         }
         boolean _and_1 = false;
         int _size_3 = partidos.size();
@@ -183,11 +183,11 @@ public class Jugador {
       boolean _lessEqualsThan_2 = (pos <= _size_3);
       boolean _while_1 = _lessEqualsThan_2;
       while (_while_1) {
-        int _calificacionTotal = calificacionTotal;
         final Set<Partido> _converted_partidos = (Set<Partido>)partidos;
         Partido _get = ((Partido[])Conversions.unwrapArray(_converted_partidos, Partido.class))[pos];
         int _promedioDeUnPartido = this.promedioDeUnPartido(_get);
-        calificacionTotal = (_calificacionTotal + _promedioDeUnPartido);
+        int _plus = (calificacionTotal + _promedioDeUnPartido);
+        calificacionTotal = _plus;
         int _size_4 = partidos.size();
         boolean _lessEqualsThan_3 = (pos <= _size_4);
         _while_1 = _lessEqualsThan_3;
@@ -201,20 +201,20 @@ public class Jugador {
   
   public int promedioDeUnPartido(final Partido partido) {
     List<Calificacion> _calificaciones = this.getCalificaciones();
-    final Function1<Calificacion, Boolean> _function = new Function1<Calificacion, Boolean>() {
+    final Function1<Calificacion,Boolean> _function = new Function1<Calificacion,Boolean>() {
       public Boolean apply(final Calificacion calificacion) {
         Partido _partido = calificacion.getPartido();
         return Boolean.valueOf(Objects.equal(_partido, partido));
       }
     };
     Iterable<Calificacion> calificacionesUltimoPartido = IterableExtensions.<Calificacion>filter(_calificaciones, _function);
-    final Function1<Calificacion, Integer> _function_1 = new Function1<Calificacion, Integer>() {
+    final Function1<Calificacion,Integer> _function_1 = new Function1<Calificacion,Integer>() {
       public Integer apply(final Calificacion calificacion) {
         return Integer.valueOf(calificacion.getNota());
       }
     };
     Iterable<Integer> _map = IterableExtensions.<Calificacion, Integer>map(calificacionesUltimoPartido, _function_1);
-    final Function2<Integer, Integer, Integer> _function_2 = new Function2<Integer, Integer, Integer>() {
+    final Function2<Integer,Integer,Integer> _function_2 = new Function2<Integer,Integer,Integer>() {
       public Integer apply(final Integer a, final Integer b) {
         return Integer.valueOf(((a).intValue() + (b).intValue()));
       }

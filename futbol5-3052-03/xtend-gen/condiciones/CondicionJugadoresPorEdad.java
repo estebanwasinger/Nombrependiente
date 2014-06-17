@@ -43,7 +43,7 @@ public class CondicionJugadoresPorEdad implements Condicion {
   
   public int cantInscriptosConEdadLimite(final Partido partido, final int edadLimite) {
     List<Jugador> _jugadores = partido.getJugadores();
-    final Function1<Jugador, Boolean> _function = new Function1<Jugador, Boolean>() {
+    final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
       public Boolean apply(final Jugador jugador) {
         return Boolean.valueOf(jugador.menorA(edadLimite));
       }

@@ -1,6 +1,8 @@
 package test;
 
+import commands.AlgoritmoImparPar;
 import commands.CriterioHandicap;
+import excepciones.BusinessException;
 import futbol5.Jugador;
 import futbol5.Partido;
 import java.util.List;
@@ -33,7 +35,11 @@ public class Entrega4Test {
   
   private Partido partido;
   
+  private Partido partido2;
+  
   private CriterioHandicap handicap;
+  
+  private AlgoritmoImparPar algoritmoImparPar;
   
   @Before
   public void setUP() {
@@ -71,6 +77,10 @@ public class Entrega4Test {
     this.partido = _partido;
     CriterioHandicap _criterioHandicap = new CriterioHandicap();
     this.handicap = _criterioHandicap;
+    Partido _partido_1 = new Partido("CABA");
+    this.partido2 = _partido_1;
+    AlgoritmoImparPar _algoritmoImparPar = new AlgoritmoImparPar();
+    this.algoritmoImparPar = _algoritmoImparPar;
     this.partido.inscribir(this.jugador1);
     this.partido.inscribir(this.jugador2);
     this.partido.inscribir(this.jugador3);
@@ -81,6 +91,19 @@ public class Entrega4Test {
     this.partido.inscribir(this.jugador8);
     this.partido.inscribir(this.jugador9);
     this.partido.inscribir(this.jugador10);
+  }
+  
+  public void armarPartido(final int max) {
+    int a = 0;
+    boolean _while = (a < max);
+    while (_while) {
+      {
+        Jugador _jugador = new Jugador();
+        this.partido2.inscribir(_jugador);
+        a = (a + 1);
+      }
+      _while = (a < max);
+    }
   }
   
   @Test
@@ -94,5 +117,17 @@ public class Entrega4Test {
       }
     };
     _jugadoresOrdenados.forEach(_function);
+  }
+  
+  @Test(expected = BusinessException.class)
+  public void testOrdenarJugadoresMenoresADiez() {
+    this.armarPartido(9);
+    this.partido2.ordenarJugadores(this.handicap);
+  }
+  
+  @Test(expected = BusinessException.class)
+  public void testDividirGrupoMenor10() {
+    this.armarPartido(9);
+    this.partido2.dividirEquipos(this.algoritmoImparPar);
   }
 }
