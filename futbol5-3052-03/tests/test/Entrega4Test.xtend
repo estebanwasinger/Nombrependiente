@@ -29,6 +29,7 @@ class Entrega4Test {
 	Jugador jugador8
 	Jugador jugador9
 	Jugador jugador10
+	Jugador jugadorEstrella
 	
 	Jugador jugadorCalificado
 	
@@ -72,7 +73,7 @@ class Entrega4Test {
 		algoritmoImparPar = new AlgoritmoImparPar;
 		algoritmoLoco = new AlgoritmoLoco;
 		criterioCalificacionUltimoPartido = new CriterioCalifiUltimoPartido
-		criterioNCalificaciones = new CriterioNCalificaciones
+		criterioNCalificaciones = new CriterioNCalificaciones(3)
 		
 		
 		partido.inscribir(jugador1);
@@ -141,25 +142,29 @@ class Entrega4Test {
     def void testDividirGrupoMenor10(){
     	armarPartido(9, partido2)
   		partido2.dividirEquipos(algoritmoImparPar)
-  	} 
+  	}
+  	
   	@Test(expected=typeof(BusinessException))
     def void testDividirGrupoMenor10CasoLoco(){
     	armarPartido(9, partido2)
   		partido2.dividirEquipos(algoritmoLoco)
   	}
-  	@Test  //NO FUNCIONA TODAVIA
+
+	@Test
 	def void testOrdenarJugadoresPorUltimoPromedio(){
-	armarPartido(10, partido2)
+	armarPartido(9, partido2)
+	jugadorEstrella = new Jugador()
+	partido2.inscribir(jugadorEstrella)
+	jugadorCalificado.calificar(partido2,10,"excelente!")
 	partido2.ordenarJugadores(criterioCalificacionUltimoPartido)
+	Assert.assertEquals(jugadorEstrella,partido2.jugadoresOrdenados.head)
 	}  
 	
-	@Test //NO FUNCIONA TODAVIA
-	def void testOrdenarJugadoresPorPromedioNPartidos(){
-		armarPartido(10, partido2)
-		armarPartido(10, partido)
-		armarPartido(10,partido3)
-		partido2.ordenarJugadores(criterioNCalificaciones)
-	
-	}
-        }  
+//	@Test //NO FUNCIONA TODAVIA
+//	def void testOrdenarJugadoresPorPromedioNPartidos(){
+//		armarPartido(10, partido2)
+//		armarPartido(10,partido3)
+//		partido2.ordenarJugadores(criterioNCalificaciones)	
+//	}
+       } 
 

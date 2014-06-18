@@ -9,6 +9,7 @@ import calificaciones.Calificacion
 import excepciones.BusinessException
 import java.util.LinkedList
 import java.util.Set
+import java.util.HashSet
 
 class Jugador {
 
@@ -55,14 +56,16 @@ class Jugador {
 //		}
 		if (calificaciones.size != 0){
 		var int calificacionTotal
-		var Set<Partido> partidos
+		var Set<Partido> partidos = new HashSet<Partido>
 		var int pos = 0;
-		while (partidos.size <= n && pos <= calificaciones.size) {
+		while (partidos.size <= n && pos < calificaciones.size) {
 			partidos.add(calificaciones.get(pos).partido)
 			pos= pos +1
 		}
-		while (pos <= partidos.size) {
+		pos = 0
+		while (pos < partidos.size) {
 			calificacionTotal = calificacionTotal + promedioDeUnPartido(partidos.get(pos))
+			pos++
 		}
 
 		return calificacionTotal / partidos.size

@@ -129,21 +129,21 @@ class Partido {
 	/*CASO DE USO: GENERAR EQUIPOS TENTATIVOS*/
 	/***************************************/
 	
-	def ordenarJugadores(CriteriosCommand criterioOrdenamiento, int n){
+	def ordenarJugadores(CriteriosCommand criterioOrdenamiento){
 
 		if (cantJugadores<10) {
 			throw new BusinessException("No se puede ordenar la lista porque no hay 10 jugadores inscriptos aun.")
 		}
 		
-		this.jugadoresOrdenados = criterioOrdenamiento.ordenar(jugadores, n);
+		this.jugadoresOrdenados = criterioOrdenamiento.ordenar(jugadores);
 
 	}
-	
-	def ordenarJugadores(CriteriosCommand criterioOrdenamiento){
-		
-		var int cantidadPorDefault = 0;
-		ordenarJugadores(criterioOrdenamiento, cantidadPorDefault)
-	}
+//	
+//	def ordenarJugadores(CriteriosCommand criterioOrdenamiento){
+//		
+//		var int cantidadPorDefault = 0;
+//		ordenarJugadores(criterioOrdenamiento, cantidadPorDefault)
+//	}
 	
 	def ordenarJugadores(List<CriteriosCommand> mixCriterios, int n){
 		
