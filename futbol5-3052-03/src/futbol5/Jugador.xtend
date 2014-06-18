@@ -18,7 +18,7 @@ class Jugador {
 	@Property List<Infraccion> infracciones
 	@Property List<Jugador> amigos
 	@Property List <Calificacion> calificaciones
-	@Property int nivelDeJuego
+	@Property float nivelDeJuego
 	@Property int criterioComparacion
 	
 	new() {
@@ -26,6 +26,7 @@ class Jugador {
 		amigos = new ArrayList<Jugador>
 		infracciones = new ArrayList<Infraccion>
 		calificaciones = new LinkedList<Calificacion>
+		nivelDeJuego = 0
 	}
 	
 	def agregarAmigo(Jugador jugador) {
@@ -44,11 +45,11 @@ class Jugador {
 		tipoInscripcion.prioridad()
 	}
 	
-	def int promedioCalificacionesUltimoPartido() {
+	def float promedioCalificacionesUltimoPartido() {
 		promedioNPartidos(1)
 	}
 
-	def promedioNPartidos(int n) {
+	def float promedioNPartidos(int n) {
 //		if (calificaciones.size == 0) {
 //			throw new BusinessException("El jugador no fue calificado aun")
 //		}

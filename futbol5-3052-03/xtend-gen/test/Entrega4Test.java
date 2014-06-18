@@ -5,9 +5,11 @@ import commands.AlgoritmoLoco;
 import commands.CriterioCalifiUltimoPartido;
 import commands.CriterioHandicap;
 import commands.CriterioNCalificaciones;
+import commands.CriteriosCommand;
 import excepciones.BusinessException;
 import futbol5.Jugador;
 import futbol5.Partido;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import org.eclipse.xtext.xbase.lib.InputOutput;
@@ -135,8 +137,30 @@ public class Entrega4Test {
     List<Jugador> _jugadoresOrdenados = this.partido.getJugadoresOrdenados();
     final Consumer<Jugador> _function = new Consumer<Jugador>() {
       public void accept(final Jugador jugador) {
-        int _nivelDeJuego = jugador.getNivelDeJuego();
-        InputOutput.<Integer>println(Integer.valueOf(_nivelDeJuego));
+        float _nivelDeJuego = jugador.getNivelDeJuego();
+        InputOutput.<Float>println(Float.valueOf(_nivelDeJuego));
+      }
+    };
+    _jugadoresOrdenados.forEach(_function);
+  }
+  
+  @Test(expected = BusinessException.class)
+  public void testPartidoOrdenaPorHandicapExcepcion() {
+    this.jugador10.setNivelDeJuego(0);
+    this.partido.ordenarJugadores(this.handicap);
+  }
+  
+  @Test
+  public void testPartidoMixDeCriterios() {
+    List<CriteriosCommand> criterios = new ArrayList<CriteriosCommand>();
+    criterios.add(this.handicap);
+    criterios.add(this.handicap);
+    this.partido.ordenarJugadores(criterios, 3);
+    List<Jugador> _jugadoresOrdenados = this.partido.getJugadoresOrdenados();
+    final Consumer<Jugador> _function = new Consumer<Jugador>() {
+      public void accept(final Jugador jugador) {
+        float _nivelDeJuego = jugador.getNivelDeJuego();
+        InputOutput.<Float>println(Float.valueOf(_nivelDeJuego));
       }
     };
     _jugadoresOrdenados.forEach(_function);

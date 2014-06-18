@@ -14,6 +14,8 @@ import commands.AlgoritmoImparPar
 import commands.AlgoritmoLoco
 import commands.CriterioCalifiUltimoPartido
 import commands.CriterioNCalificaciones
+import commands.CriteriosCommand
+import java.util.ArrayList
 
 class Entrega4Test {
 	
@@ -100,6 +102,23 @@ class Entrega4Test {
 	@Test 
 	def void testPartidoOrdenaPorHandicap() {
 		partido.ordenarJugadores(handicap);
+		partido.jugadoresOrdenados.forEach[jugador|println(jugador.nivelDeJuego)];
+	}
+	
+	@Test(expected=typeof(BusinessException))
+	def void testPartidoOrdenaPorHandicapExcepcion() {
+		jugador10.nivelDeJuego = 0;
+		partido.ordenarJugadores(handicap);
+		
+	}
+	
+
+	@Test
+	def void testPartidoMixDeCriterios() {
+		var List<CriteriosCommand> criterios = new ArrayList();
+		criterios.add(handicap);
+		criterios.add(handicap);
+		partido.ordenarJugadores(criterios, 3);
 		partido.jugadoresOrdenados.forEach[jugador|println(jugador.nivelDeJuego)];
 	}
 	

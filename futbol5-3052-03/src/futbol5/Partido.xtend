@@ -6,7 +6,7 @@ import excepciones.BusinessException
 import observers.PartidoObserver
 import commands.AlgoritmosCommand
 import commands.CriteriosCommand
-
+import commands.CriterioMix
 
 class Partido {
 
@@ -128,15 +128,32 @@ class Partido {
 	/***************************************/
 	/*CASO DE USO: GENERAR EQUIPOS TENTATIVOS*/
 	/***************************************/
-
 	
-	def ordenarJugadores(CriteriosCommand criterioOrdenamiento){
+	def ordenarJugadores(CriteriosCommand criterioOrdenamiento, int n){
+
 		if (cantJugadores<10) {
 			throw new BusinessException("No se puede ordenar la lista porque no hay 10 jugadores inscriptos aun.")
 		}
 		
-		this.jugadoresOrdenados = criterioOrdenamiento.ordenar(jugadores);
+		this.jugadoresOrdenados = criterioOrdenamiento.ordenar(jugadores, n);
+
 	}
+	
+	def ordenarJugadores(CriteriosCommand criterioOrdenamiento){
+		
+		var int cantidadPorDefault = 0;
+		ordenarJugadores(criterioOrdenamiento, cantidadPorDefault)
+	}
+	
+	def ordenarJugadores(List<CriteriosCommand> mixCriterios, int n){
+		
+		var CriterioMix criterioMix = new CriterioMix;
+	
+		this.jugadoresOrdenados = criterioMix.multiOrdenar(jugadores, mixCriterios, n)
+	}
+	
+	
+		
 		
 	def dividirEquipos(AlgoritmosCommand algoritmoDivision){
 		if (cantJugadores<10) {

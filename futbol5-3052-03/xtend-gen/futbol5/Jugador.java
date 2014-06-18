@@ -79,13 +79,13 @@ public class Jugador {
     this._calificaciones = calificaciones;
   }
   
-  private int _nivelDeJuego;
+  private float _nivelDeJuego;
   
-  public int getNivelDeJuego() {
+  public float getNivelDeJuego() {
     return this._nivelDeJuego;
   }
   
-  public void setNivelDeJuego(final int nivelDeJuego) {
+  public void setNivelDeJuego(final float nivelDeJuego) {
     this._nivelDeJuego = nivelDeJuego;
   }
   
@@ -108,6 +108,7 @@ public class Jugador {
     this.setInfracciones(_arrayList_1);
     LinkedList<Calificacion> _linkedList = new LinkedList<Calificacion>();
     this.setCalificaciones(_linkedList);
+    this.setNivelDeJuego(0);
   }
   
   public boolean agregarAmigo(final Jugador jugador) {
@@ -131,11 +132,11 @@ public class Jugador {
     return _tipoInscripcion.prioridad();
   }
   
-  public int promedioCalificacionesUltimoPartido() {
+  public float promedioCalificacionesUltimoPartido() {
     return this.promedioNPartidos(1);
   }
   
-  public int promedioNPartidos(final int n) {
+  public float promedioNPartidos(final int n) {
     List<Calificacion> _calificaciones = this.getCalificaciones();
     int _size = _calificaciones.size();
     boolean _notEquals = (_size != 0);
@@ -197,20 +198,20 @@ public class Jugador {
   
   public int promedioDeUnPartido(final Partido partido) {
     List<Calificacion> _calificaciones = this.getCalificaciones();
-    final Function1<Calificacion,Boolean> _function = new Function1<Calificacion,Boolean>() {
+    final Function1<Calificacion, Boolean> _function = new Function1<Calificacion, Boolean>() {
       public Boolean apply(final Calificacion calificacion) {
         Partido _partido = calificacion.getPartido();
         return Boolean.valueOf(Objects.equal(_partido, partido));
       }
     };
     Iterable<Calificacion> calificacionesUltimoPartido = IterableExtensions.<Calificacion>filter(_calificaciones, _function);
-    final Function1<Calificacion,Integer> _function_1 = new Function1<Calificacion,Integer>() {
+    final Function1<Calificacion, Integer> _function_1 = new Function1<Calificacion, Integer>() {
       public Integer apply(final Calificacion calificacion) {
         return Integer.valueOf(calificacion.getNota());
       }
     };
     Iterable<Integer> _map = IterableExtensions.<Calificacion, Integer>map(calificacionesUltimoPartido, _function_1);
-    final Function2<Integer,Integer,Integer> _function_2 = new Function2<Integer,Integer,Integer>() {
+    final Function2<Integer, Integer, Integer> _function_2 = new Function2<Integer, Integer, Integer>() {
       public Integer apply(final Integer a, final Integer b) {
         return Integer.valueOf(((a).intValue() + (b).intValue()));
       }

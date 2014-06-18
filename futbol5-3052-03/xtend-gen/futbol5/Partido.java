@@ -2,6 +2,7 @@ package futbol5;
 
 import com.google.common.base.Objects;
 import commands.AlgoritmosCommand;
+import commands.CriterioMix;
 import commands.CriteriosCommand;
 import excepciones.BusinessException;
 import futbol5.Administrador;
@@ -226,7 +227,7 @@ public class Partido {
         return;
       }
       List<Jugador> _jugadores = this.getJugadores();
-      final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
+      final Function1<Jugador, Boolean> _function = new Function1<Jugador, Boolean>() {
         public Boolean apply(final Jugador inscripto) {
           return Boolean.valueOf(jugador.tieneMasPrioridadQue(inscripto));
         }
@@ -237,7 +238,7 @@ public class Partido {
         throw new BusinessException("No hay mas cupo");
       }
       List<Jugador> _jugadores_1 = this.getJugadores();
-      final Function1<Jugador,Boolean> _function_1 = new Function1<Jugador,Boolean>() {
+      final Function1<Jugador, Boolean> _function_1 = new Function1<Jugador, Boolean>() {
         public Boolean apply(final Jugador unJugador) {
           int _prioridad = unJugador.prioridad();
           int _prioridad_1 = jugador.prioridad();
@@ -254,7 +255,7 @@ public class Partido {
     }
   }
   
-  public void ordenarJugadores(final CriteriosCommand criterioOrdenamiento) {
+  public void ordenarJugadores(final CriteriosCommand criterioOrdenamiento, final int n) {
     try {
       int _cantJugadores = this.cantJugadores();
       boolean _lessThan = (_cantJugadores < 10);
@@ -262,11 +263,23 @@ public class Partido {
         throw new BusinessException("No se puede ordenar la lista porque no hay 10 jugadores inscriptos aun.");
       }
       List<Jugador> _jugadores = this.getJugadores();
-      List<Jugador> _ordenar = criterioOrdenamiento.ordenar(_jugadores);
+      List<Jugador> _ordenar = criterioOrdenamiento.ordenar(_jugadores, n);
       this.setJugadoresOrdenados(_ordenar);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
+  }
+  
+  public void ordenarJugadores(final CriteriosCommand criterioOrdenamiento) {
+    int cantidadPorDefault = 0;
+    this.ordenarJugadores(criterioOrdenamiento, cantidadPorDefault);
+  }
+  
+  public void ordenarJugadores(final List<CriteriosCommand> mixCriterios, final int n) {
+    CriterioMix criterioMix = new CriterioMix();
+    List<Jugador> _jugadores = this.getJugadores();
+    List<Jugador> _multiOrdenar = criterioMix.multiOrdenar(_jugadores, mixCriterios, n);
+    this.setJugadoresOrdenados(_multiOrdenar);
   }
   
   public void dividirEquipos(final AlgoritmosCommand algoritmoDivision) {

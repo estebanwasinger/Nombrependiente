@@ -4,7 +4,7 @@ import futbol5.Jugador
 
 class CriterioNCalificaciones extends CriteriosCommand{
 	
-	def criterioComparacion(int n){
-	this.criterio = [Jugador jugador | jugador.promedioNPartidos(n)];
+	override (Jugador) => float criterioComparacion(int n){
+		return [Jugador jugador | jugador.promedioNPartidos(n)];
 	}
 }

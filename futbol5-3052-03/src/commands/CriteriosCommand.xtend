@@ -6,19 +6,14 @@ import java.util.List
 
 abstract class CriteriosCommand {
 
-	@Property var (Jugador) => int criterio; 
 	
-	def void criterioComparacion(){
+	def (Jugador) => float criterioComparacion(int n){
 		
 	}
 	
-	def List<Jugador> ordenar(List<Jugador> jugadores){
-		this.criterioComparacion();
+	def List<Jugador> ordenar(List<Jugador> jugadores, int n){
 		
-		return jugadores.sortBy(this.criterio);
-	}
-	
-
-	
-	
+		return jugadores.sortBy(this.criterioComparacion(n));
+		
+		}
 }
