@@ -128,11 +128,12 @@ class Entrega4Test {
   	partido2.ordenarJugadores(handicap)
   	
     }
-    /* @Test
+     @Test
     def void testDividirGrupo(){
     	armarPartido(10, partido2)
+    	partido2.ordenarJugadores(criterioCalificacionUltimoPartido)
   		partido2.dividirEquipos(algoritmoImparPar)
-  	}*/
+  	}
   	/* @Test
     def void testDividirGrupoCasoLoco(){
     	armarPartido(10, partido3)

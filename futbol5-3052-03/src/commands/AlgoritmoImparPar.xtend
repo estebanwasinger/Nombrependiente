@@ -7,9 +7,9 @@ import java.util.List
 class AlgoritmoImparPar extends AlgoritmosCommand {
 	
 	override dividir(List<Jugador> jugadores, List<Jugador> equipoA, List<Jugador> equipoB) {
-		var pos = 1
-		while(pos<=10){
-			if (super.esPar(pos)){
+		var pos = 0
+		while(pos<10){
+			if (super.esPar(pos+1)){
 			equipoA.add(jugadores.get(pos))	
 			}
 			else{

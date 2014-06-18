@@ -31,6 +31,8 @@ class Partido {
 		altasObservers = new LinkedList<PartidoObserver>
 		bajasObservers = new LinkedList<PartidoObserver>
 		administrador = new Administrador
+		equipoA = new LinkedList<Jugador>
+		equipoB = new LinkedList<Jugador>
 	//	criteriosOrdenamiento = new LinkedList<CriteriosCommand>
 	//	algoritmosDivision = new LinkedList<AlgoritmosCommand>
 	}
@@ -156,8 +158,8 @@ class Partido {
 		
 		
 	def dividirEquipos(AlgoritmosCommand algoritmoDivision){
-		if (cantJugadores<10) {
-			throw new BusinessException("No se pueden armar los dos equipos porque no hay 10 jugadores inscriptos a�n.")
+		if (jugadoresOrdenados.size<10) {
+			throw new BusinessException("No se pueden armar los dos equipos porque no hay 10 jugadores ordenados aun.")
 		}
 		algoritmoDivision.dividir(jugadoresOrdenados,equipoA,equipoB)
 	}
