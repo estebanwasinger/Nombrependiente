@@ -1,6 +1,5 @@
 package commands
 
-import java.util.LinkedList
 import futbol5.Jugador
 import java.util.List
 
@@ -15,7 +14,7 @@ class AlgoritmoLoco extends AlgoritmosCommand{
 			equipoB.add(jugadores.get(posB))
 			posB = calculaPosicion(posB)
 		}
-		}
+	}
 		
 		def calculaPosicion(int pos){
 			if (super.esPar(pos)){

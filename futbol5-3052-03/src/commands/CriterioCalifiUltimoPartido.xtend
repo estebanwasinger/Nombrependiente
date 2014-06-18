@@ -1,7 +1,6 @@
 package commands
 
 import futbol5.Jugador
-import java.util.List
 
 class CriterioCalifiUltimoPartido extends CriteriosCommand {
 
@@ -9,8 +8,7 @@ class CriterioCalifiUltimoPartido extends CriteriosCommand {
 		super(n)
 	}
 	
-	new() {
-	}
+	new(){}
 	
 	override (Jugador)=>float criterioComparacion(int n) {
 		return [Jugador jugador|jugador.promedioCalificacionesUltimoPartido]

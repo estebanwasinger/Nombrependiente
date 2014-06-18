@@ -15,12 +15,9 @@ class Partido {
 	@Property var List<Jugador> jugadoresOrdenados
 	@Property var List<Jugador> equipoA
 	@Property var List<Jugador> equipoB
-	@Property var List<Jugador> jugadoresConfirmados
 	@Property var List<PartidoObserver> altasObservers
 	@Property var List<PartidoObserver> bajasObservers
 	@Property var Boolean estaConfirmado = false
-//	@Property var List<CriteriosCommand> criteriosOrdenamiento
-//	@Property var List<AlgoritmosCommand> algoritmosDivision
 	@Property var Administrador administrador 
 	
 	/****************/
@@ -35,10 +32,6 @@ class Partido {
 		administrador = new Administrador
 		equipoA = new LinkedList<Jugador>
 		equipoB = new LinkedList<Jugador>
-		jugadoresConfirmados = new LinkedList<Jugador>
-		
-	//	criteriosOrdenamiento = new LinkedList<CriteriosCommand>
-	//	algoritmosDivision = new LinkedList<AlgoritmosCommand>
 	}
 
 	/********************/
@@ -88,6 +81,9 @@ class Partido {
 	/*CASO DE USO: BAJA DE UN JUGADOR*/
 	/*******************************/
 	def baja(Jugador jugador, Jugador reemplazo) {
+		if (estaConfirmado) {
+			throw new BusinessException("Los equipos estan confirmados, no se puede dar de baja")
+		}
 		if (!estaInscripto(jugador)) {
 			throw new BusinessException("El jugador no esta inscripto en este partido, no se puede dar de baja")
 		}
@@ -110,6 +106,9 @@ class Partido {
 	/*CASO DE USO: INSCRIPCION DE UN JUGADOR */
 	/**************************************/
 	def inscribir(Jugador jugador) {
+		if (estaConfirmado) {
+			throw new BusinessException("Los equipos estan confirmados, no se puede inscribir")
+		}		
 		if (this.estaInscripto(jugador)) {
 			throw new BusinessException("El jugador ya se inscribio")
 		}
@@ -133,46 +132,40 @@ class Partido {
 	
 	/***************************************/
 	/*CASO DE USO: GENERAR EQUIPOS TENTATIVOS*/
-	/***************************************/
-	
+	/***************************************/	
 	def ordenarJugadores(CriteriosCommand criterioOrdenamiento){
-
+		if (estaConfirmado) {
+			throw new BusinessException("Los equipos estan confirmados, no se puede ordenar")
+		}
 		if (cantJugadores<10) {
 			throw new BusinessException("No se puede ordenar la lista porque no hay 10 jugadores inscriptos aun.")
-		}
-		
+		}		
 		this.jugadoresOrdenados = criterioOrdenamiento.ordenar(jugadores);
-
 	}
 	
 	def ordenarJugadores(List<CriteriosCommand> mixCriterios, int n){
-		
+		if (estaConfirmado) {
+			throw new BusinessException("Los equipos estan confirmados, no se puede ordenar")
+		}
 		var CriterioMix criterioMix = new CriterioMix;
-	
 		this.jugadoresOrdenados = criterioMix.multiOrdenar(jugadores, mixCriterios, n)
 	}
-	
-	
-		
 		
 	def dividirEquipos(AlgoritmosCommand algoritmoDivision){
+		if (estaConfirmado) {
+			throw new BusinessException("Los equipos estan confirmados, no se puede dividir")
+		}
 		if (jugadoresOrdenados.size<10) {
 			throw new BusinessException("No se pueden armar los dos equipos porque no hay 10 jugadores ordenados aun.")
 		}
 		algoritmoDivision.dividir(jugadoresOrdenados,equipoA,equipoB)
 	}
-		
-	def armarEquiposTentativos(CriteriosCommand criterioOrdenamiento, AlgoritmosCommand algoritmoDivision){
-		ordenarJugadores(criterioOrdenamiento)
-		dividirEquipos(algoritmoDivision)
-	}
 	
-	def confirmarEquipos() {
-		if (estaConfirmado == true) {
-			throw new BusinessException("El partido ya se ha confirmado previamente.")
+	def confirmarEquipos(boolean confirmacion) {
+		if (confirmacion == true) {
+			estaConfirmado=true
 		} else {
-			jugadoresConfirmados = jugadoresConfirmados
-			estaConfirmado = true
+			estaConfirmado=false
 		}
 	}
 		

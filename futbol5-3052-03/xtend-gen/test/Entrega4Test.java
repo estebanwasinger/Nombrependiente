@@ -82,25 +82,34 @@ public class Entrega4Test {
     }
   }
   
+  public void armarPartido2(final int max, final Partido partido) {
+    int a = 0;
+    boolean _while = (a < max);
+    while (_while) {
+      {
+        Jugador _jugador = new Jugador();
+        partido.inscribir(_jugador);
+        a = (a + 1);
+      }
+      _while = (a < max);
+    }
+  }
+  
   @Test
   public void testPartidoOrdenaPorHandicap() {
-    this.armarPartido(10, this.partido);
+    this.armarPartido(9, this.partido);
+    this.partido.inscribir(this.jugador1);
+    this.jugador1.setNivelDeJuego(1);
     this.partido.ordenarJugadores(this.handicap);
     List<Jugador> _jugadoresOrdenados = this.partido.getJugadoresOrdenados();
-    final Consumer<Jugador> _function = new Consumer<Jugador>() {
-      public void accept(final Jugador jugador) {
-        float _nivelDeJuego = jugador.getNivelDeJuego();
-        InputOutput.<Float>println(Float.valueOf(_nivelDeJuego));
-      }
-    };
-    _jugadoresOrdenados.forEach(_function);
+    Jugador _head = IterableExtensions.<Jugador>head(_jugadoresOrdenados);
+    Assert.assertEquals(this.jugador1, _head);
   }
   
   @Test(expected = BusinessException.class)
   public void testPartidoOrdenaPorHandicapExcepcion() {
     Jugador _jugador = new Jugador();
     this.jugadorCalificado = _jugador;
-    this.armarPartido(9, this.partido);
     this.jugadorCalificado.setNivelDeJuego(0);
     this.partido.inscribir(this.jugadorCalificado);
     this.partido.ordenarJugadores(this.handicap);
@@ -137,6 +146,7 @@ public class Entrega4Test {
   
   @Test
   public void testDividirGrupo() {
+    this.partido.inscribir(this.jugador1);
     this.armarPartido(10, this.partido2);
     this.partido2.ordenarJugadores(this.criterioCalificacionUltimoPartido);
     this.partido2.dividirEquipos(this.algoritmoImparPar);
@@ -200,24 +210,49 @@ public class Entrega4Test {
     Assert.assertEquals(this.jugadorEstrella, _last);
   }
   
-  @Test
-  public void testArmarEquiposTentativos() {
-    Jugador _jugador = new Jugador();
-    this.jugadorEstrella = _jugador;
-    this.armarPartido(9, this.partido);
-    this.partido.inscribir(this.jugadorEstrella);
-    this.jugadorEstrella.calificar(this.partido, 10, "excelente");
-    this.partido.armarEquiposTentativos(this.criterioCalificacionUltimoPartido, this.algoritmoImparPar);
-    List<Jugador> _jugadoresOrdenados = this.partido.getJugadoresOrdenados();
-    Jugador _last = IterableExtensions.<Jugador>last(_jugadoresOrdenados);
-    Assert.assertEquals(this.jugadorEstrella, _last);
+  @Test(expected = BusinessException.class)
+  public void testOrdenarJugadoresPorPromedioNPartidosSinCalificacion() {
+    this.armarPartido2(10, this.partido3);
+    this.partido3.ordenarJugadores(this.criterioNCalificaciones);
   }
   
   @Test(expected = BusinessException.class)
-  public void testConfirmarEquipo() {
-    this.armarPartido(10, this.partido);
-    this.partido.armarEquiposTentativos(this.criterioCalificacionUltimoPartido, this.algoritmoImparPar);
-    this.partido.confirmarEquipos();
-    this.partido.confirmarEquipos();
+  public void testSeConfirmaEquipoYJugadorSeQuiereInsribir() {
+    Boolean confirmacion = Boolean.valueOf(true);
+    this.armarPartido(10, this.partido3);
+    this.partido3.ordenarJugadores(this.criterioCalificacionUltimoPartido);
+    this.partido3.dividirEquipos(this.algoritmoLoco);
+    this.partido3.confirmarEquipos((confirmacion).booleanValue());
+    this.partido3.inscribir(this.jugador1);
+  }
+  
+  @Test(expected = BusinessException.class)
+  public void testSeConfirmaEquipoYJugadorSeQuiereDarDeBaja() {
+    Boolean confirmacion = Boolean.valueOf(true);
+    this.armarPartido(10, this.partido3);
+    this.partido3.ordenarJugadores(this.criterioCalificacionUltimoPartido);
+    this.partido3.dividirEquipos(this.algoritmoLoco);
+    this.partido3.confirmarEquipos((confirmacion).booleanValue());
+    this.partido3.baja(this.jugador1, null);
+  }
+  
+  @Test(expected = BusinessException.class)
+  public void testSeConfirmaEquipoYSeQuiereOrdenarNuevamenteLaLista() {
+    Boolean confirmacion = Boolean.valueOf(true);
+    this.armarPartido(10, this.partido3);
+    this.partido3.ordenarJugadores(this.criterioCalificacionUltimoPartido);
+    this.partido3.dividirEquipos(this.algoritmoLoco);
+    this.partido3.confirmarEquipos((confirmacion).booleanValue());
+    this.partido3.ordenarJugadores(this.criterioCalificacionUltimoPartido);
+  }
+  
+  @Test(expected = BusinessException.class)
+  public void testSeConfirmaEquipoYSeQuiereDividirNuevamenteLaLista() {
+    Boolean confirmacion = Boolean.valueOf(true);
+    this.armarPartido(10, this.partido3);
+    this.partido3.ordenarJugadores(this.criterioCalificacionUltimoPartido);
+    this.partido3.dividirEquipos(this.algoritmoLoco);
+    this.partido3.confirmarEquipos((confirmacion).booleanValue());
+    this.partido3.dividirEquipos(this.algoritmoLoco);
   }
 }

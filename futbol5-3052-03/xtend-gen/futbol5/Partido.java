@@ -68,16 +68,6 @@ public class Partido {
     this._equipoB = equipoB;
   }
   
-  private List<Jugador> _jugadoresConfirmados;
-  
-  public List<Jugador> getJugadoresConfirmados() {
-    return this._jugadoresConfirmados;
-  }
-  
-  public void setJugadoresConfirmados(final List<Jugador> jugadoresConfirmados) {
-    this._jugadoresConfirmados = jugadoresConfirmados;
-  }
-  
   private List<PartidoObserver> _altasObservers;
   
   public List<PartidoObserver> getAltasObservers() {
@@ -134,8 +124,6 @@ public class Partido {
     this.setEquipoA(_linkedList_4);
     LinkedList<Jugador> _linkedList_5 = new LinkedList<Jugador>();
     this.setEquipoB(_linkedList_5);
-    LinkedList<Jugador> _linkedList_6 = new LinkedList<Jugador>();
-    this.setJugadoresConfirmados(_linkedList_6);
   }
   
   public void notificarInscripcion(final Jugador jugador) {
@@ -200,6 +188,10 @@ public class Partido {
   
   public void baja(final Jugador jugador, final Jugador reemplazo) {
     try {
+      Boolean _estaConfirmado = this.getEstaConfirmado();
+      if ((_estaConfirmado).booleanValue()) {
+        throw new BusinessException("Los equipos estan confirmados, no se puede dar de baja");
+      }
       boolean _estaInscripto = this.estaInscripto(jugador);
       boolean _not = (!_estaInscripto);
       if (_not) {
@@ -235,6 +227,10 @@ public class Partido {
   
   public void inscribir(final Jugador jugador) {
     try {
+      Boolean _estaConfirmado = this.getEstaConfirmado();
+      if ((_estaConfirmado).booleanValue()) {
+        throw new BusinessException("Los equipos estan confirmados, no se puede inscribir");
+      }
       boolean _estaInscripto = this.estaInscripto(jugador);
       if (_estaInscripto) {
         throw new BusinessException("El jugador ya se inscribio");
@@ -253,7 +249,7 @@ public class Partido {
         return;
       }
       List<Jugador> _jugadores = this.getJugadores();
-      final Function1<Jugador, Boolean> _function = new Function1<Jugador, Boolean>() {
+      final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
         public Boolean apply(final Jugador inscripto) {
           return Boolean.valueOf(jugador.tieneMasPrioridadQue(inscripto));
         }
@@ -264,7 +260,7 @@ public class Partido {
         throw new BusinessException("No hay mas cupo");
       }
       List<Jugador> _jugadores_1 = this.getJugadores();
-      final Function1<Jugador, Boolean> _function_1 = new Function1<Jugador, Boolean>() {
+      final Function1<Jugador,Boolean> _function_1 = new Function1<Jugador,Boolean>() {
         public Boolean apply(final Jugador unJugador) {
           int _prioridad = unJugador.prioridad();
           int _prioridad_1 = jugador.prioridad();
@@ -283,6 +279,10 @@ public class Partido {
   
   public void ordenarJugadores(final CriteriosCommand criterioOrdenamiento) {
     try {
+      Boolean _estaConfirmado = this.getEstaConfirmado();
+      if ((_estaConfirmado).booleanValue()) {
+        throw new BusinessException("Los equipos estan confirmados, no se puede ordenar");
+      }
       int _cantJugadores = this.cantJugadores();
       boolean _lessThan = (_cantJugadores < 10);
       if (_lessThan) {
@@ -297,14 +297,26 @@ public class Partido {
   }
   
   public void ordenarJugadores(final List<CriteriosCommand> mixCriterios, final int n) {
-    CriterioMix criterioMix = new CriterioMix();
-    List<Jugador> _jugadores = this.getJugadores();
-    List<Jugador> _multiOrdenar = criterioMix.multiOrdenar(_jugadores, mixCriterios, n);
-    this.setJugadoresOrdenados(_multiOrdenar);
+    try {
+      Boolean _estaConfirmado = this.getEstaConfirmado();
+      if ((_estaConfirmado).booleanValue()) {
+        throw new BusinessException("Los equipos estan confirmados, no se puede ordenar");
+      }
+      CriterioMix criterioMix = new CriterioMix();
+      List<Jugador> _jugadores = this.getJugadores();
+      List<Jugador> _multiOrdenar = criterioMix.multiOrdenar(_jugadores, mixCriterios, n);
+      this.setJugadoresOrdenados(_multiOrdenar);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   public void dividirEquipos(final AlgoritmosCommand algoritmoDivision) {
     try {
+      Boolean _estaConfirmado = this.getEstaConfirmado();
+      if ((_estaConfirmado).booleanValue()) {
+        throw new BusinessException("Los equipos estan confirmados, no se puede dividir");
+      }
       List<Jugador> _jugadoresOrdenados = this.getJugadoresOrdenados();
       int _size = _jugadoresOrdenados.size();
       boolean _lessThan = (_size < 10);
@@ -320,24 +332,11 @@ public class Partido {
     }
   }
   
-  public void armarEquiposTentativos(final CriteriosCommand criterioOrdenamiento, final AlgoritmosCommand algoritmoDivision) {
-    this.ordenarJugadores(criterioOrdenamiento);
-    this.dividirEquipos(algoritmoDivision);
-  }
-  
-  public void confirmarEquipos() {
-    try {
-      Boolean _estaConfirmado = this.getEstaConfirmado();
-      boolean _equals = ((_estaConfirmado).booleanValue() == true);
-      if (_equals) {
-        throw new BusinessException("El partido ya se ha confirmado previamente.");
-      } else {
-        List<Jugador> _jugadoresConfirmados = this.getJugadoresConfirmados();
-        this.setJugadoresConfirmados(_jugadoresConfirmados);
-        this.setEstaConfirmado(Boolean.valueOf(true));
-      }
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
+  public void confirmarEquipos(final boolean confirmacion) {
+    if ((confirmacion == true)) {
+      this.setEstaConfirmado(Boolean.valueOf(true));
+    } else {
+      this.setEstaConfirmado(Boolean.valueOf(false));
     }
   }
 }

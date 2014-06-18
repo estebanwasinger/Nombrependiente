@@ -51,9 +51,9 @@ class Jugador {
 	}
 
 	def float promedioNPartidos(int n) {
-//		if (calificaciones.size == 0) {
-//			throw new BusinessException("El jugador no fue calificado aun")
-//		}
+		if (calificaciones.size == 0) {
+			throw new BusinessException("El jugador no fue calificado aun")
+		}
 		if (calificaciones.size != 0){
 		var int calificacionTotal
 		var Set<Partido> partidos = new HashSet<Partido>

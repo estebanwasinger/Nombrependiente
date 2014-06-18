@@ -1,6 +1,5 @@
 package commands
 
-import java.util.LinkedList
 import futbol5.Jugador
 import java.util.List
 

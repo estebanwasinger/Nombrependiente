@@ -6,9 +6,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import excepciones.BusinessException
-import futbol5.Sistema
 import commands.CriterioHandicap
-import java.util.LinkedList
 import java.util.List
 import commands.AlgoritmoImparPar
 import commands.AlgoritmoLoco
@@ -18,13 +16,9 @@ import commands.CriteriosCommand
 import java.util.ArrayList
 
 class Entrega4Test {
-	
 	Jugador jugador1
-
 	Jugador jugadorEstrella
-	
 	Jugador jugadorCalificado
-	
 	Partido partido
 	Partido partido2
 	Partido partido3
@@ -33,15 +27,10 @@ class Entrega4Test {
 	AlgoritmoLoco algoritmoLoco
 	CriterioCalifiUltimoPartido criterioCalificacionUltimoPartido
 	CriterioNCalificaciones criterioNCalificaciones
-	
 	Jugador jugadorQueso
-	
 
 	@Before def void setUP() {
-		jugador1 = new Jugador;
-
-		
-		
+		jugador1 = new Jugador;		
 		partido = new Partido("CABA");
 		handicap = new CriterioHandicap;
 		partido2 = new Partido("CABA");
@@ -59,22 +48,30 @@ class Entrega4Test {
 			jugadorCalificado.nivelDeJuego = 7
 			partido.inscribir(jugadorCalificado)
 			jugadorCalificado.calificar(partido,8,"muy bueno")
-		//	println(jugadorCalificado.calificaciones.size)
+			a = a + 1
+		}
+	}
+	
+		def armarPartido2(int max, Partido partido) {
+		var int a = 0
+		while (a < max) {
+			partido.inscribir(new Jugador)
 			a = a + 1
 		}
 	}
 
 	@Test 
 	def void testPartidoOrdenaPorHandicap() {
-		armarPartido(10, partido)
+		armarPartido(9, partido)
+		partido.inscribir(jugador1)
+		jugador1.nivelDeJuego=1
 		partido.ordenarJugadores(handicap);
-		partido.jugadoresOrdenados.forEach[jugador|println(jugador.nivelDeJuego)];
+		Assert.assertEquals(jugador1,partido.jugadoresOrdenados.head)
 	}
 	
 	@Test(expected=typeof(BusinessException))
 	def void testPartidoOrdenaPorHandicapExcepcion() {
 		jugadorCalificado= new Jugador
-		armarPartido(9,partido)
 		jugadorCalificado.nivelDeJuego = 0
 		partido.inscribir(jugadorCalificado)
 		partido.ordenarJugadores(handicap)
@@ -104,6 +101,7 @@ class Entrega4Test {
     }
      @Test
     def void testDividirGrupo(){
+    	partido.inscribir(jugador1)
     	armarPartido(10, partido2)
     	partido2.ordenarJugadores(criterioCalificacionUltimoPartido)
   		partido2.dividirEquipos(algoritmoImparPar)
@@ -146,32 +144,60 @@ class Entrega4Test {
 	@Test
 	def void testOrdenarJugadoresPorPromedioNPartidos(){
 		armarPartido(9,partido3)
-	
 		jugadorEstrella = new Jugador
-
 		partido3.inscribir(jugadorEstrella)
-		
 		jugadorEstrella.calificar(partido3,10,"excelente")
 		partido3.ordenarJugadores(criterioNCalificaciones)	
 		Assert.assertEquals(jugadorEstrella,partido3.jugadoresOrdenados.last)
 	}
 	
-	@Test
-	def void testArmarEquiposTentativos(){
-		jugadorEstrella = new Jugador
-		armarPartido(9,partido)
-		partido.inscribir(jugadorEstrella)
-		jugadorEstrella.calificar(partido,10,"excelente")
-		partido.armarEquiposTentativos(criterioCalificacionUltimoPartido, algoritmoImparPar)
-		Assert.assertEquals(jugadorEstrella,partido.jugadoresOrdenados.last)
+	@Test(expected=typeof(BusinessException))
+	def void testOrdenarJugadoresPorPromedioNPartidosSinCalificacion(){
+		armarPartido2(10,partido3)
+		partido3.ordenarJugadores(criterioNCalificaciones)	
+	}
+	
+	
+	@Test(expected=typeof(BusinessException))
+	def void testSeConfirmaEquipoYJugadorSeQuiereInsribir(){
+		var Boolean confirmacion=true
+		armarPartido(10, partido3)
+		partido3.ordenarJugadores(criterioCalificacionUltimoPartido)
+  		partido3.dividirEquipos(algoritmoLoco)
+		partido3.confirmarEquipos(confirmacion)
+		partido3.inscribir(jugador1)
 	}
 	
 	@Test(expected=typeof(BusinessException))
-	def void testConfirmarEquipo(){
-		armarPartido(10, partido)
-		partido.armarEquiposTentativos(criterioCalificacionUltimoPartido, algoritmoImparPar)
-		partido.confirmarEquipos
-		partido.confirmarEquipos
-	}
+	def void testSeConfirmaEquipoYJugadorSeQuiereDarDeBaja(){
+		var Boolean confirmacion=true
+		armarPartido(10, partido3)
+		partido3.ordenarJugadores(criterioCalificacionUltimoPartido)
+  		partido3.dividirEquipos(algoritmoLoco)
+		partido3.confirmarEquipos(confirmacion)
+		partido3.baja(jugador1, null)
        } 
+       
+    @Test(expected=typeof(BusinessException))
+	def void testSeConfirmaEquipoYSeQuiereOrdenarNuevamenteLaLista(){
+		var Boolean confirmacion=true
+		armarPartido(10, partido3)
+		partido3.ordenarJugadores(criterioCalificacionUltimoPartido)
+  		partido3.dividirEquipos(algoritmoLoco)
+		partido3.confirmarEquipos(confirmacion)
+		partido3.ordenarJugadores(criterioCalificacionUltimoPartido)
+       } 
+         	
+    @Test(expected=typeof(BusinessException))
+	def void testSeConfirmaEquipoYSeQuiereDividirNuevamenteLaLista(){
+		var Boolean confirmacion=true
+		armarPartido(10, partido3)
+		partido3.ordenarJugadores(criterioCalificacionUltimoPartido)
+  		partido3.dividirEquipos(algoritmoLoco)
+		partido3.confirmarEquipos(confirmacion)
+		partido3.dividirEquipos(algoritmoLoco)
+       }      
+       
+       
+       }
 
