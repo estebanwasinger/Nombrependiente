@@ -5,7 +5,7 @@ import futbol5.Jugador;
 import java.util.List;
 
 @SuppressWarnings("all")
-public class AlgoritmoLoco implements AlgoritmosCommand {
+public class AlgoritmoLoco extends AlgoritmosCommand {
   public void dividir(final List<Jugador> jugadores, final List<Jugador> equipoA, final List<Jugador> equipoB) {
     int posA = 1;
     int posB = 2;
@@ -25,7 +25,8 @@ public class AlgoritmoLoco implements AlgoritmosCommand {
   
   public boolean calculaPosicion(final int pos) {
     boolean _xifexpression = false;
-    if (((pos % 2) == 0)) {
+    boolean _esPar = super.esPar(pos);
+    if (_esPar) {
       _xifexpression = (pos == (pos + 1));
     } else {
       _xifexpression = (pos == (pos + 3));

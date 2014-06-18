@@ -172,10 +172,23 @@ public class Entrega4Test {
     this.partido2.ordenarJugadores(this.handicap);
   }
   
+  /**
+   * @Test
+   * def void testDividirGrupoCasoLoco(){
+   * armarPartido(10, partido3)
+   * partido3.dividirEquipos(algoritmoLoco)
+   * }
+   */
   @Test(expected = BusinessException.class)
   public void testDividirGrupoMenor10() {
     this.armarPartido(9, this.partido2);
     this.partido2.dividirEquipos(this.algoritmoImparPar);
+  }
+  
+  @Test(expected = BusinessException.class)
+  public void testDividirGrupoMenor10CasoLoco() {
+    this.armarPartido(9, this.partido2);
+    this.partido2.dividirEquipos(this.algoritmoLoco);
   }
   
   @Test

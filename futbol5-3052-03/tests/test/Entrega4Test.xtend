@@ -112,7 +112,6 @@ class Entrega4Test {
 		
 	}
 	
-
 	@Test
 	def void testPartidoMixDeCriterios() {
 		var List<CriteriosCommand> criterios = new ArrayList();
@@ -128,13 +127,27 @@ class Entrega4Test {
   	partido2.ordenarJugadores(handicap)
   	
     }
+    /* @Test
+    def void testDividirGrupo(){
+    	armarPartido(10, partido2)
+  		partido2.dividirEquipos(algoritmoImparPar)
+  	}*/
+  	/* @Test
+    def void testDividirGrupoCasoLoco(){
+    	armarPartido(10, partido3)
+  		partido3.dividirEquipos(algoritmoLoco)
+  	}*/
  	@Test(expected=typeof(BusinessException))
     def void testDividirGrupoMenor10(){
     	armarPartido(9, partido2)
   		partido2.dividirEquipos(algoritmoImparPar)
-    } 
-  
-	@Test  //NO FUNCIONA TODAVIA
+  	} 
+  	@Test(expected=typeof(BusinessException))
+    def void testDividirGrupoMenor10CasoLoco(){
+    	armarPartido(9, partido2)
+  		partido2.dividirEquipos(algoritmoLoco)
+  	}
+  	@Test  //NO FUNCIONA TODAVIA
 	def void testOrdenarJugadoresPorUltimoPromedio(){
 	armarPartido(10, partido2)
 	partido2.ordenarJugadores(criterioCalificacionUltimoPartido)

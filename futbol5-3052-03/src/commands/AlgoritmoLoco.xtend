@@ -4,7 +4,7 @@ import java.util.LinkedList
 import futbol5.Jugador
 import java.util.List
 
-class AlgoritmoLoco implements AlgoritmosCommand{
+class AlgoritmoLoco extends AlgoritmosCommand{
 	
 	override dividir(List<Jugador> jugadores, List<Jugador> equipoA, List<Jugador> equipoB) {
 		var posA=1 
@@ -18,7 +18,7 @@ class AlgoritmoLoco implements AlgoritmosCommand{
 		}
 		
 		def calculaPosicion(int pos){
-			if (pos % 2==0){
+			if (super.esPar(pos)){
 			pos==pos+1
 			}
 			else{

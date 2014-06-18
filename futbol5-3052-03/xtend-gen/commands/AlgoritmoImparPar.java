@@ -5,13 +5,14 @@ import futbol5.Jugador;
 import java.util.List;
 
 @SuppressWarnings("all")
-public class AlgoritmoImparPar implements AlgoritmosCommand {
+public class AlgoritmoImparPar extends AlgoritmosCommand {
   public void dividir(final List<Jugador> jugadores, final List<Jugador> equipoA, final List<Jugador> equipoB) {
     int pos = 1;
     boolean _while = (pos <= 10);
     while (_while) {
       {
-        if (((pos % 2) == 0)) {
+        boolean _esPar = super.esPar(pos);
+        if (_esPar) {
           Jugador _get = jugadores.get(pos);
           equipoA.add(_get);
         } else {
