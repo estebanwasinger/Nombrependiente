@@ -7,22 +7,23 @@ import java.util.List
 class AlgoritmoLoco extends AlgoritmosCommand{
 	
 	override dividir(List<Jugador> jugadores, List<Jugador> equipoA, List<Jugador> equipoB) {
-		var posA=1 
-		var posB=2
-		while (posA<9 && posB<=10){
+		var posA=0 
+		var posB=1
+		while (posA<9 && posB<10){
 			equipoA.add(jugadores.get(posA))
-			calculaPosicion(posA)
+			posA = calculaPosicion(posA)
 			equipoB.add(jugadores.get(posB))
-			calculaPosicion(posB)
+			posB = calculaPosicion(posB)
 		}
 		}
 		
 		def calculaPosicion(int pos){
 			if (super.esPar(pos)){
-			pos==pos+1
+			return pos+1
+			
 			}
 			else{
-			pos==pos+3
+			return pos+3
 		}
 	
 	}

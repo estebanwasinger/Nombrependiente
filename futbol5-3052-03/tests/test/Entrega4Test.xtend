@@ -20,15 +20,7 @@ import java.util.ArrayList
 class Entrega4Test {
 	
 	Jugador jugador1
-	Jugador jugador2
-	Jugador jugador3
-	Jugador jugador4
-	Jugador jugador5
-	Jugador jugador6
-	Jugador jugador7
-	Jugador jugador8
-	Jugador jugador9
-	Jugador jugador10
+
 	Jugador jugadorEstrella
 	
 	Jugador jugadorCalificado
@@ -42,29 +34,13 @@ class Entrega4Test {
 	CriterioCalifiUltimoPartido criterioCalificacionUltimoPartido
 	CriterioNCalificaciones criterioNCalificaciones
 	
+	Jugador jugadorQueso
+	
 
 	@Before def void setUP() {
 		jugador1 = new Jugador;
-		jugador2 = new Jugador;
-		jugador3 = new Jugador;
-		jugador4 = new Jugador;
-		jugador5 = new Jugador;
-		jugador6 = new Jugador;
-		jugador7 = new Jugador;
-		jugador8 = new Jugador;
-		jugador9 = new Jugador;
-		jugador10 = new Jugador;
+
 		
-		jugador1.nivelDeJuego = 5;
-		jugador2.nivelDeJuego = 9;
-		jugador3.nivelDeJuego = 10;
-		jugador4.nivelDeJuego = 7;
-		jugador5.nivelDeJuego = 8;
-		jugador6.nivelDeJuego = 6;
-		jugador7.nivelDeJuego = 7;
-		jugador8.nivelDeJuego = 4;
-		jugador9.nivelDeJuego = 8;
-		jugador10.nivelDeJuego = 3;
 		
 		partido = new Partido("CABA");
 		handicap = new CriterioHandicap;
@@ -74,25 +50,13 @@ class Entrega4Test {
 		algoritmoLoco = new AlgoritmoLoco;
 		criterioCalificacionUltimoPartido = new CriterioCalifiUltimoPartido
 		criterioNCalificaciones = new CriterioNCalificaciones(3)
-		
-		
-		partido.inscribir(jugador1);
-		partido.inscribir(jugador2);
-		partido.inscribir(jugador3);
-		partido.inscribir(jugador4);
-		partido.inscribir(jugador5);
-		partido.inscribir(jugador6);
-		partido.inscribir(jugador7);
-		partido.inscribir(jugador8);
-		partido.inscribir(jugador9);
-		partido.inscribir(jugador10);
-	
-	}
+		}
 	
 	def armarPartido(int max, Partido partido) {
 		var int a = 0
 		while (a < max) {
 			jugadorCalificado = new Jugador
+			jugadorCalificado.nivelDeJuego = 7
 			partido.inscribir(jugadorCalificado)
 			jugadorCalificado.calificar(partido,8,"muy bueno")
 		//	println(jugadorCalificado.calificaciones.size)
@@ -102,23 +66,33 @@ class Entrega4Test {
 
 	@Test 
 	def void testPartidoOrdenaPorHandicap() {
+		armarPartido(10, partido)
 		partido.ordenarJugadores(handicap);
 		partido.jugadoresOrdenados.forEach[jugador|println(jugador.nivelDeJuego)];
 	}
 	
 	@Test(expected=typeof(BusinessException))
 	def void testPartidoOrdenaPorHandicapExcepcion() {
-		jugador10.nivelDeJuego = 0;
-		partido.ordenarJugadores(handicap);
+		jugadorCalificado= new Jugador
+		armarPartido(9,partido)
+		jugadorCalificado.nivelDeJuego = 0
+		partido.inscribir(jugadorCalificado)
+		partido.ordenarJugadores(handicap)
 		
 	}
 	
 	@Test
 	def void testPartidoMixDeCriterios() {
+		armarPartido(9,partido2)
+		jugadorEstrella = new Jugador
+		partido2.inscribir(jugadorEstrella)
+		jugadorEstrella.calificar(partido2,10,"excelente")
+		jugadorEstrella.nivelDeJuego=10
+		armarPartido(9,partido)
 		var List<CriteriosCommand> criterios = new ArrayList();
 		criterios.add(handicap);
-		criterios.add(handicap);
-		partido.ordenarJugadores(criterios, 3);
+		criterios.add(criterioCalificacionUltimoPartido);
+		partido.ordenarJugadores(criterios, 2);
 		partido.jugadoresOrdenados.forEach[jugador|println(jugador.nivelDeJuego)];
 	}
 	
@@ -134,11 +108,14 @@ class Entrega4Test {
     	partido2.ordenarJugadores(criterioCalificacionUltimoPartido)
   		partido2.dividirEquipos(algoritmoImparPar)
   	}
-  	/* @Test
+  @Test
     def void testDividirGrupoCasoLoco(){
     	armarPartido(10, partido3)
+    	partido3.ordenarJugadores(criterioCalificacionUltimoPartido)
   		partido3.dividirEquipos(algoritmoLoco)
-  	}*/
+  		Assert.assertEquals(5, partido3.equipoA.size)
+  		Assert.assertEquals(5, partido3.equipoB.size)
+  	}
  	@Test(expected=typeof(BusinessException))
     def void testDividirGrupoMenor10(){
     	armarPartido(9, partido2)
@@ -153,19 +130,48 @@ class Entrega4Test {
 
 	@Test
 	def void testOrdenarJugadoresPorUltimoPromedio(){
-	armarPartido(9, partido2)
+	armarPartido(8, partido2)
 	jugadorEstrella = new Jugador()
 	partido2.inscribir(jugadorEstrella)
-	jugadorCalificado.calificar(partido2,10,"excelente!")
+	jugadorEstrella.calificar(partido2,10,"excelente!")
+	
+	jugadorQueso = new Jugador
+	partido2.inscribir(jugadorQueso)
+	jugadorQueso.calificar(partido2,0,"malisimo")
 	partido2.ordenarJugadores(criterioCalificacionUltimoPartido)
-	Assert.assertEquals(jugadorEstrella,partido2.jugadoresOrdenados.head)
+	Assert.assertEquals(jugadorEstrella,partido2.jugadoresOrdenados.last)
+	Assert.assertEquals(jugadorQueso,partido2.jugadoresOrdenados.head)
 	}  
 	
-//	@Test //NO FUNCIONA TODAVIA
-//	def void testOrdenarJugadoresPorPromedioNPartidos(){
-//		armarPartido(10, partido2)
-//		armarPartido(10,partido3)
-//		partido2.ordenarJugadores(criterioNCalificaciones)	
-//	}
+	@Test
+	def void testOrdenarJugadoresPorPromedioNPartidos(){
+		armarPartido(9,partido3)
+	
+		jugadorEstrella = new Jugador
+
+		partido3.inscribir(jugadorEstrella)
+		
+		jugadorEstrella.calificar(partido3,10,"excelente")
+		partido3.ordenarJugadores(criterioNCalificaciones)	
+		Assert.assertEquals(jugadorEstrella,partido3.jugadoresOrdenados.last)
+	}
+	
+	@Test
+	def void testArmarEquiposTentativos(){
+		jugadorEstrella = new Jugador
+		armarPartido(9,partido)
+		partido.inscribir(jugadorEstrella)
+		jugadorEstrella.calificar(partido,10,"excelente")
+		partido.armarEquiposTentativos(criterioCalificacionUltimoPartido, algoritmoImparPar)
+		Assert.assertEquals(jugadorEstrella,partido.jugadoresOrdenados.last)
+	}
+	
+	@Test(expected=typeof(BusinessException))
+	def void testConfirmarEquipo(){
+		armarPartido(10, partido)
+		partido.armarEquiposTentativos(criterioCalificacionUltimoPartido, algoritmoImparPar)
+		partido.confirmarEquipos
+		partido.confirmarEquipos
+	}
        } 
 

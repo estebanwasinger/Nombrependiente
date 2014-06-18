@@ -15,8 +15,10 @@ class Partido {
 	@Property var List<Jugador> jugadoresOrdenados
 	@Property var List<Jugador> equipoA
 	@Property var List<Jugador> equipoB
+	@Property var List<Jugador> jugadoresConfirmados
 	@Property var List<PartidoObserver> altasObservers
 	@Property var List<PartidoObserver> bajasObservers
+	@Property var Boolean estaConfirmado = false
 //	@Property var List<CriteriosCommand> criteriosOrdenamiento
 //	@Property var List<AlgoritmosCommand> algoritmosDivision
 	@Property var Administrador administrador 
@@ -33,6 +35,8 @@ class Partido {
 		administrador = new Administrador
 		equipoA = new LinkedList<Jugador>
 		equipoB = new LinkedList<Jugador>
+		jugadoresConfirmados = new LinkedList<Jugador>
+		
 	//	criteriosOrdenamiento = new LinkedList<CriteriosCommand>
 	//	algoritmosDivision = new LinkedList<AlgoritmosCommand>
 	}
@@ -140,12 +144,6 @@ class Partido {
 		this.jugadoresOrdenados = criterioOrdenamiento.ordenar(jugadores);
 
 	}
-//	
-//	def ordenarJugadores(CriteriosCommand criterioOrdenamiento){
-//		
-//		var int cantidadPorDefault = 0;
-//		ordenarJugadores(criterioOrdenamiento, cantidadPorDefault)
-//	}
 	
 	def ordenarJugadores(List<CriteriosCommand> mixCriterios, int n){
 		
@@ -164,12 +162,18 @@ class Partido {
 		algoritmoDivision.dividir(jugadoresOrdenados,equipoA,equipoB)
 	}
 		
-	/*def armarEquiposTentativos(){
+	def armarEquiposTentativos(CriteriosCommand criterioOrdenamiento, AlgoritmosCommand algoritmoDivision){
 		ordenarJugadores(criterioOrdenamiento)
 		dividirEquipos(algoritmoDivision)
-	}*/
+	}
 	
-	def confirmarEquipos(){}
-		/*ac� hay que impedir que se puedan inscribir los jugadores si se confirma */
-		//la lista ordenada en caso de que el equipo no se confirme deberia vaciarse (ver si no hay otra opcion)
+	def confirmarEquipos() {
+		if (estaConfirmado == true) {
+			throw new BusinessException("El partido ya se ha confirmado previamente.")
+		} else {
+			jugadoresConfirmados = jugadoresConfirmados
+			estaConfirmado = true
+		}
+	}
+		
 }

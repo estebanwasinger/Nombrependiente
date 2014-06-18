@@ -7,30 +7,30 @@ import java.util.List;
 @SuppressWarnings("all")
 public class AlgoritmoLoco extends AlgoritmosCommand {
   public void dividir(final List<Jugador> jugadores, final List<Jugador> equipoA, final List<Jugador> equipoB) {
-    int posA = 1;
-    int posB = 2;
-    boolean _while = ((posA < 9) && (posB <= 10));
+    int posA = 0;
+    int posB = 1;
+    boolean _while = ((posA < 9) && (posB < 10));
     while (_while) {
       {
         Jugador _get = jugadores.get(posA);
         equipoA.add(_get);
-        this.calculaPosicion(posA);
+        int _calculaPosicion = this.calculaPosicion(posA);
+        posA = _calculaPosicion;
         Jugador _get_1 = jugadores.get(posB);
         equipoB.add(_get_1);
-        this.calculaPosicion(posB);
+        int _calculaPosicion_1 = this.calculaPosicion(posB);
+        posB = _calculaPosicion_1;
       }
-      _while = ((posA < 9) && (posB <= 10));
+      _while = ((posA < 9) && (posB < 10));
     }
   }
   
-  public boolean calculaPosicion(final int pos) {
-    boolean _xifexpression = false;
+  public int calculaPosicion(final int pos) {
     boolean _esPar = super.esPar(pos);
     if (_esPar) {
-      _xifexpression = (pos == (pos + 1));
+      return (pos + 1);
     } else {
-      _xifexpression = (pos == (pos + 3));
+      return (pos + 3);
     }
-    return _xifexpression;
   }
 }

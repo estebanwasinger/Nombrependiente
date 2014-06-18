@@ -8,7 +8,7 @@ import java.util.List;
 public class AlgoritmoImparPar extends AlgoritmosCommand {
   public void dividir(final List<Jugador> jugadores, final List<Jugador> equipoA, final List<Jugador> equipoB) {
     int pos = 1;
-    boolean _while = (pos <= 10);
+    boolean _while = (pos < 10);
     while (_while) {
       {
         boolean _esPar = super.esPar(pos);
@@ -21,7 +21,7 @@ public class AlgoritmoImparPar extends AlgoritmosCommand {
         }
         pos = (pos + 1);
       }
-      _while = (pos <= 10);
+      _while = (pos < 10);
     }
   }
 }

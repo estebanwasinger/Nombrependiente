@@ -11,7 +11,7 @@ public class CriterioMix extends CriteriosCommand {
   public float evaluarCriterios(final Jugador jugador, final List<CriteriosCommand> criterios, final int n) {
     float sum = 0;
     for (final CriteriosCommand criterio : criterios) {
-      Function1<? super Jugador,? extends Float> _criterioComparacion = criterio.criterioComparacion(n);
+      Function1<? super Jugador, ? extends Float> _criterioComparacion = criterio.criterioComparacion(n);
       Float _apply = _criterioComparacion.apply(jugador);
       float _plus = (sum + (_apply).floatValue());
       sum = _plus;
@@ -21,7 +21,7 @@ public class CriterioMix extends CriteriosCommand {
   }
   
   public List<Jugador> multiOrdenar(final List<Jugador> jugadores, final List<CriteriosCommand> criterios, final int n) {
-    final Function1<Jugador,Float> _function = new Function1<Jugador,Float>() {
+    final Function1<Jugador, Float> _function = new Function1<Jugador, Float>() {
       public Float apply(final Jugador jugador) {
         return Float.valueOf(CriterioMix.this.evaluarCriterios(jugador, criterios, n));
       }
