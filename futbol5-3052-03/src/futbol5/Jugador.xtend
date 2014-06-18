@@ -65,7 +65,7 @@ class Jugador {
 		pos = 0
 		while (pos < partidos.size) {
 			calificacionTotal = calificacionTotal + promedioDeUnPartido(partidos.get(pos))
-			pos++
+			pos= pos +1
 		}
 
 		return calificacionTotal / partidos.size
