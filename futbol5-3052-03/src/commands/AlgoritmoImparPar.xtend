@@ -3,19 +3,16 @@ package commands
 import futbol5.Jugador
 import java.util.List
 
-class AlgoritmoImparPar extends AlgoritmosCommand {
-	
+class AlgoritmoImparPar extends DivisionDeEquiposCommand {
+
 	override dividir(List<Jugador> jugadores, List<Jugador> equipoA, List<Jugador> equipoB) {
-		var pos = 1
-		while(pos<10){
-			if (super.esPar(pos)){
-			equipoA.add(jugadores.get(pos))	
+		(0 .. 9).forEach [ pos |
+			if ((pos + 1).esPar) {
+				equipoA.add(jugadores.get(pos))
+			} else {
+				equipoB.add(jugadores.get(pos))
 			}
-			else{
-			equipoB.add(jugadores.get(pos))	
-			}
-			pos=pos+1
-		}
+		]
 	}
-	
+
 }

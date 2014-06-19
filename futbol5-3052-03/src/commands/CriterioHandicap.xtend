@@ -6,8 +6,8 @@ import excepciones.BusinessException
 
 class CriterioHandicap extends CriteriosCommand{
 
-	override (Jugador) => float criterioComparacion(int n){
-		return [Jugador jugador | jugador.nivelDeJuego];
+	override (Jugador) => float criterioComparacion(){
+		return [Jugador jugador | jugador.nivelDeJuego]
 	}
 	
 	override List<Jugador> ordenar(List<Jugador> jugadores){

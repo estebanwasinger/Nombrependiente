@@ -1,36 +1,32 @@
 package commands;
 
-import commands.AlgoritmosCommand;
+import com.google.common.collect.Lists;
+import commands.DivisionDeEquiposCommand;
 import futbol5.Jugador;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 @SuppressWarnings("all")
-public class AlgoritmoLoco extends AlgoritmosCommand {
-  public void dividir(final List<Jugador> jugadores, final List<Jugador> equipoA, final List<Jugador> equipoB) {
-    int posA = 0;
-    int posB = 1;
-    boolean _while = ((posA < 9) && (posB < 10));
-    while (_while) {
-      {
-        Jugador _get = jugadores.get(posA);
-        equipoA.add(_get);
-        int _calculaPosicion = this.calculaPosicion(posA);
-        posA = _calculaPosicion;
-        Jugador _get_1 = jugadores.get(posB);
-        equipoB.add(_get_1);
-        int _calculaPosicion_1 = this.calculaPosicion(posB);
-        posB = _calculaPosicion_1;
-      }
-      _while = ((posA < 9) && (posB < 10));
-    }
-  }
+public class AlgoritmoLoco extends DivisionDeEquiposCommand {
+  private List<Integer> posicionesA = Collections.<Integer>unmodifiableList(Lists.<Integer>newArrayList(Integer.valueOf(0), Integer.valueOf(3), Integer.valueOf(4), Integer.valueOf(7), Integer.valueOf(8)));
   
-  public int calculaPosicion(final int pos) {
-    boolean _esPar = super.esPar(pos);
-    if (_esPar) {
-      return (pos + 1);
-    } else {
-      return (pos + 3);
-    }
+  private List<Integer> posicionesB = Collections.<Integer>unmodifiableList(Lists.<Integer>newArrayList(Integer.valueOf(1), Integer.valueOf(2), Integer.valueOf(5), Integer.valueOf(6), Integer.valueOf(9)));
+  
+  public void dividir(final List<Jugador> jugadores, final List<Jugador> equipoA, final List<Jugador> equipoB) {
+    final Consumer<Integer> _function = new Consumer<Integer>() {
+      public void accept(final Integer i) {
+        Jugador _get = jugadores.get((i).intValue());
+        equipoA.add(_get);
+      }
+    };
+    this.posicionesA.forEach(_function);
+    final Consumer<Integer> _function_1 = new Consumer<Integer>() {
+      public void accept(final Integer i) {
+        Jugador _get = jugadores.get((i).intValue());
+        equipoB.add(_get);
+      }
+    };
+    this.posicionesB.forEach(_function_1);
   }
 }

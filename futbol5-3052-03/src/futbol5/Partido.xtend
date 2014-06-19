@@ -4,9 +4,8 @@ import java.util.List
 import java.util.LinkedList
 import excepciones.BusinessException
 import observers.PartidoObserver
-import commands.AlgoritmosCommand
 import commands.CriteriosCommand
-import commands.CriterioMix
+import commands.DivisionDeEquiposCommand
 
 class Partido {
 
@@ -18,8 +17,8 @@ class Partido {
 	@Property var List<PartidoObserver> altasObservers
 	@Property var List<PartidoObserver> bajasObservers
 	@Property var Boolean estaConfirmado = false
-	@Property var Administrador administrador 
-	
+	@Property var Administrador administrador
+
 	/****************/
 	/*CONSTRUCTORES*/
 	/****************/
@@ -76,7 +75,7 @@ class Partido {
 	def quitarObserverBaja(PartidoObserver observer) {
 		this.bajasObservers.remove(observer)
 	}
-		
+
 	/*******************************/
 	/*CASO DE USO: BAJA DE UN JUGADOR*/
 	/*******************************/
@@ -108,7 +107,7 @@ class Partido {
 	def inscribir(Jugador jugador) {
 		if (estaConfirmado) {
 			throw new BusinessException("Los equipos estan confirmados, no se puede inscribir")
-		}		
+		}
 		if (this.estaInscripto(jugador)) {
 			throw new BusinessException("El jugador ya se inscribio")
 		}
@@ -129,44 +128,32 @@ class Partido {
 		this.agregarJugador(jugador)
 		this.notificarInscripcion(jugador)
 	}
-	
+
 	/***************************************/
 	/*CASO DE USO: GENERAR EQUIPOS TENTATIVOS*/
-	/***************************************/	
-	def ordenarJugadores(CriteriosCommand criterioOrdenamiento){
+	/***************************************/
+	def ordenarJugadores(CriteriosCommand criterioOrdenamiento) {
 		if (estaConfirmado) {
 			throw new BusinessException("Los equipos estan confirmados, no se puede ordenar")
 		}
-		if (cantJugadores<10) {
+		if (cantJugadores < 10) {
 			throw new BusinessException("No se puede ordenar la lista porque no hay 10 jugadores inscriptos aun.")
-		}		
+		}
 		this.jugadoresOrdenados = criterioOrdenamiento.ordenar(jugadores);
 	}
-	
-	def ordenarJugadores(List<CriteriosCommand> mixCriterios, int n){
-		if (estaConfirmado) {
-			throw new BusinessException("Los equipos estan confirmados, no se puede ordenar")
-		}
-		var CriterioMix criterioMix = new CriterioMix;
-		this.jugadoresOrdenados = criterioMix.multiOrdenar(jugadores, mixCriterios, n)
-	}
-		
-	def dividirEquipos(AlgoritmosCommand algoritmoDivision){
+
+	def dividirEquipos(DivisionDeEquiposCommand algoritmoDivision) {
 		if (estaConfirmado) {
 			throw new BusinessException("Los equipos estan confirmados, no se puede dividir")
 		}
-		if (jugadoresOrdenados.size<10) {
+		if (jugadoresOrdenados.size < 10) {
 			throw new BusinessException("No se pueden armar los dos equipos porque no hay 10 jugadores ordenados aun.")
 		}
-		algoritmoDivision.dividir(jugadoresOrdenados,equipoA,equipoB)
+		algoritmoDivision.dividir(jugadoresOrdenados, equipoA, equipoB)
 	}
-	
+
 	def confirmarEquipos(boolean confirmacion) {
-		if (confirmacion == true) {
-			estaConfirmado=true
-		} else {
-			estaConfirmado=false
-		}
+		estaConfirmado = confirmacion
 	}
-		
+
 }

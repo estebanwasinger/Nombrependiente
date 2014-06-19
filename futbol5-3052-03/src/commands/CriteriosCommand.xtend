@@ -6,16 +6,12 @@ import java.util.List
 
 abstract class CriteriosCommand {
 
-	var int nPartidos
-	def (Jugador) => float criterioComparacion(int n){}
+	def (Jugador) => float criterioComparacion(){}
 	
 	def List<Jugador> ordenar(List<Jugador> jugadores){		
-		return jugadores.sortBy(this.criterioComparacion(nPartidos))		
+		return jugadores.sortBy(this.criterioComparacion())		
 	}
 		
 	new(){}
 		
-	new(int n){
-		nPartidos = n
-	}
 }

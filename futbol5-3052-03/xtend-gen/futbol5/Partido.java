@@ -1,9 +1,8 @@
 package futbol5;
 
 import com.google.common.base.Objects;
-import commands.AlgoritmosCommand;
-import commands.CriterioMix;
 import commands.CriteriosCommand;
+import commands.DivisionDeEquiposCommand;
 import excepciones.BusinessException;
 import futbol5.Administrador;
 import futbol5.Jugador;
@@ -296,22 +295,7 @@ public class Partido {
     }
   }
   
-  public void ordenarJugadores(final List<CriteriosCommand> mixCriterios, final int n) {
-    try {
-      Boolean _estaConfirmado = this.getEstaConfirmado();
-      if ((_estaConfirmado).booleanValue()) {
-        throw new BusinessException("Los equipos estan confirmados, no se puede ordenar");
-      }
-      CriterioMix criterioMix = new CriterioMix();
-      List<Jugador> _jugadores = this.getJugadores();
-      List<Jugador> _multiOrdenar = criterioMix.multiOrdenar(_jugadores, mixCriterios, n);
-      this.setJugadoresOrdenados(_multiOrdenar);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
-  public void dividirEquipos(final AlgoritmosCommand algoritmoDivision) {
+  public void dividirEquipos(final DivisionDeEquiposCommand algoritmoDivision) {
     try {
       Boolean _estaConfirmado = this.getEstaConfirmado();
       if ((_estaConfirmado).booleanValue()) {
@@ -333,10 +317,6 @@ public class Partido {
   }
   
   public void confirmarEquipos(final boolean confirmacion) {
-    if ((confirmacion == true)) {
-      this.setEstaConfirmado(Boolean.valueOf(true));
-    } else {
-      this.setEstaConfirmado(Boolean.valueOf(false));
-    }
+    this.setEstaConfirmado(Boolean.valueOf(confirmacion));
   }
 }
