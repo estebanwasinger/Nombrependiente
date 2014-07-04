@@ -10,8 +10,8 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public class CriterioHandicap extends CriteriosCommand {
-  public Function1<? super Jugador,? extends Float> criterioComparacion() {
-    final Function1<Jugador,Float> _function = new Function1<Jugador,Float>() {
+  public Function1<? super Jugador, ? extends Float> criterioComparacion() {
+    final Function1<Jugador, Float> _function = new Function1<Jugador, Float>() {
       public Float apply(final Jugador jugador) {
         return Float.valueOf(jugador.getNivelDeJuego());
       }
@@ -23,7 +23,7 @@ public class CriterioHandicap extends CriteriosCommand {
     try {
       List<Jugador> _xblockexpression = null;
       {
-        final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
+        final Function1<Jugador, Boolean> _function = new Function1<Jugador, Boolean>() {
           public Boolean apply(final Jugador jugador) {
             float _nivelDeJuego = jugador.getNivelDeJuego();
             return Boolean.valueOf((_nivelDeJuego == 0));
