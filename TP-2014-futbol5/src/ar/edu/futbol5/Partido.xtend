@@ -5,12 +5,14 @@ import ar.edu.futbol5.ordenamiento.CriterioOrdenamiento
 import ar.edu.futbol5.ordenamiento.OrdenamientoPorHandicap
 import java.util.ArrayList
 import java.util.List
+import java.util.LinkedList
 
 class Partido {
 
 	@Property List<Jugador> inscriptos
-	@Property Equipo equipo1
-	@Property Equipo equipo2
+	//agregado los equipos por Pau
+	@Property var List<Jugador> equipoA
+	@Property var List<Jugador> equipoB
 	String estado
 	@Property CriterioOrdenamiento criterioOrdenamiento
 	@Property int distribucionEquipos // 5 es par/impar, 16 = 1,4,5,8,9 vs. 2,3,6,7,10
@@ -20,6 +22,9 @@ class Partido {
 		estado = "A"
 		distribucionEquipos = 5 // par/impar
 		criterioOrdenamiento = new OrdenamientoPorHandicap
+		//agregado los equipos por Pau
+		equipoA = new LinkedList<Jugador>
+		equipoB = new LinkedList<Jugador>
 	}
 
 	def generarEquipos() {
@@ -42,22 +47,20 @@ class Partido {
 		}
 		return 0
 	}
-
-	def distribuirEquipos(List<Jugador> jugadores) {
-		equipo1 = new Equipo
-		equipo2 = new Equipo
+	
+ // modificado por Pau (y Maru luego)
+def distribuirEquipos(List<Jugador> jugadores) {
+	var List<Integer> posicionesA16 = #[0,3,4,7,8]
+	var List<Integer> posicionesB16 = #[1,2,5,6,9]
+	var List<Integer> posicionesA5 = #[0,2,4,6,8]
+	var List<Integer> posicionesB5 = #[1,3,5,7,9]
+	
 		if (distribucionEquipos == 5) {
-			equipo1.jugadores = newArrayList(jugadores.get(0), jugadores.get(2), jugadores.get(4), jugadores.get(6),
-				jugadores.get(8))
-			equipo2.jugadores = newArrayList(jugadores.get(1), jugadores.get(3), jugadores.get(5), jugadores.get(7),
-				jugadores.get(9))
+			posicionesA5.forEach [ i | equipoA.add(jugadores.get(i))]	
+			posicionesB5.forEach [ i | equipoB.add(jugadores.get(i))]
 		} else {
-
-			// distribucionEquipos == 16 que ordena de esta manera
-			equipo1.jugadores = newArrayList(jugadores.get(0), jugadores.get(3), jugadores.get(4), jugadores.get(7),
-				jugadores.get(8))
-			equipo2.jugadores = newArrayList(jugadores.get(1), jugadores.get(2), jugadores.get(5), jugadores.get(6),
-				jugadores.get(9))
+			posicionesA16.forEach [ i | equipoA.add(jugadores.get(i))]	
+			posicionesB16.forEach [ i | equipoB.add(jugadores.get(i))]
 		}
 	}
 

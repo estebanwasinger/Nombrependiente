@@ -129,21 +129,21 @@ class TestGenerarEquipos {
 			partido1.ordenarEquipos)
 	}
 
-	@Test
+	@Test // modificado por Pau (y Maru luego)
 	def void distribuirEquiposParEImpar() {
 		partido1.cerrar
 		partido1.generarEquipos
-		Assert.assertArrayEquals(newArrayList(ferme, pato, lechu, rodri, leo), partido1.equipo1.jugadores)
-		Assert.assertArrayEquals(newArrayList(roly, dodi, chicho, sytek, mike), partido1.equipo2.jugadores)
+		Assert.assertArrayEquals(newArrayList(ferme, pato, lechu, rodri, leo), partido1.equipoA)
+		Assert.assertArrayEquals(newArrayList(roly, dodi, chicho, sytek, mike), partido1.equipoB)
 	}
 
-	@Test
+	@Test  // modificado por Pau (y Maru luego)
 	def void distribuirEquipos14589() {
-		partido1.distribucionEquipos = 16 // ordenamiento
+		partido1.distribucionEquipos = 16 // ordenamiento /* maru esto seguro lo tenes que modificar*/
 		partido1.cerrar
 		partido1.generarEquipos
-		Assert.assertArrayEquals(newArrayList(ferme, dodi, lechu, sytek, leo), partido1.equipo1.jugadores)
-		Assert.assertArrayEquals(newArrayList(roly, pato, chicho, rodri, mike), partido1.equipo2.jugadores)
+		Assert.assertArrayEquals(newArrayList(ferme, dodi, lechu, sytek, leo), partido1.equipoA)
+		Assert.assertArrayEquals(newArrayList(roly, pato, chicho, rodri, mike), partido1.equipoB)
 	}
 
 	@Test(expected=typeof(BusinessException))
