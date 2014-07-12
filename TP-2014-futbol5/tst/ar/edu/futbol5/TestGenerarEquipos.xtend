@@ -7,6 +7,7 @@ import ar.edu.futbol5.ordenamiento.OrdenamientoPorHandicap
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import ar.edu.futbol5.distribucion.DistribucionTomadosDeADos
 
 class TestGenerarEquipos {
 
@@ -129,7 +130,7 @@ class TestGenerarEquipos {
 			partido1.ordenarEquipos)
 	}
 
-	@Test // modificado por Pau (y Maru luego)
+	@Test // modificado por Pau y Maru
 	def void distribuirEquiposParEImpar() {
 		partido1.cerrar
 		partido1.generarEquipos
@@ -137,9 +138,9 @@ class TestGenerarEquipos {
 		Assert.assertArrayEquals(newArrayList(roly, dodi, chicho, sytek, mike), partido1.equipoB)
 	}
 
-	@Test  // modificado por Pau (y Maru luego)
+	@Test  // modificado por Pau y Maru 
 	def void distribuirEquipos14589() {
-		partido1.distribucionEquipos = 16 // ordenamiento /* maru esto seguro lo tenes que modificar*/
+		partido1.distribucionEquipos = new DistribucionTomadosDeADos
 		partido1.cerrar
 		partido1.generarEquipos
 		Assert.assertArrayEquals(newArrayList(ferme, dodi, lechu, sytek, leo), partido1.equipoA)
@@ -148,7 +149,6 @@ class TestGenerarEquipos {
 
 	@Test(expected=typeof(BusinessException))
 	def void generarEquiposCuandoSeCierra() {
-		partido1.distribucionEquipos = 16 // ordenamiento
 		partido1.cerrar
 		partido1.generarEquipos
 		partido1.generarEquipos

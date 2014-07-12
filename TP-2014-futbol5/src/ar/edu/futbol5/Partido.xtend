@@ -6,6 +6,8 @@ import ar.edu.futbol5.ordenamiento.OrdenamientoPorHandicap
 import java.util.ArrayList
 import java.util.List
 import java.util.LinkedList
+import ar.edu.futbol5.distribucion.Distribucion
+import ar.edu.futbol5.distribucion.DistribucionParImpar
 
 class Partido {
 
@@ -15,12 +17,12 @@ class Partido {
 	@Property var List<Jugador> equipoB
 	String estado
 	@Property CriterioOrdenamiento criterioOrdenamiento
-	@Property int distribucionEquipos // 5 es par/impar, 16 = 1,4,5,8,9 vs. 2,3,6,7,10
+	@Property Distribucion distribucionEquipos 
 
 	new() {
 		inscriptos = new ArrayList<Jugador>
 		estado = "A"
-		distribucionEquipos = 5 // par/impar
+		distribucionEquipos = new DistribucionParImpar
 		criterioOrdenamiento = new OrdenamientoPorHandicap
 		//agregado los equipos por Pau
 		equipoA = new LinkedList<Jugador>
@@ -29,7 +31,7 @@ class Partido {
 
   def generarEquipos() {
     if (this.validarInscripcion) {
-        this.distribuirEquipos(this.ordenarEquipos)
+        distribucionEquipos.distribuirEquipos(this, this.ordenarEquipos)
         estado = "G"
     }
 }
@@ -47,23 +49,7 @@ class Partido {
     return true
 }	
 	
- // modificado por Pau (y Maru luego)
-def distribuirEquipos(List<Jugador> jugadores) {
-	var List<Integer> posicionesA16 = #[0,3,4,7,8]
-	var List<Integer> posicionesB16 = #[1,2,5,6,9]
-	var List<Integer> posicionesA5 = #[0,2,4,6,8]
-	var List<Integer> posicionesB5 = #[1,3,5,7,9]
-	
-		if (distribucionEquipos == 5) {
-			posicionesA5.forEach [ i | equipoA.add(jugadores.get(i))]	
-			posicionesB5.forEach [ i | equipoB.add(jugadores.get(i))]
-		} else {
-			posicionesA16.forEach [ i | equipoA.add(jugadores.get(i))]	
-			posicionesB16.forEach [ i | equipoB.add(jugadores.get(i))]
-		}
-	}
-
-	def List<Jugador> ordenarEquipos() {
+ 	def List<Jugador> ordenarEquipos() {
 		criterioOrdenamiento.ordenar(this)
 	}
 
