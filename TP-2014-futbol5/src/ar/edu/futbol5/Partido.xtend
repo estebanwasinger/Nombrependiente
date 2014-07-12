@@ -67,17 +67,27 @@ def distribuirEquipos(List<Jugador> jugadores) {
 		criterioOrdenamiento.ordenar(this)
 	}
 
+	//modificado por Vero 
+	def int cantidadInscriptos(){
+        	inscriptos.size
+        }
+	def void agregarJugador(Jugador jugador){
+			inscriptos.add(jugador)
+		}    
+	def void eliminarJugador(Jugador jugador){
+    		inscriptos.remove(jugador)
+   		}
 	def void inscribir(Jugador jugador) {
-		if (inscriptos.size < 10) {
-			this.inscriptos.add(jugador)
-		} else {
-			if (this.hayAlgunJugadorQueCedaLugar()) {
-				this.inscriptos.remove(this.jugadorQueCedeLugar())
-				this.inscriptos.add(jugador)
-			} else {
-				throw new BusinessException("No hay más lugar")
-			}
-		}
+        if (this.cantidadInscriptos< 10) {
+            agregarJugador(jugador)
+        	} else {
+            	if (this.hayAlgunJugadorQueCedaLugar()) {
+                this.eliminarJugador(this.jugadorQueCedeLugar())
+                this.agregarJugador(jugador)
+            } else {
+                throw new BusinessException("No hay más lugar")
+            }
+        }
 	}
 
 	def boolean hayAlgunJugadorQueCedaLugar() {
