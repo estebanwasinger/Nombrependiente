@@ -27,26 +27,25 @@ class Partido {
 		equipoB = new LinkedList<Jugador>
 	}
 
-	def generarEquipos() {
-		if (this.validarInscripcion == -1) {
-			throw new BusinessException("Hubo un error")
-		}
-		this.distribuirEquipos(this.ordenarEquipos)
-		estado = "G"
-	}
+  def generarEquipos() {
+    if (this.validarInscripcion) {
+        this.distribuirEquipos(this.ordenarEquipos)
+        estado = "G"
+    }
+}
 
-	def validarInscripcion() {
-		if (inscriptos.size < 10) {
-			return -1
-		}
-		if (estado.equalsIgnoreCase("A")) {
-			return -1
-		}
-		if (estado.equalsIgnoreCase("G")) {
-			return -1
-		}
-		return 0
-	}
+ def validarInscripcion() {
+    if (inscriptos.size < 10) {
+        throw new BusinessException("La cantidad de jugadores es menor a 10.")
+    }
+    if (estado.equalsIgnoreCase("A")) {
+        throw new BusinessException("Las inscripciones todavía están abiertas.")
+    }    
+    if (estado.equalsIgnoreCase("G")) {
+        throw new BusinessException("Los equipos ya fueron generados")
+    }
+    return true
+}	
 	
  // modificado por Pau (y Maru luego)
 def distribuirEquipos(List<Jugador> jugadores) {
