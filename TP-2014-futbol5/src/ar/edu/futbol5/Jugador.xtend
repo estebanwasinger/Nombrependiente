@@ -31,6 +31,10 @@ class Jugador {
 		criterioInscripcion = new ModoSolidario
 	}
 	
+	def modoEstandar() {
+		criterioInscripcion = new ModoEstandar;
+	}
+	
 	def boolean dejaLugarAOtro() {
 		criterioInscripcion.dejaLugarAOtro
 	}

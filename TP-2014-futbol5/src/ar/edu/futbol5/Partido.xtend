@@ -81,9 +81,6 @@ class Partido {
 	}
 
 	def Jugador jugadorQueCedeLugar() {
-		if (!hayAlgunJugadorQueCedaLugar()) {
-			return null
-		}
 		return inscriptos.filter[jugador|jugador.dejaLugarAOtro].get(0)
 	}
 
