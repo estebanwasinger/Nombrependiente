@@ -23,7 +23,9 @@ import org.uqbar.arena.bindings.ObservableProperty
 import org.uqbar.arena.bindings.PropertyAdapter
 import java.util.List
 import materias.domain.Nota
+import org.uqbar.commons.utils.Observable
 
+@Observable
 class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 	
 	val posiblesUbicaciones = #["Nivel 1 - 1er. Cuatrimestre",

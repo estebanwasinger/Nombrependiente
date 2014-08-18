@@ -28,15 +28,17 @@ import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
+import org.uqbar.commons.utils.Observable;
 import org.uqbar.lacar.ui.model.Action;
 import org.uqbar.lacar.ui.model.ControlBuilder;
 
+@Observable
 @SuppressWarnings("all")
 public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
   private final List<String> posiblesUbicaciones = Collections.<String>unmodifiableList(Lists.<String>newArrayList("Nivel 1 - 1er. Cuatrimestre", "Nivel 1 - 2do. Cuatrimestre", "Nivel 1 - Anual", "Nivel 2 - 1er. Cuatrimestre", "Nivel 2 - 2do. Cuatrimestre", "Nivel 2 - Anual", "Nivel 3 - 1er. Cuatrimestre", "Nivel 3 - 2do. Cuatrimestre", "Nivel 3 - Anual", "Nivel 4 - 1er. Cuatrimestre", "Nivel 4 - 2do. Cuatrimestre", "Nivel 4 - Anual", "Nivel 5 - 1er. Cuatrimestre", "Nivel 5 - 2do. Cuatrimestre", "Nivel 5 - Anual"));
   
   public List<Object> asObjects(final List<?> list) {
-    final Function1<Object,Object> _function = new Function1<Object,Object>() {
+    final Function1<Object, Object> _function = new Function1<Object, Object>() {
       public Object apply(final Object it) {
         return ((Object) it);
       }
@@ -84,7 +86,7 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
     Column<Nota> _column_2 = new Column<Nota>(table);
     Column<Nota> _setTitle_2 = _column_2.setTitle("Aprobado");
     Column<Nota> _setFixedSize_2 = _setTitle_2.setFixedSize(200);
-    final Transformer<Nota,String> _function = new Transformer<Nota,String>() {
+    final Transformer<Nota, String> _function = new Transformer<Nota, String>() {
       public String transform(final Nota nota) {
         String _xifexpression = null;
         Boolean _aprobado = nota.getAprobado();
