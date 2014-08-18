@@ -13,19 +13,22 @@ class HomeMaterias extends CollectionBasedHome<Materia> {
 	}
 
 	def void init() {
-		this.create("Diseño de sistemas")
-		this.create("Analisis Matematico 1")
-		this.create("Algoritmos")
+		this.create("Diseño de sistemas", true, "2014", "Fernando")
+		this.create("Analisis Matematico 1", false, "2010", "Cafferata")
+		this.create("Algoritmos", true, "2011", "Oscar")
 	}
 
 
 	// ********************************************************
 	// ** Altas y bajas
 	// ********************************************************
-	def void create(String pNombre) {
-		var celular = new Materia
-		celular.nombre = pNombre
-		this.create(celular)
+	def void create(String pNombre, Boolean finalAprobado, String anioCursada, String profesor) {
+		var materia = new Materia
+		materia.nombre = pNombre
+		materia.finalAprobado = finalAprobado
+		materia.anioCursada = anioCursada
+		materia.profesor = profesor
+		this.create(materia)
 	}
 	override void validateCreate(Materia materia) {
 		materia.validar()

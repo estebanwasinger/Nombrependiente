@@ -41,14 +41,14 @@ public class SeguidorCarrera implements Serializable {
     this._resultados = resultados;
   }
   
-  private Materia _celularSeleccionado;
+  private Materia _materiaSeleccionada;
   
-  public Materia getCelularSeleccionado() {
-    return this._celularSeleccionado;
+  public Materia getMateriaSeleccionada() {
+    return this._materiaSeleccionada;
   }
   
-  public void setCelularSeleccionado(final Materia celularSeleccionado) {
-    this._celularSeleccionado = celularSeleccionado;
+  public void setMateriaSeleccionada(final Materia materiaSeleccionada) {
+    this._materiaSeleccionada = materiaSeleccionada;
   }
   
   public void search() {

@@ -5,6 +5,7 @@ import materias.applicationModel.SeguidorCarrera;
 import materias.domain.Materia;
 import materias.ui.CrearMateriaWindow;
 import org.uqbar.arena.layout.ColumnLayout;
+import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
@@ -40,6 +41,10 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
   public void createMainTemplate(final Panel mainPanel) {
     this.setTitle("Seguidor de carrera");
     this.setTaskDescription("Ingrese los parámetros de búsqueda");
+    Label _label = new Label(mainPanel);
+    _label.<ControlBuilder>bindValueToProperty("materiaSeleccionada.nombre");
+    Label _label_1 = new Label(mainPanel);
+    _label_1.<ControlBuilder>bindValueToProperty("materiaSeleccionada.profesor");
     super.createMainTemplate(mainPanel);
     this.createResultsGrid(mainPanel);
   }
@@ -107,8 +112,18 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
     table.setHeigth(200);
     table.setWidth(450);
     table.bindItemsToProperty("resultados");
-    table.<ControlBuilder>bindValueToProperty("celularSeleccionado");
+    table.<ControlBuilder>bindValueToProperty("materiaSeleccionada");
     this.describeResultsGrid(table);
+  }
+  
+  public void createGridActions(final Panel mainPanel) {
+    Panel actionsPanel = new Panel(mainPanel);
+    HorizontalLayout _horizontalLayout = new HorizontalLayout();
+    actionsPanel.setLayout(_horizontalLayout);
+    Button _button = new Button(actionsPanel);
+    Button edit = _button.setCaption("Editar");
+    Button _button_1 = new Button(actionsPanel);
+    Button remove = _button_1.setCaption("Borrar");
   }
   
   /**

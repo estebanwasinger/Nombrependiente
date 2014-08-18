@@ -1,7 +1,11 @@
 package materias.ui
 
 import java.awt.Color
+import materias.applicationModel.SeguidorCarrera
+import materias.domain.Materia
+import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.layout.ColumnLayout
+import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
@@ -11,8 +15,6 @@ import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
-import materias.applicationModel.SeguidorCarrera
-import materias.domain.Materia
 
 /**
  * Ventana de búsqueda de celulares.
@@ -36,7 +38,10 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 	override def createMainTemplate(Panel mainPanel) {
 		title = "Seguidor de carrera"
 		taskDescription = "Ingrese los parámetros de búsqueda"
+		new Label(mainPanel).bindValueToProperty("materiaSeleccionada.nombre")
+		new Label(mainPanel).bindValueToProperty("materiaSeleccionada.profesor")
 
+		//new TextBox(mainPanel).bindValueToProperty("nombre")
 		super.createMainTemplate(mainPanel)
 
 		this.createResultsGrid(mainPanel)
@@ -97,8 +102,19 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 		table.heigth = 200
 		table.width = 450
 		table.bindItemsToProperty("resultados")
-		table.bindValueToProperty("celularSeleccionado")
+		table.bindValueToProperty("materiaSeleccionada")
 		this.describeResultsGrid(table)
+	}
+	def void createGridActions(Panel mainPanel) {
+		var actionsPanel = new Panel(mainPanel)
+		actionsPanel.setLayout(new HorizontalLayout)
+		var edit = new Button(actionsPanel)
+			.setCaption("Editar")
+
+		var remove = new Button(actionsPanel)
+			.setCaption("Borrar")
+ 
+		// Deshabilitar los botones si no hay ningÃºn elemento seleccionado en la grilla.
 	}
 
 	/**

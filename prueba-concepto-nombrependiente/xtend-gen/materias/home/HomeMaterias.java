@@ -18,15 +18,18 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
   }
   
   public void init() {
-    this.create("Diseño de sistemas");
-    this.create("Analisis Matematico 1");
-    this.create("Algoritmos");
+    this.create("Diseño de sistemas", Boolean.valueOf(true), "2014", "Fernando");
+    this.create("Analisis Matematico 1", Boolean.valueOf(false), "2010", "Cafferata");
+    this.create("Algoritmos", Boolean.valueOf(true), "2011", "Oscar");
   }
   
-  public void create(final String pNombre) {
-    Materia celular = new Materia();
-    celular.setNombre(pNombre);
-    this.create(celular);
+  public void create(final String pNombre, final Boolean finalAprobado, final String anioCursada, final String profesor) {
+    Materia materia = new Materia();
+    materia.setNombre(pNombre);
+    materia.setFinalAprobado(finalAprobado);
+    materia.setAnioCursada(anioCursada);
+    materia.setProfesor(profesor);
+    this.create(materia);
   }
   
   public void validateCreate(final Materia materia) {

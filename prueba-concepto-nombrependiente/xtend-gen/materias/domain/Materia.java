@@ -28,6 +28,36 @@ public class Materia extends Entity {
     this._nombre = nombre;
   }
   
+  private String _anioCursada;
+  
+  public String getAnioCursada() {
+    return this._anioCursada;
+  }
+  
+  public void setAnioCursada(final String anioCursada) {
+    this._anioCursada = anioCursada;
+  }
+  
+  private Boolean _finalAprobado;
+  
+  public Boolean getFinalAprobado() {
+    return this._finalAprobado;
+  }
+  
+  public void setFinalAprobado(final Boolean finalAprobado) {
+    this._finalAprobado = finalAprobado;
+  }
+  
+  private String _profesor;
+  
+  public String getProfesor() {
+    return this._profesor;
+  }
+  
+  public void setProfesor(final String profesor) {
+    this._profesor = profesor;
+  }
+  
   public void validar() {
     String _nombre = this.getNombre();
     boolean _equals = Objects.equal(_nombre, null);

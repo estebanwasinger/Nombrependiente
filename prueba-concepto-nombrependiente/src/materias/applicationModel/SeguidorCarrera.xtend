@@ -14,7 +14,7 @@ class SeguidorCarrera implements Serializable {
 	@Property Integer numero
 	@Property String nombre
 	@Property List<Materia> resultados
-	@Property Materia celularSeleccionado
+	@Property Materia materiaSeleccionada
 
 	// ********************************************************
 	// ** Acciones
@@ -27,6 +27,7 @@ class SeguidorCarrera implements Serializable {
 		resultados = getHomeMaterias().search(nombre)
 		// también se puede llamar homeCelulares.search(numero, nombre) 
 	}
+
 
 	def void clear() {
 		nombre = null

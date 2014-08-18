@@ -9,6 +9,10 @@ class Materia extends Entity {
 
 	@Property Integer id
 	@Property String nombre
+	@Property String anioCursada
+	@Property Boolean finalAprobado
+	@Property String profesor
+	
 	
 	def validar() {
 		if (nombre == null) {
