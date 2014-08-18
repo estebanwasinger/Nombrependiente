@@ -4,7 +4,12 @@ import org.uqbar.commons.utils.Observable
 import org.uqbar.commons.model.CollectionBasedHome
 import materias.domain.Materia
 import org.uqbar.commons.model.UserException
+<<<<<<< HEAD
 import java.util.List
+=======
+import materias.domain.Ubicacion
+import org.uqbar.commons.utils.ApplicationContext
+>>>>>>> 5fc3dd56903516361308cd8fa5c20b0832b5c8e3
 
 @Observable
 class HomeMaterias extends CollectionBasedHome<Materia> {
@@ -17,6 +22,10 @@ class HomeMaterias extends CollectionBasedHome<Materia> {
 		this.create("Diseño de sistemas", 2013, true, "Fernando","Nivel 1 - 1er. Cuatrimestre" )
 		this.create("Analisis Matematico 1",2011, false, "Cafferata","Nivel 1 - 1er. Cuatrimestre")
 		this.create("Algoritmos", 2012, true, "Oscar","Nivel 1 - 1er. Cuatrimestre" )
+	}
+	
+		def getUbicacion(String modeloDescripcion) {
+		(ApplicationContext::instance.getSingleton(typeof(Ubicacion)) as HomeUbicaciones).get(modeloDescripcion)
 	}
 
 

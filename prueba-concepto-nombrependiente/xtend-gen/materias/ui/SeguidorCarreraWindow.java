@@ -4,8 +4,10 @@ import java.awt.Color;
 import materias.applicationModel.SeguidorCarrera;
 import materias.domain.Materia;
 import materias.ui.CrearMateriaWindow;
+import materias.ui.EditarMateriaWindow;
+import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.layout.ColumnLayout;
-import org.uqbar.arena.layout.HorizontalLayout;
+import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
@@ -18,13 +20,6 @@ import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.lacar.ui.model.Action;
 import org.uqbar.lacar.ui.model.ControlBuilder;
 
-/**
- * Ventana de búsqueda de celulares.
- * 
- * @see ar.edu.celulares.applicationModel.BuscadorCelular el modelo subyacente.
- * 
- * @author ?
- */
 @SuppressWarnings("all")
 public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
   public SeguidorCarreraWindow(final WindowOwner parent) {
@@ -33,20 +28,27 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
     _modelObject.search();
   }
   
-  /**
-   * El default de la vista es un formulario que permite disparar la búsqueda (invocando con super) Además
-   * le agregamos una grilla con los resultados de esa búsqueda y acciones que pueden hacerse con elementos
-   * de esa búsqueda
-   */
   public void createMainTemplate(final Panel mainPanel) {
     this.setTitle("Seguidor de carrera");
     this.setTaskDescription("Ingrese los parámetros de búsqueda");
-    Label _label = new Label(mainPanel);
-    _label.<ControlBuilder>bindValueToProperty("materiaSeleccionada.nombre");
-    Label _label_1 = new Label(mainPanel);
-    _label_1.<ControlBuilder>bindValueToProperty("materiaSeleccionada.profesor");
     super.createMainTemplate(mainPanel);
     this.createResultsGrid(mainPanel);
+    this.panelEdicionMateria(mainPanel);
+  }
+  
+  public void panelEdicionMateria(final Panel mainPanel) {
+    Label _label = new Label(mainPanel);
+    _label.setText("Materia:");
+    Label _label_1 = new Label(mainPanel);
+    _label_1.<ControlBuilder>bindValueToProperty("materiaSeleccionada.nombre");
+    Label _label_2 = new Label(mainPanel);
+    _label_2.setText("Profesor");
+    TextBox _textBox = new TextBox(mainPanel);
+    _textBox.<ControlBuilder>bindValueToProperty("materiaSeleccionada.profesor");
+    Label _label_3 = new Label(mainPanel);
+    _label_3.setText("Año de cursada");
+    TextBox _textBox_1 = new TextBox(mainPanel);
+    _textBox_1.<ControlBuilder>bindValueToProperty("materiaSeleccionada.anioCursada");
   }
   
   /**
@@ -58,7 +60,7 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
     searchFormPanel.setLayout(_columnLayout);
     Label labelNombre = new Label(searchFormPanel);
     labelNombre.setText("Nombre de materia");
-    labelNombre.setForeground(Color.BLACK);
+    labelNombre.setForeground(Color.RED);
     TextBox _textBox = new TextBox(searchFormPanel);
     _textBox.<ControlBuilder>bindValueToProperty("nombre");
   }
@@ -109,21 +111,11 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
    */
   protected void createResultsGrid(final Panel mainPanel) {
     Table<Materia> table = new Table<Materia>(mainPanel, Materia.class);
-    table.setHeigth(200);
+    table.setHeigth(150);
     table.setWidth(450);
     table.bindItemsToProperty("resultados");
     table.<ControlBuilder>bindValueToProperty("materiaSeleccionada");
     this.describeResultsGrid(table);
-  }
-  
-  public void createGridActions(final Panel mainPanel) {
-    Panel actionsPanel = new Panel(mainPanel);
-    HorizontalLayout _horizontalLayout = new HorizontalLayout();
-    actionsPanel.setLayout(_horizontalLayout);
-    Button _button = new Button(actionsPanel);
-    Button edit = _button.setCaption("Editar");
-    Button _button_1 = new Button(actionsPanel);
-    Button remove = _button_1.setCaption("Borrar");
   }
   
   /**
@@ -140,9 +132,42 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
     _setFixedSize.bindContentsToProperty("nombre");
   }
   
+  public void createGridActions(final Panel mainPanel) {
+    Panel actionsPanel = new Panel(mainPanel);
+    VerticalLayout _verticalLayout = new VerticalLayout();
+    actionsPanel.setLayout(_verticalLayout);
+    Button _button = new Button(actionsPanel);
+    Button _setCaption = _button.setCaption("Editar Materia");
+    final Action _function = new Action() {
+      public void execute() {
+        SeguidorCarreraWindow.this.editarMateriaSeleccionada();
+      }
+    };
+    Button botonEditar = _setCaption.onClick(_function);
+    Button _button_1 = new Button(actionsPanel);
+    Button _setCaption_1 = _button_1.setCaption("Borrar Materia");
+    final Action _function_1 = new Action() {
+      public void execute() {
+        SeguidorCarrera _modelObject = SeguidorCarreraWindow.this.getModelObject();
+        _modelObject.eliminarMateriaSeleccionada();
+      }
+    };
+    Button botonBorrar = _setCaption_1.onClick(_function_1);
+    NotNullObservable materiaSeleccionada = new NotNullObservable("materiaSeleccionada");
+    botonEditar.<ControlBuilder>bindEnabled(materiaSeleccionada);
+    botonBorrar.<ControlBuilder>bindEnabled(materiaSeleccionada);
+  }
+  
   public void crearMateria() {
     CrearMateriaWindow _crearMateriaWindow = new CrearMateriaWindow(this);
     this.openDialog(_crearMateriaWindow);
+  }
+  
+  public void editarMateriaSeleccionada() {
+    SeguidorCarrera _modelObject = this.getModelObject();
+    Materia _materiaSeleccionada = _modelObject.getMateriaSeleccionada();
+    EditarMateriaWindow _editarMateriaWindow = new EditarMateriaWindow(this, _materiaSeleccionada);
+    this.openDialog(_editarMateriaWindow);
   }
   
   public void openDialog(final Dialog<?> dialog) {
