@@ -126,7 +126,7 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
   public void describeResultsGrid(final Table<Materia> table) {
     Column<Materia> _column = new Column<Materia>(table);
     Column<Materia> _setTitle = _column.setTitle("Nombre");
-    Column<Materia> _setFixedSize = _setTitle.setFixedSize(150);
+    Column<Materia> _setFixedSize = _setTitle.setFixedSize(450);
     _setFixedSize.bindContentsToProperty("nombre");
   }
   
