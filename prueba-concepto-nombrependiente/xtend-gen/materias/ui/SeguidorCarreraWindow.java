@@ -1,11 +1,13 @@
 package materias.ui;
 
 import com.google.common.collect.Lists;
+import com.uqbar.commons.collections.Transformer;
 import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 import materias.applicationModel.SeguidorCarrera;
 import materias.domain.Materia;
+import materias.domain.Nota;
 import materias.ui.CrearMateriaWindow;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
@@ -16,8 +18,10 @@ import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.CheckBox;
 import org.uqbar.arena.widgets.Label;
+import org.uqbar.arena.widgets.Link;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.Selector;
+import org.uqbar.arena.widgets.SkinnableControl;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
@@ -54,21 +58,61 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
     this.setTitle("Seguidor de carrera");
     this.setTaskDescription("Ingrese los parámetros de búsqueda");
     super.createMainTemplate(mainPanel);
-    this.createResultsGrid(mainPanel);
+    this.grillaDeMaterias(mainPanel);
     this.panelEdicionMateria(mainPanel);
+    this.grillaDeNotas(mainPanel);
+  }
+  
+  public void grillaDeMaterias(final Panel mainPanel) {
+    this.createResultsGrid(mainPanel);
+  }
+  
+  public void grillaDeNotas(final Panel mainPanel) {
+    Table<Nota> table = new Table<Nota>(mainPanel, Nota.class);
+    table.setHeigth(150);
+    table.setWidth(600);
+    table.bindItemsToProperty("notas");
+    table.<ControlBuilder>bindValueToProperty("notaSeleccionada");
+    Column<Nota> _column = new Column<Nota>(table);
+    Column<Nota> _setTitle = _column.setTitle("Fecha");
+    Column<Nota> _setFixedSize = _setTitle.setFixedSize(200);
+    _setFixedSize.bindContentsToProperty("fecha");
+    Column<Nota> _column_1 = new Column<Nota>(table);
+    Column<Nota> _setTitle_1 = _column_1.setTitle("Descripcion");
+    Column<Nota> _setFixedSize_1 = _setTitle_1.setFixedSize(200);
+    _setFixedSize_1.bindContentsToProperty("descripcion");
+    Column<Nota> _column_2 = new Column<Nota>(table);
+    Column<Nota> _setTitle_2 = _column_2.setTitle("Aprobado");
+    Column<Nota> _setFixedSize_2 = _setTitle_2.setFixedSize(200);
+    final Transformer<Nota,String> _function = new Transformer<Nota,String>() {
+      public String transform(final Nota nota) {
+        String _xifexpression = null;
+        Boolean _aprobado = nota.getAprobado();
+        if ((_aprobado).booleanValue()) {
+          _xifexpression = "SI";
+        } else {
+          _xifexpression = "NO";
+        }
+        return _xifexpression;
+      }
+    };
+    _setFixedSize_2.<String>bindContentsToTransformer(_function);
   }
   
   public void panelEdicionMateria(final Panel mainPanel) {
     Label _label = new Label(mainPanel);
-    _label.setText("Materia:");
+    Label _setText = _label.setText("Materia:");
+    _setText.setForeground(Color.RED);
     Label _label_1 = new Label(mainPanel);
     _label_1.<ControlBuilder>bindValueToProperty("materiaSeleccionada.nombre");
     Label _label_2 = new Label(mainPanel);
-    _label_2.setText("Profesor");
+    Label _setText_1 = _label_2.setText("Profesor");
+    _setText_1.setForeground(Color.RED);
     TextBox _textBox = new TextBox(mainPanel);
     _textBox.<ControlBuilder>bindValueToProperty("materiaSeleccionada.profesor");
     Label _label_3 = new Label(mainPanel);
-    _label_3.setText("Año de cursada");
+    Label _setText_2 = _label_3.setText("Año de cursada");
+    _setText_2.setForeground(Color.RED);
     TextBox _textBox_1 = new TextBox(mainPanel);
     _textBox_1.<ControlBuilder>bindValueToProperty("materiaSeleccionada.anioCursada");
     Label _label_4 = new Label(mainPanel);
@@ -100,7 +144,8 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
     searchFormPanel.setLayout(_columnLayout);
     Label labelNombre = new Label(searchFormPanel);
     labelNombre.setText("Nombre de materia");
-    labelNombre.setForeground(Color.RED);
+    Color _darker = Color.RED.darker();
+    labelNombre.setForeground(_darker);
     TextBox _textBox = new TextBox(searchFormPanel);
     _textBox.<ControlBuilder>bindValueToProperty("nombre");
   }
@@ -124,7 +169,9 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
     };
     Button _onClick = _setCaption.onClick(_function);
     Button _setAsDefault = _onClick.setAsDefault();
-    _setAsDefault.disableOnError();
+    Link _disableOnError = _setAsDefault.disableOnError();
+    SkinnableControl _setFontSize = _disableOnError.setFontSize(12);
+    _setFontSize.setForeground(Color.BLUE);
     Button _button_1 = new Button(actionsPanel);
     Button _setCaption_1 = _button_1.setCaption("Limpiar");
     final Action _function_1 = new Action() {
@@ -133,7 +180,9 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
         _modelObject.clear();
       }
     };
-    _setCaption_1.onClick(_function_1);
+    Button _onClick_1 = _setCaption_1.onClick(_function_1);
+    SkinnableControl _setFontSize_1 = _onClick_1.setFontSize(12);
+    _setFontSize_1.setForeground(Color.BLUE);
     Button _button_2 = new Button(actionsPanel);
     Button _setCaption_2 = _button_2.setCaption("Nueva Materia");
     final Action _function_2 = new Action() {
@@ -141,7 +190,9 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
         SeguidorCarreraWindow.this.crearMateria();
       }
     };
-    _setCaption_2.onClick(_function_2);
+    Button _onClick_2 = _setCaption_2.onClick(_function_2);
+    SkinnableControl _setFontSize_2 = _onClick_2.setFontSize(12);
+    _setFontSize_2.setForeground(Color.BLUE);
   }
   
   /**

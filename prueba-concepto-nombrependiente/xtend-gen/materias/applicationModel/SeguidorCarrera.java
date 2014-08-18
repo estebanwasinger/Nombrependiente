@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import materias.domain.Materia;
+import materias.domain.Nota;
 import materias.home.HomeMaterias;
+import materias.home.HomeNotas;
 import org.uqbar.commons.utils.ApplicationContext;
 import org.uqbar.commons.utils.Observable;
 
@@ -41,6 +43,16 @@ public class SeguidorCarrera implements Serializable {
     this._resultados = resultados;
   }
   
+  private List<Nota> _notas;
+  
+  public List<Nota> getNotas() {
+    return this._notas;
+  }
+  
+  public void setNotas(final List<Nota> notas) {
+    this._notas = notas;
+  }
+  
   private Materia _materiaSeleccionada;
   
   public Materia getMateriaSeleccionada() {
@@ -49,6 +61,16 @@ public class SeguidorCarrera implements Serializable {
   
   public void setMateriaSeleccionada(final Materia materiaSeleccionada) {
     this._materiaSeleccionada = materiaSeleccionada;
+  }
+  
+  private Nota _notaSeleccionada;
+  
+  public Nota getNotaSeleccionada() {
+    return this._notaSeleccionada;
+  }
+  
+  public void setNotaSeleccionada(final Nota notaSeleccionada) {
+    this._notaSeleccionada = notaSeleccionada;
   }
   
   public void search() {
@@ -60,6 +82,16 @@ public class SeguidorCarrera implements Serializable {
     this.setResultados(_search);
   }
   
+  public void buscar() {
+    ArrayList<Nota> _arrayList = new ArrayList<Nota>();
+    this.setNotas(_arrayList);
+    HomeNotas _homeNotas = this.getHomeNotas();
+    Materia _materiaSeleccionada = this.getMateriaSeleccionada();
+    String _nombre = _materiaSeleccionada.getNombre();
+    List<Nota> _notas = _homeNotas.getNotas(_nombre);
+    this.setNotas(_notas);
+  }
+  
   public void clear() {
     this.setNombre(null);
   }
@@ -67,5 +99,10 @@ public class SeguidorCarrera implements Serializable {
   public HomeMaterias getHomeMaterias() {
     ApplicationContext _instance = ApplicationContext.getInstance();
     return _instance.<HomeMaterias>getSingleton(Materia.class);
+  }
+  
+  public HomeNotas getHomeNotas() {
+    ApplicationContext _instance = ApplicationContext.getInstance();
+    return _instance.<HomeNotas>getSingleton(Nota.class);
   }
 }

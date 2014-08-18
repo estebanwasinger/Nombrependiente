@@ -19,9 +19,11 @@ public class HomeNotas extends CollectionBasedHome<Nota> {
   
   public void init() {
     Date _date = new Date();
-    this.create("Diseño de Sistemas", _date, "Parcial", true);
+    this.create("Diseño de Sistemas", _date, "Parcial 1", true);
     Date _date_1 = new Date();
-    this.create("Algoritmos", _date_1, "TP", true);
+    this.create("Diseño de Sistemas", _date_1, "Parcial 2", false);
+    Date _date_2 = new Date();
+    this.create("Algoritmos", _date_2, "TP", true);
   }
   
   public void create(final String materia, final Date fecha, final String descripcion, final boolean aprobado) {

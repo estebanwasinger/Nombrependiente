@@ -22,6 +22,7 @@ import org.uqbar.arena.widgets.Selector
 import org.uqbar.arena.bindings.ObservableProperty
 import org.uqbar.arena.bindings.PropertyAdapter
 import java.util.List
+import materias.domain.Nota
 
 class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 	
@@ -59,36 +60,68 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 		taskDescription = "Ingrese los parámetros de búsqueda"
 		
 		super.createMainTemplate(mainPanel)
-		this.createResultsGrid(mainPanel)
+		grillaDeMaterias(mainPanel) 
 		panelEdicionMateria(mainPanel)
+		grillaDeNotas(mainPanel)
 		
 	}
+
+	def void grillaDeMaterias(Panel mainPanel) {
+		this.createResultsGrid(mainPanel)
+	}
+	
+	def void grillaDeNotas(Panel mainPanel){
+		var table = new Table<Nota>(mainPanel, typeof(Nota))
+		table.heigth = 150
+		table.width = 600
+		table.bindItemsToProperty("notas")
+		table.bindValueToProperty("notaSeleccionada")
+		
+		new Column<Nota>(table) //
+			.setTitle("Fecha")
+			.setFixedSize(200)
+			.bindContentsToProperty("fecha")
+			
+		new Column<Nota>(table) //
+			.setTitle("Descripcion")
+			.setFixedSize(200)
+			.bindContentsToProperty("descripcion")
+			
+		new Column<Nota>(table) //
+			.setTitle("Aprobado")
+			.setFixedSize(200)
+			.bindContentsToTransformer([nota | if (nota.aprobado) "SI" else "NO"])
+			
+}
 	def void panelEdicionMateria(Panel mainPanel){
 		
 		new Label(mainPanel).setText("Materia:")
-		
+		.foreground = Color::RED
 		new Label(mainPanel).bindValueToProperty("materiaSeleccionada.nombre")
 		
 		new Label(mainPanel).setText("Profesor")
+		.foreground = Color::RED
 		new TextBox(mainPanel).bindValueToProperty("materiaSeleccionada.profesor")
 		
 		new Label(mainPanel).setText("Año de cursada")
+		.foreground = Color::RED
 		new TextBox(mainPanel).bindValueToProperty("materiaSeleccionada.anioCursada")
 		// este check DEBERIA habilitarse solo si estan cargadas las 3 notas con Aprobado en SI (validacion!)
 		//se debe modificar despues de agregar la grilla o tabla de notas
 		
-		new Label(mainPanel).setText = "Final Aprobado"
+		new Label(mainPanel).setText = ("Final Aprobado")
 		var checkAprobado = new CheckBox(mainPanel)
 		checkAprobado.bindValueToProperty("materiaSeleccionada.finalAprobado")
 		
-		new Label(mainPanel).text = "Ubicacion Materia"
+		new Label(mainPanel).text = ("Ubicacion Materia")
 		new Selector(mainPanel) => [
 			allowNull = false
 			bindItems(new ObservableProperty(this, "ubicacionesPosibles"))
 			bindValueToProperty("materiaSeleccionada.ubicacion")
 		]
 		
-		new Label(mainPanel).setText = "Notas de Cursada"
+		new Label(mainPanel).setText = ("Notas de Cursada")
+		
 	}
 	
 	
@@ -104,7 +137,8 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 
 		var labelNombre = new Label(searchFormPanel)
 		labelNombre.text = "Nombre de materia"
-		labelNombre.foreground = Color::RED //esto se lo cambie para probar nada mas :P si lo dejamos negro no hay que ponerlo
+		labelNombre.foreground = Color::RED
+		.darker
 
 		new TextBox(searchFormPanel).bindValueToProperty("nombre")
 	}
@@ -125,14 +159,20 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 			.onClick [ | modelObject.search ] 
 			.setAsDefault
 			.disableOnError
+			.setFontSize(12)
+			.foreground = Color::BLUE
 
 		new Button(actionsPanel) 
 			.setCaption("Limpiar")
 			.onClick [ | modelObject.clear ]
+			.setFontSize(12)
+			.foreground = Color::BLUE
 			
 		new Button(actionsPanel) //
 			.setCaption("Nueva Materia")
 			.onClick [ | this.crearMateria ]
+			.setFontSize(12)
+			.foreground = Color::BLUE
 			
 	}
 

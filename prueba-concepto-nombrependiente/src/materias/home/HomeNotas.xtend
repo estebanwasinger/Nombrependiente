@@ -15,7 +15,8 @@ class HomeNotas extends CollectionBasedHome<Nota> {
 	}
 
 	def void init() {
-		this.create("Diseño de Sistemas", new Date,"Parcial", true)
+		this.create("Diseño de Sistemas", new Date,"Parcial 1", true)
+		this.create("Diseño de Sistemas", new Date,"Parcial 2", false)
 		this.create("Algoritmos", new Date,"TP", true)
 	}	
 	
@@ -28,7 +29,6 @@ class HomeNotas extends CollectionBasedHome<Nota> {
 		this.create(nota)
 	}
 	
-
 	override def getEntityType() {
 		typeof(Nota)
 	}

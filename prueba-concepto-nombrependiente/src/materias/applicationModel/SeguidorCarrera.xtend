@@ -7,6 +7,8 @@ import org.uqbar.commons.utils.ApplicationContext
 import org.uqbar.commons.utils.Observable
 import materias.home.HomeMaterias
 import materias.domain.Materia
+import materias.domain.Nota
+import materias.home.HomeNotas
 
 @Observable
 class SeguidorCarrera implements Serializable {
@@ -14,7 +16,9 @@ class SeguidorCarrera implements Serializable {
 	@Property Integer numero
 	@Property String nombre
 	@Property List<Materia> resultados
+	@Property List<Nota> notas
 	@Property Materia materiaSeleccionada
+	@Property Nota notaSeleccionada
 
 	// ********************************************************
 	// ** Acciones
@@ -28,7 +32,15 @@ class SeguidorCarrera implements Serializable {
 		// también se puede llamar homeCelulares.search(numero, nombre) 
 	}
 
+	def void buscar() { 
+		// WORKAROUND para que refresque la grilla en las actualizaciones
+		notas = new ArrayList<Nota>
 
+		// FIN WORKAROUND
+		notas = getHomeNotas().getNotas(materiaSeleccionada.nombre)
+		// también se puede llamar homeCelulares.search(numero, nombre) 
+	}
+	
 	def void clear() {
 		nombre = null
 	}
@@ -38,4 +50,7 @@ class SeguidorCarrera implements Serializable {
 		ApplicationContext::instance.getSingleton(typeof(Materia))
 	}
 
+	def HomeNotas getHomeNotas() {
+		ApplicationContext::instance.getSingleton(typeof(Nota))
+	}
 }
