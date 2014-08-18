@@ -2,6 +2,7 @@ package materias.domain;
 
 import com.google.common.base.Objects;
 import org.uqbar.commons.model.Entity;
+import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
 
 @Observable
@@ -25,6 +26,14 @@ public class Materia extends Entity {
   
   public void setNombre(final String nombre) {
     this._nombre = nombre;
+  }
+  
+  public void validar() {
+    String _nombre = this.getNombre();
+    boolean _equals = Objects.equal(_nombre, null);
+    if (_equals) {
+      throw new UserException("Debe ingresar un nombre de materia");
+    }
   }
   
   public boolean ingresoNombre() {

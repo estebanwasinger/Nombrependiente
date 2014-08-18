@@ -75,10 +75,13 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 			.setAsDefault
 			.disableOnError
 
-		new Button(actionsPanel) //
+		new Button(actionsPanel) 
 			.setCaption("Limpiar")
 			.onClick [ | modelObject.clear ]
 			
+		new Button(actionsPanel) //
+			.setCaption("Nueva Materia")
+			.onClick [ | this.crearMateria ]
 	}
 
 	// *************************************************************************
@@ -117,7 +120,9 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 	// ********************************************************
 	// ** Acciones
 	// ********************************************************
-
+	def void crearMateria() {
+		this.openDialog(new CrearMateriaWindow(this))
+	}
 
 
 	def openDialog(Dialog<?> dialog) {

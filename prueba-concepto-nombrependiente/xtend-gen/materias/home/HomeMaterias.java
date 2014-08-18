@@ -7,6 +7,7 @@ import org.apache.commons.collections15.Predicate;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.uqbar.commons.model.CollectionBasedHome;
+import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
 
 @Observable
@@ -26,6 +27,21 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
     Materia celular = new Materia();
     celular.setNombre(pNombre);
     this.create(celular);
+  }
+  
+  public void validateCreate(final Materia materia) {
+    materia.validar();
+    this.validarMateriasDuplicadas(materia);
+  }
+  
+  public void validarMateriasDuplicadas(final Materia materia) {
+    final String nombre = materia.getNombre();
+    List<Materia> _search = this.search(nombre);
+    boolean _isEmpty = _search.isEmpty();
+    boolean _not = (!_isEmpty);
+    if (_not) {
+      throw new UserException(("Ya existe una materia con el nombre " + nombre));
+    }
   }
   
   /**

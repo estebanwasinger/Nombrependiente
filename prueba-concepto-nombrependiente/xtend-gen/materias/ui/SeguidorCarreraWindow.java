@@ -3,6 +3,7 @@ package materias.ui;
 import java.awt.Color;
 import materias.applicationModel.SeguidorCarrera;
 import materias.domain.Materia;
+import materias.ui.CrearMateriaWindow;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
@@ -86,6 +87,14 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
       }
     };
     _setCaption_1.onClick(_function_1);
+    Button _button_2 = new Button(actionsPanel);
+    Button _setCaption_2 = _button_2.setCaption("Nueva Materia");
+    final Action _function_2 = new Action() {
+      public void execute() {
+        SeguidorCarreraWindow.this.crearMateria();
+      }
+    };
+    _setCaption_2.onClick(_function_2);
   }
   
   /**
@@ -114,6 +123,11 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
     Column<Materia> _setTitle = _column.setTitle("Nombre");
     Column<Materia> _setFixedSize = _setTitle.setFixedSize(150);
     _setFixedSize.bindContentsToProperty("nombre");
+  }
+  
+  public void crearMateria() {
+    CrearMateriaWindow _crearMateriaWindow = new CrearMateriaWindow(this);
+    this.openDialog(_crearMateriaWindow);
   }
   
   public void openDialog(final Dialog<?> dialog) {
