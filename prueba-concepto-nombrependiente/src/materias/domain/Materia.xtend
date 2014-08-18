@@ -18,26 +18,6 @@ class Materia extends Entity {
 	@Property String profesor
 	@Property String ubicacion
 	
-	val posiblesUbicaciones = #["Nivel 1 - 1er. Cuatrimestre",
-								"Nivel 1 - 2do. Cuatrimestre",
-								"Nivel 1 - Anual",
-								"Nivel 2 - 1er. Cuatrimestre",
-								"Nivel 2 - 2do. Cuatrimestre",
-								"Nivel 2 - Anual",
-								"Nivel 3 - 1er. Cuatrimestre",
-								"Nivel 3 - 2do. Cuatrimestre",
-								"Nivel 3 - Anual",
-								"Nivel 4 - 1er. Cuatrimestre",
-								"Nivel 4 - 2do. Cuatrimestre",
-								"Nivel 4 - Anual",
-								"Nivel 5 - 1er. Cuatrimestre",
-								"Nivel 5 - 2do. Cuatrimestre",
-								"Nivel 5 - Anual"]
-
-	def asObjects(List<?> list) {
-		list.map[it as Object]
-	}
-	
 	def validarNombre() {
 		if (nombre == null) {
 			throw new UserException("Debe ingresar un nombre de materia")
@@ -56,11 +36,6 @@ class Materia extends Entity {
 		if (profesor == null || profesor.trim().equals("")){
 			throw new UserException("Debe ingresar un nombre de profesor")
 		}
-		
-	}
-	
-	def getUbicacionesPosibles(){
-		posiblesUbicaciones.asObjects
 	}
 	
 	def HomeMaterias getHomeMaterias() {
@@ -79,8 +54,6 @@ class Materia extends Entity {
 	def getAnioMateria(String nombre){
 		getMaterias().filter[materia | materia.nombre == nombre].head.anioCursada
 		}
-	
-
 }
 
 

@@ -1,3 +1,4 @@
+
 package materias.ui
 
 import java.awt.Color
@@ -20,8 +21,33 @@ import org.uqbar.arena.widgets.CheckBox
 import org.uqbar.arena.widgets.Selector
 import org.uqbar.arena.bindings.ObservableProperty
 import org.uqbar.arena.bindings.PropertyAdapter
+import java.util.List
 
 class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
+	
+	val posiblesUbicaciones = #["Nivel 1 - 1er. Cuatrimestre",
+								"Nivel 1 - 2do. Cuatrimestre",
+								"Nivel 1 - Anual",
+								"Nivel 2 - 1er. Cuatrimestre",
+								"Nivel 2 - 2do. Cuatrimestre",
+								"Nivel 2 - Anual",
+								"Nivel 3 - 1er. Cuatrimestre",
+								"Nivel 3 - 2do. Cuatrimestre",
+								"Nivel 3 - Anual",
+								"Nivel 4 - 1er. Cuatrimestre",
+								"Nivel 4 - 2do. Cuatrimestre",
+								"Nivel 4 - Anual",
+								"Nivel 5 - 1er. Cuatrimestre",
+								"Nivel 5 - 2do. Cuatrimestre",
+								"Nivel 5 - Anual"]
+
+	def asObjects(List<?> list) {
+		list.map[it as Object]
+	}
+	
+	def getUbicacionesPosibles(){
+		posiblesUbicaciones.asObjects
+	}
 
 	new(WindowOwner parent) {
 		super(parent, new SeguidorCarrera)
@@ -40,30 +66,31 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 	def void panelEdicionMateria(Panel mainPanel){
 		
 		new Label(mainPanel).setText("Materia:")
+		
 		new Label(mainPanel).bindValueToProperty("materiaSeleccionada.nombre")
+		
 		new Label(mainPanel).setText("Profesor")
 		new TextBox(mainPanel).bindValueToProperty("materiaSeleccionada.profesor")
+		
 		new Label(mainPanel).setText("Año de cursada")
 		new TextBox(mainPanel).bindValueToProperty("materiaSeleccionada.anioCursada")
 		// este check DEBERIA habilitarse solo si estan cargadas las 3 notas con Aprobado en SI (validacion!)
 		//se debe modificar despues de agregar la grilla o tabla de notas
+		
 		new Label(mainPanel).setText = "Final Aprobado"
 		var checkAprobado = new CheckBox(mainPanel)
 		checkAprobado.bindValueToProperty("materiaSeleccionada.finalAprobado")
-		new Label(mainPanel).text = "Ubicacion Materia"/*
+		
+		new Label(mainPanel).text = "Ubicacion Materia"
 		new Selector(mainPanel) => [
 			allowNull = false
-			//bindItems(new ObservableProperty(this, "valoresPosibles"))
+			bindItems(new ObservableProperty(this, "ubicacionesPosibles"))
 			bindValueToProperty("materiaSeleccionada.ubicacion")
-//			bindValue(new ObservableProperty(this.modelObject, "tipo"))
 		]
-		//val selectorUbicacion = new Selector<String>(mainPanel)
-		//selectorUbicacion.allowNull(false)
-		//selectorUbicacion.bindValueToProperty("materiaSeleccionada.ubicacion")
-		//var propiedadUbicaciones = selectorUbicacion.bindItems(new ObservableProperty(this.modelObject.materiaSeleccionada, "posiblesUbicaciones"))
-		//propiedadUbicaciones.adapter = new PropertyAdapter(typeof(String), "descripcion")*/
+		
 		new Label(mainPanel).setText = "Notas de Cursada"
 	}
+	
 	
 	// *************************************************************************
 	// * FORMULARIO DE BUSQUEDA

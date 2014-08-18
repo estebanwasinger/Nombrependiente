@@ -1,14 +1,23 @@
 package materias.ui;
 
+import com.google.common.collect.Lists;
 import java.awt.Color;
+import java.util.Collections;
+import java.util.List;
 import materias.applicationModel.SeguidorCarrera;
 import materias.domain.Materia;
 import materias.ui.CrearMateriaWindow;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.ListExtensions;
+import org.eclipse.xtext.xbase.lib.ObjectExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
+import org.uqbar.arena.bindings.ObservableProperty;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.CheckBox;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
+import org.uqbar.arena.widgets.Selector;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
@@ -20,6 +29,21 @@ import org.uqbar.lacar.ui.model.ControlBuilder;
 
 @SuppressWarnings("all")
 public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
+  private final List<String> posiblesUbicaciones = Collections.<String>unmodifiableList(Lists.<String>newArrayList("Nivel 1 - 1er. Cuatrimestre", "Nivel 1 - 2do. Cuatrimestre", "Nivel 1 - Anual", "Nivel 2 - 1er. Cuatrimestre", "Nivel 2 - 2do. Cuatrimestre", "Nivel 2 - Anual", "Nivel 3 - 1er. Cuatrimestre", "Nivel 3 - 2do. Cuatrimestre", "Nivel 3 - Anual", "Nivel 4 - 1er. Cuatrimestre", "Nivel 4 - 2do. Cuatrimestre", "Nivel 4 - Anual", "Nivel 5 - 1er. Cuatrimestre", "Nivel 5 - 2do. Cuatrimestre", "Nivel 5 - Anual"));
+  
+  public List<Object> asObjects(final List<?> list) {
+    final Function1<Object, Object> _function = new Function1<Object, Object>() {
+      public Object apply(final Object it) {
+        return ((Object) it);
+      }
+    };
+    return ListExtensions.map(list, _function);
+  }
+  
+  public List<Object> getUbicacionesPosibles() {
+    return this.asObjects(this.posiblesUbicaciones);
+  }
+  
   public SeguidorCarreraWindow(final WindowOwner parent) {
     super(parent, new SeguidorCarrera());
     SeguidorCarrera _modelObject = this.getModelObject();
@@ -53,6 +77,16 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
     checkAprobado.<ControlBuilder>bindValueToProperty("materiaSeleccionada.finalAprobado");
     Label _label_5 = new Label(mainPanel);
     _label_5.setText("Ubicacion Materia");
+    Selector<Object> _selector = new Selector<Object>(mainPanel);
+    final Procedure1<Selector<Object>> _function = new Procedure1<Selector<Object>>() {
+      public void apply(final Selector<Object> it) {
+        it.allowNull(false);
+        ObservableProperty _observableProperty = new ObservableProperty(SeguidorCarreraWindow.this, "ubicacionesPosibles");
+        it.bindItems(_observableProperty);
+        it.<ControlBuilder>bindValueToProperty("materiaSeleccionada.ubicacion");
+      }
+    };
+    ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector, _function);
     Label _label_6 = new Label(mainPanel);
     _label_6.setText("Notas de Cursada");
   }
