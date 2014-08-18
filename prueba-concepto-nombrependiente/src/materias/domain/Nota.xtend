@@ -14,7 +14,7 @@ class Nota extends Entity {
 	@Property String nombreMateria
 	@Property Date fecha
 	@Property String descripcion
-	@Property boolean aprobado
+	@Property Boolean aprobado
 	
 	
 	def validarDescripcion(){

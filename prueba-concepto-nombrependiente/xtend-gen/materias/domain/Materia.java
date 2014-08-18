@@ -47,7 +47,7 @@ public class Materia extends Entity {
     this._anioCursada = anioCursada;
   }
   
-  private Boolean _finalAprobado;
+  private Boolean _finalAprobado = Boolean.valueOf(false);
   
   public Boolean getFinalAprobado() {
     return this._finalAprobado;
@@ -80,7 +80,7 @@ public class Materia extends Entity {
   private final List<String> posiblesUbicaciones = Collections.<String>unmodifiableList(Lists.<String>newArrayList("Nivel 1 - 1er. Cuatrimestre", "Nivel 1 - 2do. Cuatrimestre", "Nivel 1 - Anual", "Nivel 2 - 1er. Cuatrimestre", "Nivel 2 - 2do. Cuatrimestre", "Nivel 2 - Anual", "Nivel 3 - 1er. Cuatrimestre", "Nivel 3 - 2do. Cuatrimestre", "Nivel 3 - Anual", "Nivel 4 - 1er. Cuatrimestre", "Nivel 4 - 2do. Cuatrimestre", "Nivel 4 - Anual", "Nivel 5 - 1er. Cuatrimestre", "Nivel 5 - 2do. Cuatrimestre", "Nivel 5 - Anual"));
   
   public List<Object> asObjects(final List<?> list) {
-    final Function1<Object, Object> _function = new Function1<Object, Object>() {
+    final Function1<Object,Object> _function = new Function1<Object,Object>() {
       public Object apply(final Object it) {
         return ((Object) it);
       }
@@ -173,7 +173,7 @@ public class Materia extends Entity {
   
   public String getAnioMateria(final String nombre) {
     List<Materia> _materias = this.getMaterias();
-    final Function1<Materia, Boolean> _function = new Function1<Materia, Boolean>() {
+    final Function1<Materia,Boolean> _function = new Function1<Materia,Boolean>() {
       public Boolean apply(final Materia materia) {
         String _nombre = materia.getNombre();
         return Boolean.valueOf(Objects.equal(_nombre, nombre));

@@ -14,10 +14,9 @@ class Materia extends Entity {
 	@Property Integer id
 	@Property String nombre
 	@Property String anioCursada
-	@Property Boolean finalAprobado
+	@Property Boolean finalAprobado = false
 	@Property String profesor
 	@Property String ubicacion
-	
 	
 	val posiblesUbicaciones = #["Nivel 1 - 1er. Cuatrimestre",
 								"Nivel 1 - 2do. Cuatrimestre",

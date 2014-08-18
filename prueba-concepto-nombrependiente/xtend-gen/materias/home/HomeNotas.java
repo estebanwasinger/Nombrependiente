@@ -29,7 +29,7 @@ public class HomeNotas extends CollectionBasedHome<Nota> {
     nota.setNombreMateria(materia);
     nota.setFecha(fecha);
     nota.setDescripcion(descripcion);
-    nota.setAprobado(aprobado);
+    nota.setAprobado(Boolean.valueOf(aprobado));
     this.create(nota);
   }
   
@@ -47,7 +47,7 @@ public class HomeNotas extends CollectionBasedHome<Nota> {
   
   public List<Nota> getNotas(final String nombreMateria) {
     List<Nota> _allInstances = this.allInstances();
-    final Function1<Nota, Boolean> _function = new Function1<Nota, Boolean>() {
+    final Function1<Nota,Boolean> _function = new Function1<Nota,Boolean>() {
       public Boolean apply(final Nota materia) {
         String _nombreMateria = materia.getNombreMateria();
         return Boolean.valueOf(Objects.equal(_nombreMateria, nombreMateria));

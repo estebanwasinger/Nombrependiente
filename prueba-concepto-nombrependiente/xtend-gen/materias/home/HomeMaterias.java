@@ -70,7 +70,7 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
    */
   public List<Materia> search(final String nombre) {
     List<Materia> _allInstances = this.allInstances();
-    final Function1<Materia, Boolean> _function = new Function1<Materia, Boolean>() {
+    final Function1<Materia,Boolean> _function = new Function1<Materia,Boolean>() {
       public Boolean apply(final Materia materia) {
         String _nombre = materia.getNombre();
         return Boolean.valueOf(HomeMaterias.this.match(nombre, _nombre));

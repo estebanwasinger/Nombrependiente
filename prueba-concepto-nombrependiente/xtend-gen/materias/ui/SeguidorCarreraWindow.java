@@ -4,9 +4,9 @@ import java.awt.Color;
 import materias.applicationModel.SeguidorCarrera;
 import materias.domain.Materia;
 import materias.ui.CrearMateriaWindow;
-import materias.ui.EditarMateriaWindow;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.Button;
+import org.uqbar.arena.widgets.CheckBox;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.TextBox;
@@ -47,6 +47,14 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
     _label_3.setText("Año de cursada");
     TextBox _textBox_1 = new TextBox(mainPanel);
     _textBox_1.<ControlBuilder>bindValueToProperty("materiaSeleccionada.anioCursada");
+    Label _label_4 = new Label(mainPanel);
+    _label_4.setText("Final Aprobado");
+    CheckBox checkAprobado = new CheckBox(mainPanel);
+    checkAprobado.<ControlBuilder>bindValueToProperty("materiaSeleccionada.finalAprobado");
+    Label _label_5 = new Label(mainPanel);
+    _label_5.setText("Ubicacion Materia");
+    Label _label_6 = new Label(mainPanel);
+    _label_6.setText("Notas de Cursada");
   }
   
   /**
@@ -130,21 +138,9 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
     _setFixedSize.bindContentsToProperty("nombre");
   }
   
-  public void createGridActions(final Panel mainPanel) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method eliminarMateriaSeleccionada is undefined for the type SeguidorCarreraWindow");
-  }
-  
   public void crearMateria() {
     CrearMateriaWindow _crearMateriaWindow = new CrearMateriaWindow(this);
     this.openDialog(_crearMateriaWindow);
-  }
-  
-  public void editarMateriaSeleccionada() {
-    SeguidorCarrera _modelObject = this.getModelObject();
-    Materia _materiaSeleccionada = _modelObject.getMateriaSeleccionada();
-    EditarMateriaWindow _editarMateriaWindow = new EditarMateriaWindow(this, _materiaSeleccionada);
-    this.openDialog(_editarMateriaWindow);
   }
   
   public void openDialog(final Dialog<?> dialog) {

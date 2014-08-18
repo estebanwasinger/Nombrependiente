@@ -16,6 +16,10 @@ import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.arena.layout.VerticalLayout
+import org.uqbar.arena.widgets.CheckBox
+import org.uqbar.arena.widgets.Selector
+import org.uqbar.arena.bindings.ObservableProperty
+import org.uqbar.arena.bindings.PropertyAdapter
 
 class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 
@@ -41,7 +45,26 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 		new TextBox(mainPanel).bindValueToProperty("materiaSeleccionada.profesor")
 		new Label(mainPanel).setText("Año de cursada")
 		new TextBox(mainPanel).bindValueToProperty("materiaSeleccionada.anioCursada")
+		// este check DEBERIA habilitarse solo si estan cargadas las 3 notas con Aprobado en SI (validacion!)
+		//se debe modificar despues de agregar la grilla o tabla de notas
+		new Label(mainPanel).setText = "Final Aprobado"
+		var checkAprobado = new CheckBox(mainPanel)
+		checkAprobado.bindValueToProperty("materiaSeleccionada.finalAprobado")
+		new Label(mainPanel).text = "Ubicacion Materia"/*
+		new Selector(mainPanel) => [
+			allowNull = false
+			//bindItems(new ObservableProperty(this, "valoresPosibles"))
+			bindValueToProperty("materiaSeleccionada.ubicacion")
+//			bindValue(new ObservableProperty(this.modelObject, "tipo"))
+		]
+		//val selectorUbicacion = new Selector<String>(mainPanel)
+		//selectorUbicacion.allowNull(false)
+		//selectorUbicacion.bindValueToProperty("materiaSeleccionada.ubicacion")
+		//var propiedadUbicaciones = selectorUbicacion.bindItems(new ObservableProperty(this.modelObject.materiaSeleccionada, "posiblesUbicaciones"))
+		//propiedadUbicaciones.adapter = new PropertyAdapter(typeof(String), "descripcion")*/
+		new Label(mainPanel).setText = "Notas de Cursada"
 	}
+	
 	// *************************************************************************
 	// * FORMULARIO DE BUSQUEDA
 	// *************************************************************************
@@ -116,35 +139,12 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 			.setFixedSize(450)
 			.bindContentsToProperty("nombre")
 	}	
-	
-	def void createGridActions(Panel mainPanel) {
-		var actionsPanel = new Panel(mainPanel)
-		actionsPanel.setLayout(new VerticalLayout)
 		
-		var botonEditar = new Button(actionsPanel) //
-			.setCaption("Editar Materia")
-			.onClick [ | this.editarMateriaSeleccionada ]
-			//.bindValueToProperty("materiaSeleccionada")
- 
-	 	var botonBorrar = new Button(actionsPanel)
-			.setCaption("Borrar Materia")
-			.onClick [ | modelObject.eliminarMateriaSeleccionada]
- 
-		// Deshabilitar los botones de accion sobre las materias si no hay ninguna materia  seleccionada en la grilla.
-		var materiaSeleccionada= new NotNullObservable("materiaSeleccionada")
-		botonEditar.bindEnabled(materiaSeleccionada)
-		botonBorrar.bindEnabled(materiaSeleccionada)
-	}
-
 	// ********************************************************
 	// ** Acciones
 	// ********************************************************
 	def void crearMateria() {
 		this.openDialog(new CrearMateriaWindow(this))
-	}
-
-	def void editarMateriaSeleccionada() {
-		this.openDialog(new EditarMateriaWindow(this, modelObject.materiaSeleccionada))
 	}
 
 	def openDialog(Dialog<?> dialog) {

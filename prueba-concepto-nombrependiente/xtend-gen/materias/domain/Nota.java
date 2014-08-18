@@ -44,13 +44,13 @@ public class Nota extends Entity {
     this._descripcion = descripcion;
   }
   
-  private boolean _aprobado;
+  private Boolean _aprobado;
   
-  public boolean isAprobado() {
+  public Boolean getAprobado() {
     return this._aprobado;
   }
   
-  public void setAprobado(final boolean aprobado) {
+  public void setAprobado(final Boolean aprobado) {
     this._aprobado = aprobado;
   }
   
@@ -91,8 +91,8 @@ public class Nota extends Entity {
     String _nombreMateria = this.getNombreMateria();
     Date _fecha = this.getFecha();
     String _descripcion = this.getDescripcion();
-    boolean _isAprobado = this.isAprobado();
-    _homeNotas.create(_nombreMateria, _fecha, _descripcion, _isAprobado);
+    Boolean _aprobado = this.getAprobado();
+    _homeNotas.create(_nombreMateria, _fecha, _descripcion, (_aprobado).booleanValue());
   }
   
   public HomeNotas getHomeNotas() {
