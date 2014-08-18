@@ -7,6 +7,7 @@ import org.uqbar.commons.model.UserException
 import java.util.Calendar
 import org.uqbar.commons.utils.ApplicationContext
 import materias.home.HomeNotas
+import java.util.List
 
 @Observable
 class Nota extends Entity {
@@ -42,5 +43,9 @@ class Nota extends Entity {
 	
 	def HomeNotas getHomeNotas() {
 		ApplicationContext.instance.getSingleton(typeof(Nota))
+	}
+	
+	def List<Nota> getNotas(){
+		getHomeNotas().getNotas(nombreMateria)
 	}
 }

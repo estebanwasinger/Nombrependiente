@@ -5,9 +5,7 @@ import materias.applicationModel.SeguidorCarrera;
 import materias.domain.Materia;
 import materias.ui.CrearMateriaWindow;
 import materias.ui.EditarMateriaWindow;
-import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.layout.ColumnLayout;
-import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
@@ -133,29 +131,8 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
   }
   
   public void createGridActions(final Panel mainPanel) {
-    Panel actionsPanel = new Panel(mainPanel);
-    VerticalLayout _verticalLayout = new VerticalLayout();
-    actionsPanel.setLayout(_verticalLayout);
-    Button _button = new Button(actionsPanel);
-    Button _setCaption = _button.setCaption("Editar Materia");
-    final Action _function = new Action() {
-      public void execute() {
-        SeguidorCarreraWindow.this.editarMateriaSeleccionada();
-      }
-    };
-    Button botonEditar = _setCaption.onClick(_function);
-    Button _button_1 = new Button(actionsPanel);
-    Button _setCaption_1 = _button_1.setCaption("Borrar Materia");
-    final Action _function_1 = new Action() {
-      public void execute() {
-        SeguidorCarrera _modelObject = SeguidorCarreraWindow.this.getModelObject();
-        _modelObject.eliminarMateriaSeleccionada();
-      }
-    };
-    Button botonBorrar = _setCaption_1.onClick(_function_1);
-    NotNullObservable materiaSeleccionada = new NotNullObservable("materiaSeleccionada");
-    botonEditar.<ControlBuilder>bindEnabled(materiaSeleccionada);
-    botonBorrar.<ControlBuilder>bindEnabled(materiaSeleccionada);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method eliminarMateriaSeleccionada is undefined for the type SeguidorCarreraWindow");
   }
   
   public void crearMateria() {

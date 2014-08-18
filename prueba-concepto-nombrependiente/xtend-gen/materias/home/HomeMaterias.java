@@ -3,11 +3,14 @@ package materias.home;
 import com.google.common.base.Objects;
 import java.util.List;
 import materias.domain.Materia;
+import materias.domain.Ubicacion;
+import materias.home.HomeUbicaciones;
 import org.apache.commons.collections15.Predicate;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.uqbar.commons.model.CollectionBasedHome;
 import org.uqbar.commons.model.UserException;
+import org.uqbar.commons.utils.ApplicationContext;
 import org.uqbar.commons.utils.Observable;
 
 @Observable
@@ -21,6 +24,12 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
     this.create("Diseño de sistemas", 2013, true, "Fernando", "Nivel 1 - 1er. Cuatrimestre");
     this.create("Analisis Matematico 1", 2011, false, "Cafferata", "Nivel 1 - 1er. Cuatrimestre");
     this.create("Algoritmos", 2012, true, "Oscar", "Nivel 1 - 1er. Cuatrimestre");
+  }
+  
+  public Ubicacion getUbicacion(final String modeloDescripcion) {
+    ApplicationContext _instance = ApplicationContext.getInstance();
+    Object _singleton = _instance.<Object>getSingleton(Ubicacion.class);
+    return ((HomeUbicaciones) _singleton).get(modeloDescripcion);
   }
   
   public void create(final String nombre, final int anioCursada, final boolean finalAprobado, final String profesor, final String ubicacion) {

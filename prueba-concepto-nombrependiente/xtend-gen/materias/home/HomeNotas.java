@@ -1,8 +1,12 @@
 package materias.home;
 
+import com.google.common.base.Objects;
 import java.util.Date;
+import java.util.List;
 import materias.domain.Nota;
 import org.apache.commons.collections15.Predicate;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.uqbar.commons.model.CollectionBasedHome;
 import org.uqbar.commons.utils.Observable;
 
@@ -15,7 +19,9 @@ public class HomeNotas extends CollectionBasedHome<Nota> {
   
   public void init() {
     Date _date = new Date();
-    this.create("Matemática Discreta", _date, "Parcial", true);
+    this.create("Diseño de Sistemas", _date, "Parcial", true);
+    Date _date_1 = new Date();
+    this.create("Algoritmos", _date_1, "TP", true);
   }
   
   public void create(final String materia, final Date fecha, final String descripcion, final boolean aprobado) {
@@ -37,5 +43,17 @@ public class HomeNotas extends CollectionBasedHome<Nota> {
   
   public Predicate getCriterio(final Nota example) {
     return null;
+  }
+  
+  public List<Nota> getNotas(final String nombreMateria) {
+    List<Nota> _allInstances = this.allInstances();
+    final Function1<Nota, Boolean> _function = new Function1<Nota, Boolean>() {
+      public Boolean apply(final Nota materia) {
+        String _nombreMateria = materia.getNombreMateria();
+        return Boolean.valueOf(Objects.equal(_nombreMateria, nombreMateria));
+      }
+    };
+    Iterable<Nota> _filter = IterableExtensions.<Nota>filter(_allInstances, _function);
+    return IterableExtensions.<Nota>toList(_filter);
   }
 }

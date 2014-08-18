@@ -3,6 +3,7 @@ package materias.domain;
 import com.google.common.base.Objects;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import materias.domain.Materia;
 import materias.home.HomeNotas;
 import org.uqbar.commons.model.Entity;
@@ -97,5 +98,11 @@ public class Nota extends Entity {
   public HomeNotas getHomeNotas() {
     ApplicationContext _instance = ApplicationContext.getInstance();
     return _instance.<HomeNotas>getSingleton(Nota.class);
+  }
+  
+  public List<Nota> getNotas() {
+    HomeNotas _homeNotas = this.getHomeNotas();
+    String _nombreMateria = this.getNombreMateria();
+    return _homeNotas.getNotas(_nombreMateria);
   }
 }

@@ -15,7 +15,8 @@ class HomeNotas extends CollectionBasedHome<Nota> {
 	}
 
 	def void init() {
-		this.create("Matemática Discreta", new Date,"Parcial", true)
+		this.create("Diseño de Sistemas", new Date,"Parcial", true)
+		this.create("Algoritmos", new Date,"TP", true)
 	}	
 	
 	def void create(String materia, Date fecha, String descripcion, boolean aprobado) {
@@ -38,6 +39,10 @@ class HomeNotas extends CollectionBasedHome<Nota> {
 
 	override def getCriterio(Nota example) {
 		null
+	}
+	
+	def getNotas(String nombreMateria){
+		allInstances.filter[materia | materia.nombreMateria == nombreMateria].toList
 	}
 	
 

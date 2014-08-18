@@ -4,12 +4,9 @@ import org.uqbar.commons.utils.Observable
 import org.uqbar.commons.model.CollectionBasedHome
 import materias.domain.Materia
 import org.uqbar.commons.model.UserException
-<<<<<<< HEAD
 import java.util.List
-=======
 import materias.domain.Ubicacion
 import org.uqbar.commons.utils.ApplicationContext
->>>>>>> 5fc3dd56903516361308cd8fa5c20b0832b5c8e3
 
 @Observable
 class HomeMaterias extends CollectionBasedHome<Materia> {
