@@ -1,6 +1,9 @@
 package materias.domain;
 
 import com.google.common.base.Objects;
+import java.util.List;
+import materias.domain.Nota;
+import materias.domain.Ubicacion;
 import org.uqbar.commons.model.Entity;
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
@@ -56,6 +59,26 @@ public class Materia extends Entity {
   
   public void setProfesor(final String profesor) {
     this._profesor = profesor;
+  }
+  
+  private List<Nota> _notas;
+  
+  public List<Nota> getNotas() {
+    return this._notas;
+  }
+  
+  public void setNotas(final List<Nota> notas) {
+    this._notas = notas;
+  }
+  
+  private Ubicacion _ubicacion;
+  
+  public Ubicacion getUbicacion() {
+    return this._ubicacion;
+  }
+  
+  public void setUbicacion(final Ubicacion ubicacion) {
+    this._ubicacion = ubicacion;
   }
   
   public void validar() {

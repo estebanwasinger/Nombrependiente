@@ -64,6 +64,14 @@ public class SeguidorCarrera implements Serializable {
     this.setNombre(null);
   }
   
+  public void eliminarMateriaSeleccionada() {
+    HomeMaterias _homeMaterias = this.getHomeMaterias();
+    Materia _materiaSeleccionada = this.getMateriaSeleccionada();
+    _homeMaterias.delete(_materiaSeleccionada);
+    this.search();
+    this.setMateriaSeleccionada(null);
+  }
+  
   public HomeMaterias getHomeMaterias() {
     ApplicationContext _instance = ApplicationContext.getInstance();
     return _instance.<HomeMaterias>getSingleton(Materia.class);

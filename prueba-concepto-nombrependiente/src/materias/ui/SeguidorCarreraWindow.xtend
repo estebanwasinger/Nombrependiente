@@ -15,6 +15,7 @@ import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
+import org.uqbar.arena.layout.VerticalLayout
 
 /**
  * Ventana de búsqueda de celulares.
@@ -40,10 +41,8 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 		taskDescription = "Ingrese los parámetros de búsqueda"
 		new Label(mainPanel).bindValueToProperty("materiaSeleccionada.nombre")
 		new Label(mainPanel).bindValueToProperty("materiaSeleccionada.profesor")
-
 		//new TextBox(mainPanel).bindValueToProperty("nombre")
 		super.createMainTemplate(mainPanel)
-
 		this.createResultsGrid(mainPanel)
 	}
 
@@ -59,7 +58,7 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 
 		var labelNombre = new Label(searchFormPanel)
 		labelNombre.text = "Nombre de materia"
-		labelNombre.foreground = Color::BLACK
+		labelNombre.foreground = Color::RED //esto se lo cambie para probar nada mas :P si lo dejamos negro no hay que ponerlo
 
 		new TextBox(searchFormPanel).bindValueToProperty("nombre")
 	}
@@ -74,6 +73,7 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 	 *
 	 */
 	override protected addActions(Panel actionsPanel) {
+
 		new Button(actionsPanel)
 			.setCaption("Buscar")
 			.onClick [ | modelObject.search ] 
@@ -87,6 +87,7 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 		new Button(actionsPanel) //
 			.setCaption("Nueva Materia")
 			.onClick [ | this.crearMateria ]
+			
 	}
 
 	// *************************************************************************
@@ -99,25 +100,14 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 	 */
 	def protected createResultsGrid(Panel mainPanel) {
 		var table = new Table<Materia>(mainPanel, typeof(Materia))
-		table.heigth = 200
+		table.heigth = 150 //mismo valor que la columna para que sea una sola (columna)
 		table.width = 450
 		table.bindItemsToProperty("resultados")
 		table.bindValueToProperty("materiaSeleccionada")
 		this.describeResultsGrid(table)
 	}
-	def void createGridActions(Panel mainPanel) {
-		var actionsPanel = new Panel(mainPanel)
-		actionsPanel.setLayout(new HorizontalLayout)
-		var edit = new Button(actionsPanel)
-			.setCaption("Editar")
-
-		var remove = new Button(actionsPanel)
-			.setCaption("Borrar")
- 
-		// Deshabilitar los botones si no hay ningÃºn elemento seleccionado en la grilla.
-	}
-
-	/**
+	
+		/**
 	 * Define las columnas de la grilla Cada columna se puede bindear 1) contra una propiedad del model, como
 	 * en el caso del número o el nombre 2) contra un transformer que recibe el model y devuelve un tipo
 	 * (generalmente String), como en el caso de Recibe Resumen de Cuenta
@@ -129,9 +119,26 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 			.setTitle("Nombre")
 			.setFixedSize(150)
 			.bindContentsToProperty("nombre")
-	}
-
+	}	
 	
+	def void createGridActions(Panel mainPanel) {
+		var actionsPanel = new Panel(mainPanel)
+		actionsPanel.setLayout(new VerticalLayout)
+		
+		var botonEditar = new Button(actionsPanel) //
+			.setCaption("Editar Materia")
+			.onClick [ | this.editarMateriaSeleccionada ]
+			//.bindValueToProperty("materiaSeleccionada")
+ 
+	 	var botonBorrar = new Button(actionsPanel)
+			.setCaption("Borrar Materia")
+			.onClick [ | modelObject.eliminarMateriaSeleccionada]
+ 
+		// Deshabilitar los botones de accion sobre las materias si no hay ninguna materia  seleccionada en la grilla.
+		var materiaSeleccionada= new NotNullObservable("materiaSeleccionada")
+		botonEditar.bindEnabled(materiaSeleccionada)
+		botonBorrar.bindEnabled(materiaSeleccionada)
+	}
 
 	// ********************************************************
 	// ** Acciones
@@ -140,6 +147,9 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 		this.openDialog(new CrearMateriaWindow(this))
 	}
 
+	def void editarMateriaSeleccionada() {
+		this.openDialog(new EditarMateriaWindow(this, modelObject.materiaSeleccionada))
+	}
 
 	def openDialog(Dialog<?> dialog) {
 		dialog.onAccept[|modelObject.search]

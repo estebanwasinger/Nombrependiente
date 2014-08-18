@@ -4,8 +4,10 @@ import java.awt.Color;
 import materias.applicationModel.SeguidorCarrera;
 import materias.domain.Materia;
 import materias.ui.CrearMateriaWindow;
+import materias.ui.EditarMateriaWindow;
+import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.layout.ColumnLayout;
-import org.uqbar.arena.layout.HorizontalLayout;
+import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
@@ -58,7 +60,7 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
     searchFormPanel.setLayout(_columnLayout);
     Label labelNombre = new Label(searchFormPanel);
     labelNombre.setText("Nombre de materia");
-    labelNombre.setForeground(Color.BLACK);
+    labelNombre.setForeground(Color.RED);
     TextBox _textBox = new TextBox(searchFormPanel);
     _textBox.<ControlBuilder>bindValueToProperty("nombre");
   }
@@ -109,21 +111,11 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
    */
   protected void createResultsGrid(final Panel mainPanel) {
     Table<Materia> table = new Table<Materia>(mainPanel, Materia.class);
-    table.setHeigth(200);
+    table.setHeigth(150);
     table.setWidth(450);
     table.bindItemsToProperty("resultados");
     table.<ControlBuilder>bindValueToProperty("materiaSeleccionada");
     this.describeResultsGrid(table);
-  }
-  
-  public void createGridActions(final Panel mainPanel) {
-    Panel actionsPanel = new Panel(mainPanel);
-    HorizontalLayout _horizontalLayout = new HorizontalLayout();
-    actionsPanel.setLayout(_horizontalLayout);
-    Button _button = new Button(actionsPanel);
-    Button edit = _button.setCaption("Editar");
-    Button _button_1 = new Button(actionsPanel);
-    Button remove = _button_1.setCaption("Borrar");
   }
   
   /**
@@ -140,9 +132,42 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
     _setFixedSize.bindContentsToProperty("nombre");
   }
   
+  public void createGridActions(final Panel mainPanel) {
+    Panel actionsPanel = new Panel(mainPanel);
+    VerticalLayout _verticalLayout = new VerticalLayout();
+    actionsPanel.setLayout(_verticalLayout);
+    Button _button = new Button(actionsPanel);
+    Button _setCaption = _button.setCaption("Editar Materia");
+    final Action _function = new Action() {
+      public void execute() {
+        SeguidorCarreraWindow.this.editarMateriaSeleccionada();
+      }
+    };
+    Button botonEditar = _setCaption.onClick(_function);
+    Button _button_1 = new Button(actionsPanel);
+    Button _setCaption_1 = _button_1.setCaption("Borrar Materia");
+    final Action _function_1 = new Action() {
+      public void execute() {
+        SeguidorCarrera _modelObject = SeguidorCarreraWindow.this.getModelObject();
+        _modelObject.eliminarMateriaSeleccionada();
+      }
+    };
+    Button botonBorrar = _setCaption_1.onClick(_function_1);
+    NotNullObservable materiaSeleccionada = new NotNullObservable("materiaSeleccionada");
+    botonEditar.<ControlBuilder>bindEnabled(materiaSeleccionada);
+    botonBorrar.<ControlBuilder>bindEnabled(materiaSeleccionada);
+  }
+  
   public void crearMateria() {
     CrearMateriaWindow _crearMateriaWindow = new CrearMateriaWindow(this);
     this.openDialog(_crearMateriaWindow);
+  }
+  
+  public void editarMateriaSeleccionada() {
+    SeguidorCarrera _modelObject = this.getModelObject();
+    Materia _materiaSeleccionada = _modelObject.getMateriaSeleccionada();
+    EditarMateriaWindow _editarMateriaWindow = new EditarMateriaWindow(this, _materiaSeleccionada);
+    this.openDialog(_editarMateriaWindow);
   }
   
   public void openDialog(final Dialog<?> dialog) {

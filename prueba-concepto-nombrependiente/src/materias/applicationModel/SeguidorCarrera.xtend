@@ -33,7 +33,12 @@ class SeguidorCarrera implements Serializable {
 		nombre = null
 	}
 
-
+	def void eliminarMateriaSeleccionada() {
+		getHomeMaterias().delete(materiaSeleccionada)
+		this.search()
+		materiaSeleccionada = null
+	}
+	
 	def HomeMaterias getHomeMaterias() {
 		ApplicationContext::instance.getSingleton(typeof(Materia))
 	}
