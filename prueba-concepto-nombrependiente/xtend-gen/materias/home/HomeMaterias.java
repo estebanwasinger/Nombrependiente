@@ -18,22 +18,23 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
   }
   
   public void init() {
-    this.create("Diseño de sistemas", Boolean.valueOf(true), "2014", "Fernando");
-    this.create("Analisis Matematico 1", Boolean.valueOf(false), "2010", "Cafferata");
-    this.create("Algoritmos", Boolean.valueOf(true), "2011", "Oscar");
+    this.create("Diseño de sistemas", 2013, true, "Fernando", "Nivel 1 - 1er. Cuatrimestre");
+    this.create("Analisis Matematico 1", 2011, false, "Cafferata", "Nivel 1 - 1er. Cuatrimestre");
+    this.create("Algoritmos", 2012, true, "Oscar", "Nivel 1 - 1er. Cuatrimestre");
   }
   
-  public void create(final String pNombre, final Boolean finalAprobado, final String anioCursada, final String profesor) {
+  public void create(final String nombre, final int anioCursada, final boolean finalAprobado, final String profesor, final String ubicacion) {
     Materia materia = new Materia();
-    materia.setNombre(pNombre);
-    materia.setFinalAprobado(finalAprobado);
+    materia.setNombre(nombre);
+    materia.setFinalAprobado(Boolean.valueOf(finalAprobado));
     materia.setAnioCursada(anioCursada);
     materia.setProfesor(profesor);
+    materia.setUbicacion(ubicacion);
     this.create(materia);
   }
   
   public void validateCreate(final Materia materia) {
-    materia.validar();
+    materia.validarNombre();
     this.validarMateriasDuplicadas(materia);
   }
   
@@ -47,6 +48,10 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
     }
   }
   
+  public List<Materia> getMaterias() {
+    return this.allInstances();
+  }
+  
   /**
    * Busca los celulares que coincidan con los datos recibidos. Tanto número como nombre pueden ser nulos,
    * en ese caso no se filtra por ese atributo.
@@ -56,7 +61,7 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
    */
   public List<Materia> search(final String nombre) {
     List<Materia> _allInstances = this.allInstances();
-    final Function1<Materia,Boolean> _function = new Function1<Materia,Boolean>() {
+    final Function1<Materia, Boolean> _function = new Function1<Materia, Boolean>() {
       public Boolean apply(final Materia celular) {
         String _nombre = celular.getNombre();
         return Boolean.valueOf(HomeMaterias.this.match(nombre, _nombre));

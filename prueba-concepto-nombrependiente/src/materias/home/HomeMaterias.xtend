@@ -4,6 +4,7 @@ import org.uqbar.commons.utils.Observable
 import org.uqbar.commons.model.CollectionBasedHome
 import materias.domain.Materia
 import org.uqbar.commons.model.UserException
+import java.util.List
 
 @Observable
 class HomeMaterias extends CollectionBasedHome<Materia> {
@@ -13,25 +14,26 @@ class HomeMaterias extends CollectionBasedHome<Materia> {
 	}
 
 	def void init() {
-		this.create("Diseño de sistemas", true, "2014", "Fernando")
-		this.create("Analisis Matematico 1", false, "2010", "Cafferata")
-		this.create("Algoritmos", true, "2011", "Oscar")
+		this.create("Diseño de sistemas", 2013, true, "Fernando","Nivel 1 - 1er. Cuatrimestre" )
+		this.create("Analisis Matematico 1",2011, false, "Cafferata","Nivel 1 - 1er. Cuatrimestre")
+		this.create("Algoritmos", 2012, true, "Oscar","Nivel 1 - 1er. Cuatrimestre" )
 	}
 
 
 	// ********************************************************
 	// ** Altas y bajas
 	// ********************************************************
-	def void create(String pNombre, Boolean finalAprobado, String anioCursada, String profesor) {
+	def void create(String nombre, int anioCursada, boolean finalAprobado, String profesor, String ubicacion){
 		var materia = new Materia
-		materia.nombre = pNombre
+		materia.nombre = nombre
 		materia.finalAprobado = finalAprobado
 		materia.anioCursada = anioCursada
 		materia.profesor = profesor
+		materia.ubicacion = ubicacion
 		this.create(materia)
 	}
 	override void validateCreate(Materia materia) {
-		materia.validar()
+		materia.validarNombre()
 		validarMateriasDuplicadas(materia)
 	}
 
@@ -40,6 +42,10 @@ class HomeMaterias extends CollectionBasedHome<Materia> {
 		if (!this.search(nombre).isEmpty) {
 			throw new UserException("Ya existe una materia con el nombre " + nombre)
 		}
+	}
+
+	def List<Materia> getMaterias(){
+		allInstances
 	}
 
 	// ********************************************************

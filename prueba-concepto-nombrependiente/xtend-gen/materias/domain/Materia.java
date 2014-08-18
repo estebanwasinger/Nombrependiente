@@ -1,8 +1,17 @@
 package materias.domain;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
+import materias.home.HomeMaterias;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.uqbar.commons.model.Entity;
 import org.uqbar.commons.model.UserException;
+import org.uqbar.commons.utils.ApplicationContext;
 import org.uqbar.commons.utils.Observable;
 
 @Observable
@@ -28,13 +37,13 @@ public class Materia extends Entity {
     this._nombre = nombre;
   }
   
-  private String _anioCursada;
+  private int _anioCursada;
   
-  public String getAnioCursada() {
+  public int getAnioCursada() {
     return this._anioCursada;
   }
   
-  public void setAnioCursada(final String anioCursada) {
+  public void setAnioCursada(final int anioCursada) {
     this._anioCursada = anioCursada;
   }
   
@@ -58,7 +67,28 @@ public class Materia extends Entity {
     this._profesor = profesor;
   }
   
-  public void validar() {
+  private String _ubicacion;
+  
+  public String getUbicacion() {
+    return this._ubicacion;
+  }
+  
+  public void setUbicacion(final String ubicacion) {
+    this._ubicacion = ubicacion;
+  }
+  
+  private final List<String> posiblesUbicaciones = Collections.<String>unmodifiableList(Lists.<String>newArrayList("Nivel 1 - 1er. Cuatrimestre", "Nivel 1 - 2do. Cuatrimestre", "Nivel 1 - Anual", "Nivel 2 - 1er. Cuatrimestre", "Nivel 2 - 2do. Cuatrimestre", "Nivel 2 - Anual"));
+  
+  public List<Object> asObjects(final List<?> list) {
+    final Function1<Object, Object> _function = new Function1<Object, Object>() {
+      public Object apply(final Object it) {
+        return ((Object) it);
+      }
+    };
+    return ListExtensions.map(list, _function);
+  }
+  
+  public void validarNombre() {
     String _nombre = this.getNombre();
     boolean _equals = Objects.equal(_nombre, null);
     if (_equals) {
@@ -80,5 +110,76 @@ public class Materia extends Entity {
       _and = _not;
     }
     return _and;
+  }
+  
+  public boolean validarAnio() {
+    boolean _xblockexpression = false;
+    {
+      Calendar cal = Calendar.getInstance();
+      boolean _and = false;
+      int _anioCursada = this.getAnioCursada();
+      boolean _greaterEqualsThan = (_anioCursada >= 1900);
+      if (!_greaterEqualsThan) {
+        _and = false;
+      } else {
+        int _anioCursada_1 = this.getAnioCursada();
+        int _get = cal.get(Calendar.YEAR);
+        boolean _lessEqualsThan = (_anioCursada_1 <= _get);
+        _and = _lessEqualsThan;
+      }
+      _xblockexpression = _and;
+    }
+    return _xblockexpression;
+  }
+  
+  public void validarProfesor() {
+    boolean _or = false;
+    String _profesor = this.getProfesor();
+    boolean _equals = Objects.equal(_profesor, null);
+    if (_equals) {
+      _or = true;
+    } else {
+      String _profesor_1 = this.getProfesor();
+      String _trim = _profesor_1.trim();
+      boolean _equals_1 = _trim.equals("");
+      _or = _equals_1;
+    }
+    if (_or) {
+      throw new UserException("Debe ingresar un nombre de profesor");
+    }
+  }
+  
+  public List<Object> getUbicacionesPosibles() {
+    return this.asObjects(this.posiblesUbicaciones);
+  }
+  
+  public HomeMaterias getHomeMaterias() {
+    ApplicationContext _instance = ApplicationContext.getInstance();
+    return _instance.<HomeMaterias>getSingleton(Materia.class);
+  }
+  
+  public List<Materia> getMaterias() {
+    HomeMaterias _homeMaterias = this.getHomeMaterias();
+    return _homeMaterias.getMaterias();
+  }
+  
+  public void crearMateria() {
+    this.validarNombre();
+    HomeMaterias _homeMaterias = this.getHomeMaterias();
+    String _nombre = this.getNombre();
+    _homeMaterias.create(_nombre, 0, false, "", "");
+  }
+  
+  public int getAnioMateria(final String nombre) {
+    List<Materia> _materias = this.getMaterias();
+    final Function1<Materia, Boolean> _function = new Function1<Materia, Boolean>() {
+      public Boolean apply(final Materia materia) {
+        String _nombre = materia.getNombre();
+        return Boolean.valueOf(Objects.equal(_nombre, nombre));
+      }
+    };
+    Iterable<Materia> _filter = IterableExtensions.<Materia>filter(_materias, _function);
+    Materia _head = IterableExtensions.<Materia>head(_filter);
+    return _head.getAnioCursada();
   }
 }
