@@ -16,9 +16,9 @@ class HomeMaterias extends CollectionBasedHome<Materia> {
 	}
 
 	def void init() {
-		this.create("Diseño de sistemas", 2013, true, "Fernando","Nivel 1 - 1er. Cuatrimestre" )
-		this.create("Analisis Matematico 1",2011, false, "Cafferata","Nivel 1 - 1er. Cuatrimestre")
-		this.create("Algoritmos", 2012, true, "Oscar","Nivel 1 - 1er. Cuatrimestre" )
+		this.create("Diseño de sistemas", "2013", true, "Fernando","Nivel 1 - 1er. Cuatrimestre" )
+		this.create("Analisis Matematico 1","2011", false, "Cafferata","Nivel 1 - 1er. Cuatrimestre")
+		this.create("Algoritmos", "2012", true, "Oscar","Nivel 1 - 1er. Cuatrimestre" )
 	}
 	
 		def getUbicacion(String modeloDescripcion) {
@@ -29,7 +29,7 @@ class HomeMaterias extends CollectionBasedHome<Materia> {
 	// ********************************************************
 	// ** Altas y bajas
 	// ********************************************************
-	def void create(String nombre, int anioCursada, boolean finalAprobado, String profesor, String ubicacion){
+	def void create(String nombre, String anioCursada, boolean finalAprobado, String profesor, String ubicacion){
 		var materia = new Materia
 		materia.nombre = nombre
 		materia.finalAprobado = finalAprobado
@@ -66,7 +66,7 @@ class HomeMaterias extends CollectionBasedHome<Materia> {
 	 * la búsqueda (23, "Gonza")
 	 */
 	def search(String nombre) {
-		allInstances.filter[celular|this.match(nombre, celular.nombre)].toList
+		allInstances.filter[materia|this.match(nombre, materia.nombre)].toList
 	}
 
 	def match(Object expectedValue, Object realValue) {

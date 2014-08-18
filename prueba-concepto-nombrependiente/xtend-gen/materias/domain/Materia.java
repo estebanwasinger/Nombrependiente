@@ -37,13 +37,13 @@ public class Materia extends Entity {
     this._nombre = nombre;
   }
   
-  private int _anioCursada;
+  private String _anioCursada;
   
-  public int getAnioCursada() {
+  public String getAnioCursada() {
     return this._anioCursada;
   }
   
-  public void setAnioCursada(final int anioCursada) {
+  public void setAnioCursada(final String anioCursada) {
     this._anioCursada = anioCursada;
   }
   
@@ -117,14 +117,15 @@ public class Materia extends Entity {
     {
       Calendar cal = Calendar.getInstance();
       boolean _and = false;
-      int _anioCursada = this.getAnioCursada();
-      boolean _greaterEqualsThan = (_anioCursada >= 1900);
-      if (!_greaterEqualsThan) {
+      String _anioCursada = this.getAnioCursada();
+      boolean _notEquals = (!Objects.equal(_anioCursada, null));
+      if (!_notEquals) {
         _and = false;
       } else {
-        int _anioCursada_1 = this.getAnioCursada();
+        String _anioCursada_1 = this.getAnioCursada();
+        int _parseInt = Integer.parseInt(_anioCursada_1);
         int _get = cal.get(Calendar.YEAR);
-        boolean _lessEqualsThan = (_anioCursada_1 <= _get);
+        boolean _lessEqualsThan = (_parseInt <= _get);
         _and = _lessEqualsThan;
       }
       _xblockexpression = _and;
@@ -167,10 +168,10 @@ public class Materia extends Entity {
     this.validarNombre();
     HomeMaterias _homeMaterias = this.getHomeMaterias();
     String _nombre = this.getNombre();
-    _homeMaterias.create(_nombre, 0, false, "", "");
+    _homeMaterias.create(_nombre, null, false, "", "");
   }
   
-  public int getAnioMateria(final String nombre) {
+  public String getAnioMateria(final String nombre) {
     List<Materia> _materias = this.getMaterias();
     final Function1<Materia, Boolean> _function = new Function1<Materia, Boolean>() {
       public Boolean apply(final Materia materia) {

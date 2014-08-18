@@ -13,7 +13,7 @@ class Materia extends Entity {
 
 	@Property Integer id
 	@Property String nombre
-	@Property int anioCursada
+	@Property String anioCursada
 	@Property Boolean finalAprobado
 	@Property String profesor
 	@Property String ubicacion
@@ -50,7 +50,7 @@ class Materia extends Entity {
 		
 	def validarAnio(){
 	var Calendar cal = Calendar.getInstance()
-	anioCursada >=1900 && anioCursada <= cal.get(Calendar.YEAR)	
+	anioCursada != null && Integer.parseInt(anioCursada) <= cal.get(Calendar.YEAR)	
 	}
 	
 	def validarProfesor(){
@@ -74,7 +74,7 @@ class Materia extends Entity {
 	
 	def crearMateria(){
 		validarNombre()
-		getHomeMaterias.create(nombre,0 ,false ,"" ,"")
+		getHomeMaterias.create(nombre, null ,false ,"" ,"")
 	}
 	
 	def getAnioMateria(String nombre){

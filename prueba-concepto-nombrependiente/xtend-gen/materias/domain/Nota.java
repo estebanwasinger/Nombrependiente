@@ -67,15 +67,15 @@ public class Nota extends Entity {
     Date _fecha = this.getFecha();
     cal.setTime(_fecha);
     int anioNota = cal.get(Calendar.YEAR);
-    int _anioCursada = this.getAnioCursada();
-    boolean _notEquals = (anioNota != _anioCursada);
+    String _anioCursada = this.getAnioCursada();
+    boolean _notEquals = (!Objects.equal(Integer.valueOf(anioNota), _anioCursada));
     if (_notEquals) {
       throw new UserException("El año de la cursada debe ser igual al de la nota");
     }
   }
   
-  public int getAnioCursada() {
-    int _xblockexpression = (int) 0;
+  public String getAnioCursada() {
+    String _xblockexpression = null;
     {
       Materia materia = new Materia();
       String _nombreMateria = this.getNombreMateria();

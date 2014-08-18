@@ -21,9 +21,9 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
   }
   
   public void init() {
-    this.create("Diseño de sistemas", 2013, true, "Fernando", "Nivel 1 - 1er. Cuatrimestre");
-    this.create("Analisis Matematico 1", 2011, false, "Cafferata", "Nivel 1 - 1er. Cuatrimestre");
-    this.create("Algoritmos", 2012, true, "Oscar", "Nivel 1 - 1er. Cuatrimestre");
+    this.create("Diseño de sistemas", "2013", true, "Fernando", "Nivel 1 - 1er. Cuatrimestre");
+    this.create("Analisis Matematico 1", "2011", false, "Cafferata", "Nivel 1 - 1er. Cuatrimestre");
+    this.create("Algoritmos", "2012", true, "Oscar", "Nivel 1 - 1er. Cuatrimestre");
   }
   
   public Ubicacion getUbicacion(final String modeloDescripcion) {
@@ -32,7 +32,7 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
     return ((HomeUbicaciones) _singleton).get(modeloDescripcion);
   }
   
-  public void create(final String nombre, final int anioCursada, final boolean finalAprobado, final String profesor, final String ubicacion) {
+  public void create(final String nombre, final String anioCursada, final boolean finalAprobado, final String profesor, final String ubicacion) {
     Materia materia = new Materia();
     materia.setNombre(nombre);
     materia.setFinalAprobado(Boolean.valueOf(finalAprobado));
@@ -71,8 +71,8 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
   public List<Materia> search(final String nombre) {
     List<Materia> _allInstances = this.allInstances();
     final Function1<Materia, Boolean> _function = new Function1<Materia, Boolean>() {
-      public Boolean apply(final Materia celular) {
-        String _nombre = celular.getNombre();
+      public Boolean apply(final Materia materia) {
+        String _nombre = materia.getNombre();
         return Boolean.valueOf(HomeMaterias.this.match(nombre, _nombre));
       }
     };
