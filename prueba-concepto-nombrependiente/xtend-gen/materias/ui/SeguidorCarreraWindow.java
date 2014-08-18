@@ -32,7 +32,7 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
   private final List<String> posiblesUbicaciones = Collections.<String>unmodifiableList(Lists.<String>newArrayList("Nivel 1 - 1er. Cuatrimestre", "Nivel 1 - 2do. Cuatrimestre", "Nivel 1 - Anual", "Nivel 2 - 1er. Cuatrimestre", "Nivel 2 - 2do. Cuatrimestre", "Nivel 2 - Anual", "Nivel 3 - 1er. Cuatrimestre", "Nivel 3 - 2do. Cuatrimestre", "Nivel 3 - Anual", "Nivel 4 - 1er. Cuatrimestre", "Nivel 4 - 2do. Cuatrimestre", "Nivel 4 - Anual", "Nivel 5 - 1er. Cuatrimestre", "Nivel 5 - 2do. Cuatrimestre", "Nivel 5 - Anual"));
   
   public List<Object> asObjects(final List<?> list) {
-    final Function1<Object, Object> _function = new Function1<Object, Object>() {
+    final Function1<Object,Object> _function = new Function1<Object,Object>() {
       public Object apply(final Object it) {
         return ((Object) it);
       }

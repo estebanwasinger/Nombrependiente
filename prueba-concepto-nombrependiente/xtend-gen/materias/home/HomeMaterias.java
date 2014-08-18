@@ -21,9 +21,11 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
   }
   
   public void init() {
-    this.create("Diseño de sistemas", "2013", true, "Fernando", "Nivel 1 - 1er. Cuatrimestre");
-    this.create("Analisis Matematico 1", "2011", false, "Cafferata", "Nivel 1 - 1er. Cuatrimestre");
-    this.create("Algoritmos", "2012", true, "Oscar", "Nivel 1 - 1er. Cuatrimestre");
+    this.create("Analisis Matematico I", "2011", false, "Cafferata", "Nivel 1 - Anual");
+    this.create("Algoritmos", "2011", true, "Bruno", "Nivel 1 - 1er. Cuatrimestre");
+    this.create("Analisis de sistemas", "2012", true, "Garbarini", "Nivel 2 - Anual");
+    this.create("Diseño de sistemas", "2013", false, "Dodino", "Nivel 3 - 1er. Cuatrimestre");
+    this.create("Sistemas Operativos", "2012", true, "Bruno", "Nivel 3 - 2do. Cuatrimestre");
   }
   
   public Ubicacion getUbicacion(final String modeloDescripcion) {
@@ -70,7 +72,7 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
    */
   public List<Materia> search(final String nombre) {
     List<Materia> _allInstances = this.allInstances();
-    final Function1<Materia, Boolean> _function = new Function1<Materia, Boolean>() {
+    final Function1<Materia,Boolean> _function = new Function1<Materia,Boolean>() {
       public Boolean apply(final Materia materia) {
         String _nombre = materia.getNombre();
         return Boolean.valueOf(HomeMaterias.this.match(nombre, _nombre));
