@@ -20,13 +20,6 @@ import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.lacar.ui.model.Action;
 import org.uqbar.lacar.ui.model.ControlBuilder;
 
-/**
- * Ventana de búsqueda de celulares.
- * 
- * @see ar.edu.celulares.applicationModel.BuscadorCelular el modelo subyacente.
- * 
- * @author ?
- */
 @SuppressWarnings("all")
 public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
   public SeguidorCarreraWindow(final WindowOwner parent) {
@@ -35,20 +28,27 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
     _modelObject.search();
   }
   
-  /**
-   * El default de la vista es un formulario que permite disparar la búsqueda (invocando con super) Además
-   * le agregamos una grilla con los resultados de esa búsqueda y acciones que pueden hacerse con elementos
-   * de esa búsqueda
-   */
   public void createMainTemplate(final Panel mainPanel) {
     this.setTitle("Seguidor de carrera");
     this.setTaskDescription("Ingrese los parámetros de búsqueda");
-    Label _label = new Label(mainPanel);
-    _label.<ControlBuilder>bindValueToProperty("materiaSeleccionada.nombre");
-    Label _label_1 = new Label(mainPanel);
-    _label_1.<ControlBuilder>bindValueToProperty("materiaSeleccionada.profesor");
     super.createMainTemplate(mainPanel);
     this.createResultsGrid(mainPanel);
+    this.panelEdicionMateria(mainPanel);
+  }
+  
+  public void panelEdicionMateria(final Panel mainPanel) {
+    Label _label = new Label(mainPanel);
+    _label.setText("Materia:");
+    Label _label_1 = new Label(mainPanel);
+    _label_1.<ControlBuilder>bindValueToProperty("materiaSeleccionada.nombre");
+    Label _label_2 = new Label(mainPanel);
+    _label_2.setText("Profesor");
+    TextBox _textBox = new TextBox(mainPanel);
+    _textBox.<ControlBuilder>bindValueToProperty("materiaSeleccionada.profesor");
+    Label _label_3 = new Label(mainPanel);
+    _label_3.setText("Año de cursada");
+    TextBox _textBox_1 = new TextBox(mainPanel);
+    _textBox_1.<ControlBuilder>bindValueToProperty("materiaSeleccionada.anioCursada");
   }
   
   /**

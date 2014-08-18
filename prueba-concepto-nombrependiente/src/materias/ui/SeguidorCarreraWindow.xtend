@@ -17,13 +17,6 @@ import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.arena.layout.VerticalLayout
 
-/**
- * Ventana de búsqueda de celulares.
- *
- * @see ar.edu.celulares.applicationModel.BuscadorCelular el modelo subyacente.
- *
- * @author ?
- */
 class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 
 	new(WindowOwner parent) {
@@ -31,21 +24,24 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 		modelObject.search()
 	}
 
-	/**
-	 * El default de la vista es un formulario que permite disparar la búsqueda (invocando con super) Además
-	 * le agregamos una grilla con los resultados de esa búsqueda y acciones que pueden hacerse con elementos
-	 * de esa búsqueda
-	 */
 	override def createMainTemplate(Panel mainPanel) {
 		title = "Seguidor de carrera"
 		taskDescription = "Ingrese los parámetros de búsqueda"
-		new Label(mainPanel).bindValueToProperty("materiaSeleccionada.nombre")
-		new Label(mainPanel).bindValueToProperty("materiaSeleccionada.profesor")
-		//new TextBox(mainPanel).bindValueToProperty("nombre")
+		
 		super.createMainTemplate(mainPanel)
 		this.createResultsGrid(mainPanel)
+		panelEdicionMateria(mainPanel)
+		
 	}
-
+	def void panelEdicionMateria(Panel mainPanel){
+		
+		new Label(mainPanel).setText("Materia:")
+		new Label(mainPanel).bindValueToProperty("materiaSeleccionada.nombre")
+		new Label(mainPanel).setText("Profesor")
+		new TextBox(mainPanel).bindValueToProperty("materiaSeleccionada.profesor")
+		new Label(mainPanel).setText("Año de cursada")
+		new TextBox(mainPanel).bindValueToProperty("materiaSeleccionada.anioCursada")
+	}
 	// *************************************************************************
 	// * FORMULARIO DE BUSQUEDA
 	// *************************************************************************
