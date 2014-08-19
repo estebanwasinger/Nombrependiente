@@ -2,31 +2,32 @@
 package materias.ui
 
 import java.awt.Color
+import java.util.List
 import materias.applicationModel.SeguidorCarrera
 import materias.domain.Materia
-import org.uqbar.arena.bindings.NotNullObservable
+import materias.domain.Nota
+import materias.home.HomeMaterias
+import materias.home.HomeNotas
+import org.uqbar.arena.bindings.ObservableProperty
 import org.uqbar.arena.layout.ColumnLayout
-import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Button
+import org.uqbar.arena.widgets.CheckBox
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
+import org.uqbar.arena.widgets.Selector
 import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
-import org.uqbar.arena.windows.SimpleWindow
+import org.uqbar.arena.windows.MainWindow
 import org.uqbar.arena.windows.WindowOwner
-import org.uqbar.arena.layout.VerticalLayout
-import org.uqbar.arena.widgets.CheckBox
-import org.uqbar.arena.widgets.Selector
-import org.uqbar.arena.bindings.ObservableProperty
-import org.uqbar.arena.bindings.PropertyAdapter
-import java.util.List
-import materias.domain.Nota
+import org.uqbar.commons.utils.ApplicationContext
 import org.uqbar.commons.utils.Observable
+import org.uqbar.arena.layout.HorizontalLayout
+import org.uqbar.arena.windows.ErrorsPanel
 
 @Observable
-class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
+class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 	
 	val posiblesUbicaciones = #["Nivel 1 - 1er. Cuatrimestre",
 								"Nivel 1 - 2do. Cuatrimestre",
@@ -43,6 +44,31 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 								"Nivel 5 - 1er. Cuatrimestre",
 								"Nivel 5 - 2do. Cuatrimestre",
 								"Nivel 5 - Anual"]
+	@Observable							
+	override createContents(Panel mainPanel) {
+		
+		title = "Seguidor de carrera"
+		new ErrorsPanel(mainPanel,"Seguidor OK")
+		var panel2Columnas = new Panel(mainPanel)
+		panel2Columnas.setLayout(new ColumnLayout(2))
+		var panelIzquierda = new Panel(panel2Columnas)
+		var panelDerecha = new Panel(panel2Columnas)
+				new Label(panelIzquierda)=>[
+			text = "Seguidor de Carreras"
+			fontSize = 20
+			]
+		var panelBotones = new Panel(panelIzquierda).setLayout(new HorizontalLayout)
+		addActions(panelBotones)
+		createFormPanel(panelIzquierda)
+		grillaDeMaterias(panelIzquierda) 
+		panelEdicionMateria(panelDerecha)
+		grillaDeNotas(panelDerecha)
+	}
+	def static main(String[] args) {
+		ApplicationContext.instance.configureSingleton(typeof(Materia), new HomeMaterias)
+		ApplicationContext.instance.configureSingleton(typeof(Nota), new HomeNotas)
+		new SeguidorCarreraWindow().startApplication
+	}
 
 	def asObjects(List<?> list) {
 		list.map[it as Object]
@@ -52,21 +78,12 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 		posiblesUbicaciones.asObjects
 	}
 
-	new(WindowOwner parent) {
-		super(parent, new SeguidorCarrera)
+	new() {
+		super(new SeguidorCarrera)
 		modelObject.search()
 	}
-
-	override def createMainTemplate(Panel mainPanel) {
-		title = "Seguidor de carrera"
-		taskDescription = "Ingrese los parámetros de búsqueda"
-		
-		super.createMainTemplate(mainPanel)
-		grillaDeMaterias(mainPanel) 
-		panelEdicionMateria(mainPanel)
-		grillaDeNotas(mainPanel)
-		
-	}
+	
+	
 
 	def void grillaDeMaterias(Panel mainPanel) {
 		this.createResultsGrid(mainPanel)
@@ -97,26 +114,38 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 }
 	def void panelEdicionMateria(Panel mainPanel){
 		
-		new Label(mainPanel).setText("Materia:")
-		.foreground = Color::RED
-		new Label(mainPanel).bindValueToProperty("materiaSeleccionada.nombre")
+		var panelEdicionColumnas = new Panel(mainPanel)
+		panelEdicionColumnas.setLayout(new ColumnLayout(2))
 		
-		new Label(mainPanel).setText("Profesor")
-		.foreground = Color::RED
-		new TextBox(mainPanel).bindValueToProperty("materiaSeleccionada.profesor")
+		new Label(panelEdicionColumnas).setText("Materia:")
+		new Label(panelEdicionColumnas) =>[
+			bindValueToProperty("materiaSeleccionada.nombre")
+			width = 200
+			fontSize = 15
+			]
 		
-		new Label(mainPanel).setText("Año de cursada")
-		.foreground = Color::RED
-		new TextBox(mainPanel).bindValueToProperty("materiaSeleccionada.anioCursada")
+		new Label(panelEdicionColumnas).setText("Profesor")
+		new TextBox(panelEdicionColumnas)=>[
+			bindValueToProperty("materiaSeleccionada.profesor")
+			width = 200
+			fontSize = 10
+			]
+		
+		new Label(panelEdicionColumnas).setText("Año de cursada")
+		new TextBox(panelEdicionColumnas)=>[
+			bindValueToProperty("materiaSeleccionada.anioCursada")
+			width = 200
+			fontSize = 10
+			]
 		// este check DEBERIA habilitarse solo si estan cargadas las 3 notas con Aprobado en SI (validacion!)
 		//se debe modificar despues de agregar la grilla o tabla de notas
 		
-		new Label(mainPanel).setText = ("Final Aprobado")
-		var checkAprobado = new CheckBox(mainPanel)
+		new Label(panelEdicionColumnas).setText = ("Final Aprobado")
+		var checkAprobado = new CheckBox(panelEdicionColumnas)
 		checkAprobado.bindValueToProperty("materiaSeleccionada.finalAprobado")
 		
-		new Label(mainPanel).text = ("Ubicacion Materia")
-		new Selector(mainPanel) => [
+		new Label(panelEdicionColumnas).text = ("Ubicacion Materia")
+		new Selector(panelEdicionColumnas) => [
 			allowNull = false
 			bindItems(new ObservableProperty(this, "ubicacionesPosibles"))
 			bindValueToProperty("materiaSeleccionada.ubicacion")
@@ -133,16 +162,18 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 	/**
 	 * El panel principal de búsuqeda permite filtrar por número o nombre
 	 */
-	override def void createFormPanel(Panel mainPanel) {
+	def void createFormPanel(Panel mainPanel) {
 		var searchFormPanel = new Panel(mainPanel)
 		searchFormPanel.setLayout(new ColumnLayout(2))
 
 		var labelNombre = new Label(searchFormPanel)
 		labelNombre.text = "Nombre de materia"
-		labelNombre.foreground = Color::RED
-		.darker
 
-		new TextBox(searchFormPanel).bindValueToProperty("nombre")
+
+		new TextBox(searchFormPanel)=>
+			[bindValueToProperty("nombre")
+			width = 200
+			]
 	}
 
 	/**
@@ -154,7 +185,7 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 	 * pantalla de alta, entonces lo resuelve la vista (this)
 	 *
 	 */
-	override protected addActions(Panel actionsPanel) {
+	def addActions(Panel actionsPanel) {
 
 		new Button(actionsPanel)
 			.setCaption("Buscar")
@@ -246,4 +277,7 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 		dialog.onAccept[|modelObject.buscar]
 		dialog.open
 	}
+	
+	
+	
 }

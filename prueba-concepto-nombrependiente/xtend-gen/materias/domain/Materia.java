@@ -155,7 +155,7 @@ public class Materia extends Entity {
   
   public String getAnioMateria(final String nombre) {
     List<Materia> _materias = this.getMaterias();
-    final Function1<Materia, Boolean> _function = new Function1<Materia, Boolean>() {
+    final Function1<Materia,Boolean> _function = new Function1<Materia,Boolean>() {
       public Boolean apply(final Materia materia) {
         String _nombre = materia.getNombre();
         return Boolean.valueOf(Objects.equal(_nombre, nombre));

@@ -11,14 +11,12 @@ import materias.home.HomeNotas
 
 class SeguidorCarreraApp extends Application {
 	
-	static def void main(String[] args) { 
-		new SeguidorCarreraApp().start()
-	}
-
-	override protected Window<?> createMainWindow() {
-		ApplicationContext.instance.configureSingleton(typeof(Materia), new HomeMaterias)
-		ApplicationContext.instance.configureSingleton(typeof(Nota), new HomeNotas)
+	def hola(){
 		
-		return new SeguidorCarreraWindow(this)
 	}
+	
+	override protected createMainWindow() {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
 }
