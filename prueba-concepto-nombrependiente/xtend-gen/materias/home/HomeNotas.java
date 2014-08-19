@@ -20,6 +20,14 @@ public class HomeNotas extends CollectionBasedHome<Nota> {
     this.create("Diseño de Sistemas", "11/06/2013", "Parcial 1", true);
     this.create("Diseño de Sistemas", "15/11/2013", "Parcial 2", false);
     this.create("Algoritmos", "31/07/2011", "TP", true);
+    this.create("Algoritmos", "15/11/2013", "Parcial 1", true);
+    this.create("Diseño de Sistemas", "11/06/2013", "TP", true);
+    this.create("Analisis de Sistemas", "11/06/2012", "Parcial 1", true);
+    this.create("Analisis de Sistemas", "11/08/2012", "Parcial 2", true);
+    this.create("Analisis de Sistemas", "20/06/2012", "TP", true);
+    this.create("Sistemas Operativos", "01/03/2012", "Parcial 1", true);
+    this.create("Sistemas Operativos", "30/06/2012", "Parcial 2", true);
+    this.create("Sistemas Operativos", "20/06/2012", "TP", true);
   }
   
   public void create(final String materia, final String fecha, final String descripcion, final boolean aprobado) {
@@ -29,6 +37,10 @@ public class HomeNotas extends CollectionBasedHome<Nota> {
     nota.setDescripcion(descripcion);
     nota.setAprobado(Boolean.valueOf(aprobado));
     this.create(nota);
+  }
+  
+  public List<Nota> getNotas() {
+    return this.allInstances();
   }
   
   public Class<Nota> getEntityType() {
@@ -43,15 +55,35 @@ public class HomeNotas extends CollectionBasedHome<Nota> {
     return null;
   }
   
-  public List<Nota> getNotas(final String nombreMateria) {
+  public List<Nota> buscar(final String nombre) {
     List<Nota> _allInstances = this.allInstances();
     final Function1<Nota,Boolean> _function = new Function1<Nota,Boolean>() {
       public Boolean apply(final Nota materia) {
         String _nombreMateria = materia.getNombreMateria();
-        return Boolean.valueOf(Objects.equal(_nombreMateria, nombreMateria));
+        return Boolean.valueOf(HomeNotas.this.match(nombre, _nombreMateria));
       }
     };
     Iterable<Nota> _filter = IterableExtensions.<Nota>filter(_allInstances, _function);
     return IterableExtensions.<Nota>toList(_filter);
+  }
+  
+  public boolean match(final Object expectedValue, final Object realValue) {
+    boolean _xblockexpression = false;
+    {
+      boolean _equals = Objects.equal(expectedValue, null);
+      if (_equals) {
+        return true;
+      }
+      boolean _equals_1 = Objects.equal(realValue, null);
+      if (_equals_1) {
+        return false;
+      }
+      String _string = realValue.toString();
+      String _lowerCase = _string.toLowerCase();
+      String _string_1 = expectedValue.toString();
+      String _lowerCase_1 = _string_1.toLowerCase();
+      _xblockexpression = _lowerCase.contains(_lowerCase_1);
+    }
+    return _xblockexpression;
   }
 }

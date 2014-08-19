@@ -93,8 +93,8 @@ public class SeguidorCarrera implements Serializable {
       HomeNotas _homeNotas = this.getHomeNotas();
       Materia _materiaSeleccionada_1 = this.getMateriaSeleccionada();
       String _nombre = _materiaSeleccionada_1.getNombre();
-      List<Nota> _notas = _homeNotas.getNotas(_nombre);
-      this.setNotas(_notas);
+      List<Nota> _buscar = _homeNotas.buscar(_nombre);
+      this.setNotas(_buscar);
     } else {
       throw new UserException("No ha seleccionado ninguna materia");
     }

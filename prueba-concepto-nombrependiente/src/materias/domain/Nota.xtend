@@ -48,6 +48,6 @@ class Nota extends Entity {
 	}
 	
 	def List<Nota> getNotas(){
-		getHomeNotas().getNotas(nombreMateria)
+		getHomeNotas().getNotas()
 	}
 }

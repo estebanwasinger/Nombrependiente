@@ -111,7 +111,6 @@ public class Nota extends Entity {
   
   public List<Nota> getNotas() {
     HomeNotas _homeNotas = this.getHomeNotas();
-    String _nombreMateria = this.getNombreMateria();
-    return _homeNotas.getNotas(_nombreMateria);
+    return _homeNotas.getNotas();
   }
 }
