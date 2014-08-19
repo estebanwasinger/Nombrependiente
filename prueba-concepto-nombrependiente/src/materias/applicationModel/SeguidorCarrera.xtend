@@ -9,6 +9,7 @@ import materias.home.HomeMaterias
 import materias.domain.Materia
 import materias.domain.Nota
 import materias.home.HomeNotas
+import org.uqbar.commons.model.UserException
 
 @Observable
 class SeguidorCarrera implements Serializable {
@@ -26,10 +27,11 @@ class SeguidorCarrera implements Serializable {
 	def void search() { 
 		// WORKAROUND para que refresque la grilla en las actualizaciones
 		resultados = new ArrayList<Materia>
+		
 
 		// FIN WORKAROUND
 		resultados = getHomeMaterias().search(nombre)
-		// también se puede llamar homeCelulares.search(numero, nombre) 
+		 
 	}
 
 	def void buscar() { 
@@ -37,9 +39,13 @@ class SeguidorCarrera implements Serializable {
 		notas = new ArrayList<Nota>
 
 		// FIN WORKAROUND
+		 if (materiaSeleccionada != null){
 		notas = getHomeNotas().getNotas(materiaSeleccionada.nombre)
-		// también se puede llamar homeCelulares.search(numero, nombre) 
-	}
+		} else {
+			throw new UserException("No ha seleccionado ninguna materia")
+		} 
+		
+	} 
 	
 	def void clear() {
 		nombre = null
@@ -47,10 +53,10 @@ class SeguidorCarrera implements Serializable {
 
 
 	def HomeMaterias getHomeMaterias() {
-		ApplicationContext::instance.getSingleton(typeof(Materia))
+		ApplicationContext.instance.getSingleton(typeof(Materia))
 	}
 
 	def HomeNotas getHomeNotas() {
-		ApplicationContext::instance.getSingleton(typeof(Nota))
+		ApplicationContext.instance.getSingleton(typeof(Nota))
 	}
 }

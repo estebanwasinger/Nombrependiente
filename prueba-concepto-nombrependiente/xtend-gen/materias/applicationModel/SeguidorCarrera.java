@@ -1,5 +1,6 @@
 package materias.applicationModel;
 
+import com.google.common.base.Objects;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +8,7 @@ import materias.domain.Materia;
 import materias.domain.Nota;
 import materias.home.HomeMaterias;
 import materias.home.HomeNotas;
+import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.ApplicationContext;
 import org.uqbar.commons.utils.Observable;
 
@@ -85,11 +87,17 @@ public class SeguidorCarrera implements Serializable {
   public void buscar() {
     ArrayList<Nota> _arrayList = new ArrayList<Nota>();
     this.setNotas(_arrayList);
-    HomeNotas _homeNotas = this.getHomeNotas();
     Materia _materiaSeleccionada = this.getMateriaSeleccionada();
-    String _nombre = _materiaSeleccionada.getNombre();
-    List<Nota> _notas = _homeNotas.getNotas(_nombre);
-    this.setNotas(_notas);
+    boolean _notEquals = (!Objects.equal(_materiaSeleccionada, null));
+    if (_notEquals) {
+      HomeNotas _homeNotas = this.getHomeNotas();
+      Materia _materiaSeleccionada_1 = this.getMateriaSeleccionada();
+      String _nombre = _materiaSeleccionada_1.getNombre();
+      List<Nota> _notas = _homeNotas.getNotas(_nombre);
+      this.setNotas(_notas);
+    } else {
+      throw new UserException("No ha seleccionado ninguna materia");
+    }
   }
   
   public void clear() {

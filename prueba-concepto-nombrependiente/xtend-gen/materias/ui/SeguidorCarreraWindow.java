@@ -9,6 +9,7 @@ import materias.applicationModel.SeguidorCarrera;
 import materias.domain.Materia;
 import materias.domain.Nota;
 import materias.ui.CrearMateriaWindow;
+import materias.ui.EditarNotaWindow;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
@@ -195,6 +196,31 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
     Button _onClick_2 = _setCaption_2.onClick(_function_2);
     SkinnableControl _setFontSize_2 = _onClick_2.setFontSize(12);
     _setFontSize_2.setForeground(Color.BLUE);
+    Button _button_3 = new Button(actionsPanel);
+    Button _setCaption_3 = _button_3.setCaption("Cargar notas");
+    final Action _function_3 = new Action() {
+      public void execute() {
+        SeguidorCarrera _modelObject = SeguidorCarreraWindow.this.getModelObject();
+        _modelObject.buscar();
+      }
+    };
+    Button _onClick_3 = _setCaption_3.onClick(_function_3);
+    Button _setAsDefault_1 = _onClick_3.setAsDefault();
+    Link _disableOnError_1 = _setAsDefault_1.disableOnError();
+    SkinnableControl _setFontSize_3 = _disableOnError_1.setFontSize(12);
+    _setFontSize_3.setForeground(Color.BLUE);
+    Button _button_4 = new Button(actionsPanel);
+    Button _setCaption_4 = _button_4.setCaption("Editar Nota");
+    final Action _function_4 = new Action() {
+      public void execute() {
+        SeguidorCarreraWindow.this.editarNota();
+      }
+    };
+    Button _onClick_4 = _setCaption_4.onClick(_function_4);
+    Button _setAsDefault_2 = _onClick_4.setAsDefault();
+    Link _disableOnError_2 = _setAsDefault_2.disableOnError();
+    SkinnableControl _setFontSize_4 = _disableOnError_2.setFontSize(12);
+    _setFontSize_4.setForeground(Color.BLUE);
   }
   
   /**
@@ -235,6 +261,24 @@ public class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
       public void execute() {
         SeguidorCarrera _modelObject = SeguidorCarreraWindow.this.getModelObject();
         _modelObject.search();
+      }
+    };
+    dialog.onAccept(_function);
+    dialog.open();
+  }
+  
+  public void editarNota() {
+    SeguidorCarrera _modelObject = this.getModelObject();
+    Nota _notaSeleccionada = _modelObject.getNotaSeleccionada();
+    EditarNotaWindow _editarNotaWindow = new EditarNotaWindow(this, _notaSeleccionada);
+    this.openDialogNota(_editarNotaWindow);
+  }
+  
+  public void openDialogNota(final Dialog<?> dialog) {
+    final Action _function = new Action() {
+      public void execute() {
+        SeguidorCarrera _modelObject = SeguidorCarreraWindow.this.getModelObject();
+        _modelObject.buscar();
       }
     };
     dialog.onAccept(_function);

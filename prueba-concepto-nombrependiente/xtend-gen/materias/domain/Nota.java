@@ -1,11 +1,13 @@
 package materias.domain;
 
 import com.google.common.base.Objects;
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import materias.domain.Materia;
 import materias.home.HomeNotas;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.uqbar.commons.model.Entity;
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.ApplicationContext;
@@ -24,13 +26,13 @@ public class Nota extends Entity {
     this._nombreMateria = nombreMateria;
   }
   
-  private Date _fecha;
+  private String _fecha;
   
-  public Date getFecha() {
+  public String getFecha() {
     return this._fecha;
   }
   
-  public void setFecha(final Date fecha) {
+  public void setFecha(final String fecha) {
     this._fecha = fecha;
   }
   
@@ -63,14 +65,21 @@ public class Nota extends Entity {
   }
   
   public void validarFecha() {
-    Calendar cal = Calendar.getInstance();
-    Date _fecha = this.getFecha();
-    cal.setTime(_fecha);
-    int anioNota = cal.get(Calendar.YEAR);
-    String _anioCursada = this.getAnioCursada();
-    boolean _notEquals = (!Objects.equal(Integer.valueOf(anioNota), _anioCursada));
-    if (_notEquals) {
-      throw new UserException("El año de la cursada debe ser igual al de la nota");
+    try {
+      DateFormat instance = DateFormat.getInstance();
+      String _fecha = this.getFecha();
+      Date dateNota = instance.parse(_fecha);
+      Calendar cal = Calendar.getInstance();
+      cal.setTime(dateNota);
+      int anioNota = cal.get(Calendar.YEAR);
+      String _anioCursada = this.getAnioCursada();
+      int _parseInt = Integer.parseInt(_anioCursada);
+      boolean _notEquals = (anioNota != _parseInt);
+      if (_notEquals) {
+        throw new UserException("El año de la cursada debe ser igual al de la nota");
+      }
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
     }
   }
   
@@ -89,7 +98,7 @@ public class Nota extends Entity {
     this.validarDescripcion();
     HomeNotas _homeNotas = this.getHomeNotas();
     String _nombreMateria = this.getNombreMateria();
-    Date _fecha = this.getFecha();
+    String _fecha = this.getFecha();
     String _descripcion = this.getDescripcion();
     Boolean _aprobado = this.getAprobado();
     _homeNotas.create(_nombreMateria, _fecha, _descripcion, (_aprobado).booleanValue());

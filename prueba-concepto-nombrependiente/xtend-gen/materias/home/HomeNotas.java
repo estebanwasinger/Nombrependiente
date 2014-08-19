@@ -1,7 +1,6 @@
 package materias.home;
 
 import com.google.common.base.Objects;
-import java.util.Date;
 import java.util.List;
 import materias.domain.Nota;
 import org.apache.commons.collections15.Predicate;
@@ -18,15 +17,12 @@ public class HomeNotas extends CollectionBasedHome<Nota> {
   }
   
   public void init() {
-    Date _date = new Date();
-    this.create("Diseño de Sistemas", _date, "Parcial 1", true);
-    Date _date_1 = new Date();
-    this.create("Diseño de Sistemas", _date_1, "Parcial 2", false);
-    Date _date_2 = new Date();
-    this.create("Algoritmos", _date_2, "TP", true);
+    this.create("Diseño de Sistemas", "11/06/2013", "Parcial 1", true);
+    this.create("Diseño de Sistemas", "15/11/2013", "Parcial 2", false);
+    this.create("Algoritmos", "31/07/2011", "TP", true);
   }
   
-  public void create(final String materia, final Date fecha, final String descripcion, final boolean aprobado) {
+  public void create(final String materia, final String fecha, final String descripcion, final boolean aprobado) {
     Nota nota = new Nota();
     nota.setNombreMateria(materia);
     nota.setFecha(fecha);

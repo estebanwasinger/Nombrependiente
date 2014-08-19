@@ -79,17 +79,17 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 		table.bindItemsToProperty("notas")
 		table.bindValueToProperty("notaSeleccionada")
 		
-		new Column<Nota>(table) //
+		new Column<Nota>(table) 
 			.setTitle("Fecha")
 			.setFixedSize(200)
 			.bindContentsToProperty("fecha")
 			
-		new Column<Nota>(table) //
+		new Column<Nota>(table) 
 			.setTitle("Descripcion")
 			.setFixedSize(200)
 			.bindContentsToProperty("descripcion")
 			
-		new Column<Nota>(table) //
+		new Column<Nota>(table) 
 			.setTitle("Aprobado")
 			.setFixedSize(200)
 			.bindContentsToTransformer([nota | if (nota.aprobado) "SI" else "NO"])
@@ -176,6 +176,22 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 			.setFontSize(12)
 			.foreground = Color::BLUE
 			
+		new Button(actionsPanel)
+			.setCaption("Cargar notas")
+			.onClick [ | modelObject.buscar ] 
+			.setAsDefault
+			.disableOnError
+			.setFontSize(12)
+			.foreground = Color::BLUE
+			
+		new Button(actionsPanel)
+			.setCaption("Editar Nota")
+			.onClick [ | this.editarNota] 
+			.setAsDefault
+			.disableOnError
+			.setFontSize(12)
+			.foreground = Color::BLUE
+			
 	}
 
 	// *************************************************************************
@@ -193,6 +209,7 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 		table.bindItemsToProperty("resultados")
 		table.bindValueToProperty("materiaSeleccionada")
 		this.describeResultsGrid(table)
+		
 	}
 	
 		/**
@@ -220,5 +237,13 @@ class SeguidorCarreraWindow extends SimpleWindow<SeguidorCarrera> {
 		dialog.onAccept[|modelObject.search]
 		dialog.open
 	}
-
+	
+	 def void editarNota(){
+		this.openDialogNota(new EditarNotaWindow(this, modelObject.notaSeleccionada))
+	}
+	
+	def openDialogNota(Dialog<?> dialog){
+		dialog.onAccept[|modelObject.buscar]
+		dialog.open
+	}
 }

@@ -1,26 +1,25 @@
 package materias.home
 
 import org.uqbar.commons.model.CollectionBasedHome
-import org.uqbar.commons.model.UserException
-import org.uqbar.commons.utils.ApplicationContext
 import org.uqbar.commons.utils.Observable
-import java.util.Date
 import materias.domain.Nota
+
 
 @Observable
 class HomeNotas extends CollectionBasedHome<Nota> {
 	
 	new() {
 		this.init
+	
 	}
 
 	def void init() {
-		this.create("Diseño de Sistemas", new Date,"Parcial 1", true)
-		this.create("Diseño de Sistemas", new Date,"Parcial 2", false)
-		this.create("Algoritmos", new Date,"TP", true)
+		this.create("Diseño de Sistemas", "11/06/2013","Parcial 1", true)
+		this.create("Diseño de Sistemas", "15/11/2013","Parcial 2", false)
+		this.create("Algoritmos", "31/07/2011","TP", true)
 	}	
 	
-	def void create(String materia, Date fecha, String descripcion, boolean aprobado) {
+	def void create(String materia, String fecha, String descripcion, boolean aprobado) {
 		var nota = new Nota
 		nota.nombreMateria = materia
 		nota.fecha = fecha
