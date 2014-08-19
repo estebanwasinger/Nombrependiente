@@ -11,11 +11,13 @@ import materias.domain.Nota;
 import materias.home.HomeMaterias;
 import materias.home.HomeNotas;
 import materias.ui.CrearMateriaWindow;
+import materias.ui.CrearNotaWindow;
 import materias.ui.EditarNotaWindow;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
+import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.bindings.ObservableProperty;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
@@ -188,6 +190,48 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
       }
     };
     ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector, _function_3);
+    Button _button = new Button(panelEdicionColumnas);
+    Button _setCaption = _button.setCaption("Cargar notas guardadas");
+    final Action _function_4 = new Action() {
+      public void execute() {
+        SeguidorCarrera _modelObject = SeguidorCarreraWindow.this.getModelObject();
+        _modelObject.buscar();
+      }
+    };
+    Button _onClick = _setCaption.onClick(_function_4);
+    Button _setAsDefault = _onClick.setAsDefault();
+    Link _disableOnError = _setAsDefault.disableOnError();
+    SkinnableControl _setFontSize = _disableOnError.setFontSize(9);
+    SkinnableControl verNotas = _setFontSize.setForeground(Color.GREEN);
+    Button _button_1 = new Button(panelEdicionColumnas);
+    Button _setCaption_1 = _button_1.setCaption("Editar Nota");
+    final Action _function_5 = new Action() {
+      public void execute() {
+        SeguidorCarreraWindow.this.editarNota();
+      }
+    };
+    Button _onClick_1 = _setCaption_1.onClick(_function_5);
+    Button _setAsDefault_1 = _onClick_1.setAsDefault();
+    Link _disableOnError_1 = _setAsDefault_1.disableOnError();
+    SkinnableControl _setFontSize_1 = _disableOnError_1.setFontSize(9);
+    SkinnableControl edicionNota = _setFontSize_1.setForeground(Color.GREEN);
+    Button _button_2 = new Button(panelEdicionColumnas);
+    Button _setCaption_2 = _button_2.setCaption("Agregar Nota");
+    final Action _function_6 = new Action() {
+      public void execute() {
+        SeguidorCarreraWindow.this.cargarNota();
+      }
+    };
+    Button _onClick_2 = _setCaption_2.onClick(_function_6);
+    Button _setAsDefault_2 = _onClick_2.setAsDefault();
+    Link _disableOnError_2 = _setAsDefault_2.disableOnError();
+    SkinnableControl _setFontSize_2 = _disableOnError_2.setFontSize(9);
+    SkinnableControl nuevaNota = _setFontSize_2.setForeground(Color.GREEN);
+    NotNullObservable notaMarcada = new NotNullObservable("notaSeleccionada");
+    edicionNota.<ControlBuilder>bindEnabled(notaMarcada);
+    NotNullObservable materiaMarcada = new NotNullObservable("materiaSeleccionada");
+    verNotas.<ControlBuilder>bindEnabled(materiaMarcada);
+    nuevaNota.<ControlBuilder>bindEnabled(materiaMarcada);
     Label _label_6 = new Label(mainPanel);
     _label_6.setText("Notas de Cursada");
   }
@@ -255,32 +299,7 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
       };
       Button _onClick_2 = _setCaption_2.onClick(_function_2);
       SkinnableControl _setFontSize_2 = _onClick_2.setFontSize(12);
-      _setFontSize_2.setForeground(Color.BLUE);
-      Button _button_3 = new Button(actionsPanel);
-      Button _setCaption_3 = _button_3.setCaption("Cargar notas");
-      final Action _function_3 = new Action() {
-        public void execute() {
-          SeguidorCarrera _modelObject = SeguidorCarreraWindow.this.getModelObject();
-          _modelObject.buscar();
-        }
-      };
-      Button _onClick_3 = _setCaption_3.onClick(_function_3);
-      Button _setAsDefault_1 = _onClick_3.setAsDefault();
-      Link _disableOnError_1 = _setAsDefault_1.disableOnError();
-      SkinnableControl _setFontSize_3 = _disableOnError_1.setFontSize(12);
-      _setFontSize_3.setForeground(Color.BLUE);
-      Button _button_4 = new Button(actionsPanel);
-      Button _setCaption_4 = _button_4.setCaption("Editar Nota");
-      final Action _function_4 = new Action() {
-        public void execute() {
-          SeguidorCarreraWindow.this.editarNota();
-        }
-      };
-      Button _onClick_4 = _setCaption_4.onClick(_function_4);
-      Button _setAsDefault_2 = _onClick_4.setAsDefault();
-      Link _disableOnError_2 = _setAsDefault_2.disableOnError();
-      SkinnableControl _setFontSize_4 = _disableOnError_2.setFontSize(12);
-      _xblockexpression = _setFontSize_4.setForeground(Color.BLUE);
+      _xblockexpression = _setFontSize_2.setForeground(Color.BLUE);
     }
     return _xblockexpression;
   }
@@ -334,6 +353,11 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
     Nota _notaSeleccionada = _modelObject.getNotaSeleccionada();
     EditarNotaWindow _editarNotaWindow = new EditarNotaWindow(this, _notaSeleccionada);
     this.openDialogNota(_editarNotaWindow);
+  }
+  
+  public void cargarNota() {
+    CrearNotaWindow _crearNotaWindow = new CrearNotaWindow(this);
+    this.openDialogNota(_crearNotaWindow);
   }
   
   public void openDialogNota(final Dialog<?> dialog) {

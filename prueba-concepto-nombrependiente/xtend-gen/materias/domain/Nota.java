@@ -113,4 +113,12 @@ public class Nota extends Entity {
     HomeNotas _homeNotas = this.getHomeNotas();
     return _homeNotas.getNotas();
   }
+  
+  public void cargarNota() {
+    this.validarDescripcion();
+    HomeNotas _homeNotas = this.getHomeNotas();
+    String _nombreMateria = this.getNombreMateria();
+    String _descripcion = this.getDescripcion();
+    _homeNotas.create(_nombreMateria, "", _descripcion, false);
+  }
 }

@@ -1,6 +1,7 @@
 package materias.ui;
 
 import materias.domain.Nota;
+import materias.home.HomeNotas;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.CheckBox;
@@ -9,6 +10,7 @@ import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
+import org.uqbar.commons.utils.ApplicationContext;
 import org.uqbar.lacar.ui.model.Action;
 import org.uqbar.lacar.ui.model.ControlBuilder;
 
@@ -56,5 +58,11 @@ public class EditarNotaWindow extends Dialog<Nota> {
       }
     };
     _setCaption_1.onClick(_function_1);
+  }
+  
+  public HomeNotas homeNotas() {
+    ApplicationContext _instance = ApplicationContext.getInstance();
+    Object _singleton = _instance.<Object>getSingleton(Nota.class);
+    return ((HomeNotas) _singleton);
   }
 }

@@ -50,4 +50,10 @@ class Nota extends Entity {
 	def List<Nota> getNotas(){
 		getHomeNotas().getNotas()
 	}
+	
+	def cargarNota(){
+		validarDescripcion()
+		getHomeNotas.create(nombreMateria, "" ,descripcion, false)
+	
+	}
 }

@@ -95,9 +95,4 @@ class HomeMaterias extends CollectionBasedHome<Materia> {
 		null
 	}
 	
-	
-	/**
-	 * Para el proyecto web - se mantiene la busqueda por Identificador
-	 */
-
 }

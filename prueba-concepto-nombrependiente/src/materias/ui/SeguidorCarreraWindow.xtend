@@ -25,6 +25,7 @@ import org.uqbar.commons.utils.ApplicationContext
 import org.uqbar.commons.utils.Observable
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.windows.ErrorsPanel
+import org.uqbar.arena.bindings.NotNullObservable
 
 @Observable
 class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
@@ -151,8 +152,39 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 			bindValueToProperty("materiaSeleccionada.ubicacion")
 		]
 		
-		new Label(mainPanel).setText = ("Notas de Cursada")
+		var verNotas = new Button(panelEdicionColumnas)
+			.setCaption("Cargar notas guardadas")
+			.onClick [ | modelObject.buscar ] 
+			.setAsDefault
+			.disableOnError
+			.setFontSize(9)
+			.foreground = Color::GREEN
+			
+		var edicionNota = new Button(panelEdicionColumnas)
+			.setCaption("Editar Nota")
+			.onClick [ | this.editarNota] 
+			.setAsDefault
+			.disableOnError
+			.setFontSize(9)
+			.foreground = Color::GREEN
+			
+		var nuevaNota = new Button(panelEdicionColumnas)
+			.setCaption("Agregar Nota")
+			.onClick [ | this.cargarNota] 
+			.setAsDefault
+			.disableOnError
+			.setFontSize(9)
+			.foreground = Color::GREEN
+				
+		var notaMarcada = new NotNullObservable("notaSeleccionada")
+		edicionNota.bindEnabled(notaMarcada)
 		
+		var materiaMarcada = new NotNullObservable("materiaSeleccionada")
+		verNotas.bindEnabled(materiaMarcada)
+		nuevaNota.bindEnabled(materiaMarcada)
+					
+		new Label(mainPanel).setText = ("Notas de Cursada")
+			
 	}
 	
 	
@@ -206,23 +238,7 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 			.onClick [ | this.crearMateria ]
 			.setFontSize(12)
 			.foreground = Color::BLUE
-			
-		new Button(actionsPanel)
-			.setCaption("Cargar notas")
-			.onClick [ | modelObject.buscar ] 
-			.setAsDefault
-			.disableOnError
-			.setFontSize(12)
-			.foreground = Color::BLUE
-			
-		new Button(actionsPanel)
-			.setCaption("Editar Nota")
-			.onClick [ | this.editarNota] 
-			.setAsDefault
-			.disableOnError
-			.setFontSize(12)
-			.foreground = Color::BLUE
-			
+						
 	}
 
 	// *************************************************************************
@@ -273,11 +289,14 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 		this.openDialogNota(new EditarNotaWindow(this, modelObject.notaSeleccionada))
 	}
 	
+	def void cargarNota(){
+		this.openDialogNota(new CrearNotaWindow(this))
+	}
+
+	
 	def openDialogNota(Dialog<?> dialog){
 		dialog.onAccept[|modelObject.buscar]
 		dialog.open
-	}
-	
-	
+	}	
 	
 }

@@ -45,8 +45,8 @@ class EditarNotaWindow extends Dialog<Nota>{
 			.onClick [|this.cancel]
 	}
 
-
-	
-	
+	def homeNotas() {
+		ApplicationContext::instance.getSingleton(typeof(Nota)) as HomeNotas
+	}
 	
 }
