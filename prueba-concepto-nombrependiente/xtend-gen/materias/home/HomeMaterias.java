@@ -33,16 +33,71 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
       }
     };
     ObjectExtensions.<Nota>operator_doubleArrow(notaParcial, _function);
+    Nota notaTP = new Nota();
+    final Procedure1<Nota> _function_1 = new Procedure1<Nota>() {
+      public void apply(final Nota it) {
+        it.setDescripcion("TP");
+        it.setFecha("20/11/2014");
+        it.setAprobado(Boolean.valueOf(true));
+        it.setNombreMateria("Analisis Matematico I");
+      }
+    };
+    ObjectExtensions.<Nota>operator_doubleArrow(notaTP, _function_1);
     notasAM.add(notaParcial);
+    notasAM.add(notaTP);
+    ArrayList<Nota> notasAYED = new ArrayList<Nota>();
+    Nota notaParcial1 = new Nota();
+    final Procedure1<Nota> _function_2 = new Procedure1<Nota>() {
+      public void apply(final Nota it) {
+        it.setDescripcion("Parcial 2");
+        it.setFecha("20/12/2013");
+        it.setAprobado(Boolean.valueOf(true));
+        it.setNombreMateria("Algoritmos");
+      }
+    };
+    ObjectExtensions.<Nota>operator_doubleArrow(notaParcial1, _function_2);
+    notasAYED.add(notaParcial1);
+    ArrayList<Nota> notasADS = new ArrayList<Nota>();
+    Nota notaParcial2 = new Nota();
+    final Procedure1<Nota> _function_3 = new Procedure1<Nota>() {
+      public void apply(final Nota it) {
+        it.setDescripcion("Parcial");
+        it.setFecha("12/08/2012");
+        it.setAprobado(Boolean.valueOf(true));
+        it.setNombreMateria("Analisis de Sistemas");
+      }
+    };
+    ObjectExtensions.<Nota>operator_doubleArrow(notaParcial2, _function_3);
+    notasADS.add(notaParcial2);
+    ArrayList<Nota> notasDDS = new ArrayList<Nota>();
+    Nota notaTP2 = new Nota();
+    final Procedure1<Nota> _function_4 = new Procedure1<Nota>() {
+      public void apply(final Nota it) {
+        it.setDescripcion("TP");
+        it.setFecha("01/06/2012");
+        it.setAprobado(Boolean.valueOf(true));
+        it.setNombreMateria("Diseño de Sistemas");
+      }
+    };
+    ObjectExtensions.<Nota>operator_doubleArrow(notaTP2, _function_4);
+    notasDDS.add(notaTP2);
+    ArrayList<Nota> notasSO = new ArrayList<Nota>();
+    Nota notaTP3 = new Nota();
+    final Procedure1<Nota> _function_5 = new Procedure1<Nota>() {
+      public void apply(final Nota it) {
+        it.setDescripcion("TP");
+        it.setFecha("01/05/2014");
+        it.setAprobado(Boolean.valueOf(true));
+        it.setNombreMateria("Sistemas Operativos");
+      }
+    };
+    ObjectExtensions.<Nota>operator_doubleArrow(notaTP3, _function_5);
+    notasSO.add(notaTP3);
     this.create("Analisis Matematico I", "2011", false, "Cafferata", "Nivel 1 - Anual", notasAM);
-    ArrayList<Nota> _arrayList = new ArrayList<Nota>();
-    this.create("Algoritmos", "2011", true, "Bruno", "Nivel 1 - 1er. Cuatrimestre", _arrayList);
-    ArrayList<Nota> _arrayList_1 = new ArrayList<Nota>();
-    this.create("Analisis de Sistemas", "2012", true, "Garbarini", "Nivel 2 - Anual", _arrayList_1);
-    ArrayList<Nota> _arrayList_2 = new ArrayList<Nota>();
-    this.create("Diseño de Sistemas", "2013", false, "Dodino", "Nivel 3 - 1er. Cuatrimestre", _arrayList_2);
-    ArrayList<Nota> _arrayList_3 = new ArrayList<Nota>();
-    this.create("Sistemas Operativos", "2012", true, "Bruno", "Nivel 3 - 2do. Cuatrimestre", _arrayList_3);
+    this.create("Algoritmos", "2011", true, "Bruno", "Nivel 1 - 1er. Cuatrimestre", notasAYED);
+    this.create("Analisis de Sistemas", "2012", true, "Garbarini", "Nivel 2 - Anual", notasADS);
+    this.create("Diseño de Sistemas", "2013", false, "Dodino", "Nivel 3 - 1er. Cuatrimestre", notasDDS);
+    this.create("Sistemas Operativos", "2012", true, "Bruno", "Nivel 3 - 2do. Cuatrimestre", notasSO);
   }
   
   public void create(final String nombre, final String anioCursada, final boolean finalAprobado, final String profesor, final String ubicacion, final List<Nota> notas) {

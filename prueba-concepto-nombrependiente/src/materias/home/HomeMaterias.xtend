@@ -18,18 +18,37 @@ class HomeMaterias extends CollectionBasedHome<Materia> {
 	def void init() {
 		var notasAM = new ArrayList<Nota>
 		var notaParcial = new Nota
-		notaParcial=>[
-			descripcion = "Parcial"
-			fecha = "20/12/2014"
-			aprobado = true
-			nombreMateria = "Analisis Matematico I"
-		]
+		notaParcial=>[descripcion = "Parcial"	fecha = "20/12/2014" aprobado = true nombreMateria = "Analisis Matematico I"]
+		var notaTP = new Nota
+		notaTP=>[descripcion = "TP"	fecha = "20/11/2014" aprobado = true nombreMateria = "Analisis Matematico I"]
 		notasAM.add(notaParcial)
+		notasAM.add(notaTP)
+		
+		var notasAYED = new ArrayList<Nota>
+		var notaParcial1 = new Nota
+		notaParcial1=>[descripcion = "Parcial 2"	fecha = "20/12/2013" aprobado = true nombreMateria = "Algoritmos"]
+		notasAYED.add(notaParcial1)
+		
+		var notasADS = new ArrayList<Nota>
+		var notaParcial2 = new Nota
+		notaParcial2=>[descripcion = "Parcial" fecha = "12/08/2012" aprobado = true nombreMateria = "Analisis de Sistemas"]
+		notasADS.add(notaParcial2)
+		
+		var notasDDS = new ArrayList<Nota>
+		var notaTP2 = new Nota
+		notaTP2=>[descripcion = "TP" fecha = "01/06/2012" aprobado = true nombreMateria = "Diseño de Sistemas"]
+		notasDDS.add(notaTP2)
+		
+		var notasSO = new ArrayList<Nota>
+		var notaTP3 = new Nota
+		notaTP3=>[descripcion = "TP" fecha = "01/05/2014" aprobado = true nombreMateria = "Sistemas Operativos"]
+		notasSO.add(notaTP3)
+
 		this.create("Analisis Matematico I","2011", false, "Cafferata","Nivel 1 - Anual", notasAM)
-		this.create("Algoritmos", "2011", true, "Bruno","Nivel 1 - 1er. Cuatrimestre",new ArrayList<Nota> )
-		this.create("Analisis de Sistemas", "2012", true, "Garbarini","Nivel 2 - Anual",new ArrayList<Nota> )
-		this.create("Diseño de Sistemas", "2013", false, "Dodino","Nivel 3 - 1er. Cuatrimestre",new ArrayList<Nota> )
-		this.create("Sistemas Operativos", "2012", true, "Bruno","Nivel 3 - 2do. Cuatrimestre",new ArrayList<Nota> )
+		this.create("Algoritmos", "2011", true, "Bruno","Nivel 1 - 1er. Cuatrimestre",notasAYED )
+		this.create("Analisis de Sistemas", "2012", true, "Garbarini","Nivel 2 - Anual",notasADS )
+		this.create("Diseño de Sistemas", "2013", false, "Dodino","Nivel 3 - 1er. Cuatrimestre",notasDDS )
+		this.create("Sistemas Operativos", "2012", true, "Bruno","Nivel 3 - 2do. Cuatrimestre", notasSO )
 		
 		
 	}
