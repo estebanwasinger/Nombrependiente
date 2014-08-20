@@ -7,7 +7,6 @@ import java.util.List;
 import materias.domain.Materia;
 import materias.domain.Nota;
 import materias.home.HomeMaterias;
-import materias.home.HomeNotas;
 import org.uqbar.commons.utils.ApplicationContext;
 import org.uqbar.commons.utils.Observable;
 
@@ -102,10 +101,5 @@ public class SeguidorCarrera implements Serializable {
   public HomeMaterias getHomeMaterias() {
     ApplicationContext _instance = ApplicationContext.getInstance();
     return _instance.<HomeMaterias>getSingleton(Materia.class);
-  }
-  
-  public HomeNotas getHomeNotas() {
-    ApplicationContext _instance = ApplicationContext.getInstance();
-    return _instance.<HomeNotas>getSingleton(Nota.class);
   }
 }

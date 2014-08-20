@@ -1,14 +1,12 @@
 package materias.home
 
-import org.uqbar.commons.utils.Observable
-import org.uqbar.commons.model.CollectionBasedHome
-import materias.domain.Materia
-import org.uqbar.commons.model.UserException
-import java.util.List
-import materias.domain.Ubicacion
-import org.uqbar.commons.utils.ApplicationContext
-import materias.domain.Nota
 import java.util.ArrayList
+import java.util.List
+import materias.domain.Materia
+import materias.domain.Nota
+import org.uqbar.commons.model.CollectionBasedHome
+import org.uqbar.commons.model.UserException
+import org.uqbar.commons.utils.Observable
 
 @Observable
 class HomeMaterias extends CollectionBasedHome<Materia> {

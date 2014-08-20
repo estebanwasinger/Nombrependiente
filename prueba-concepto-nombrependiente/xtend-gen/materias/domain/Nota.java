@@ -4,13 +4,10 @@ import com.google.common.base.Objects;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import materias.domain.Materia;
-import materias.home.HomeNotas;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.uqbar.commons.model.Entity;
 import org.uqbar.commons.model.UserException;
-import org.uqbar.commons.utils.ApplicationContext;
 import org.uqbar.commons.utils.Observable;
 
 @Observable
@@ -101,34 +98,5 @@ public class Nota extends Entity {
       _xblockexpression = materia.getAnioMateria(_nombreMateria);
     }
     return _xblockexpression;
-  }
-  
-  public void agregarNota() {
-    this.validarFecha();
-    this.validarDescripcion();
-    HomeNotas _homeNotas = this.getHomeNotas();
-    String _nombreMateria = this.getNombreMateria();
-    String _fecha = this.getFecha();
-    String _descripcion = this.getDescripcion();
-    Boolean _aprobado = this.getAprobado();
-    _homeNotas.create(_nombreMateria, _fecha, _descripcion, (_aprobado).booleanValue());
-  }
-  
-  public HomeNotas getHomeNotas() {
-    ApplicationContext _instance = ApplicationContext.getInstance();
-    return _instance.<HomeNotas>getSingleton(Nota.class);
-  }
-  
-  public List<Nota> getNotas() {
-    HomeNotas _homeNotas = this.getHomeNotas();
-    return _homeNotas.getNotas();
-  }
-  
-  public void cargarNota() {
-    this.validarDescripcion();
-    HomeNotas _homeNotas = this.getHomeNotas();
-    String _nombreMateria = this.getNombreMateria();
-    String _descripcion = this.getDescripcion();
-    _homeNotas.create(_nombreMateria, "", _descripcion, false);
   }
 }

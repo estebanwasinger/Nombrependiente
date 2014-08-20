@@ -8,8 +8,6 @@ import org.uqbar.commons.utils.Observable
 import materias.home.HomeMaterias
 import materias.domain.Materia
 import materias.domain.Nota
-import materias.home.HomeNotas
-import org.uqbar.commons.model.UserException
 
 @Observable
 class SeguidorCarrera implements Serializable {
@@ -51,9 +49,5 @@ class SeguidorCarrera implements Serializable {
 
 	def HomeMaterias getHomeMaterias() {
 		ApplicationContext.instance.getSingleton(typeof(Materia))
-	}
-
-	def HomeNotas getHomeNotas() {
-		ApplicationContext.instance.getSingleton(typeof(Nota))
 	}
 }

@@ -4,9 +4,6 @@ import org.uqbar.commons.model.Entity
 import org.uqbar.commons.utils.Observable
 import org.uqbar.commons.model.UserException
 import java.util.Calendar
-import org.uqbar.commons.utils.ApplicationContext
-import materias.home.HomeNotas
-import java.util.List
 import java.text.DateFormat
 
 @Observable
@@ -45,24 +42,5 @@ class Nota extends Entity {
 		var materia = new Materia
 		materia.getAnioMateria(nombreMateria)
 	}
-	
-	def agregarNota(){
-		validarFecha()
-		validarDescripcion()
-		getHomeNotas().create(nombreMateria, fecha, descripcion,aprobado)
-	}
-	
-	def HomeNotas getHomeNotas() {
-		ApplicationContext.instance.getSingleton(typeof(Nota))
-	}
-	
-	def List<Nota> getNotas(){
-		getHomeNotas().getNotas()
-	}
-	
-	def cargarNota(){
-		validarDescripcion()
-		getHomeNotas.create(nombreMateria, "" ,descripcion, false)
-	
-	}
+
 }

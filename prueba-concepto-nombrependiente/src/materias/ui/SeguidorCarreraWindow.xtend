@@ -1,15 +1,15 @@
 
 package materias.ui
 
-import java.awt.Color
 import java.util.List
 import materias.applicationModel.SeguidorCarrera
 import materias.domain.Materia
 import materias.domain.Nota
 import materias.home.HomeMaterias
-import materias.home.HomeNotas
+import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.bindings.ObservableProperty
 import org.uqbar.arena.layout.ColumnLayout
+import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.CheckBox
 import org.uqbar.arena.widgets.Label
@@ -19,14 +19,10 @@ import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
+import org.uqbar.arena.windows.ErrorsPanel
 import org.uqbar.arena.windows.MainWindow
-import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.utils.ApplicationContext
 import org.uqbar.commons.utils.Observable
-import org.uqbar.arena.layout.HorizontalLayout
-import org.uqbar.arena.windows.ErrorsPanel
-import org.uqbar.arena.bindings.NotNullObservable
-import org.uqbar.commons.utils.ApplicationContextConfiguration
 
 @Observable
 class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
@@ -68,7 +64,6 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 	}
 	def static main(String[] args) {
 		ApplicationContext.instance.configureSingleton(typeof(Materia), new HomeMaterias)
-		ApplicationContext.instance.configureSingleton(typeof(Nota), new HomeNotas)
 		new SeguidorCarreraWindow().startApplication
 	}
 

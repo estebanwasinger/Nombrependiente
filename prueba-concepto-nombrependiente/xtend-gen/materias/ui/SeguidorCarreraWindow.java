@@ -8,7 +8,6 @@ import materias.applicationModel.SeguidorCarrera;
 import materias.domain.Materia;
 import materias.domain.Nota;
 import materias.home.HomeMaterias;
-import materias.home.HomeNotas;
 import materias.ui.CrearMateriaWindow;
 import materias.ui.CrearNotaWindow;
 import materias.ui.EditarNotaWindow;
@@ -74,15 +73,12 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
     ApplicationContext _instance = ApplicationContext.getInstance();
     HomeMaterias _homeMaterias = new HomeMaterias();
     _instance.<HomeMaterias>configureSingleton(Materia.class, _homeMaterias);
-    ApplicationContext _instance_1 = ApplicationContext.getInstance();
-    HomeNotas _homeNotas = new HomeNotas();
-    _instance_1.<HomeNotas>configureSingleton(Nota.class, _homeNotas);
     SeguidorCarreraWindow _seguidorCarreraWindow = new SeguidorCarreraWindow();
     _seguidorCarreraWindow.startApplication();
   }
   
   public List<Object> asObjects(final List<?> list) {
-    final Function1<Object, Object> _function = new Function1<Object, Object>() {
+    final Function1<Object,Object> _function = new Function1<Object,Object>() {
       public Object apply(final Object it) {
         return ((Object) it);
       }
@@ -114,7 +110,7 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
     _setTitle_1.bindContentsToProperty("descripcion");
     Column<Nota> _column_2 = new Column<Nota>(table);
     Column<Nota> _setTitle_2 = _column_2.setTitle("Aprobado");
-    final Transformer<Nota, String> _function = new Transformer<Nota, String>() {
+    final Transformer<Nota,String> _function = new Transformer<Nota,String>() {
       public String transform(final Nota nota) {
         String _xifexpression = null;
         Boolean _aprobado = nota.getAprobado();
