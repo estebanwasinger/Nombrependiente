@@ -40,7 +40,7 @@ public class HomeUbicaciones extends CollectionBasedHome<Ubicacion> {
   
   public Ubicacion get(final String descripcion) {
     List<Ubicacion> _ubicaciones = this.getUbicaciones();
-    final Function1<Ubicacion,Boolean> _function = new Function1<Ubicacion,Boolean>() {
+    final Function1<Ubicacion, Boolean> _function = new Function1<Ubicacion, Boolean>() {
       public Boolean apply(final Ubicacion ubicacion) {
         String _descripcion = ubicacion.getDescripcion();
         return Boolean.valueOf(_descripcion.equals(descripcion));

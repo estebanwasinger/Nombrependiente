@@ -1,7 +1,6 @@
 package materias.ui;
 
 import materias.domain.Nota;
-import materias.home.HomeNotas;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.CheckBox;
@@ -10,12 +9,13 @@ import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
-import org.uqbar.commons.utils.ApplicationContext;
 import org.uqbar.lacar.ui.model.Action;
 import org.uqbar.lacar.ui.model.ControlBuilder;
 
 @SuppressWarnings("all")
 public class EditarNotaWindow extends Dialog<Nota> {
+  private TextBox fechaBox;
+  
   public EditarNotaWindow(final WindowOwner owner, final Nota nota) {
     super(owner, nota);
   }
@@ -28,7 +28,8 @@ public class EditarNotaWindow extends Dialog<Nota> {
     Label _label = new Label(form);
     _label.setText("Fecha");
     TextBox _textBox = new TextBox(form);
-    _textBox.<ControlBuilder>bindValueToProperty("fecha");
+    this.fechaBox = _textBox;
+    this.fechaBox.<ControlBuilder>bindValueToProperty("fecha");
     Label _label_1 = new Label(form);
     _label_1.setText("Descripción");
     TextBox _textBox_1 = new TextBox(form);
@@ -58,11 +59,5 @@ public class EditarNotaWindow extends Dialog<Nota> {
       }
     };
     _setCaption_1.onClick(_function_1);
-  }
-  
-  public HomeNotas homeNotas() {
-    ApplicationContext _instance = ApplicationContext.getInstance();
-    Object _singleton = _instance.<Object>getSingleton(Nota.class);
-    return ((HomeNotas) _singleton);
   }
 }

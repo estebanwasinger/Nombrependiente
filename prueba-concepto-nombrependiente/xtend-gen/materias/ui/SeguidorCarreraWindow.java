@@ -83,7 +83,7 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
   }
   
   public List<Object> asObjects(final List<?> list) {
-    final Function1<Object,Object> _function = new Function1<Object,Object>() {
+    final Function1<Object, Object> _function = new Function1<Object, Object>() {
       public Object apply(final Object it) {
         return ((Object) it);
       }
@@ -109,7 +109,7 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
     Table<Nota> table = new Table<Nota>(mainPanel, Nota.class);
     table.setHeigth(150);
     table.setWidth(600);
-    table.bindItemsToProperty("notas");
+    table.bindItemsToProperty("materiaSeleccionada.notas");
     table.<ControlBuilder>bindValueToProperty("notaSeleccionada");
     Column<Nota> _column = new Column<Nota>(table);
     Column<Nota> _setTitle = _column.setTitle("Fecha");
@@ -122,7 +122,7 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
     Column<Nota> _column_2 = new Column<Nota>(table);
     Column<Nota> _setTitle_2 = _column_2.setTitle("Aprobado");
     Column<Nota> _setFixedSize_2 = _setTitle_2.setFixedSize(200);
-    final Transformer<Nota,String> _function = new Transformer<Nota,String>() {
+    final Transformer<Nota, String> _function = new Transformer<Nota, String>() {
       public String transform(final Nota nota) {
         String _xifexpression = null;
         Boolean _aprobado = nota.getAprobado();
@@ -191,46 +191,32 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
     };
     ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector, _function_3);
     Button _button = new Button(panelEdicionColumnas);
-    Button _setCaption = _button.setCaption("Cargar notas guardadas");
+    Button _setCaption = _button.setCaption("Editar Nota");
     final Action _function_4 = new Action() {
       public void execute() {
-        SeguidorCarrera _modelObject = SeguidorCarreraWindow.this.getModelObject();
-        _modelObject.buscar();
+        SeguidorCarreraWindow.this.editarNota();
       }
     };
     Button _onClick = _setCaption.onClick(_function_4);
     Button _setAsDefault = _onClick.setAsDefault();
     Link _disableOnError = _setAsDefault.disableOnError();
     SkinnableControl _setFontSize = _disableOnError.setFontSize(9);
-    SkinnableControl verNotas = _setFontSize.setForeground(Color.GREEN);
+    SkinnableControl edicionNota = _setFontSize.setForeground(Color.GREEN);
     Button _button_1 = new Button(panelEdicionColumnas);
-    Button _setCaption_1 = _button_1.setCaption("Editar Nota");
+    Button _setCaption_1 = _button_1.setCaption("Agregar Nota");
     final Action _function_5 = new Action() {
       public void execute() {
-        SeguidorCarreraWindow.this.editarNota();
+        SeguidorCarreraWindow.this.cargarNota();
       }
     };
     Button _onClick_1 = _setCaption_1.onClick(_function_5);
     Button _setAsDefault_1 = _onClick_1.setAsDefault();
     Link _disableOnError_1 = _setAsDefault_1.disableOnError();
     SkinnableControl _setFontSize_1 = _disableOnError_1.setFontSize(9);
-    SkinnableControl edicionNota = _setFontSize_1.setForeground(Color.GREEN);
-    Button _button_2 = new Button(panelEdicionColumnas);
-    Button _setCaption_2 = _button_2.setCaption("Agregar Nota");
-    final Action _function_6 = new Action() {
-      public void execute() {
-        SeguidorCarreraWindow.this.cargarNota();
-      }
-    };
-    Button _onClick_2 = _setCaption_2.onClick(_function_6);
-    Button _setAsDefault_2 = _onClick_2.setAsDefault();
-    Link _disableOnError_2 = _setAsDefault_2.disableOnError();
-    SkinnableControl _setFontSize_2 = _disableOnError_2.setFontSize(9);
-    SkinnableControl nuevaNota = _setFontSize_2.setForeground(Color.GREEN);
+    SkinnableControl nuevaNota = _setFontSize_1.setForeground(Color.GREEN);
     NotNullObservable notaMarcada = new NotNullObservable("notaSeleccionada");
     edicionNota.<ControlBuilder>bindEnabled(notaMarcada);
     NotNullObservable materiaMarcada = new NotNullObservable("materiaSeleccionada");
-    verNotas.<ControlBuilder>bindEnabled(materiaMarcada);
     nuevaNota.<ControlBuilder>bindEnabled(materiaMarcada);
     Label _label_6 = new Label(mainPanel);
     _label_6.setText("Notas de Cursada");
@@ -356,7 +342,9 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
   }
   
   public void cargarNota() {
-    CrearNotaWindow _crearNotaWindow = new CrearNotaWindow(this);
+    SeguidorCarrera _modelObject = this.getModelObject();
+    Materia _materiaSeleccionada = _modelObject.getMateriaSeleccionada();
+    CrearNotaWindow _crearNotaWindow = new CrearNotaWindow(this, _materiaSeleccionada);
     this.openDialogNota(_crearNotaWindow);
   }
   

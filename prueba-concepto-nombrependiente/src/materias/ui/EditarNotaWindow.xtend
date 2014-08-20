@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils
 import org.uqbar.arena.widgets.CheckBox
 
 class EditarNotaWindow extends Dialog<Nota>{
+	var TextBox fechaBox
 	
 	new(WindowOwner owner, Nota nota) {
 		super(owner, nota)
@@ -25,8 +26,8 @@ class EditarNotaWindow extends Dialog<Nota>{
 		form.layout = new ColumnLayout(2)
 		
 		new Label(form).text = "Fecha"
-		new TextBox(form).bindValueToProperty("fecha")
-		
+		fechaBox = new TextBox(form)
+		fechaBox.bindValueToProperty("fecha")
 		new Label(form).text = "Descripción"
 		new TextBox(form).bindValueToProperty("descripcion")
 		
@@ -37,16 +38,15 @@ class EditarNotaWindow extends Dialog<Nota>{
 	override protected void addActions(Panel actions) {
 		new Button(actions)
 			.setCaption("Aceptar")
-			.onClick [|this.accept]
+			.onClick [|this.accept
+			]
 			.setAsDefault.disableOnError
 
 		new Button(actions) 
 			.setCaption("Cancelar")
 			.onClick [|this.cancel]
 	}
-
-	def homeNotas() {
-		ApplicationContext::instance.getSingleton(typeof(Nota)) as HomeNotas
-	}
 	
+
+
 }

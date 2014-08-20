@@ -26,6 +26,7 @@ import org.uqbar.commons.utils.Observable
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.windows.ErrorsPanel
 import org.uqbar.arena.bindings.NotNullObservable
+import org.uqbar.commons.utils.ApplicationContextConfiguration
 
 @Observable
 class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
@@ -94,9 +95,8 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 		var table = new Table<Nota>(mainPanel, typeof(Nota))
 		table.heigth = 150
 		table.width = 600
-		table.bindItemsToProperty("notas")
+		table.bindItemsToProperty("materiaSeleccionada.notas")
 		table.bindValueToProperty("notaSeleccionada")
-		
 		new Column<Nota>(table) 
 			.setTitle("Fecha")
 			.setFixedSize(200)
@@ -152,14 +152,6 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 			bindValueToProperty("materiaSeleccionada.ubicacion")
 		]
 		
-		var verNotas = new Button(panelEdicionColumnas)
-			.setCaption("Cargar notas guardadas")
-			.onClick [ | modelObject.buscar ] 
-			.setAsDefault
-			.disableOnError
-			.setFontSize(9)
-			.foreground = Color::GREEN
-			
 		var edicionNota = new Button(panelEdicionColumnas)
 			.setCaption("Editar Nota")
 			.onClick [ | this.editarNota] 
@@ -180,7 +172,6 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 		edicionNota.bindEnabled(notaMarcada)
 		
 		var materiaMarcada = new NotNullObservable("materiaSeleccionada")
-		verNotas.bindEnabled(materiaMarcada)
 		nuevaNota.bindEnabled(materiaMarcada)
 					
 		new Label(mainPanel).setText = ("Notas de Cursada")
@@ -290,7 +281,7 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 	}
 	
 	def void cargarNota(){
-		this.openDialogNota(new CrearNotaWindow(this))
+		this.openDialogNota(new CrearNotaWindow(this, modelObject.materiaSeleccionada))
 	}
 
 	

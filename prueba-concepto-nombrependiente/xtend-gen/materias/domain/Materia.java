@@ -1,8 +1,10 @@
 package materias.domain;
 
 import com.google.common.base.Objects;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import materias.domain.Nota;
 import materias.home.HomeMaterias;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
@@ -72,6 +74,16 @@ public class Materia extends Entity {
   
   public void setUbicacion(final String ubicacion) {
     this._ubicacion = ubicacion;
+  }
+  
+  private List<Nota> _notas;
+  
+  public List<Nota> getNotas() {
+    return this._notas;
+  }
+  
+  public void setNotas(final List<Nota> notas) {
+    this._notas = notas;
   }
   
   public void validarNombre() {
@@ -150,12 +162,13 @@ public class Materia extends Entity {
     this.validarNombre();
     HomeMaterias _homeMaterias = this.getHomeMaterias();
     String _nombre = this.getNombre();
-    _homeMaterias.create(_nombre, null, false, "", "");
+    ArrayList<Nota> _arrayList = new ArrayList<Nota>();
+    _homeMaterias.create(_nombre, null, false, "", "", _arrayList);
   }
   
   public String getAnioMateria(final String nombre) {
     List<Materia> _materias = this.getMaterias();
-    final Function1<Materia,Boolean> _function = new Function1<Materia,Boolean>() {
+    final Function1<Materia, Boolean> _function = new Function1<Materia, Boolean>() {
       public Boolean apply(final Materia materia) {
         String _nombre = materia.getNombre();
         return Boolean.valueOf(Objects.equal(_nombre, nombre));

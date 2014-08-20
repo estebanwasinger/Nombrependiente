@@ -7,6 +7,7 @@ import java.util.Calendar
 import java.util.List
 import materias.home.HomeMaterias
 import org.uqbar.commons.utils.ApplicationContext
+import java.util.ArrayList
 
 @Observable
 class Materia extends Entity {
@@ -17,6 +18,7 @@ class Materia extends Entity {
 	@Property Boolean finalAprobado = false
 	@Property String profesor
 	@Property String ubicacion
+	@Property List<Nota> notas
 	
 	def validarNombre() {
 		if (nombre == null) {
@@ -48,7 +50,7 @@ class Materia extends Entity {
 	
 	def crearMateria(){
 		validarNombre()
-		getHomeMaterias.create(nombre, null ,false ,"" ,"")
+		getHomeMaterias.create(nombre, null ,false ,"" ,"",new ArrayList<Nota>)
 	}
 	
 	def getAnioMateria(String nombre){

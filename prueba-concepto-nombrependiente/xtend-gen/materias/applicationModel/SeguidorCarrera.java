@@ -8,7 +8,6 @@ import materias.domain.Materia;
 import materias.domain.Nota;
 import materias.home.HomeMaterias;
 import materias.home.HomeNotas;
-import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.ApplicationContext;
 import org.uqbar.commons.utils.Observable;
 
@@ -90,13 +89,9 @@ public class SeguidorCarrera implements Serializable {
     Materia _materiaSeleccionada = this.getMateriaSeleccionada();
     boolean _notEquals = (!Objects.equal(_materiaSeleccionada, null));
     if (_notEquals) {
-      HomeNotas _homeNotas = this.getHomeNotas();
       Materia _materiaSeleccionada_1 = this.getMateriaSeleccionada();
-      String _nombre = _materiaSeleccionada_1.getNombre();
-      List<Nota> _buscar = _homeNotas.buscar(_nombre);
-      this.setNotas(_buscar);
-    } else {
-      throw new UserException("No ha seleccionado ninguna materia");
+      List<Nota> _notas = _materiaSeleccionada_1.getNotas();
+      this.setNotas(_notas);
     }
   }
   

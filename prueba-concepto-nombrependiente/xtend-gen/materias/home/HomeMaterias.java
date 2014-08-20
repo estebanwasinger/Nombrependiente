@@ -1,13 +1,17 @@
 package materias.home;
 
 import com.google.common.base.Objects;
+import java.util.ArrayList;
 import java.util.List;
 import materias.domain.Materia;
+import materias.domain.Nota;
 import materias.domain.Ubicacion;
 import materias.home.HomeUbicaciones;
 import org.apache.commons.collections15.Predicate;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.ObjectExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.commons.model.CollectionBasedHome;
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.ApplicationContext;
@@ -21,11 +25,27 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
   }
   
   public void init() {
-    this.create("Analisis Matematico I", "2011", false, "Cafferata", "Nivel 1 - Anual");
-    this.create("Algoritmos", "2011", true, "Bruno", "Nivel 1 - 1er. Cuatrimestre");
-    this.create("Analisis de Sistemas", "2012", true, "Garbarini", "Nivel 2 - Anual");
-    this.create("Diseño de Sistemas", "2013", false, "Dodino", "Nivel 3 - 1er. Cuatrimestre");
-    this.create("Sistemas Operativos", "2012", true, "Bruno", "Nivel 3 - 2do. Cuatrimestre");
+    ArrayList<Nota> notasAM = new ArrayList<Nota>();
+    Nota notaParcial = new Nota();
+    final Procedure1<Nota> _function = new Procedure1<Nota>() {
+      public void apply(final Nota it) {
+        it.setDescripcion("Parcial");
+        it.setFecha("20/12/2014");
+        it.setAprobado(Boolean.valueOf(true));
+        it.setNombreMateria("Analisis Matematico I");
+      }
+    };
+    ObjectExtensions.<Nota>operator_doubleArrow(notaParcial, _function);
+    notasAM.add(notaParcial);
+    this.create("Analisis Matematico I", "2011", false, "Cafferata", "Nivel 1 - Anual", notasAM);
+    ArrayList<Nota> _arrayList = new ArrayList<Nota>();
+    this.create("Algoritmos", "2011", true, "Bruno", "Nivel 1 - 1er. Cuatrimestre", _arrayList);
+    ArrayList<Nota> _arrayList_1 = new ArrayList<Nota>();
+    this.create("Analisis de Sistemas", "2012", true, "Garbarini", "Nivel 2 - Anual", _arrayList_1);
+    ArrayList<Nota> _arrayList_2 = new ArrayList<Nota>();
+    this.create("Diseño de Sistemas", "2013", false, "Dodino", "Nivel 3 - 1er. Cuatrimestre", _arrayList_2);
+    ArrayList<Nota> _arrayList_3 = new ArrayList<Nota>();
+    this.create("Sistemas Operativos", "2012", true, "Bruno", "Nivel 3 - 2do. Cuatrimestre", _arrayList_3);
   }
   
   public Ubicacion getUbicacion(final String modeloDescripcion) {
@@ -34,13 +54,14 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
     return ((HomeUbicaciones) _singleton).get(modeloDescripcion);
   }
   
-  public void create(final String nombre, final String anioCursada, final boolean finalAprobado, final String profesor, final String ubicacion) {
+  public void create(final String nombre, final String anioCursada, final boolean finalAprobado, final String profesor, final String ubicacion, final List<Nota> notas) {
     Materia materia = new Materia();
     materia.setNombre(nombre);
     materia.setFinalAprobado(Boolean.valueOf(finalAprobado));
     materia.setAnioCursada(anioCursada);
     materia.setProfesor(profesor);
     materia.setUbicacion(ubicacion);
+    materia.setNotas(notas);
     this.create(materia);
   }
   
@@ -72,7 +93,7 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
    */
   public List<Materia> search(final String nombre) {
     List<Materia> _allInstances = this.allInstances();
-    final Function1<Materia,Boolean> _function = new Function1<Materia,Boolean>() {
+    final Function1<Materia, Boolean> _function = new Function1<Materia, Boolean>() {
       public Boolean apply(final Materia materia) {
         String _nombre = materia.getNombre();
         return Boolean.valueOf(HomeMaterias.this.match(nombre, _nombre));

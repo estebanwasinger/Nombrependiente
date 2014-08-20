@@ -40,11 +40,8 @@ class SeguidorCarrera implements Serializable {
 
 		// FIN WORKAROUND
 		 if (materiaSeleccionada != null){
-		notas = getHomeNotas().buscar(materiaSeleccionada.nombre)
-		} else {
-			throw new UserException("No ha seleccionado ninguna materia")
-		} 
-		
+		notas = materiaSeleccionada.notas
+		}
 	} 
 	
 	def void clear() {

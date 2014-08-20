@@ -57,7 +57,7 @@ public class HomeNotas extends CollectionBasedHome<Nota> {
   
   public List<Nota> buscar(final String nombre) {
     List<Nota> _allInstances = this.allInstances();
-    final Function1<Nota,Boolean> _function = new Function1<Nota,Boolean>() {
+    final Function1<Nota, Boolean> _function = new Function1<Nota, Boolean>() {
       public Boolean apply(final Nota materia) {
         String _nombreMateria = materia.getNombreMateria();
         return Boolean.valueOf(HomeNotas.this.match(nombre, _nombreMateria));
