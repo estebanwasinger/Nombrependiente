@@ -55,10 +55,10 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 		panel2Columnas.setLayout(new ColumnLayout(2))
 		var panelIzquierda = new Panel(panel2Columnas)
 		var panelDerecha = new Panel(panel2Columnas)
-				new Label(panelIzquierda)=>[
+		new Label(panelIzquierda) => [
 			text = "Seguidor de Carreras"
 			fontSize = 20
-			]
+		]
 		var panelBotones = new Panel(panelIzquierda).setLayout(new HorizontalLayout)
 		addActions(panelBotones)
 		createFormPanel(panelIzquierda)
@@ -86,30 +86,22 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 	}
 	
 	
-
-	def void grillaDeMaterias(Panel mainPanel) {
-		this.createResultsGrid(mainPanel)
-	}
-	
 	def void grillaDeNotas(Panel mainPanel){
 		var table = new Table<Nota>(mainPanel, typeof(Nota))
 		table.heigth = 150
-		table.width = 600
+		table.width = 400
 		table.bindItemsToProperty("materiaSeleccionada.notas")
 		table.bindValueToProperty("notaSeleccionada")
 		new Column<Nota>(table) 
 			.setTitle("Fecha")
-			.setFixedSize(200)
 			.bindContentsToProperty("fecha")
 			
 		new Column<Nota>(table) 
 			.setTitle("Descripcion")
-			.setFixedSize(200)
 			.bindContentsToProperty("descripcion")
 			
 		new Column<Nota>(table) 
 			.setTitle("Aprobado")
-			.setFixedSize(200)
 			.bindContentsToTransformer([nota | if (nota.aprobado) "SI" else "NO"])
 			
 }
@@ -152,21 +144,20 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 			bindValueToProperty("materiaSeleccionada.ubicacion")
 		]
 		
-		var edicionNota = new Button(panelEdicionColumnas)
+		var panelBotonesNotas = new Panel(mainPanel).layout = new HorizontalLayout()
+		var edicionNota = new Button(panelBotonesNotas)
 			.setCaption("Editar Nota")
 			.onClick [ | this.editarNota] 
 			.setAsDefault
 			.disableOnError
 			.setFontSize(9)
-			.foreground = Color::GREEN
 			
-		var nuevaNota = new Button(panelEdicionColumnas)
+		var nuevaNota = new Button(panelBotonesNotas)
 			.setCaption("Agregar Nota")
 			.onClick [ | this.cargarNota] 
 			.setAsDefault
 			.disableOnError
 			.setFontSize(9)
-			.foreground = Color::GREEN
 				
 		var notaMarcada = new NotNullObservable("notaSeleccionada")
 		edicionNota.bindEnabled(notaMarcada)
@@ -199,15 +190,6 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 			]
 	}
 
-	/**
-	 * Acciones asociadas de la pantalla principal. Interesante para ver es cómo funciona el binding que mapea
-	 * la acción que se dispara cuando el usuario presiona click Para que el binding sea flexible necesito
-	 * decirle objeto al que disparo la acción y el mensaje a enviarle Contra: estoy atado a tener métodos sin
-	 * parámetros. Eso me impide poder pasarle parámetros como en el caso del alta/modificación.
-	 * Buscar/Limpiar -> son acciones que resuelve el modelo (BuscadorCelular) Nuevo -> necesita disparar una
-	 * pantalla de alta, entonces lo resuelve la vista (this)
-	 *
-	 */
 	def addActions(Panel actionsPanel) {
 
 		new Button(actionsPanel)
@@ -216,47 +198,32 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 			.setAsDefault
 			.disableOnError
 			.setFontSize(12)
-			.foreground = Color::BLUE
 
 		new Button(actionsPanel) 
 			.setCaption("Limpiar")
 			.onClick [ | modelObject.clear ]
 			.setFontSize(12)
-			.foreground = Color::BLUE
 			
 		new Button(actionsPanel) //
 			.setCaption("Nueva Materia")
 			.onClick [ | this.crearMateria ]
 			.setFontSize(12)
-			.foreground = Color::BLUE
 						
 	}
 
-	// *************************************************************************
-	// ** RESULTADOS DE LA BUSQUEDA
-	// *************************************************************************
-	/**
-	 * Se crea la grilla en el panel de abajo El binding es: el contenido de la grilla en base a los
-	 * resultados de la búsqueda Cuando el usuario presiona Buscar, se actualiza el model, y éste a su vez
-	 * dispara la notificación a la grilla que funciona como Observer
-	 */
-	def protected createResultsGrid(Panel mainPanel) {
+	//***************************************
+	//**    Resultado busqueda materias    **
+	//***************************************
+	def protected grillaDeMaterias(Panel mainPanel) {
 		var table = new Table<Materia>(mainPanel, typeof(Materia))
-		table.heigth = 150 //mismo valor que la columna para que sea una sola (columna)
-		table.width = 450
+		table.heigth = 230 //mismo valor que la columna para que sea una sola (columna)
+		table.width = 300
 		table.bindItemsToProperty("resultados")
 		table.bindValueToProperty("materiaSeleccionada")
 		this.describeResultsGrid(table)
 		
 	}
 	
-		/**
-	 * Define las columnas de la grilla Cada columna se puede bindear 1) contra una propiedad del model, como
-	 * en el caso del número o el nombre 2) contra un transformer que recibe el model y devuelve un tipo
-	 * (generalmente String), como en el caso de Recibe Resumen de Cuenta
-	 *
-	 * @param table
-	 */
 	def void describeResultsGrid(Table<Materia> table) {
 		new Column<Materia>(table) //
 			.setTitle("Nombre")
@@ -264,9 +231,9 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 			.bindContentsToProperty("nombre")
 	}	
 		
-	// ********************************************************
-	// ** Acciones
-	// ********************************************************
+	// *******************************
+	// **          Acciones         **
+	// *******************************
 	def void crearMateria() {
 		this.openDialog(new CrearMateriaWindow(this))
 	}
@@ -281,7 +248,7 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 	}
 	
 	def void cargarNota(){
-		this.openDialogNota(new CrearNotaWindow(this, modelObject.materiaSeleccionada))
+		this.openDialogNota(new CrearNotaWindow(this, new Nota,modelObject.materiaSeleccionada))
 	}
 
 	

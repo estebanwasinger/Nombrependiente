@@ -2,7 +2,6 @@ package materias.ui;
 
 import com.google.common.collect.Lists;
 import com.uqbar.commons.collections.Transformer;
-import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 import materias.applicationModel.SeguidorCarrera;
@@ -83,7 +82,7 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
   }
   
   public List<Object> asObjects(final List<?> list) {
-    final Function1<Object,Object> _function = new Function1<Object,Object>() {
+    final Function1<Object, Object> _function = new Function1<Object, Object>() {
       public Object apply(final Object it) {
         return ((Object) it);
       }
@@ -101,28 +100,21 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
     _modelObject.search();
   }
   
-  public void grillaDeMaterias(final Panel mainPanel) {
-    this.createResultsGrid(mainPanel);
-  }
-  
   public void grillaDeNotas(final Panel mainPanel) {
     Table<Nota> table = new Table<Nota>(mainPanel, Nota.class);
     table.setHeigth(150);
-    table.setWidth(600);
+    table.setWidth(400);
     table.bindItemsToProperty("materiaSeleccionada.notas");
     table.<ControlBuilder>bindValueToProperty("notaSeleccionada");
     Column<Nota> _column = new Column<Nota>(table);
     Column<Nota> _setTitle = _column.setTitle("Fecha");
-    Column<Nota> _setFixedSize = _setTitle.setFixedSize(200);
-    _setFixedSize.bindContentsToProperty("fecha");
+    _setTitle.bindContentsToProperty("fecha");
     Column<Nota> _column_1 = new Column<Nota>(table);
     Column<Nota> _setTitle_1 = _column_1.setTitle("Descripcion");
-    Column<Nota> _setFixedSize_1 = _setTitle_1.setFixedSize(200);
-    _setFixedSize_1.bindContentsToProperty("descripcion");
+    _setTitle_1.bindContentsToProperty("descripcion");
     Column<Nota> _column_2 = new Column<Nota>(table);
     Column<Nota> _setTitle_2 = _column_2.setTitle("Aprobado");
-    Column<Nota> _setFixedSize_2 = _setTitle_2.setFixedSize(200);
-    final Transformer<Nota,String> _function = new Transformer<Nota,String>() {
+    final Transformer<Nota, String> _function = new Transformer<Nota, String>() {
       public String transform(final Nota nota) {
         String _xifexpression = null;
         Boolean _aprobado = nota.getAprobado();
@@ -134,7 +126,7 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
         return _xifexpression;
       }
     };
-    _setFixedSize_2.<String>bindContentsToTransformer(_function);
+    _setTitle_2.<String>bindContentsToTransformer(_function);
   }
   
   public void panelEdicionMateria(final Panel mainPanel) {
@@ -190,7 +182,10 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
       }
     };
     ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector, _function_3);
-    Button _button = new Button(panelEdicionColumnas);
+    Panel _panel = new Panel(mainPanel);
+    HorizontalLayout _horizontalLayout = new HorizontalLayout();
+    Panel panelBotonesNotas = _panel.setLayout(_horizontalLayout);
+    Button _button = new Button(panelBotonesNotas);
     Button _setCaption = _button.setCaption("Editar Nota");
     final Action _function_4 = new Action() {
       public void execute() {
@@ -200,9 +195,8 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
     Button _onClick = _setCaption.onClick(_function_4);
     Button _setAsDefault = _onClick.setAsDefault();
     Link _disableOnError = _setAsDefault.disableOnError();
-    SkinnableControl _setFontSize = _disableOnError.setFontSize(9);
-    SkinnableControl edicionNota = _setFontSize.setForeground(Color.GREEN);
-    Button _button_1 = new Button(panelEdicionColumnas);
+    SkinnableControl edicionNota = _disableOnError.setFontSize(9);
+    Button _button_1 = new Button(panelBotonesNotas);
     Button _setCaption_1 = _button_1.setCaption("Agregar Nota");
     final Action _function_5 = new Action() {
       public void execute() {
@@ -212,8 +206,7 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
     Button _onClick_1 = _setCaption_1.onClick(_function_5);
     Button _setAsDefault_1 = _onClick_1.setAsDefault();
     Link _disableOnError_1 = _setAsDefault_1.disableOnError();
-    SkinnableControl _setFontSize_1 = _disableOnError_1.setFontSize(9);
-    SkinnableControl nuevaNota = _setFontSize_1.setForeground(Color.GREEN);
+    SkinnableControl nuevaNota = _disableOnError_1.setFontSize(9);
     NotNullObservable notaMarcada = new NotNullObservable("notaSeleccionada");
     edicionNota.<ControlBuilder>bindEnabled(notaMarcada);
     NotNullObservable materiaMarcada = new NotNullObservable("materiaSeleccionada");
@@ -241,14 +234,6 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
     ObjectExtensions.<TextBox>operator_doubleArrow(_textBox, _function);
   }
   
-  /**
-   * Acciones asociadas de la pantalla principal. Interesante para ver es cómo funciona el binding que mapea
-   * la acción que se dispara cuando el usuario presiona click Para que el binding sea flexible necesito
-   * decirle objeto al que disparo la acción y el mensaje a enviarle Contra: estoy atado a tener métodos sin
-   * parámetros. Eso me impide poder pasarle parámetros como en el caso del alta/modificación.
-   * Buscar/Limpiar -> son acciones que resuelve el modelo (BuscadorCelular) Nuevo -> necesita disparar una
-   * pantalla de alta, entonces lo resuelve la vista (this)
-   */
   public SkinnableControl addActions(final Panel actionsPanel) {
     SkinnableControl _xblockexpression = null;
     {
@@ -263,8 +248,7 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
       Button _onClick = _setCaption.onClick(_function);
       Button _setAsDefault = _onClick.setAsDefault();
       Link _disableOnError = _setAsDefault.disableOnError();
-      SkinnableControl _setFontSize = _disableOnError.setFontSize(12);
-      _setFontSize.setForeground(Color.BLUE);
+      _disableOnError.setFontSize(12);
       Button _button_1 = new Button(actionsPanel);
       Button _setCaption_1 = _button_1.setCaption("Limpiar");
       final Action _function_1 = new Action() {
@@ -274,8 +258,7 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
         }
       };
       Button _onClick_1 = _setCaption_1.onClick(_function_1);
-      SkinnableControl _setFontSize_1 = _onClick_1.setFontSize(12);
-      _setFontSize_1.setForeground(Color.BLUE);
+      _onClick_1.setFontSize(12);
       Button _button_2 = new Button(actionsPanel);
       Button _setCaption_2 = _button_2.setCaption("Nueva Materia");
       final Action _function_2 = new Action() {
@@ -284,33 +267,20 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
         }
       };
       Button _onClick_2 = _setCaption_2.onClick(_function_2);
-      SkinnableControl _setFontSize_2 = _onClick_2.setFontSize(12);
-      _xblockexpression = _setFontSize_2.setForeground(Color.BLUE);
+      _xblockexpression = _onClick_2.setFontSize(12);
     }
     return _xblockexpression;
   }
   
-  /**
-   * Se crea la grilla en el panel de abajo El binding es: el contenido de la grilla en base a los
-   * resultados de la búsqueda Cuando el usuario presiona Buscar, se actualiza el model, y éste a su vez
-   * dispara la notificación a la grilla que funciona como Observer
-   */
-  protected void createResultsGrid(final Panel mainPanel) {
+  protected void grillaDeMaterias(final Panel mainPanel) {
     Table<Materia> table = new Table<Materia>(mainPanel, Materia.class);
-    table.setHeigth(150);
-    table.setWidth(450);
+    table.setHeigth(230);
+    table.setWidth(300);
     table.bindItemsToProperty("resultados");
     table.<ControlBuilder>bindValueToProperty("materiaSeleccionada");
     this.describeResultsGrid(table);
   }
   
-  /**
-   * Define las columnas de la grilla Cada columna se puede bindear 1) contra una propiedad del model, como
-   * en el caso del número o el nombre 2) contra un transformer que recibe el model y devuelve un tipo
-   * (generalmente String), como en el caso de Recibe Resumen de Cuenta
-   * 
-   * @param table
-   */
   public void describeResultsGrid(final Table<Materia> table) {
     Column<Materia> _column = new Column<Materia>(table);
     Column<Materia> _setTitle = _column.setTitle("Nombre");
@@ -342,9 +312,10 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
   }
   
   public void cargarNota() {
+    Nota _nota = new Nota();
     SeguidorCarrera _modelObject = this.getModelObject();
     Materia _materiaSeleccionada = _modelObject.getMateriaSeleccionada();
-    CrearNotaWindow _crearNotaWindow = new CrearNotaWindow(this, _materiaSeleccionada);
+    CrearNotaWindow _crearNotaWindow = new CrearNotaWindow(this, _nota, _materiaSeleccionada);
     this.openDialogNota(_crearNotaWindow);
   }
   

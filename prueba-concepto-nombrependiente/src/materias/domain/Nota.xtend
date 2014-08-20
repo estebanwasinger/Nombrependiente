@@ -16,6 +16,15 @@ class Nota extends Entity {
 	@Property String descripcion
 	@Property Boolean aprobado
 	
+	new(){
+		
+	}
+	new(String fechaN,String descripcionN,Boolean estadoAprobacion){
+		fecha = fechaN
+		descripcion = descripcionN
+		aprobado = estadoAprobacion
+		nombreMateria = "Hola"
+	}
 	
 	def validarDescripcion(){
 		if (descripcion == null) {

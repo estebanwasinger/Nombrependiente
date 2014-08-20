@@ -56,6 +56,16 @@ public class Nota extends Entity {
     this._aprobado = aprobado;
   }
   
+  public Nota() {
+  }
+  
+  public Nota(final String fechaN, final String descripcionN, final Boolean estadoAprobacion) {
+    this.setFecha(fechaN);
+    this.setDescripcion(descripcionN);
+    this.setAprobado(estadoAprobacion);
+    this.setNombreMateria("Hola");
+  }
+  
   public void validarDescripcion() {
     String _descripcion = this.getDescripcion();
     boolean _equals = Objects.equal(_descripcion, null);
