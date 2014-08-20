@@ -43,7 +43,4 @@ class EditarNotaWindow extends Dialog<Nota>{
 			.setCaption("Cancelar")
 			.onClick [|this.cancel]
 	}
-	
-
-
 }

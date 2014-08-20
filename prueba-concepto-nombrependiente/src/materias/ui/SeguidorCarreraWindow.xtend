@@ -27,21 +27,14 @@ import org.uqbar.commons.utils.Observable
 @Observable
 class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 	
-	val posiblesUbicaciones = #["Nivel 1 - 1er. Cuatrimestre",
-								"Nivel 1 - 2do. Cuatrimestre",
-								"Nivel 1 - Anual",
-								"Nivel 2 - 1er. Cuatrimestre",
-								"Nivel 2 - 2do. Cuatrimestre",
-								"Nivel 2 - Anual",
-								"Nivel 3 - 1er. Cuatrimestre",
-								"Nivel 3 - 2do. Cuatrimestre",
-								"Nivel 3 - Anual",
-								"Nivel 4 - 1er. Cuatrimestre",
-								"Nivel 4 - 2do. Cuatrimestre",
-								"Nivel 4 - Anual",
-								"Nivel 5 - 1er. Cuatrimestre",
-								"Nivel 5 - 2do. Cuatrimestre",
-								"Nivel 5 - Anual"]
+	val posiblesUbicaciones = #["Nivel 1 - 1er. Cuatrimestre", "Nivel 1 - 2do. Cuatrimestre",
+								"Nivel 1 - Anual", "Nivel 2 - 1er. Cuatrimestre",
+								"Nivel 2 - 2do. Cuatrimestre", "Nivel 2 - Anual",
+								"Nivel 3 - 1er. Cuatrimestre", "Nivel 3 - 2do. Cuatrimestre",
+								"Nivel 3 - Anual", "Nivel 4 - 1er. Cuatrimestre",
+								"Nivel 4 - 2do. Cuatrimestre", "Nivel 4 - Anual",
+								"Nivel 5 - 1er. Cuatrimestre", "Nivel 5 - 2do. Cuatrimestre", "Nivel 5 - Anual"]
+								
 	@Observable							
 	override createContents(Panel mainPanel) {
 		
@@ -55,6 +48,7 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 			text = "Seguidor de Carreras"
 			fontSize = 20
 		]
+		
 		var panelBotones = new Panel(panelIzquierda).setLayout(new HorizontalLayout)
 		addActions(panelBotones)
 		createFormPanel(panelIzquierda)
@@ -62,6 +56,7 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 		panelEdicionMateria(panelDerecha)
 		grillaDeNotas(panelDerecha)
 	}
+	
 	def static main(String[] args) {
 		ApplicationContext.instance.configureSingleton(typeof(Materia), new HomeMaterias)
 		new SeguidorCarreraWindow().startApplication
@@ -78,10 +73,9 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 	new() {
 		super(new SeguidorCarrera)
 		modelObject.search()
-	}
+	}	
 	
-	
-	def void grillaDeNotas(Panel mainPanel){
+	def protected grillaDeNotas(Panel mainPanel){
 		var table = new Table<Nota>(mainPanel, typeof(Nota))
 		table.heigth = 150
 		table.width = 400
@@ -97,9 +91,9 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 			
 		new Column<Nota>(table) 
 			.setTitle("Aprobado")
-			.bindContentsToTransformer([nota | if (nota.aprobado) "SI" else "NO"])
-			
+			.bindContentsToTransformer([nota | if (nota.aprobado) "SI" else "NO"])			
 }
+
 	def void panelEdicionMateria(Panel mainPanel){
 		
 		var panelEdicionColumnas = new Panel(mainPanel)
@@ -109,25 +103,20 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 		new Label(panelEdicionColumnas) =>[
 			bindValueToProperty("materiaSeleccionada.nombre")
 			width = 200
-			fontSize = 15
-			]
+			fontSize = 15]
 		
 		new Label(panelEdicionColumnas).setText("Profesor")
 		new TextBox(panelEdicionColumnas)=>[
 			bindValueToProperty("materiaSeleccionada.profesor")
 			width = 200
-			fontSize = 10
-			]
+			fontSize = 10]
 		
 		new Label(panelEdicionColumnas).setText("Año de cursada")
 		new TextBox(panelEdicionColumnas)=>[
 			bindValueToProperty("materiaSeleccionada.anioCursada")
 			width = 200
-			fontSize = 10
-			]
-		// este check DEBERIA habilitarse solo si estan cargadas las 3 notas con Aprobado en SI (validacion!)
-		//se debe modificar despues de agregar la grilla o tabla de notas
-		
+			fontSize = 10]
+
 		new Label(panelEdicionColumnas).setText = ("Final Aprobado")
 		var checkAprobado = new CheckBox(panelEdicionColumnas)
 		checkAprobado.bindValueToProperty("materiaSeleccionada.finalAprobado")
@@ -161,16 +150,8 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 		nuevaNota.bindEnabled(materiaMarcada)
 					
 		new Label(mainPanel).setText = ("Notas de Cursada")
-			
 	}
 	
-	
-	// *************************************************************************
-	// * FORMULARIO DE BUSQUEDA
-	// *************************************************************************
-	/**
-	 * El panel principal de búsuqeda permite filtrar por número o nombre
-	 */
 	def void createFormPanel(Panel mainPanel) {
 		var searchFormPanel = new Panel(mainPanel)
 		searchFormPanel.setLayout(new ColumnLayout(2))
@@ -178,11 +159,9 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 		var labelNombre = new Label(searchFormPanel)
 		labelNombre.text = "Nombre de materia"
 
-
 		new TextBox(searchFormPanel)=>
 			[bindValueToProperty("nombre")
-			width = 200
-			]
+			width = 200]
 	}
 
 	def addActions(Panel actionsPanel) {
@@ -203,32 +182,24 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 			.setCaption("Nueva Materia")
 			.onClick [ | this.crearMateria ]
 			.setFontSize(12)
-						
 	}
 
-	//***************************************
-	//**    Resultado busqueda materias    **
-	//***************************************
 	def protected grillaDeMaterias(Panel mainPanel) {
 		var table = new Table<Materia>(mainPanel, typeof(Materia))
-		table.heigth = 230 //mismo valor que la columna para que sea una sola (columna)
+		table.heigth = 230 
 		table.width = 300
 		table.bindItemsToProperty("resultados")
 		table.bindValueToProperty("materiaSeleccionada")
 		this.describeResultsGrid(table)
-		
 	}
 	
 	def void describeResultsGrid(Table<Materia> table) {
-		new Column<Materia>(table) //
+		new Column<Materia>(table)
 			.setTitle("Nombre")
 			.setFixedSize(450)
 			.bindContentsToProperty("nombre")
 	}	
-		
-	// *******************************
-	// **          Acciones         **
-	// *******************************
+
 	def void crearMateria() {
 		this.openDialog(new CrearMateriaWindow(this))
 	}
@@ -245,11 +216,9 @@ class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
 	def void cargarNota(){
 		this.openDialogNota(new CrearNotaWindow(this, new Nota,modelObject.materiaSeleccionada))
 	}
-
 	
 	def openDialogNota(Dialog<?> dialog){
 		dialog.onAccept[|modelObject.buscar]
 		dialog.open
-	}	
-	
+	}		
 }

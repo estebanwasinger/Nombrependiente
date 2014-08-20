@@ -49,14 +49,8 @@ class HomeMaterias extends CollectionBasedHome<Materia> {
 		this.create("Analisis de Sistemas", "2012", true, "Garbarini","Nivel 2 - Anual",notasADS )
 		this.create("Diseño de Sistemas", "2013", false, "Dodino","Nivel 3 - 1er. Cuatrimestre",notasDDS )
 		this.create("Sistemas Operativos", "2012", true, "Bruno","Nivel 3 - 2do. Cuatrimestre", notasSO )
-		
-		
 	}
 
-
-	// ********************************************************
-	// ** Altas y bajas
-	// ********************************************************
 	def void create(String nombre, String anioCursada, boolean finalAprobado, String profesor, String ubicacion, List<Nota> notas){
 		var materia = new Materia
 		materia.nombre = nombre
@@ -67,6 +61,7 @@ class HomeMaterias extends CollectionBasedHome<Materia> {
 		materia.notas = notas
 		this.create(materia)
 	}
+	
 	override void validateCreate(Materia materia) {
 		materia.validarNombre()
 		validarMateriasDuplicadas(materia)
@@ -83,17 +78,6 @@ class HomeMaterias extends CollectionBasedHome<Materia> {
 		allInstances
 	}
 
-	// ********************************************************
-	// ** Búsquedas
-	// ********************************************************
-
-	/**
-	 * Busca los celulares que coincidan con los datos recibidos. Tanto número como nombre pueden ser nulos,
-	 * en ese caso no se filtra por ese atributo.
-	 *
-	 * Soporta búsquedas por substring, por ejemplo el celular (12345, "Juan Gonzalez") será contemplado por
-	 * la búsqueda (23, "Gonza")
-	 */
 	def search(String nombre) {
 		allInstances.filter[materia|this.match(nombre, materia.nombre)].toList
 	}

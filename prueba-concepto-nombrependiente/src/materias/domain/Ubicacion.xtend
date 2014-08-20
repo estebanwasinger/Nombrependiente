@@ -6,5 +6,4 @@ import org.uqbar.commons.model.Entity
 @Observable
 class Ubicacion extends Entity{
 	@Property String descripcion	
-	
 }

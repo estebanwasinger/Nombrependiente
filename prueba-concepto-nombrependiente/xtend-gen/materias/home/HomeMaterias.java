@@ -130,13 +130,6 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
     return this.allInstances();
   }
   
-  /**
-   * Busca los celulares que coincidan con los datos recibidos. Tanto número como nombre pueden ser nulos,
-   * en ese caso no se filtra por ese atributo.
-   * 
-   * Soporta búsquedas por substring, por ejemplo el celular (12345, "Juan Gonzalez") será contemplado por
-   * la búsqueda (23, "Gonza")
-   */
   public List<Materia> search(final String nombre) {
     List<Materia> _allInstances = this.allInstances();
     final Function1<Materia,Boolean> _function = new Function1<Materia,Boolean>() {

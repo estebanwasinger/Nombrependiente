@@ -96,33 +96,37 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
     _modelObject.search();
   }
   
-  public void grillaDeNotas(final Panel mainPanel) {
-    Table<Nota> table = new Table<Nota>(mainPanel, Nota.class);
-    table.setHeigth(150);
-    table.setWidth(400);
-    table.bindItemsToProperty("materiaSeleccionada.notas");
-    table.<ControlBuilder>bindValueToProperty("notaSeleccionada");
-    Column<Nota> _column = new Column<Nota>(table);
-    Column<Nota> _setTitle = _column.setTitle("Fecha");
-    _setTitle.bindContentsToProperty("fecha");
-    Column<Nota> _column_1 = new Column<Nota>(table);
-    Column<Nota> _setTitle_1 = _column_1.setTitle("Descripcion");
-    _setTitle_1.bindContentsToProperty("descripcion");
-    Column<Nota> _column_2 = new Column<Nota>(table);
-    Column<Nota> _setTitle_2 = _column_2.setTitle("Aprobado");
-    final Transformer<Nota,String> _function = new Transformer<Nota,String>() {
-      public String transform(final Nota nota) {
-        String _xifexpression = null;
-        Boolean _aprobado = nota.getAprobado();
-        if ((_aprobado).booleanValue()) {
-          _xifexpression = "SI";
-        } else {
-          _xifexpression = "NO";
+  protected Column<Nota> grillaDeNotas(final Panel mainPanel) {
+    Column<Nota> _xblockexpression = null;
+    {
+      Table<Nota> table = new Table<Nota>(mainPanel, Nota.class);
+      table.setHeigth(150);
+      table.setWidth(400);
+      table.bindItemsToProperty("materiaSeleccionada.notas");
+      table.<ControlBuilder>bindValueToProperty("notaSeleccionada");
+      Column<Nota> _column = new Column<Nota>(table);
+      Column<Nota> _setTitle = _column.setTitle("Fecha");
+      _setTitle.bindContentsToProperty("fecha");
+      Column<Nota> _column_1 = new Column<Nota>(table);
+      Column<Nota> _setTitle_1 = _column_1.setTitle("Descripcion");
+      _setTitle_1.bindContentsToProperty("descripcion");
+      Column<Nota> _column_2 = new Column<Nota>(table);
+      Column<Nota> _setTitle_2 = _column_2.setTitle("Aprobado");
+      final Transformer<Nota,String> _function = new Transformer<Nota,String>() {
+        public String transform(final Nota nota) {
+          String _xifexpression = null;
+          Boolean _aprobado = nota.getAprobado();
+          if ((_aprobado).booleanValue()) {
+            _xifexpression = "SI";
+          } else {
+            _xifexpression = "NO";
+          }
+          return _xifexpression;
         }
-        return _xifexpression;
-      }
-    };
-    _setTitle_2.<String>bindContentsToTransformer(_function);
+      };
+      _xblockexpression = _setTitle_2.<String>bindContentsToTransformer(_function);
+    }
+    return _xblockexpression;
   }
   
   public void panelEdicionMateria(final Panel mainPanel) {
@@ -211,9 +215,6 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
     _label_6.setText("Notas de Cursada");
   }
   
-  /**
-   * El panel principal de búsuqeda permite filtrar por número o nombre
-   */
   public void createFormPanel(final Panel mainPanel) {
     Panel searchFormPanel = new Panel(mainPanel);
     ColumnLayout _columnLayout = new ColumnLayout(2);

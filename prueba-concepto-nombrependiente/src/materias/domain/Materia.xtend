@@ -25,6 +25,7 @@ class Materia extends Entity {
 			throw new UserException("Debe ingresar un nombre de materia")
 		}
 	}
+	
 	def ingresoNombre() {
 		 nombre != null && !nombre.trim().equals("")
 	}
@@ -57,5 +58,3 @@ class Materia extends Entity {
 		getMaterias().filter[materia | materia.nombre == nombre].head.anioCursada
 		}
 }
-
-

@@ -19,24 +19,13 @@ class SeguidorCarrera implements Serializable {
 	@Property Materia materiaSeleccionada
 	@Property Nota notaSeleccionada
 
-	// ********************************************************
-	// ** Acciones
-	// ********************************************************
 	def void search() { 
-		// WORKAROUND para que refresque la grilla en las actualizaciones
 		resultados = new ArrayList<Materia>
-		
-
-		// FIN WORKAROUND
 		resultados = getHomeMaterias().search(nombre)
-		 
 	}
 
 	def void buscar() { 
-		// WORKAROUND para que refresque la grilla en las actualizaciones
 		notas = new ArrayList<Nota>
-
-		// FIN WORKAROUND
 		 if (materiaSeleccionada != null){
 		notas = materiaSeleccionada.notas
 		}
@@ -45,7 +34,6 @@ class SeguidorCarrera implements Serializable {
 	def void clear() {
 		nombre = null
 	}
-
 
 	def HomeMaterias getHomeMaterias() {
 		ApplicationContext.instance.getSingleton(typeof(Materia))

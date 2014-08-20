@@ -45,15 +45,13 @@ class CrearNotaWindow extends Dialog<Nota>{
 			]
 			.setAsDefault.disableOnError
 
-		new Button(actions) 
-			.setCaption("Cancelar")
-			.onClick [|this.cancel]
+	new Button(actions) 
+		.setCaption("Cancelar")
+		.onClick [|this.cancel]
 	}
+	
 	def void guardarNota(){
 		if(notaNueva.aprobado != true) notaNueva.aprobado = false
 	materiaSeleccionada.notas.add(notaNueva)
 	}
-	
-
-
 }

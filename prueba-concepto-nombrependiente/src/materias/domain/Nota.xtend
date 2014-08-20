@@ -13,9 +13,7 @@ class Nota extends Entity {
 	@Property String descripcion
 	@Property Boolean aprobado
 	
-	new(){
-		
-	}
+	new(){}
 	new(String fechaN,String descripcionN,Boolean estadoAprobacion){
 		fecha = fechaN
 		descripcion = descripcionN
@@ -28,6 +26,7 @@ class Nota extends Entity {
 			throw new UserException("Debe ingresar una descripción")
 		}
 	}
+	
 	def validarFecha(){
 		var instance = DateFormat.getInstance()
 		var dateNota = instance.parse(fecha)
@@ -38,9 +37,9 @@ class Nota extends Entity {
 			throw new UserException("El año de la cursada debe ser igual al de la nota")
 		}
 	}
+	
 	def getAnioCursada(){
 		var materia = new Materia
 		materia.getAnioMateria(nombreMateria)
 	}
-
 }
