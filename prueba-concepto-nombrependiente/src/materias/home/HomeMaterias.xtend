@@ -35,10 +35,6 @@ class HomeMaterias extends CollectionBasedHome<Materia> {
 		
 		
 	}
-	
-		def getUbicacion(String modeloDescripcion) {
-		(ApplicationContext::instance.getSingleton(typeof(Ubicacion)) as HomeUbicaciones).get(modeloDescripcion)
-	}
 
 
 	// ********************************************************

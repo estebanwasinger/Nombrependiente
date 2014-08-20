@@ -83,7 +83,7 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
   }
   
   public List<Object> asObjects(final List<?> list) {
-    final Function1<Object, Object> _function = new Function1<Object, Object>() {
+    final Function1<Object,Object> _function = new Function1<Object,Object>() {
       public Object apply(final Object it) {
         return ((Object) it);
       }
@@ -122,7 +122,7 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
     Column<Nota> _column_2 = new Column<Nota>(table);
     Column<Nota> _setTitle_2 = _column_2.setTitle("Aprobado");
     Column<Nota> _setFixedSize_2 = _setTitle_2.setFixedSize(200);
-    final Transformer<Nota, String> _function = new Transformer<Nota, String>() {
+    final Transformer<Nota,String> _function = new Transformer<Nota,String>() {
       public String transform(final Nota nota) {
         String _xifexpression = null;
         Boolean _aprobado = nota.getAprobado();

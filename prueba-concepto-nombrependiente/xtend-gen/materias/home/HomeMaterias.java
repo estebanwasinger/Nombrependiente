@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import materias.domain.Materia;
 import materias.domain.Nota;
-import materias.domain.Ubicacion;
-import materias.home.HomeUbicaciones;
 import org.apache.commons.collections15.Predicate;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
@@ -14,7 +12,6 @@ import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.commons.model.CollectionBasedHome;
 import org.uqbar.commons.model.UserException;
-import org.uqbar.commons.utils.ApplicationContext;
 import org.uqbar.commons.utils.Observable;
 
 @Observable
@@ -46,12 +43,6 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
     this.create("Diseño de Sistemas", "2013", false, "Dodino", "Nivel 3 - 1er. Cuatrimestre", _arrayList_2);
     ArrayList<Nota> _arrayList_3 = new ArrayList<Nota>();
     this.create("Sistemas Operativos", "2012", true, "Bruno", "Nivel 3 - 2do. Cuatrimestre", _arrayList_3);
-  }
-  
-  public Ubicacion getUbicacion(final String modeloDescripcion) {
-    ApplicationContext _instance = ApplicationContext.getInstance();
-    Object _singleton = _instance.<Object>getSingleton(Ubicacion.class);
-    return ((HomeUbicaciones) _singleton).get(modeloDescripcion);
   }
   
   public void create(final String nombre, final String anioCursada, final boolean finalAprobado, final String profesor, final String ubicacion, final List<Nota> notas) {
@@ -93,7 +84,7 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
    */
   public List<Materia> search(final String nombre) {
     List<Materia> _allInstances = this.allInstances();
-    final Function1<Materia, Boolean> _function = new Function1<Materia, Boolean>() {
+    final Function1<Materia,Boolean> _function = new Function1<Materia,Boolean>() {
       public Boolean apply(final Materia materia) {
         String _nombre = materia.getNombre();
         return Boolean.valueOf(HomeMaterias.this.match(nombre, _nombre));
