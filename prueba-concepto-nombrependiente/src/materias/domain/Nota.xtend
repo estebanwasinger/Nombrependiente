@@ -1,17 +1,17 @@
 package materias.domain
 
-import org.uqbar.commons.model.Entity
-import org.uqbar.commons.utils.Observable
-import org.uqbar.commons.model.UserException
-import java.util.Calendar
 import java.text.DateFormat
+import java.util.Calendar
+import org.uqbar.commons.model.Entity
+import org.uqbar.commons.model.UserException
+import org.uqbar.commons.utils.Observable
 
 @Observable
-class Nota extends Entity {
+class Nota extends Entity implements Cloneable {
 	@Property String nombreMateria
 	@Property String fecha
 	@Property String descripcion
-	@Property Boolean aprobado
+	@Property boolean aprobado //con el boolean (!= de Boolean)se permite crear una nueva nota desaprobado
 	
 	new(){}
 	new(String fechaN,String descripcionN,Boolean estadoAprobacion){
@@ -41,5 +41,9 @@ class Nota extends Entity {
 	def getAnioCursada(){
 		var materia = new Materia
 		materia.getAnioMateria(nombreMateria)
+	}
+	
+	override clone() {
+		super.clone()
 	}
 }

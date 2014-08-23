@@ -12,7 +12,7 @@ import org.uqbar.commons.utils.Observable;
 
 @Observable
 @SuppressWarnings("all")
-public class Nota extends Entity {
+public class Nota extends Entity implements Cloneable {
   private String _nombreMateria;
   
   public String getNombreMateria() {
@@ -43,13 +43,13 @@ public class Nota extends Entity {
     this._descripcion = descripcion;
   }
   
-  private Boolean _aprobado;
+  private boolean _aprobado;
   
-  public Boolean getAprobado() {
+  public boolean isAprobado() {
     return this._aprobado;
   }
   
-  public void setAprobado(final Boolean aprobado) {
+  public void setAprobado(final boolean aprobado) {
     this._aprobado = aprobado;
   }
   
@@ -59,7 +59,7 @@ public class Nota extends Entity {
   public Nota(final String fechaN, final String descripcionN, final Boolean estadoAprobacion) {
     this.setFecha(fechaN);
     this.setDescripcion(descripcionN);
-    this.setAprobado(estadoAprobacion);
+    this.setAprobado((estadoAprobacion).booleanValue());
     this.setNombreMateria("Hola");
   }
   
@@ -98,5 +98,13 @@ public class Nota extends Entity {
       _xblockexpression = materia.getAnioMateria(_nombreMateria);
     }
     return _xblockexpression;
+  }
+  
+  public Object clone() {
+    try {
+      return super.clone();
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
 }

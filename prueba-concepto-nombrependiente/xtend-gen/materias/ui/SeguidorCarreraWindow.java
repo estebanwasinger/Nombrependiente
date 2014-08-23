@@ -115,8 +115,8 @@ public class SeguidorCarreraWindow extends MainWindow<SeguidorCarrera> {
       final Transformer<Nota,String> _function = new Transformer<Nota,String>() {
         public String transform(final Nota nota) {
           String _xifexpression = null;
-          Boolean _aprobado = nota.getAprobado();
-          if ((_aprobado).booleanValue()) {
+          boolean _isAprobado = nota.isAprobado();
+          if (_isAprobado) {
             _xifexpression = "SI";
           } else {
             _xifexpression = "NO";

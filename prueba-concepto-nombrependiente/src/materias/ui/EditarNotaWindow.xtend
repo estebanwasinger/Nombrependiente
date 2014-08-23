@@ -14,7 +14,7 @@ class EditarNotaWindow extends Dialog<Nota>{
 	var TextBox fechaBox
 	
 	new(WindowOwner owner, Nota nota) {
-		super(owner, nota)
+		super(owner, nota.clone() as Nota)
 	}
 	
 	override protected createFormPanel(Panel mainPanel) {
@@ -27,9 +27,8 @@ class EditarNotaWindow extends Dialog<Nota>{
 		fechaBox.bindValueToProperty("fecha")
 		new Label(form).text = "Descripción"
 		new TextBox(form).bindValueToProperty("descripcion")
-		
+		new Label(form).text = "Aprobado"		
 		new CheckBox(form).bindValueToProperty("aprobado")
-		new Label(form).text = "Aprobado"
 		}
 
 	override protected void addActions(Panel actions) {

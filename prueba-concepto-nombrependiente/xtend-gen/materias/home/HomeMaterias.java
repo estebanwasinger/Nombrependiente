@@ -28,7 +28,7 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
       public void apply(final Nota it) {
         it.setDescripcion("Parcial");
         it.setFecha("20/12/2014");
-        it.setAprobado(Boolean.valueOf(true));
+        it.setAprobado(true);
         it.setNombreMateria("Analisis Matematico I");
       }
     };
@@ -38,7 +38,7 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
       public void apply(final Nota it) {
         it.setDescripcion("TP");
         it.setFecha("20/11/2014");
-        it.setAprobado(Boolean.valueOf(true));
+        it.setAprobado(true);
         it.setNombreMateria("Analisis Matematico I");
       }
     };
@@ -51,7 +51,7 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
       public void apply(final Nota it) {
         it.setDescripcion("Parcial 2");
         it.setFecha("20/12/2013");
-        it.setAprobado(Boolean.valueOf(true));
+        it.setAprobado(true);
         it.setNombreMateria("Algoritmos");
       }
     };
@@ -63,7 +63,7 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
       public void apply(final Nota it) {
         it.setDescripcion("Parcial");
         it.setFecha("12/08/2012");
-        it.setAprobado(Boolean.valueOf(true));
+        it.setAprobado(true);
         it.setNombreMateria("Analisis de Sistemas");
       }
     };
@@ -75,7 +75,7 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
       public void apply(final Nota it) {
         it.setDescripcion("TP");
         it.setFecha("01/06/2012");
-        it.setAprobado(Boolean.valueOf(true));
+        it.setAprobado(true);
         it.setNombreMateria("Diseño de Sistemas");
       }
     };
@@ -87,7 +87,7 @@ public class HomeMaterias extends CollectionBasedHome<Materia> {
       public void apply(final Nota it) {
         it.setDescripcion("TP");
         it.setFecha("01/05/2014");
-        it.setAprobado(Boolean.valueOf(true));
+        it.setAprobado(true);
         it.setNombreMateria("Sistemas Operativos");
       }
     };

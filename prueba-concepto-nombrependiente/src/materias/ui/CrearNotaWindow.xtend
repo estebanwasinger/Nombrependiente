@@ -41,7 +41,7 @@ class CrearNotaWindow extends Dialog<Nota>{
 		new Button(actions)
 			.setCaption("Aceptar")
 			.onClick [|this.accept
-				this.guardarNota
+				this.guardarNota()
 			]
 			.setAsDefault.disableOnError
 
@@ -52,6 +52,6 @@ class CrearNotaWindow extends Dialog<Nota>{
 	
 	def void guardarNota(){
 		if(notaNueva.aprobado != true) notaNueva.aprobado = false
-	materiaSeleccionada.notas.add(notaNueva)
+			materiaSeleccionada.notas.add(notaNueva)	
 	}
 }

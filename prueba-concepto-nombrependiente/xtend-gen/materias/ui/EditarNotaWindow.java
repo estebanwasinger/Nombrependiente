@@ -17,7 +17,7 @@ public class EditarNotaWindow extends Dialog<Nota> {
   private TextBox fechaBox;
   
   public EditarNotaWindow(final WindowOwner owner, final Nota nota) {
-    super(owner, nota);
+    super(owner, ((Nota) nota.clone()));
   }
   
   protected void createFormPanel(final Panel mainPanel) {
@@ -34,10 +34,10 @@ public class EditarNotaWindow extends Dialog<Nota> {
     _label_1.setText("Descripción");
     TextBox _textBox_1 = new TextBox(form);
     _textBox_1.<ControlBuilder>bindValueToProperty("descripcion");
-    CheckBox _checkBox = new CheckBox(form);
-    _checkBox.<ControlBuilder>bindValueToProperty("aprobado");
     Label _label_2 = new Label(form);
     _label_2.setText("Aprobado");
+    CheckBox _checkBox = new CheckBox(form);
+    _checkBox.<ControlBuilder>bindValueToProperty("aprobado");
   }
   
   protected void addActions(final Panel actions) {

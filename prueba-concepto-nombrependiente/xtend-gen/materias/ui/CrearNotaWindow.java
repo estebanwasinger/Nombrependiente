@@ -74,10 +74,10 @@ public class CrearNotaWindow extends Dialog<Nota> {
   }
   
   public void guardarNota() {
-    Boolean _aprobado = this.notaNueva.getAprobado();
-    boolean _notEquals = ((_aprobado).booleanValue() != true);
+    boolean _isAprobado = this.notaNueva.isAprobado();
+    boolean _notEquals = (_isAprobado != true);
     if (_notEquals) {
-      this.notaNueva.setAprobado(Boolean.valueOf(false));
+      this.notaNueva.setAprobado(false);
     }
     List<Nota> _notas = this.materiaSeleccionada.getNotas();
     _notas.add(this.notaNueva);
