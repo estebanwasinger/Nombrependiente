@@ -18,7 +18,6 @@ class MateriaController {
 	
 		def list(Integer max) {
 			def Materia materiaBusqueda = mapear(new Materia(), params)
-			println(materiaBusqueda._nombre)
 			def materias = homeMaterias.getMaterias(materiaBusqueda)
 			[materiaInstanceList: materias, materiaInstanceTotal: materias.size(), materiaBusqueda: materiaBusqueda ]
 		}
