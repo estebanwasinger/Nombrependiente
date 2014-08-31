@@ -63,7 +63,7 @@ public class Materia implements Cloneable {
     this.setUbicacion("");
   }
   
-  public Materia(final String profesor, final String nombre, final String ubicacion, final Integer anioCursada) {
+  public Materia(final String nombre, final String profesor, final String ubicacion, final Integer anioCursada) {
     this.setProfesor(profesor);
     this.setNombre(nombre);
     this.setUbicacion(ubicacion);
@@ -117,7 +117,7 @@ public class Materia implements Cloneable {
     Integer _anioCursada = this.getAnioCursada();
     boolean _equals_6 = Objects.equal(_anioCursada, null);
     if (_equals_6) {
-      throw new BusinessException("anioCursada", "Debe completar el a&ntilde;o de cursada");
+      throw new BusinessException("anioCursada", "Debe completar el año de cursada");
     } else {
       Integer _anioCursada_1 = this.getAnioCursada();
       Date _date = new Date();
@@ -125,7 +125,7 @@ public class Materia implements Cloneable {
       int _plus = (_year + 1900);
       boolean _greaterThan = ((_anioCursada_1).intValue() > _plus);
       if (_greaterThan) {
-        throw new BusinessException("anioCursada", "El a&ntilde;o de cursada no puede ser posterior al a&ntilde;o actual");
+        throw new BusinessException("anioCursada", "El año de cursada no puede ser posterior al a�o actual");
       }
     }
   }
@@ -142,18 +142,6 @@ public class Materia implements Cloneable {
   }
   
   public boolean matchea(final Materia materia) {
-    boolean _and = false;
-    boolean _matcheaAutor = this.matcheaAutor(materia);
-    if (!_matcheaAutor) {
-      _and = false;
-    } else {
-      boolean _matcheaTitulo = this.matcheaTitulo(materia);
-      _and = _matcheaTitulo;
-    }
-    return _and;
-  }
-  
-  public boolean matcheaTitulo(final Materia materia) {
     boolean _or = false;
     String _nombre = materia.getNombre();
     boolean _equals = Objects.equal(_nombre, null);
@@ -163,21 +151,6 @@ public class Materia implements Cloneable {
       String _nombre_1 = this.getNombre();
       String _nombre_2 = materia.getNombre();
       boolean _contains = _nombre_1.contains(_nombre_2);
-      _or = _contains;
-    }
-    return _or;
-  }
-  
-  public boolean matcheaAutor(final Materia materia) {
-    boolean _or = false;
-    String _profesor = materia.getProfesor();
-    boolean _equals = Objects.equal(_profesor, null);
-    if (_equals) {
-      _or = true;
-    } else {
-      String _profesor_1 = this.getProfesor();
-      String _profesor_2 = materia.getProfesor();
-      boolean _contains = _profesor_1.contains(_profesor_2);
       _or = _contains;
     }
     return _or;

@@ -28,10 +28,6 @@
 									<label>Nombre</label> 
 									<input type="text" name="nombre" id="nombre" class="form-control" placeholder="Contiene..." value="${materiaBusqueda?.nombre}"> 
   								</div>
-  								<div class="col-md-6">
-									<label>Profesor</label> 
-									<input type="text" class="form-control" name="profesor" id="profesor" placeholder="Contiene..." value="${materiaBusqueda?.profesor}">
-  								</div>
   								<div class="col-md-12">
 									<br />
 									<button type="submit" class="btn btn-primary">

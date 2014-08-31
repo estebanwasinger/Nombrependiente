@@ -17,7 +17,7 @@ class Materia implements Cloneable{
 		ubicacion = ""
 	}
 
-	new(String profesor, String nombre, String ubicacion, Integer anioCursada) {
+	new(String nombre,String profesor,  String ubicacion, Integer anioCursada) {
 		this.profesor = profesor
 		this.nombre = nombre
 		this.ubicacion = ubicacion
@@ -39,10 +39,10 @@ class Materia implements Cloneable{
 			throw new BusinessException("ubicacion", "Debe completar la ubicacion")
 		}
 		if (anioCursada == null) {
-			throw new BusinessException("anioCursada", "Debe completar el año de cursada")
+			throw new BusinessException("anioCursada", "Debe completar el aÃ±o de cursada")
 		} else {
 			if (anioCursada > new Date().year + 1900) {
-				throw new BusinessException("anioCursada", "El año de cursada no puede ser posterior al año actual")
+				throw new BusinessException("anioCursada", "El aÃ±o de cursada no puede ser posterior al aï¿½o actual")
 			}
 		}
 	}
@@ -55,17 +55,8 @@ class Materia implements Cloneable{
 	}
 
 	def matchea(Materia materia) {
-		matcheaAutor(materia) && matcheaTitulo(materia)
-	}
-
-	def matcheaTitulo(Materia materia) {
 		materia.nombre == null || nombre.contains(materia.nombre)
 	}
-
-	def matcheaAutor(Materia materia) {
-		materia.profesor == null || profesor.contains(materia.profesor)
-	}
-
 	def Materia copy() {
 		super.clone as Materia
 	}
