@@ -117,7 +117,7 @@ public class Materia implements Cloneable {
     Integer _anioCursada = this.getAnioCursada();
     boolean _equals_6 = Objects.equal(_anioCursada, null);
     if (_equals_6) {
-      throw new BusinessException("anioCursada", "Debe completar el año de cursada");
+      throw new BusinessException("anioCursada", "Debe completar el a&ntilde;o de cursada");
     } else {
       Integer _anioCursada_1 = this.getAnioCursada();
       Date _date = new Date();
@@ -125,7 +125,7 @@ public class Materia implements Cloneable {
       int _plus = (_year + 1900);
       boolean _greaterThan = ((_anioCursada_1).intValue() > _plus);
       if (_greaterThan) {
-        throw new BusinessException("anioCursada", "El año de cursada no puede ser posterior al año actual");
+        throw new BusinessException("anioCursada", "El a&ntilde;o de cursada no puede ser posterior al a&ntilde;o actual");
       }
     }
   }

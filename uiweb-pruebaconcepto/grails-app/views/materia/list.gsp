@@ -57,7 +57,7 @@
 							<div id="list-libro" class="content scaffold-list">
 								<table class="table table-striped table-bordered table-hover table-condensed">
 									<thead>
-										<g:sortableColumn property="nombre" title="nombre" />
+										<g:sortableColumn property="nombre" title="Nombre" />
 										<g:sortableColumn property="profesor" title="Profesor"/>
 										<g:sortableColumn property="ubicacion" title="Ubicaci&oacute;n"/>
 										<g:sortableColumn property="anioCursada" title="A&ntilde;o de Cursada" />
@@ -67,10 +67,10 @@
 											var="materiaInstance">
 											<tr class="${(i % 2) == 0 ? 'info' : ''}">
 												<td><g:link action="show" id="${materiaInstance.id}">
-														${materiaInstance.profesor}
+														${materiaInstance.nombre}
 													</g:link></td>
 												<td>
-													${materiaInstance.nombre}
+													${materiaInstance.profesor}
 												</td>
 												<td>
 													${materiaInstance.ubicacion}
