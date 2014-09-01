@@ -10,6 +10,7 @@ class Materia implements Cloneable{
 	@Property String nombre
 	@Property String ubicacion
 	@Property Integer anioCursada
+	@Property boolean finalAprobado = true
 
 	new() {
 		profesor = "" 
@@ -17,11 +18,12 @@ class Materia implements Cloneable{
 		ubicacion = ""
 	}
 
-	new(String profesor, String nombre, String ubicacion, Integer anioCursada) {
+	new(String nombre,String profesor,  String ubicacion, Integer anioCursada, Boolean finalAprobado) {
 		this.profesor = profesor
 		this.nombre = nombre
 		this.ubicacion = ubicacion
 		this.anioCursada = anioCursada
+		this.finalAprobado = finalAprobado
 	}
 
 	override toString() {
@@ -39,12 +41,13 @@ class Materia implements Cloneable{
 			throw new BusinessException("ubicacion", "Debe completar la ubicacion")
 		}
 		if (anioCursada == null) {
-			throw new BusinessException("anioCursada", "Debe completar el año de cursada")
+			throw new BusinessException("anioCursada", "Debe completar el aÃ±o de cursada")
 		} else {
 			if (anioCursada > new Date().year + 1900) {
-				throw new BusinessException("anioCursada", "El año de cursada no puede ser posterior al año actual")
+				throw new BusinessException("anioCursada", "El aÃ±o de cursada no puede ser posterior al aï¿½o actual")
 			}
 		}
+		
 	}
 
 	def actualizarCon(Materia materia) {
@@ -52,20 +55,13 @@ class Materia implements Cloneable{
 		this.nombre = materia.nombre
 		this.ubicacion = materia.ubicacion
 		this.anioCursada = materia.anioCursada
+		this.finalAprobado = materia.finalAprobado
 	}
 
 	def matchea(Materia materia) {
-		matcheaAutor(materia) && matcheaTitulo(materia)
-	}
-
-	def matcheaTitulo(Materia materia) {
 		materia.nombre == null || nombre.contains(materia.nombre)
 	}
-
-	def matcheaAutor(Materia materia) {
-		materia.profesor == null || profesor.contains(materia.profesor)
-	}
-
+	
 	def Materia copy() {
 		super.clone as Materia
 	}

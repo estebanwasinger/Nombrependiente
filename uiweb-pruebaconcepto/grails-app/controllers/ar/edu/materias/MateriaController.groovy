@@ -101,6 +101,11 @@ class MateriaController {
 			} else {
 				materia.anioCursada = null
 			}
+			if (params.finalAprobado) {
+				materia.finalAprobado = params.finalAprobado
+			} else {
+				materia.finalAprobado = null
+			}
 			materia
 		}
 

@@ -60,6 +60,13 @@
 						</div>
 					</div>
 				</div>
+				<div class="col-md-6">
+					<div class="control-group ${exception?.campoOrigen?.equalsIgnoreCase('finalAprobado') ? 'danger' : ''}">
+						<label class="control-label" for="finalAprobado">Final Aprobado</label>
+						<div class="controls">
+							<input class="form-control" type="checkbox" name="finalAprobado" id="finalAprobado" placeholder="Final Aprobado" value="${materiaInstance?.finalAprobado}" />
+						</div>
+					</div>
 				<div class="col-md-12">
 					<div class="buttons">
 						<br>

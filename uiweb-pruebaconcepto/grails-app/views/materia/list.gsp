@@ -57,6 +57,7 @@
 										<g:sortableColumn property="profesor" title="Profesor"/>
 										<g:sortableColumn property="ubicacion" title="Ubicaci&oacute;n"/>
 										<g:sortableColumn property="anioCursada" title="A&ntilde;o de Cursada" />
+										<g:sortableColumn property="finalAprobado" title="Final Aprobado" />
 									</thead>
 									<tbody>
 										<g:each in="${materiaInstanceList}" status="i"
@@ -73,6 +74,9 @@
 												</td>
 												<td>
 													${materiaInstance.anioCursada}
+												</td>
+												<td>
+													${materiaInstance.finalAprobado}
 												</td>
 											</tr>
 										</g:each>

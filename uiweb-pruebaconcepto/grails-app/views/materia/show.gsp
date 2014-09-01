@@ -15,21 +15,25 @@
 		</g:if>
 		<g:form class="form-horizontal" method="post">
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-6">
 					<label class="control-label" for="profesor">Profesor&nbsp;&nbsp; </label> 
 					${materiaInstance?.profesor}
 				</div>
-				<div class="col-md-12">
+				<div class="col-md-6">
 					<label class="control-label" for="titulo">Nombre&nbsp;&nbsp; </label>
 					${materiaInstance?.nombre}
 				</div>
-				<div class="col-md-12">	
+				<div class="col-md-6">	
 					<label class="control-label" for="editorial">Ubicacion&nbsp;&nbsp; </label> 
 					${materiaInstance?.ubicacion}
 				</div>
-				<div class="col-md-12">
+				<div class="col-md-6">
 					<label class="control-label" for="editorial">Anio de Cursada&nbsp;&nbsp; </label>
 					${materiaInstance?.anioCursada}
+				</div>
+				<div class="col-md-6">	
+					<label class="control-label" for="editorial">Final Aprobado&nbsp;&nbsp; </label> 
+					${materiaInstance?.finalAprobado}
 				</div>
 			</div>
 			<div class="buttons">
