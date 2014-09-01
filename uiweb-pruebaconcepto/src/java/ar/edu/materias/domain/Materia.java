@@ -57,13 +57,13 @@ public class Materia implements Cloneable {
     this._anioCursada = anioCursada;
   }
   
-  private String _finalAprobado;
+  private Boolean _finalAprobado;
   
-  public String getFinalAprobado() {
+  public Boolean getFinalAprobado() {
     return this._finalAprobado;
   }
   
-  public void setFinalAprobado(final String finalAprobado) {
+  public void setFinalAprobado(final Boolean finalAprobado) {
     this._finalAprobado = finalAprobado;
   }
   
@@ -73,7 +73,7 @@ public class Materia implements Cloneable {
     this.setUbicacion("");
   }
   
-  public Materia(final String nombre, final String profesor, final String ubicacion, final Integer anioCursada, final String finalAprobado) {
+  public Materia(final String nombre, final String profesor, final String ubicacion, final Integer anioCursada, final Boolean finalAprobado) {
     this.setProfesor(profesor);
     this.setNombre(nombre);
     this.setUbicacion(ubicacion);
@@ -139,17 +139,7 @@ public class Materia implements Cloneable {
         throw new BusinessException("anioCursada", "El año de cursada no puede ser posterior al a�o actual");
       }
     }
-    boolean _or_3 = false;
-    String _finalAprobado = this.getFinalAprobado();
-    boolean _equals_5 = Objects.equal(_finalAprobado, null);
-    if (_equals_5) {
-      _or_3 = true;
-    } else {
-      String _finalAprobado_1 = this.getFinalAprobado();
-      boolean _equals_7 = _finalAprobado_1.equals("");
-      _or_3 = _equals_7;
-    }
-   }
+  }
   
   public void actualizarCon(final Materia materia) {
     String _profesor = materia.getProfesor();
@@ -160,7 +150,7 @@ public class Materia implements Cloneable {
     this.setUbicacion(_ubicacion);
     Integer _anioCursada = materia.getAnioCursada();
     this.setAnioCursada(_anioCursada);
-    String _finalAprobado = materia.getFinalAprobado();
+    Boolean _finalAprobado = materia.getFinalAprobado();
     this.setFinalAprobado(_finalAprobado);
   }
   

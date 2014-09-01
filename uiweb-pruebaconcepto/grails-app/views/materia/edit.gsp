@@ -54,7 +54,7 @@
 				</div>
 				<div class="col-md-6">
 					<div class="control-group ${exception?.campoOrigen?.equalsIgnoreCase('anioCursada') ? 'danger' : ''}">
-						<label class="control-label" for="anioCursada">Anio de Cursada</label>
+						<label class="control-label" for="anioCursada">Año de Cursada</label>
 						<div class="controls">
 							<input class="form-control" type="text" name="anioCursada" id="anioCursada" placeholder="Anio de Cursada" value="${materiaInstance?.anioCursada}" />
 						</div>
@@ -64,7 +64,7 @@
 					<div class="control-group ${exception?.campoOrigen?.equalsIgnoreCase('finalAprobado') ? 'danger' : ''}">
 						<label class="control-label" for="finalAprobado">Final Aprobado</label>
 						<div class="controls">
-							<input class="form-control" type="checkbox" name="finalAprobado" id="finalAprobado" placeholder="Final Aprobado" value="${materiaInstance?.finalAprobado}" />
+							<input type="checkbox" ${(materiaInstance.finalAprobado == true) ? 'checked="yes"':''} name="finalAprobado" id="finalAprobado" placeholder="Final Aprobado" value="${materiaInstance?.finalAprobado}" />
 						</div>
 					</div>
 				<div class="col-md-12">

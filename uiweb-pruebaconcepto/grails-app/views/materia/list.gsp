@@ -3,10 +3,19 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="layout" content="main" />
+	<style>
+.bs-docs-header {
+background-color: #292929;
+padding: 30px;
+}
+</style>
 </head>
 <body>
+<div class="bs-docs-header">
+<g:render template="nombre" model="['nombre': 'Seguidor de Carrera']"/>
+</div>
 	<div style="width: 90%; padding: 15pt;">
-		<g:render template="nombre" model="['nombre': 'Seguidor de Carrera']"/>
+		
 		<g:if test="${flash.message}">
 			<div class="alert alert-info">
 				${flash.message}
@@ -76,7 +85,7 @@
 													${materiaInstance.anioCursada}
 												</td>
 												<td>
-													${materiaInstance.finalAprobado}
+													${(materiaInstance.finalAprobado == true) ? 'Si':'No'}
 												</td>
 											</tr>
 										</g:each>

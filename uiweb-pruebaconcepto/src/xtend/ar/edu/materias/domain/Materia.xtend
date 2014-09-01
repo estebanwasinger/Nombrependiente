@@ -10,7 +10,7 @@ class Materia implements Cloneable{
 	@Property String nombre
 	@Property String ubicacion
 	@Property Integer anioCursada
-	@Property boolean finalAprobado = true
+	@Property Boolean finalAprobado
 
 	new() {
 		profesor = "" 

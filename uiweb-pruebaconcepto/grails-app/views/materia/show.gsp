@@ -33,7 +33,7 @@
 				</div>
 				<div class="col-md-6">	
 					<label class="control-label" for="editorial">Final Aprobado&nbsp;&nbsp; </label> 
-					${materiaInstance?.finalAprobado}
+					${(materiaInstance.finalAprobado == true) ? 'Si':'No'}
 				</div>
 			</div>
 			<div class="buttons">
@@ -45,8 +45,8 @@
 					<i class="icon-file icon-white"></i>Editar
 				</button>
 				 -->
-				<g:actionSubmit class="btn btn-primary" action="delete" value="Eliminar"/>
-				<g:link class="btn btn-primary" action="list">
+				<g:actionSubmit class="btn btn-danger" action="delete" value="Eliminar"/>
+				<g:link class="btn btn-warning" action="list" value="Cancelar">
 					Cancelar
 				</g:link>
 			</div>
