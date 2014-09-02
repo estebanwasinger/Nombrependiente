@@ -5,8 +5,10 @@
 <title>Busqueda de materias</title>
 </head>
 <body>
+<g:render template="menuSuperior"></g:render>
+
 	<div class="body" style="width: 90%; padding: 15pt;">
-		<g:render template="menuSuperior"></g:render>
+		
 		
 		<g:if test="${alta}">
 			<g:set var="nombre" value="Crear materia"/>
@@ -45,12 +47,12 @@
 					</div>
 				</div>
 				<div class="col-md-6">
-					<div class="control-group ${exception?.campoOrigen?.equalsIgnoreCase('ubicacion') ? 'danger' : ''}">
-						<label class="control-label" for="ubicacion">Ubicacion</label>
-						<div class="controls">
-							<input class="form-control" type="text" name="ubicacion" id="ubicacion" placeholder="Ubicacion" value="${materiaInstance?.ubicacion}" />
-						</div>
-					</div>
+					<label class="control-label" for="ubicacion">Ubicacion</label> <select
+						class="form-control type=" text" name="ubicacion" id="ubicacion" placeholder="Ubicacion" value="${materiaInstance?.ubicacion}"">
+						<option>1er Cuatrimestre</option>
+						<option>2do Cuatrimestre</option>
+						<option>Anual</option>
+					</select>
 				</div>
 				<div class="col-md-6">
 					<div class="control-group ${exception?.campoOrigen?.equalsIgnoreCase('anioCursada') ? 'danger' : ''}">
@@ -67,7 +69,7 @@
 							<input type="checkbox" ${(materiaInstance.finalAprobado == true) ?  'checked="yes"':''} name="finalAprobado" id="finalAprobado" placeholder="Final Aprobado" value="${materiaInstance?.finalAprobado}" />
 						</div>
 					</div>
-				<div class="col-md-12">
+					<div class="col-md-12">
 					<div class="buttons">
 						<br>
 						<input type="submit" class="btn btn-primary" value="Aceptar" />

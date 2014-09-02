@@ -5,8 +5,9 @@
 <title>Ver materia</title>
 </head>
 <body>
+<g:render template="menuSuperior"/>
 	<div class="body" style="width: 90%; padding: 15pt;">
-		<g:render template="menuSuperior"/>
+		
 		<g:render template="nombre" model="['nombre': 'Ver materia']"/>
 		<g:if test="${flash.message}">
 			<div class="message">
