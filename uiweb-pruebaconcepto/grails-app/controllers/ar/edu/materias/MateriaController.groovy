@@ -103,8 +103,6 @@ class MateriaController {
 			}
 			if (params.finalAprobado) {
 				materia.finalAprobado = params.finalAprobado
-			} else {
-				materia.finalAprobado = null
 			}
 			materia
 		}
