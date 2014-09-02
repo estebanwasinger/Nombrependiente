@@ -81,6 +81,7 @@ class MateriaController {
 		}
 	
 		def mapear(materia, params) {
+			println(params.finalAprobado)
 			if (params.profesor) {
 				materia.profesor = params.profesor
 			} else {
@@ -103,6 +104,8 @@ class MateriaController {
 			}
 			if (params.finalAprobado) {
 				materia.finalAprobado = params.finalAprobado
+			} else{
+				materia.finalAprobado = false
 			}
 			materia
 		}
