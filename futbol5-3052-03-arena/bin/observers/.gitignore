@@ -1,0 +1,17 @@
+/.InscripcionObserver.java._trace
+/.MailObserver.java._trace
+/.EquipoCompletoObserver.java._trace
+/.Notificacion.java._trace
+/.StubMessageSender.java._trace
+/.NotificacionObserver.java._trace
+/.EquipoIncompletoObserver.java._trace
+/.BajaSinReemplazoObserver.java._trace
+/.PartidoObserver.java._trace
+/.AltasObserver.java._trace
+/.BajasObserver.java._trace
+/BajaSinReemplazoObserver.java
+/EquipoCompletoObserver.java
+/EquipoIncompletoObserver.java
+/InscripcionObserver.java
+/Notificacion.java
+/PartidoObserver.java
