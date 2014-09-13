@@ -6,10 +6,8 @@ import java.util.Calendar;
 import java.util.List;
 import materias.domain.Nota;
 import materias.home.HomeMaterias;
-import org.eclipse.xtend.lib.Property;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.Pure;
 import org.uqbar.commons.model.Entity;
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.ApplicationContext;
@@ -18,26 +16,75 @@ import org.uqbar.commons.utils.Observable;
 @Observable
 @SuppressWarnings("all")
 public class Materia extends Entity {
-  @Property
   private Integer _id;
   
-  @Property
+  public Integer getId() {
+    return this._id;
+  }
+  
+  public void setId(final Integer id) {
+    this._id = id;
+  }
+  
   private String _nombre;
   
-  @Property
+  public String getNombre() {
+    return this._nombre;
+  }
+  
+  public void setNombre(final String nombre) {
+    this._nombre = nombre;
+  }
+  
   private String _anioCursada;
   
-  @Property
+  public String getAnioCursada() {
+    return this._anioCursada;
+  }
+  
+  public void setAnioCursada(final String anioCursada) {
+    this._anioCursada = anioCursada;
+  }
+  
   private Boolean _finalAprobado = Boolean.valueOf(false);
   
-  @Property
+  public Boolean getFinalAprobado() {
+    return this._finalAprobado;
+  }
+  
+  public void setFinalAprobado(final Boolean finalAprobado) {
+    this._finalAprobado = finalAprobado;
+  }
+  
   private String _profesor;
   
-  @Property
+  public String getProfesor() {
+    return this._profesor;
+  }
+  
+  public void setProfesor(final String profesor) {
+    this._profesor = profesor;
+  }
+  
   private String _ubicacion;
   
-  @Property
+  public String getUbicacion() {
+    return this._ubicacion;
+  }
+  
+  public void setUbicacion(final String ubicacion) {
+    this._ubicacion = ubicacion;
+  }
+  
   private List<Nota> _notas;
+  
+  public List<Nota> getNotas() {
+    return this._notas;
+  }
+  
+  public void setNotas(final List<Nota> notas) {
+    this._notas = notas;
+  }
   
   public void validarNombre() {
     String _nombre = this.getNombre();
@@ -121,7 +168,7 @@ public class Materia extends Entity {
   
   public String getAnioMateria(final String nombre) {
     List<Materia> _materias = this.getMaterias();
-    final Function1<Materia, Boolean> _function = new Function1<Materia, Boolean>() {
+    final Function1<Materia,Boolean> _function = new Function1<Materia,Boolean>() {
       public Boolean apply(final Materia materia) {
         String _nombre = materia.getNombre();
         return Boolean.valueOf(Objects.equal(_nombre, nombre));
@@ -130,68 +177,5 @@ public class Materia extends Entity {
     Iterable<Materia> _filter = IterableExtensions.<Materia>filter(_materias, _function);
     Materia _head = IterableExtensions.<Materia>head(_filter);
     return _head.getAnioCursada();
-  }
-  
-  @Pure
-  public Integer getId() {
-    return this._id;
-  }
-  
-  public void setId(final Integer id) {
-    this._id = id;
-  }
-  
-  @Pure
-  public String getNombre() {
-    return this._nombre;
-  }
-  
-  public void setNombre(final String nombre) {
-    this._nombre = nombre;
-  }
-  
-  @Pure
-  public String getAnioCursada() {
-    return this._anioCursada;
-  }
-  
-  public void setAnioCursada(final String anioCursada) {
-    this._anioCursada = anioCursada;
-  }
-  
-  @Pure
-  public Boolean getFinalAprobado() {
-    return this._finalAprobado;
-  }
-  
-  public void setFinalAprobado(final Boolean finalAprobado) {
-    this._finalAprobado = finalAprobado;
-  }
-  
-  @Pure
-  public String getProfesor() {
-    return this._profesor;
-  }
-  
-  public void setProfesor(final String profesor) {
-    this._profesor = profesor;
-  }
-  
-  @Pure
-  public String getUbicacion() {
-    return this._ubicacion;
-  }
-  
-  public void setUbicacion(final String ubicacion) {
-    this._ubicacion = ubicacion;
-  }
-  
-  @Pure
-  public List<Nota> getNotas() {
-    return this._notas;
-  }
-  
-  public void setNotas(final List<Nota> notas) {
-    this._notas = notas;
   }
 }
