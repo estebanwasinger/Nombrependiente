@@ -10,9 +10,17 @@ import excepciones.BusinessException
 import java.util.LinkedList
 import java.util.Set
 import java.util.HashSet
+import org.uqbar.commons.utils.Observable
+import org.uqbar.commons.model.Entity
+import org.uqbar.commons.model.UserException
+import jugadores.home.HomeJugadores
+import org.uqbar.commons.utils.ApplicationContext
 
-class Jugador {
 
+@Observable
+class Jugador extends Entity{
+
+	@Property String nombre
 	@Property TipoInscripcion tipoInscripcion
 	@Property int edad
 	@Property String email
@@ -28,6 +36,12 @@ class Jugador {
 		infracciones = new ArrayList<Infraccion>
 		calificaciones = new LinkedList<Calificacion>
 		nivelDeJuego = 0
+	}
+	
+	def validarNombre() {
+		if (nombre == null) {
+			throw new UserException("Debe ingresar un nombre de materia")
+		}
 	}
 	
 	def agregarAmigo(Jugador jugador) {
