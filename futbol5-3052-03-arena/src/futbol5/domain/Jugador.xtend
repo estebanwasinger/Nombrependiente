@@ -30,6 +30,15 @@ class Jugador extends Entity{
 	@Property int criterioComparacion
 	
 	new() {
+		init
+	}
+	
+	new(String nombre){
+		this.nombre = nombre
+		init
+	}
+	
+	def init(){
 		tipoInscripcion = new Estandar
 		amigos = new ArrayList<Jugador>
 		infracciones = new ArrayList<Infraccion>
