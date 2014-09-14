@@ -1,5 +1,3 @@
 ./target
 /target/
 ./xtend-gen
-*.class
-._trace
