@@ -1,12 +1,16 @@
 package futbol5.ui;
 
+import com.google.common.collect.Lists;
 import futbol5.applicationModel.Futbol5;
 import futbol5.domain.Jugador;
 import futbol5.ui.RunnableBusquedaJugadores;
 import futbol5.ui.VerDatosJugadorWindow;
+import java.util.Collections;
+import java.util.List;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.arena.bindings.NotNullObservable;
+import org.uqbar.arena.bindings.ObservableProperty;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
@@ -15,6 +19,7 @@ import org.uqbar.arena.widgets.Control;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Link;
 import org.uqbar.arena.widgets.Panel;
+import org.uqbar.arena.widgets.RadioSelector;
 import org.uqbar.arena.widgets.SkinnableControl;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.tables.Column;
@@ -35,6 +40,10 @@ public class BusquedaJugadoresWindow extends SimpleWindow<Futbol5> {
   
   public BusquedaJugadoresWindow(final RunnableBusquedaJugadores parent) {
     super(parent, new Futbol5());
+  }
+  
+  public List<String> getOpcionesRango() {
+    return Collections.<String>unmodifiableList(Lists.<String>newArrayList("Desde", "Hasta"));
   }
   
   public void createContents(final Panel mainPanel) {
@@ -113,26 +122,45 @@ public class BusquedaJugadoresWindow extends SimpleWindow<Futbol5> {
       }
     };
     ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_2, _function_2);
+    Label labelRangoHandicap = new Label(busquedaSuperior);
+    labelRangoHandicap.setText("Handicap");
+    RadioSelector<Object> _radioSelector = new RadioSelector<Object>(busquedaSuperior);
+    final Procedure1<RadioSelector<Object>> _function_3 = new Procedure1<RadioSelector<Object>>() {
+      public void apply(final RadioSelector<Object> it) {
+        ObservableProperty _observableProperty = new ObservableProperty(BusquedaJugadoresWindow.this, "opcionesRango");
+        it.bindItems(_observableProperty);
+        it.allowNull(false);
+      }
+    };
+    ObjectExtensions.<RadioSelector<Object>>operator_doubleArrow(_radioSelector, _function_3);
+    TextBox _textBox_3 = new TextBox(busquedaSuperior);
+    final Procedure1<TextBox> _function_4 = new Procedure1<TextBox>() {
+      public void apply(final TextBox it) {
+        it.<ControlBuilder>bindValueToProperty("nivelDeJuego");
+        it.setWidth(200);
+      }
+    };
+    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_3, _function_4);
     Button _button = new Button(busquedaSuperior);
     Button _setCaption = _button.setCaption("Buscar");
-    final Action _function_3 = new Action() {
+    final Action _function_5 = new Action() {
       public void execute() {
         Futbol5 _modelObject = BusquedaJugadoresWindow.this.getModelObject();
         _modelObject.search();
       }
     };
-    Button _onClick = _setCaption.onClick(_function_3);
+    Button _onClick = _setCaption.onClick(_function_5);
     SkinnableControl _setFontSize = _onClick.setFontSize(12);
     _setFontSize.setWidth(200);
     Button _button_1 = new Button(busquedaSuperior);
     Button _setCaption_1 = _button_1.setCaption("Limpiar");
-    final Action _function_4 = new Action() {
+    final Action _function_6 = new Action() {
       public void execute() {
         Futbol5 _modelObject = BusquedaJugadoresWindow.this.getModelObject();
         _modelObject.clear();
       }
     };
-    Button _onClick_1 = _setCaption_1.onClick(_function_4);
+    Button _onClick_1 = _setCaption_1.onClick(_function_6);
     SkinnableControl _setFontSize_1 = _onClick_1.setFontSize(12);
     _setFontSize_1.setWidth(200);
   }

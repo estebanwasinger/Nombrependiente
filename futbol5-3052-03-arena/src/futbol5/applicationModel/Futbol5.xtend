@@ -16,6 +16,7 @@ class Futbol5 implements Serializable {
 	@Property String apodo
 	@Property String nombre
 	@Property Date fechaNacimiento
+	@Property int nivelDeJuego
 	@Property Jugador seleccionJugador
 	@Property List<Jugador> jugadores
 	@Property Jugador jugadorSeleccionado

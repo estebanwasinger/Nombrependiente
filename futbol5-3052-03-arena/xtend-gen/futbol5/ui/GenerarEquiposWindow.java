@@ -10,6 +10,7 @@ import commands.DivisionDeEquiposCommand;
 import futbol5.domain.Jugador;
 import futbol5.domain.Partido;
 import futbol5.ui.RunnableTest;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
@@ -27,13 +28,18 @@ import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
+import org.uqbar.commons.model.ObservableUtils;
 import org.uqbar.commons.utils.Observable;
+import org.uqbar.lacar.ui.model.Action;
+import org.uqbar.lacar.ui.model.ControlBuilder;
 import org.uqbar.lacar.ui.model.ListBuilder;
 import org.uqbar.lacar.ui.model.bindings.Binding;
 
 @Observable
 @SuppressWarnings("all")
 public class GenerarEquiposWindow extends SimpleWindow<Partido> {
+  private Table<Jugador> tableListaEquipoA;
+  
   private List<DivisionDeEquiposCommand> _listaCommand;
   
   public List<DivisionDeEquiposCommand> getListaCommand() {
@@ -54,8 +60,11 @@ public class GenerarEquiposWindow extends SimpleWindow<Partido> {
     this._listaCommand2 = listaCommand2;
   }
   
+  private Partido model;
+  
   public GenerarEquiposWindow(final WindowOwner parent, final Partido model) {
     super(parent, model);
+    this.model = model;
   }
   
   public GenerarEquiposWindow(final RunnableTest parent) {
@@ -109,6 +118,7 @@ public class GenerarEquiposWindow extends SimpleWindow<Partido> {
     AlgoritmoLoco _algoritmoLoco = new AlgoritmoLoco();
     _listaCommand_1.add(_algoritmoLoco);
     selectorOrdenamiento.allowNull(false);
+    selectorOrdenamiento.<ControlBuilder>bindValueToProperty("algoritmoDivision");
     ObservableProperty _observableProperty = new ObservableProperty(this, "listaCommand");
     Binding<ListBuilder<DivisionDeEquiposCommand>> propiedadOrdenamiento = selectorOrdenamiento.bindItems(_observableProperty);
     PropertyAdapter _propertyAdapter = new PropertyAdapter(DivisionDeEquiposCommand.class, "nombre");
@@ -135,16 +145,47 @@ public class GenerarEquiposWindow extends SimpleWindow<Partido> {
     CriterioNCalificaciones _criterioNCalificaciones = new CriterioNCalificaciones();
     _listaCommand2_2.add(_criterioNCalificaciones);
     selectorOrdenamiento2.allowNull(false);
+    selectorOrdenamiento2.<ControlBuilder>bindValueToProperty("algoritmoOrdenamiento");
     ObservableProperty _observableProperty_1 = new ObservableProperty(this, "listaCommand2");
     Binding<ListBuilder<CriteriosCommand>> propiedadOrdenamiento2 = selectorOrdenamiento2.bindItems(_observableProperty_1);
     PropertyAdapter _propertyAdapter_1 = new PropertyAdapter(CriteriosCommand.class, "nombre");
     propiedadOrdenamiento2.setAdapter(_propertyAdapter_1);
+    Label _label_2 = new Label(selector3);
+    _label_2.<ControlBuilder>bindValueToProperty("cantEquipoA");
     Button _button = new Button(selector3);
     final Procedure1<Button> _function_2 = new Procedure1<Button>() {
       public void apply(final Button it) {
         it.setWidth(200);
         it.setHeigth(45);
         it.setCaption("Generar Equipos");
+        final Action _function = new Action() {
+          public void execute() {
+            Partido _modelObject = GenerarEquiposWindow.this.getModelObject();
+            ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
+            _modelObject.setEquipoA(_arrayList);
+            Partido _modelObject_1 = GenerarEquiposWindow.this.getModelObject();
+            Partido _modelObject_2 = GenerarEquiposWindow.this.getModelObject();
+            CriteriosCommand _algoritmoOrdenamiento = _modelObject_2.getAlgoritmoOrdenamiento();
+            _modelObject_1.ordenarJugadores(_algoritmoOrdenamiento);
+            Partido _modelObject_3 = GenerarEquiposWindow.this.getModelObject();
+            Partido _modelObject_4 = GenerarEquiposWindow.this.getModelObject();
+            DivisionDeEquiposCommand _algoritmoDivision = _modelObject_4.getAlgoritmoDivision();
+            _modelObject_3.dividirEquipos(_algoritmoDivision);
+            Partido _modelObject_5 = GenerarEquiposWindow.this.getModelObject();
+            List<Jugador> _jugadores = _modelObject_5.getJugadores();
+            Jugador _jugador = new Jugador("hola");
+            _jugadores.add(_jugador);
+            Partido _modelObject_6 = GenerarEquiposWindow.this.getModelObject();
+            Partido _modelObject_7 = GenerarEquiposWindow.this.getModelObject();
+            List<Jugador> _equipoA = _modelObject_7.getEquipoA();
+            ObservableUtils.firePropertyChanged(_modelObject_6, "equipoA", _equipoA);
+            Partido _modelObject_8 = GenerarEquiposWindow.this.getModelObject();
+            Partido _modelObject_9 = GenerarEquiposWindow.this.getModelObject();
+            List<Jugador> _equipoB = _modelObject_9.getEquipoB();
+            ObservableUtils.firePropertyChanged(_modelObject_8, "equipoB", _equipoB);
+          }
+        };
+        it.onClick(_function);
       }
     };
     final Button botonGenerar = ObjectExtensions.<Button>operator_doubleArrow(_button, _function_2);
@@ -176,25 +217,26 @@ public class GenerarEquiposWindow extends SimpleWindow<Partido> {
       }
     };
     Label labelEquipo2 = ObjectExtensions.<Label>operator_doubleArrow(_label_2, _function_2);
-    Table<Jugador> table3 = new Table<Jugador>(panelJugadores, Jugador.class);
-    table3.setHeigth(200);
-    table3.setWidth(285);
-    table3.bindItemsToProperty("jugadores");
-    Column<Jugador> _column = new Column<Jugador>(table3);
+    Table<Jugador> tableListaInscriptos = new Table<Jugador>(panelJugadores, Jugador.class);
+    tableListaInscriptos.setHeigth(200);
+    tableListaInscriptos.setWidth(285);
+    tableListaInscriptos.bindItemsToProperty("jugadores");
+    Column<Jugador> _column = new Column<Jugador>(tableListaInscriptos);
     Column<Jugador> _setTitle = _column.setTitle("Nombre");
     _setTitle.bindContentsToProperty("nombre");
-    Table<Jugador> table = new Table<Jugador>(panelJugadores, Jugador.class);
-    table.setHeigth(200);
-    table.setWidth(285);
-    table.bindItemsToProperty("equipoA");
-    Column<Jugador> _column_1 = new Column<Jugador>(table);
+    Table<Jugador> _table = new Table<Jugador>(panelJugadores, Jugador.class);
+    this.tableListaEquipoA = _table;
+    this.tableListaEquipoA.setHeigth(200);
+    this.tableListaEquipoA.setWidth(285);
+    this.tableListaEquipoA.bindItemsToProperty("equipoA");
+    Column<Jugador> _column_1 = new Column<Jugador>(this.tableListaEquipoA);
     Column<Jugador> _setTitle_1 = _column_1.setTitle("Nombre");
     _setTitle_1.bindContentsToProperty("nombre");
-    Table<Jugador> table2 = new Table<Jugador>(panelJugadores, Jugador.class);
-    table2.setHeigth(200);
-    table2.setWidth(285);
-    table.bindItemsToProperty("equipoB");
-    Column<Jugador> _column_2 = new Column<Jugador>(table2);
+    Table<Jugador> tableListaEquipoB = new Table<Jugador>(panelJugadores, Jugador.class);
+    tableListaEquipoB.setHeigth(200);
+    tableListaEquipoB.setWidth(285);
+    tableListaEquipoB.bindItemsToProperty("equipoB");
+    Column<Jugador> _column_2 = new Column<Jugador>(tableListaEquipoB);
     Column<Jugador> _setTitle_2 = _column_2.setTitle("Nombre");
     _setTitle_2.bindContentsToProperty("nombre");
   }

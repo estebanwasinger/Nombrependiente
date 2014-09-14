@@ -190,77 +190,67 @@ public class Jugador extends Entity {
   }
   
   public float promedioNPartidos(final int n) {
-    try {
-      List<Calificacion> _calificaciones = this.getCalificaciones();
-      int _size = _calificaciones.size();
-      boolean _equals = (_size == 0);
-      if (_equals) {
-        throw new BusinessException("El jugador no fue calificado aun");
+    List<Calificacion> _calificaciones = this.getCalificaciones();
+    int _size = _calificaciones.size();
+    boolean _notEquals = (_size != 0);
+    if (_notEquals) {
+      int calificacionTotal = 0;
+      Set<Partido> partidos = new HashSet<Partido>();
+      int pos = 0;
+      boolean _and = false;
+      int _size_1 = partidos.size();
+      boolean _lessEqualsThan = (_size_1 <= n);
+      if (!_lessEqualsThan) {
+        _and = false;
+      } else {
+        List<Calificacion> _calificaciones_1 = this.getCalificaciones();
+        int _size_2 = _calificaciones_1.size();
+        boolean _lessThan = (pos < _size_2);
+        _and = _lessThan;
       }
-      List<Calificacion> _calificaciones_1 = this.getCalificaciones();
-      int _size_1 = _calificaciones_1.size();
-      boolean _notEquals = (_size_1 != 0);
-      if (_notEquals) {
-        int calificacionTotal = 0;
-        Set<Partido> partidos = new HashSet<Partido>();
-        int pos = 0;
-        boolean _and = false;
-        int _size_2 = partidos.size();
-        boolean _lessEqualsThan = (_size_2 <= n);
-        if (!_lessEqualsThan) {
-          _and = false;
+      boolean _while = _and;
+      while (_while) {
+        {
+          List<Calificacion> _calificaciones_2 = this.getCalificaciones();
+          Calificacion _get = _calificaciones_2.get(pos);
+          Partido _partido = _get.getPartido();
+          partidos.add(_partido);
+          pos = (pos + 1);
+        }
+        boolean _and_1 = false;
+        int _size_3 = partidos.size();
+        boolean _lessEqualsThan_1 = (_size_3 <= n);
+        if (!_lessEqualsThan_1) {
+          _and_1 = false;
         } else {
           List<Calificacion> _calificaciones_2 = this.getCalificaciones();
-          int _size_3 = _calificaciones_2.size();
-          boolean _lessThan = (pos < _size_3);
-          _and = _lessThan;
+          int _size_4 = _calificaciones_2.size();
+          boolean _lessThan_1 = (pos < _size_4);
+          _and_1 = _lessThan_1;
         }
-        boolean _while = _and;
-        while (_while) {
-          {
-            List<Calificacion> _calificaciones_3 = this.getCalificaciones();
-            Calificacion _get = _calificaciones_3.get(pos);
-            Partido _partido = _get.getPartido();
-            partidos.add(_partido);
-            pos = (pos + 1);
-          }
-          boolean _and_1 = false;
-          int _size_4 = partidos.size();
-          boolean _lessEqualsThan_1 = (_size_4 <= n);
-          if (!_lessEqualsThan_1) {
-            _and_1 = false;
-          } else {
-            List<Calificacion> _calificaciones_3 = this.getCalificaciones();
-            int _size_5 = _calificaciones_3.size();
-            boolean _lessThan_1 = (pos < _size_5);
-            _and_1 = _lessThan_1;
-          }
-          _while = _and_1;
-        }
-        pos = 0;
-        int _size_4 = partidos.size();
-        boolean _lessThan_1 = (pos < _size_4);
-        boolean _while_1 = _lessThan_1;
-        while (_while_1) {
-          {
-            final Set<Partido> _converted_partidos = (Set<Partido>)partidos;
-            Partido _get = ((Partido[])Conversions.unwrapArray(_converted_partidos, Partido.class))[pos];
-            int _promedioDeUnPartido = this.promedioDeUnPartido(_get);
-            int _plus = (calificacionTotal + _promedioDeUnPartido);
-            calificacionTotal = _plus;
-            pos = (pos + 1);
-          }
-          int _size_5 = partidos.size();
-          boolean _lessThan_2 = (pos < _size_5);
-          _while_1 = _lessThan_2;
-        }
-        int _size_5 = partidos.size();
-        return (calificacionTotal / _size_5);
+        _while = _and_1;
       }
-      return 0;
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
+      pos = 0;
+      int _size_3 = partidos.size();
+      boolean _lessThan_1 = (pos < _size_3);
+      boolean _while_1 = _lessThan_1;
+      while (_while_1) {
+        {
+          final Set<Partido> _converted_partidos = (Set<Partido>)partidos;
+          Partido _get = ((Partido[])Conversions.unwrapArray(_converted_partidos, Partido.class))[pos];
+          int _promedioDeUnPartido = this.promedioDeUnPartido(_get);
+          int _plus = (calificacionTotal + _promedioDeUnPartido);
+          calificacionTotal = _plus;
+          pos = (pos + 1);
+        }
+        int _size_4 = partidos.size();
+        boolean _lessThan_2 = (pos < _size_4);
+        _while_1 = _lessThan_2;
+      }
+      int _size_4 = partidos.size();
+      return (calificacionTotal / _size_4);
     }
+    return 0;
   }
   
   public int promedioDeUnPartido(final Partido partido) {

@@ -52,6 +52,16 @@ public class Futbol5 implements Serializable {
     this._fechaNacimiento = fechaNacimiento;
   }
   
+  private int _nivelDeJuego;
+  
+  public int getNivelDeJuego() {
+    return this._nivelDeJuego;
+  }
+  
+  public void setNivelDeJuego(final int nivelDeJuego) {
+    this._nivelDeJuego = nivelDeJuego;
+  }
+  
   private Jugador _seleccionJugador;
   
   public Jugador getSeleccionJugador() {

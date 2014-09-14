@@ -7,6 +7,7 @@ import excepciones.BusinessException;
 import futbol5.domain.Administrador;
 import futbol5.domain.Jugador;
 import inscripciones.TipoInscripcion;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -70,6 +71,16 @@ public class Partido extends Entity {
     this._equipoB = equipoB;
   }
   
+  private List<Jugador> _equipoC;
+  
+  public List<Jugador> getEquipoC() {
+    return this._equipoC;
+  }
+  
+  public void setEquipoC(final List<Jugador> equipoC) {
+    this._equipoC = equipoC;
+  }
+  
   private List<PartidoObserver> _altasObservers;
   
   public List<PartidoObserver> getAltasObservers() {
@@ -88,6 +99,16 @@ public class Partido extends Entity {
   
   public void setBajasObservers(final List<PartidoObserver> bajasObservers) {
     this._bajasObservers = bajasObservers;
+  }
+  
+  private int _cantEquipoA;
+  
+  public int getCantEquipoA() {
+    return this._cantEquipoA;
+  }
+  
+  public void setCantEquipoA(final int cantEquipoA) {
+    this._cantEquipoA = cantEquipoA;
   }
   
   private Boolean _estaConfirmado = Boolean.valueOf(false);
@@ -110,6 +131,26 @@ public class Partido extends Entity {
     this._administrador = administrador;
   }
   
+  private DivisionDeEquiposCommand _AlgoritmoDivision;
+  
+  public DivisionDeEquiposCommand getAlgoritmoDivision() {
+    return this._AlgoritmoDivision;
+  }
+  
+  public void setAlgoritmoDivision(final DivisionDeEquiposCommand AlgoritmoDivision) {
+    this._AlgoritmoDivision = AlgoritmoDivision;
+  }
+  
+  private CriteriosCommand _AlgoritmoOrdenamiento;
+  
+  public CriteriosCommand getAlgoritmoOrdenamiento() {
+    return this._AlgoritmoOrdenamiento;
+  }
+  
+  public void setAlgoritmoOrdenamiento(final CriteriosCommand AlgoritmoOrdenamiento) {
+    this._AlgoritmoOrdenamiento = AlgoritmoOrdenamiento;
+  }
+  
   public Partido(final String localidad) {
     this.setLocalidad(localidad);
     this.init();
@@ -130,10 +171,10 @@ public class Partido extends Entity {
     this.setBajasObservers(_linkedList_3);
     Administrador _administrador = new Administrador();
     this.setAdministrador(_administrador);
-    LinkedList<Jugador> _linkedList_4 = new LinkedList<Jugador>();
-    this.setEquipoA(_linkedList_4);
-    LinkedList<Jugador> _linkedList_5 = new LinkedList<Jugador>();
-    this.setEquipoB(_linkedList_5);
+    ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
+    this.setEquipoA(_arrayList);
+    ArrayList<Jugador> _arrayList_1 = new ArrayList<Jugador>();
+    this.setEquipoB(_arrayList_1);
   }
   
   public void notificarInscripcion(final Jugador jugador) {
@@ -287,6 +328,7 @@ public class Partido extends Entity {
     }
   }
   
+  @Observable
   public void ordenarJugadores(final CriteriosCommand criterioOrdenamiento) {
     try {
       Boolean _estaConfirmado = this.getEstaConfirmado();
@@ -306,6 +348,7 @@ public class Partido extends Entity {
     }
   }
   
+  @Observable
   public void dividirEquipos(final DivisionDeEquiposCommand algoritmoDivision) {
     try {
       Boolean _estaConfirmado = this.getEstaConfirmado();
@@ -318,10 +361,15 @@ public class Partido extends Entity {
       if (_lessThan) {
         throw new BusinessException("No se pueden armar los dos equipos porque no hay 10 jugadores ordenados aun.");
       }
+      ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
+      this.setEquipoB(_arrayList);
       List<Jugador> _jugadoresOrdenados_1 = this.getJugadoresOrdenados();
       List<Jugador> _equipoA = this.getEquipoA();
       List<Jugador> _equipoB = this.getEquipoB();
       algoritmoDivision.dividir(_jugadoresOrdenados_1, _equipoA, _equipoB);
+      List<Jugador> _equipoA_1 = this.getEquipoA();
+      int _size_1 = _equipoA_1.size();
+      this.setCantEquipoA(_size_1);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

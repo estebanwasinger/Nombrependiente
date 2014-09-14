@@ -21,6 +21,8 @@ import futbol5.homes.HomeJugadores
 import org.uqbar.arena.widgets.Link
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.bindings.NotNullObservable
+import org.uqbar.arena.bindings.ObservableProperty
+import org.uqbar.arena.widgets.RadioSelector
 
 @Observable
 class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
@@ -31,6 +33,9 @@ class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
 	new(RunnableBusquedaJugadores parent) {
 		super(parent, new Futbol5)
 	}
+	
+	def getOpcionesRango() { #["Desde","Hasta"] 
+}
 						
 	override createContents(Panel mainPanel) {
 		
@@ -98,6 +103,17 @@ class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
 			width = 200]	
 			
 		//Por rango desde/hasta del hándicap (puede ingresarse sólo desde, o sólo hasta) //
+		var labelRangoHandicap = new Label(busquedaSuperior)
+		labelRangoHandicap.text = "Handicap" 
+		
+		 new RadioSelector(busquedaSuperior) => [
+		 bindItems(new ObservableProperty(this, "opcionesRango"))
+		 allowNull = false
+		 ]
+		 
+		 new TextBox(busquedaSuperior)=>
+			[bindValueToProperty("nivelDeJuego")
+			width = 200]	
 		//Por rango desde/hasta del promedio de último partido //
 		//Filtrar sólo los que tuvieron infracciones, sólo los que no tuvieron infracciones, todos //
 			
