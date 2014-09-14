@@ -6,6 +6,10 @@ class CriterioNCalificaciones extends CriteriosCommand{
 	
 	int n
 	
+	new(){
+		nombre = "N Calificaciones"
+	}
+	
 	new(int n) {
 		this.n = n
 	}

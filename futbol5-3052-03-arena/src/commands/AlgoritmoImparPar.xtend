@@ -4,6 +4,10 @@ import futbol5.domain.Jugador
 import java.util.List
 
 class AlgoritmoImparPar extends DivisionDeEquiposCommand {
+	
+	new(){
+		nombre = "Impar Par"
+	}
 
 	override dividir(List<Jugador> jugadores, List<Jugador> equipoA, List<Jugador> equipoB) {
 		(0 .. 9).forEach [ pos |
