@@ -9,16 +9,24 @@ import futbol5.Jugador
 import inscripciones.TipoInscripcion
 import infracciones.Infraccion
 import calificaciones.Calificacion
+import auxiliares.RegistroRechazo
+import java.util.LinkedList
 
 @Observable
 class HomeJugadores extends CollectionBasedHome<Jugador> {
+	
+	@Property var List<Jugador> jugadoresAceptados
+	@Property var List<RegistroRechazo> jugadoresRechazados
+	@Property var LinkedList<Jugador> jugadoresRecomendados
 
 	new() {
 		this.init
 	}
 
 	def void init() {
-
+ 		jugadoresAceptados = new LinkedList<Jugador>
+		jugadoresRechazados = new LinkedList<RegistroRechazo>
+		jugadoresRecomendados = new LinkedList<Jugador>
 	}
 
 	def void create(String nombre, TipoInscripcion tipoInscripcion, int edad, List<Infraccion> infracciones, List<Jugador> amigos, List <Calificacion> calificaciones,float nivelDeJuego,int criterioComparacion){
@@ -32,7 +40,7 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 		jugador.nivelDeJuego = nivelDeJuego
 		jugador.criterioComparacion = criterioComparacion
 		
-		this.create(jugador)
+		jugadoresAceptados.add(jugador)
 	}
 	
 	override void validateCreate(Jugador jugador) {
@@ -43,7 +51,7 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 	def void validarMateriasDuplicadas(Jugador jugador) {
 		val nombre = jugador.nombre
 		if (!this.search(nombre).isEmpty) {
-			throw new UserException("Ya existe una materia con el nombre " + nombre)
+			throw new UserException("Ya existe una jugador con el nombre " + nombre)
 		}
 	}
 

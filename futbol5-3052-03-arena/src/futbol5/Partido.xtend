@@ -6,8 +6,9 @@ import excepciones.BusinessException
 import observers.PartidoObserver
 import commands.CriteriosCommand
 import commands.DivisionDeEquiposCommand
+import org.uqbar.commons.model.Entity
 
-class Partido {
+class Partido extends Entity {
 
 	@Property var String localidad
 	@Property var List<Jugador> jugadores
@@ -31,6 +32,9 @@ class Partido {
 		administrador = new Administrador
 		equipoA = new LinkedList<Jugador>
 		equipoB = new LinkedList<Jugador>
+	}
+	
+	new() {
 	}
 
 	/********************/
