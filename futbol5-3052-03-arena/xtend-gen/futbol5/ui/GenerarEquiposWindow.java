@@ -47,7 +47,7 @@ public class GenerarEquiposWindow extends SimpleWindow<Partido> {
     HorizontalLayout _horizontalLayout = new HorizontalLayout();
     botoneraSuperior.setLayout(_horizontalLayout);
     final Panel panelListaJugadores = new Panel(mainPanel);
-    ColumnLayout _columnLayout = new ColumnLayout(2);
+    ColumnLayout _columnLayout = new ColumnLayout(3);
     panelListaJugadores.setLayout(_columnLayout);
     final Panel selector1 = new Panel(botoneraSuperior);
     VerticalLayout _verticalLayout_1 = new VerticalLayout();
@@ -88,28 +88,47 @@ public class GenerarEquiposWindow extends SimpleWindow<Partido> {
     Label _label = new Label(panelJugadores);
     final Procedure1<Label> _function = new Procedure1<Label>() {
       public void apply(final Label it) {
+        it.setText("Jugadores");
+        it.setFontSize(20);
+      }
+    };
+    Label labelJugadores = ObjectExtensions.<Label>operator_doubleArrow(_label, _function);
+    Label _label_1 = new Label(panelJugadores);
+    final Procedure1<Label> _function_1 = new Procedure1<Label>() {
+      public void apply(final Label it) {
         it.setText("Equipo A");
         it.setFontSize(20);
       }
     };
-    Label labelEquipo1 = ObjectExtensions.<Label>operator_doubleArrow(_label, _function);
-    Label _label_1 = new Label(panelJugadores);
-    final Procedure1<Label> _function_1 = new Procedure1<Label>() {
+    Label labelEquipo1 = ObjectExtensions.<Label>operator_doubleArrow(_label_1, _function_1);
+    Label _label_2 = new Label(panelJugadores);
+    final Procedure1<Label> _function_2 = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Equipo B");
         it.setFontSize(20);
       }
     };
-    Label labelEquipo2 = ObjectExtensions.<Label>operator_doubleArrow(_label_1, _function_1);
+    Label labelEquipo2 = ObjectExtensions.<Label>operator_doubleArrow(_label_2, _function_2);
+    Table<Jugador> table3 = new Table<Jugador>(panelJugadores, Jugador.class);
+    table3.setHeigth(200);
+    table3.setWidth(285);
+    table3.bindItemsToProperty("jugadores");
+    Column<Jugador> _column = new Column<Jugador>(table3);
+    Column<Jugador> _setTitle = _column.setTitle("Nombre");
+    _setTitle.bindContentsToProperty("nombre");
     Table<Jugador> table = new Table<Jugador>(panelJugadores, Jugador.class);
     table.setHeigth(200);
     table.setWidth(285);
-    Column<Jugador> _column = new Column<Jugador>(table);
-    _column.setTitle("Nombre");
+    table.bindItemsToProperty("equipoA");
+    Column<Jugador> _column_1 = new Column<Jugador>(table);
+    Column<Jugador> _setTitle_1 = _column_1.setTitle("Nombre");
+    _setTitle_1.bindContentsToProperty("nombre");
     Table<Jugador> table2 = new Table<Jugador>(panelJugadores, Jugador.class);
     table2.setHeigth(200);
     table2.setWidth(285);
-    Column<Jugador> _column_1 = new Column<Jugador>(table2);
-    _column_1.setTitle("Nombre");
+    table.bindItemsToProperty("equipoB");
+    Column<Jugador> _column_2 = new Column<Jugador>(table2);
+    Column<Jugador> _setTitle_2 = _column_2.setTitle("Nombre");
+    _setTitle_2.bindContentsToProperty("nombre");
   }
 }

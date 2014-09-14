@@ -14,10 +14,11 @@ public class RunnableTest extends Application {
   }
   
   protected Window<?> createMainWindow() {
-    Partido partidoEjemplo = new Partido();
-    Jugador _jugador = new Jugador();
+    Partido partidoEjemplo = new Partido("San Miguel");
+    Jugador _jugador = new Jugador("Esteban");
     partidoEjemplo.agregarJugador(_jugador);
-    Partido _partido = new Partido();
-    return new GenerarEquiposWindow(this, _partido);
+    Jugador _jugador_1 = new Jugador("Carolina");
+    partidoEjemplo.agregarJugador(_jugador_1);
+    return new GenerarEquiposWindow(this, partidoEjemplo);
   }
 }

@@ -20,6 +20,7 @@ import org.uqbar.commons.utils.ApplicationContext
 class Jugador extends Entity{
 
 	@Property String nombre
+	@Property String apodo
 	@Property TipoInscripcion tipoInscripcion
 	@Property int edad
 	@Property String email

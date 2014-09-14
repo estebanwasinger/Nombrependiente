@@ -11,68 +11,106 @@ import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
+import org.uqbar.arena.widgets.Label
+import org.uqbar.commons.utils.Observable
 
+@Observable
 class BusquedaJugadoresWindow extends SimpleWindow<Jugador>{
 		new(WindowOwner parent,Jugador model) {
 		super(parent, model)
 	}
 	
-	new(RunnableTest parent) {
+	new(RunnableBusquedaJugadores parent) {
 		super(parent, new Jugador)
+	}
+							
+	override createContents(Panel mainPanel) {
+		
+		title = "Busqueda de Jugadores"
+		var panel2Columnas = new Panel(mainPanel)
+		panel2Columnas.setLayout(new ColumnLayout(2))
+		var panelIzquierda = new Panel(panel2Columnas) // divido la vista principal en dos paneles
+		var panelDerecha = new Panel(panel2Columnas)
+		new Label(panelIzquierda) => [
+			text = "Busqueda" //le doy un titulo al panel izquierdo que va a contener los tipos de busqueda
+			fontSize = 20
+			]
+		new Label(panelDerecha) => [
+			text = "Resultados" //le doy un titulo al panel derecho que va a mostrar los resultados de la busqueda
+			fontSize = 20
+		]
+		
+		addActions(mainPanel) 
+		createFormPanel(panelIzquierda)
+		grillaBasicaJugadores(panelDerecha)
 	}
 	
 	override protected addActions(Panel actionPanel) {
 		actionPanel.layout = new HorizontalLayout
 		new Button(actionPanel)
-			.setCaption("Cancelar")
-			
-		new Button(actionPanel)
-			.setCaption("Aceptar")
+			.setCaption("Regresar")
 	}
 	
-	override protected createFormPanel(Panel mainPanel) {
+	
+	override void createFormPanel(Panel panelIzquierda) {
 		title = "Busqueda Jugador"
 
-		/* Creacion panel BUSCAR EQUIPO */
-		mainPanel.layout = new VerticalLayout
-		val busquedaSuperior = new Panel(mainPanel)
-		busquedaSuperior.layout = new HorizontalLayout
-		val panelListaJugadores = new Panel(mainPanel)
-		panelListaJugadores.layout = new ColumnLayout(2)
+		panelIzquierda.layout = new VerticalLayout
+		val busquedaSuperior = new Panel(panelIzquierda)
+		busquedaSuperior.layout = new VerticalLayout
 		
-		createMetodoBusqueda(busquedaSuperior)
-		createListaJugadores(panelListaJugadores)
+		val panelBusquedaJugadores = new Panel(panelIzquierda)
+		panelBusquedaJugadores.layout = new ColumnLayout(2)
+		
+		criteriosDeBusqueda(busquedaSuperior)
+		//grillaBasicaJugadores(panelListaJugadores)
 	}
 	
-	def void createMetodoBusqueda(Panel busquedaSuperior){
-		val campoBusqueda = new TextBox(busquedaSuperior)=>[width = 200
-			title ="Busqueda de Equipos"
-		]
-		val campoBusqueda2 = new TextBox(busquedaSuperior).width = 200
-		val campoBusqueda3 = new TextBox(busquedaSuperior).width = 200
-		val campoBusqueda4 = new TextBox(busquedaSuperior).width = 200
+	def void criteriosDeBusqueda(Panel busquedaSuperior){
+		
+		// Por nombre “comienza con” //
+		var labelNombre = new Label(busquedaSuperior)
+		labelNombre.text = "Nombre Jugador" //hay que afinar el "comienza con"
+
+		new TextBox(busquedaSuperior)=>
+			[bindValueToProperty("nombre")
+			width = 200]
+		
+		//Por apodo “contiene” //	
+		var labelApodo = new Label(busquedaSuperior)
+		labelApodo.text = "Apodo Jugador" //hay que afinar el "contiene"
+
+		new TextBox(busquedaSuperior)=>
+			[bindValueToProperty("apodo")
+			width = 200]	
+			
+		// Búsqueda por fecha de nacimiento “anterior a” //
+		//Por rango desde/hasta del hándicap (puede ingresarse sólo desde, o sólo hasta) //
+		//Por rango desde/hasta del promedio de último partido //
+		//Filtrar sólo los que tuvieron infracciones, sólo los que no tuvieron infracciones, todos //
+			
 		val botonBuscar = new Button(busquedaSuperior) => [
 			width = 200
 			caption = "Buscar Jugadores"
 		]
 	}
 	
-	def void createListaJugadores(Panel panelJugadores){
+	def void grillaBasicaJugadores(Panel panelJugadores){
 		var table = new Table<Jugador>(panelJugadores, typeof(Jugador))
 		table.heigth = 200
-		table.width = 450
+		table.width = 590
 		new Column<Jugador>(table) //
 			.setTitle("Nombre")
 			.setFixedSize(150)
-		//	.bindContentsToProperty("nombre")
+			.bindContentsToProperty("nombre")
 		new Column<Jugador>(table) //
 			.setTitle("Apodo")
 			.setFixedSize(150)
-		//	.bindContentsToProperty("nombre")
+			.bindContentsToProperty("apodo")
 		new Column<Jugador>(table) //
 			.setTitle("Handicap")
 			.setFixedSize(150)
-		//	.bindContentsToProperty("nombre")
+			.bindContentsToProperty("nivelDeJuego")
 		new Column<Jugador>(table) //
 			.setTitle("Promedio")
 			.setFixedSize(150)
