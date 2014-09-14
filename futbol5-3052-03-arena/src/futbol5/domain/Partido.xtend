@@ -7,7 +7,9 @@ import observers.PartidoObserver
 import commands.CriteriosCommand
 import commands.DivisionDeEquiposCommand
 import org.uqbar.commons.model.Entity
+import org.uqbar.commons.utils.Observable
 
+@Observable
 class Partido extends Entity {
 
 	@Property var String localidad

@@ -15,12 +15,13 @@ class RunnableTest extends Application {
 	override protected Window<?> createMainWindow() {
 		//ApplicationContext.instance.configureSingleton(typeof(Modelo), new HomeModelos)
 		//ApplicationContext.instance.configureSingleton(typeof(Celular), new HomeCelulares)
-		var Partido partidoEjemplo = new Partido
-		partidoEjemplo.agregarJugador(new Jugador())
+		var Partido partidoEjemplo = new Partido("San Miguel")
+		partidoEjemplo.agregarJugador(new Jugador("Esteban"))
+		partidoEjemplo.agregarJugador(new Jugador("Carolina"))
 		
 		
 		
-		return new GenerarEquiposWindow(this, new Partido)
+		return new GenerarEquiposWindow(this, partidoEjemplo)
 	}
 }
 	
