@@ -2,4 +2,4 @@
 /target/
 ./xtend-gen
 *.class
-._trace
+*._trace
