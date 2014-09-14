@@ -30,6 +30,7 @@ import org.uqbar.arena.windows.ErrorsPanel
 import org.uqbar.arena.windows.MainWindow
 import org.uqbar.commons.utils.ApplicationContext
 import org.uqbar.commons.utils.Observable
+import futbol5.Jugador
 
 @Observable
 class GenerarEquiposWindow extends SimpleWindow<Partido> {
@@ -60,5 +61,33 @@ class GenerarEquiposWindow extends SimpleWindow<Partido> {
 		botoneraSuperior.layout = new HorizontalLayout
 		val panelListaJugadores = new Panel(mainPanel)
 		panelListaJugadores.layout = new ColumnLayout(2)
+		
+		createBotonera(botoneraSuperior)
+		createListaJugadores(panelListaJugadores)
+	}
+	
+	def void createBotonera(Panel botoneraSuperior){
+		val selectorOrdenamiento = new Selector(botoneraSuperior)=>[width = 200
+			title ="hola"
+		]
+		val selectorOrdenamiento2 = new Selector(botoneraSuperior).width = 200
+		val botonGenerar = new Button(botoneraSuperior) => [
+			width = 200
+			caption = "Generar Equipos"
+		]
+	}
+	
+	def void createListaJugadores(Panel panelJugadores){
+		var table = new Table<Jugador>(panelJugadores, typeof(Jugador))
+		table.heigth = 200
+		table.width = 450
+		new Column<Jugador>(table) //
+			.setTitle("Nombre")
+			.setFixedSize(150)
+		//	.bindContentsToProperty("nombre")
+		new Column<Jugador>(table) //
+			.setTitle("Nombre")
+			.setFixedSize(150)
+		//	.bindContentsToProperty("nombre")
 	}
 }
