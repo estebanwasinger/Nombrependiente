@@ -3,4 +3,3 @@
 ./xtend-gen
 *.class
 *._trace
-*.java
