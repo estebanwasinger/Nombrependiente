@@ -14,9 +14,23 @@ import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.utils.Observable
+import commands.DivisionDeEquiposCommand
+import org.uqbar.arena.bindings.ObservableProperty
+import java.util.LinkedList
+import java.util.List
+import commands.AlgoritmoImparPar
+import org.uqbar.arena.bindings.PropertyAdapter
+import commands.AlgoritmoLoco
+import commands.CriteriosCommand
+import commands.CriterioCalifiUltimoPartido
+import commands.CriterioHandicap
+import commands.CriterioNCalificaciones
 
 @Observable
 class GenerarEquiposWindow extends SimpleWindow<Partido> {
+
+	@Property  List<DivisionDeEquiposCommand> listaCommand
+	@Property  List<CriteriosCommand> listaCommand2
 
 	new(WindowOwner parent, Partido model) {
 		super(parent, model)
@@ -49,14 +63,40 @@ class GenerarEquiposWindow extends SimpleWindow<Partido> {
 		val selector3 = new Panel(botoneraSuperior)
 		selector3.layout = new VerticalLayout
 
+		/* RELLENO DE LOS SELECTORES ES HORRIBLE PERO POR AHORA FUNCIONA
+		 * lo que hay que ver es tipo los algoritmos que necesitan que le pases algun parametro para que funcione como ultimos N partidos
+		 */
+
 		new Label(selector1).text = "Criterio de Selección"
-		val selectorOrdenamiento = new Selector(selector1) => [
+		val selectorOrdenamiento = new Selector<DivisionDeEquiposCommand>(selector1) => [
 			width = 200
 			title = "Generar equipos tentativos"
 		]
+		listaCommand = new LinkedList<DivisionDeEquiposCommand>
+		listaCommand.add(new AlgoritmoImparPar)
+		listaCommand.add(new AlgoritmoLoco)
+		selectorOrdenamiento.allowNull(false)
+ 		//selectorOrdenamiento.bindValueToProperty("pais")
+ 		var propiedadOrdenamiento = selectorOrdenamiento.bindItems(new ObservableProperty(this, "listaCommand"))
+ 		propiedadOrdenamiento.adapter = new PropertyAdapter(typeof(DivisionDeEquiposCommand), "nombre")
+		
 
 		new Label(selector2).text = "Criterio de Ordenamiento"
-		val selectorOrdenamiento2 = new Selector(selector2).width = 200
+		val selectorOrdenamiento2 = new Selector<CriteriosCommand>(selector2) => [
+			allowNull(false) 
+			width = 200
+		]
+		listaCommand2 = new LinkedList<CriteriosCommand>
+		listaCommand2.add(new CriterioCalifiUltimoPartido)
+		listaCommand2.add(new CriterioHandicap)
+		listaCommand2.add(new CriterioNCalificaciones)
+		selectorOrdenamiento2.allowNull(false)
+ 		//selectorOrdenamiento.bindValueToProperty("pais")
+ 		var propiedadOrdenamiento2 = selectorOrdenamiento2.bindItems(new ObservableProperty(this, "listaCommand2"))
+ 		propiedadOrdenamiento2.adapter = new PropertyAdapter(typeof(CriteriosCommand), "nombre")
+		
+		
+		
 
 		//new Label(selector3).text = " "
 		val botonGenerar = new Button(selector3) => [

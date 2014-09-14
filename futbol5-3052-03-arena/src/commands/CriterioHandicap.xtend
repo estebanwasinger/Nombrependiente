@@ -5,6 +5,10 @@ import futbol5.domain.Jugador
 import java.util.List
 
 class CriterioHandicap extends CriteriosCommand{
+	
+	new(){
+		nombre = "Handicap"
+	}
 
 	override (Jugador) => float criterioComparacion(){
 		return [Jugador jugador | jugador.nivelDeJuego]

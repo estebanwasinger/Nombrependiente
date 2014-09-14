@@ -8,6 +8,10 @@ class AlgoritmoLoco extends DivisionDeEquiposCommand {
 	List<Integer> posicionesA = #[0,3,4,7,8]
 	List<Integer> posicionesB = #[1,2,5,6,9]
 	
+	new(){
+		nombre = "Loco"
+	}
+	
 	override dividir(List<Jugador> jugadores, List<Jugador> equipoA, List<Jugador> equipoB) {
 //		var posA = 0
 //		var posB = 1

@@ -4,7 +4,9 @@ import futbol5.domain.Jugador
 
 class CriterioCalifiUltimoPartido extends CriteriosCommand {
 
-	new(){}
+	new(){
+		nombre = "Ultimo Partido"
+	}
 	
 	override (Jugador)=>float criterioComparacion() {
 		return [Jugador jugador|jugador.promedioCalificacionesUltimoPartido]
