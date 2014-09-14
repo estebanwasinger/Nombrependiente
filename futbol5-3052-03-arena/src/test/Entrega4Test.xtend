@@ -8,8 +8,8 @@ import commands.CriterioMix
 import commands.CriterioNCalificaciones
 import commands.CriteriosCommand
 import excepciones.BusinessException
-import futbol5.Jugador
-import futbol5.Partido
+import futbol5.domain.Jugador
+import futbol5.domain.Partido
 import java.util.ArrayList
 import java.util.List
 import org.junit.Assert

@@ -1,9 +1,9 @@
 package observers
 
-import futbol5.Jugador
-import futbol5.Partido
-import infracciones.Infraccion
 import auxiliares.MessageSender
+import futbol5.domain.Jugador
+import futbol5.domain.Partido
+import infracciones.Infraccion
 
 class BajaSinReemplazoObserver extends PartidoObserver {
 

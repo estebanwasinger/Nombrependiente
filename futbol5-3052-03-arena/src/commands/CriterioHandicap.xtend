@@ -1,8 +1,8 @@
 package commands
 
-import futbol5.Jugador
-import java.util.List
 import excepciones.BusinessException
+import futbol5.domain.Jugador
+import java.util.List
 
 class CriterioHandicap extends CriteriosCommand{
 

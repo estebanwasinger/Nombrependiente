@@ -1,8 +1,8 @@
 package observers
 
-import futbol5.Jugador
-import futbol5.Partido
 import auxiliares.MessageSender
+import futbol5.domain.Jugador
+import futbol5.domain.Partido
 
 class InscripcionObserver extends PartidoObserver{
 	

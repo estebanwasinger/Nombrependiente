@@ -1,6 +1,7 @@
 package auxiliares
 
-import java.util.Dateimport futbol5.Jugador
+import futbol5.domain.Jugador
+import java.util.Date
 
 class RegistroRechazo {
 	@Property Date fechaDelDia

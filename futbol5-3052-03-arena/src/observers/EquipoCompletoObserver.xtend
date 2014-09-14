@@ -1,8 +1,8 @@
 package observers
 
-import futbol5.Partido
-import futbol5.Jugador
 import auxiliares.MessageSender
+import futbol5.domain.Jugador
+import futbol5.domain.Partido
 
 class EquipoCompletoObserver extends PartidoObserver{
 	

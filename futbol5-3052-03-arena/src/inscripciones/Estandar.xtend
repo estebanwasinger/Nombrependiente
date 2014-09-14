@@ -1,8 +1,7 @@
 package inscripciones
 
-import inscripciones.TipoInscripcion
-import futbol5.Partido
-import futbol5.Jugador
+import futbol5.domain.Jugador
+import futbol5.domain.Partido
 
 class Estandar implements TipoInscripcion {
 

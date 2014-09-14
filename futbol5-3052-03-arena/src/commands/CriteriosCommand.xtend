@@ -1,8 +1,7 @@
 package commands
 
-import futbol5.Jugador
+import futbol5.domain.Jugador
 import java.util.List
-
 
 abstract class CriteriosCommand {
 

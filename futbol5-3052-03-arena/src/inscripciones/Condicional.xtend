@@ -1,9 +1,8 @@
 package inscripciones
 
-import inscripciones.TipoInscripcion
 import condiciones.Condicion
-import futbol5.Partido
-import futbol5.Jugador
+import futbol5.domain.Jugador
+import futbol5.domain.Partido
 
 class Condicional implements TipoInscripcion {
 	@Property Condicion condicion

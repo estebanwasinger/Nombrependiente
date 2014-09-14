@@ -1,7 +1,7 @@
 package test
 
-import futbol5.Jugador
-import futbol5.Partido
+import futbol5.domain.Jugador
+import futbol5.domain.Partido
 import condiciones.CondicionJugadoresPorEdad
 import condiciones.CondicionPartidoEnLocalidad
 import inscripciones.Estandar

@@ -1,7 +1,7 @@
 package condiciones
 
-import futbol5.Partido
-import futbol5.Jugador
+import futbol5.domain.Jugador
+import futbol5.domain.Partido
 
 class CondicionPartidoEnLocalidad implements Condicion {
 		@Property var String localidad 

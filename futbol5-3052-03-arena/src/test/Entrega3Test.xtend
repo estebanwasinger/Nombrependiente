@@ -1,12 +1,12 @@
 package test
 
-import futbol5.Jugador
-import futbol5.Partido
+import futbol5.domain.Jugador
+import futbol5.domain.Partido
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import excepciones.BusinessException
-import futbol5.Sistema
+import futbol5.domain.Sistema
 
 class Entrega3Test {
 	Jugador jugador

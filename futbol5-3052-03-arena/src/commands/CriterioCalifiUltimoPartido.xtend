@@ -1,6 +1,6 @@
 package commands
 
-import futbol5.Jugador
+import futbol5.domain.Jugador
 
 class CriterioCalifiUltimoPartido extends CriteriosCommand {
 

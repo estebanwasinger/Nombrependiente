@@ -1,7 +1,7 @@
 package test
 
-import futbol5.Jugador
-import futbol5.Partido
+import futbol5.domain.Jugador
+import futbol5.domain.Partido
 import inscripciones.Estandar
 import org.junit.Before
 import org.junit.Test
@@ -14,7 +14,7 @@ import observers.InscripcionObserver
 import junit.framework.Assert
 import observers.EquipoIncompletoObserver
 import observers.BajaSinReemplazoObserver
-import futbol5.Administrador
+import futbol5.domain.Administrador
 
 class Entrega2Test {
 		Jugador jugador 

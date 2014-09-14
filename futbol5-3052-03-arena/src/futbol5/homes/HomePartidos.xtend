@@ -1,7 +1,7 @@
 package futbol5.homes
 
+import futbol5.domain.Partido
 import org.uqbar.commons.model.CollectionBasedHome
-import futbol5.Partido
 
 class HomePartidos extends CollectionBasedHome<Partido> {
 	

@@ -1,7 +1,7 @@
 package inscripciones
 
-import futbol5.Jugador
-import futbol5.Partido
+import futbol5.domain.Jugador
+import futbol5.domain.Partido
 
 interface TipoInscripcion {
 	
