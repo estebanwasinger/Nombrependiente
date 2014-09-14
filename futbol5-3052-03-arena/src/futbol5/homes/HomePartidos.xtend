@@ -2,6 +2,8 @@ package futbol5.homes
 
 import futbol5.domain.Partido
 import org.uqbar.commons.model.CollectionBasedHome
+import java.util.LinkedList
+import java.util.List
 
 class HomePartidos extends CollectionBasedHome<Partido> {
 	
