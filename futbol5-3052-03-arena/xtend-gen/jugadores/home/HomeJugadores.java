@@ -1,10 +1,12 @@
 package jugadores.home;
 
+import auxiliares.RegistroRechazo;
 import calificaciones.Calificacion;
 import com.google.common.base.Objects;
 import futbol5.Jugador;
 import infracciones.Infraccion;
 import inscripciones.TipoInscripcion;
+import java.util.LinkedList;
 import java.util.List;
 import org.apache.commons.collections15.Predicate;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -16,11 +18,47 @@ import org.uqbar.commons.utils.Observable;
 @Observable
 @SuppressWarnings("all")
 public class HomeJugadores extends CollectionBasedHome<Jugador> {
+  private List<Jugador> _jugadoresAceptados;
+  
+  public List<Jugador> getJugadoresAceptados() {
+    return this._jugadoresAceptados;
+  }
+  
+  public void setJugadoresAceptados(final List<Jugador> jugadoresAceptados) {
+    this._jugadoresAceptados = jugadoresAceptados;
+  }
+  
+  private List<RegistroRechazo> _jugadoresRechazados;
+  
+  public List<RegistroRechazo> getJugadoresRechazados() {
+    return this._jugadoresRechazados;
+  }
+  
+  public void setJugadoresRechazados(final List<RegistroRechazo> jugadoresRechazados) {
+    this._jugadoresRechazados = jugadoresRechazados;
+  }
+  
+  private LinkedList<Jugador> _jugadoresRecomendados;
+  
+  public LinkedList<Jugador> getJugadoresRecomendados() {
+    return this._jugadoresRecomendados;
+  }
+  
+  public void setJugadoresRecomendados(final LinkedList<Jugador> jugadoresRecomendados) {
+    this._jugadoresRecomendados = jugadoresRecomendados;
+  }
+  
   public HomeJugadores() {
     this.init();
   }
   
   public void init() {
+    LinkedList<Jugador> _linkedList = new LinkedList<Jugador>();
+    this.setJugadoresAceptados(_linkedList);
+    LinkedList<RegistroRechazo> _linkedList_1 = new LinkedList<RegistroRechazo>();
+    this.setJugadoresRechazados(_linkedList_1);
+    LinkedList<Jugador> _linkedList_2 = new LinkedList<Jugador>();
+    this.setJugadoresRecomendados(_linkedList_2);
   }
   
   public void create(final String nombre, final TipoInscripcion tipoInscripcion, final int edad, final List<Infraccion> infracciones, final List<Jugador> amigos, final List<Calificacion> calificaciones, final float nivelDeJuego, final int criterioComparacion) {
@@ -33,7 +71,8 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     jugador.setCalificaciones(calificaciones);
     jugador.setNivelDeJuego(nivelDeJuego);
     jugador.setCriterioComparacion(criterioComparacion);
-    this.create(jugador);
+    List<Jugador> _jugadoresAceptados = this.getJugadoresAceptados();
+    _jugadoresAceptados.add(jugador);
   }
   
   public void validateCreate(final Jugador jugador) {
@@ -47,7 +86,7 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     boolean _isEmpty = _search.isEmpty();
     boolean _not = (!_isEmpty);
     if (_not) {
-      throw new UserException(("Ya existe una materia con el nombre " + nombre));
+      throw new UserException(("Ya existe una jugador con el nombre " + nombre));
     }
   }
   

@@ -61,21 +61,30 @@ class GenerarEquiposWindow extends SimpleWindow<Partido> {
 		botoneraSuperior.layout = new HorizontalLayout
 		val panelListaJugadores = new Panel(mainPanel)
 		panelListaJugadores.layout = new ColumnLayout(2)
+		val selector1 = new Panel(botoneraSuperior)
+		selector1.layout = new VerticalLayout
+		val selector2 = new Panel(botoneraSuperior)
+		selector2.layout = new VerticalLayout
+		val selector3 = new Panel(botoneraSuperior)
+		selector3.layout = new VerticalLayout
 		
-		createBotonera(botoneraSuperior)
-		createListaJugadores(panelListaJugadores)
-	}
-	
-	def void createBotonera(Panel botoneraSuperior){
-		val selectorOrdenamiento = new Selector(botoneraSuperior)=>[width = 200
-			title ="hola"
+		new Label(selector1).text = "Criterio de Selección"
+		val selectorOrdenamiento = new Selector(selector1)=>[width = 200
+			title ="Generar equipos tentativos"
 		]
-		val selectorOrdenamiento2 = new Selector(botoneraSuperior).width = 200
-		val botonGenerar = new Button(botoneraSuperior) => [
+		
+		new Label(selector2).text = "Criterio de Ordenamiento"
+		val selectorOrdenamiento2 = new Selector(selector2).width = 200
+		
+		new Label(selector3).text = " "
+		val botonGenerar = new Button(selector3) => [
 			width = 200
 			caption = "Generar Equipos"
 		]
+		
+		createListaJugadores(panelListaJugadores)
 	}
+	
 	
 	def void createListaJugadores(Panel panelJugadores){
 		var table = new Table<Jugador>(panelJugadores, typeof(Jugador))
