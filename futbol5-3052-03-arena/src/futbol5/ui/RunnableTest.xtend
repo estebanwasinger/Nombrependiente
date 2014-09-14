@@ -18,6 +18,15 @@ class RunnableTest extends Application {
 		var Partido partidoEjemplo = new Partido("San Miguel")
 		partidoEjemplo.agregarJugador(new Jugador("Esteban"))
 		partidoEjemplo.agregarJugador(new Jugador("Carolina"))
+		partidoEjemplo.agregarJugador(new Jugador("Vero"))
+		partidoEjemplo.agregarJugador(new Jugador("Pau"))
+		partidoEjemplo.agregarJugador(new Jugador("Esteban"))
+		partidoEjemplo.agregarJugador(new Jugador("Carolina"))
+		partidoEjemplo.agregarJugador(new Jugador("Vero"))
+		partidoEjemplo.agregarJugador(new Jugador("Pau"))
+		partidoEjemplo.agregarJugador(new Jugador("Esteban"))
+		partidoEjemplo.agregarJugador(new Jugador("Carolina"))
+		partidoEjemplo.equipoA.add(new Jugador("Hola"))
 		
 		
 		

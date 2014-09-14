@@ -8,6 +8,7 @@ import commands.CriteriosCommand
 import commands.DivisionDeEquiposCommand
 import org.uqbar.commons.model.Entity
 import org.uqbar.commons.utils.Observable
+import java.util.ArrayList
 
 @Observable
 class Partido extends Entity {
@@ -17,10 +18,14 @@ class Partido extends Entity {
 	@Property var List<Jugador> jugadoresOrdenados
 	@Property var List<Jugador> equipoA
 	@Property var List<Jugador> equipoB
+	@Property var List<Jugador> equipoC
 	@Property var List<PartidoObserver> altasObservers
 	@Property var List<PartidoObserver> bajasObservers
+	@Property var int cantEquipoA
 	@Property var Boolean estaConfirmado = false
 	@Property var Administrador administrador
+	@Property var DivisionDeEquiposCommand AlgoritmoDivision
+	@Property var CriteriosCommand AlgoritmoOrdenamiento
 
 	/****************/
 	/*CONSTRUCTORES*/
@@ -28,7 +33,7 @@ class Partido extends Entity {
 	new(String localidad) {
 		this.localidad = localidad
 		init
-		
+
 	}
 	
 	new() {
@@ -41,8 +46,8 @@ class Partido extends Entity {
 		altasObservers = new LinkedList<PartidoObserver>
 		bajasObservers = new LinkedList<PartidoObserver>
 		administrador = new Administrador
-		equipoA = new LinkedList<Jugador>
-		equipoB = new LinkedList<Jugador>
+		equipoA = new ArrayList<Jugador>
+		equipoB = new ArrayList<Jugador>
 	}
 
 	/********************/
@@ -144,6 +149,7 @@ class Partido extends Entity {
 	/***************************************/
 	/*CASO DE USO: GENERAR EQUIPOS TENTATIVOS*/
 	/***************************************/
+	@Observable
 	def ordenarJugadores(CriteriosCommand criterioOrdenamiento) {
 		if (estaConfirmado) {
 			throw new BusinessException("Los equipos estan confirmados, no se puede ordenar")
@@ -153,7 +159,7 @@ class Partido extends Entity {
 		}
 		this.jugadoresOrdenados = criterioOrdenamiento.ordenar(jugadores);
 	}
-
+	@Observable
 	def dividirEquipos(DivisionDeEquiposCommand algoritmoDivision) {
 		if (estaConfirmado) {
 			throw new BusinessException("Los equipos estan confirmados, no se puede dividir")
@@ -161,7 +167,9 @@ class Partido extends Entity {
 		if (jugadoresOrdenados.size < 10) {
 			throw new BusinessException("No se pueden armar los dos equipos porque no hay 10 jugadores ordenados aun.")
 		}
+		equipoB = new ArrayList<Jugador>
 		algoritmoDivision.dividir(jugadoresOrdenados, equipoA, equipoB)
+		cantEquipoA = equipoA.size
 	}
 
 	def confirmarEquipos(boolean confirmacion) {

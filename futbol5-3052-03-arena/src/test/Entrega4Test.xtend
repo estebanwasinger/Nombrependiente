@@ -169,7 +169,7 @@ class Entrega4Test {
 		partido3.ordenarJugadores(criterioNCalificaciones)
 		Assert.assertEquals(jugadorEstrella, partido3.jugadoresOrdenados.last)
 	}
-
+	@Deprecated
 	@Test(expected=typeof(BusinessException))
 	def void testOrdenarJugadoresPorPromedioNPartidosSinCalificacion() {
 		armarPartido2(10, partido3)

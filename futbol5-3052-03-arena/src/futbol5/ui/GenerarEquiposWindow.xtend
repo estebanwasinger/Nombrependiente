@@ -25,15 +25,21 @@ import commands.CriteriosCommand
 import commands.CriterioCalifiUltimoPartido
 import commands.CriterioHandicap
 import commands.CriterioNCalificaciones
+import org.uqbar.commons.model.ObservableUtils
+import java.util.ArrayList
 
 @Observable
 class GenerarEquiposWindow extends SimpleWindow<Partido> {
 
-	@Property  List<DivisionDeEquiposCommand> listaCommand
-	@Property  List<CriteriosCommand> listaCommand2
+	Table<Jugador> tableListaEquipoA
+
+	@Property List<DivisionDeEquiposCommand> listaCommand
+	@Property List<CriteriosCommand> listaCommand2
+	Partido model
 
 	new(WindowOwner parent, Partido model) {
 		super(parent, model)
+		this.model = model
 	}
 
 	new(RunnableTest parent) {
@@ -66,7 +72,6 @@ class GenerarEquiposWindow extends SimpleWindow<Partido> {
 		/* RELLENO DE LOS SELECTORES ES HORRIBLE PERO POR AHORA FUNCIONA
 		 * lo que hay que ver es tipo los algoritmos que necesitan que le pases algun parametro para que funcione como ultimos N partidos
 		 */
-
 		new Label(selector1).text = "Criterio de Selección"
 		val selectorOrdenamiento = new Selector<DivisionDeEquiposCommand>(selector1) => [
 			width = 200
@@ -76,14 +81,14 @@ class GenerarEquiposWindow extends SimpleWindow<Partido> {
 		listaCommand.add(new AlgoritmoImparPar)
 		listaCommand.add(new AlgoritmoLoco)
 		selectorOrdenamiento.allowNull(false)
- 		//selectorOrdenamiento.bindValueToProperty("pais")
- 		var propiedadOrdenamiento = selectorOrdenamiento.bindItems(new ObservableProperty(this, "listaCommand"))
- 		propiedadOrdenamiento.adapter = new PropertyAdapter(typeof(DivisionDeEquiposCommand), "nombre")
-		
+
+		selectorOrdenamiento.bindValueToProperty("algoritmoDivision")
+		var propiedadOrdenamiento = selectorOrdenamiento.bindItems(new ObservableProperty(this, "listaCommand"))
+		propiedadOrdenamiento.adapter = new PropertyAdapter(typeof(DivisionDeEquiposCommand), "nombre")
 
 		new Label(selector2).text = "Criterio de Ordenamiento"
 		val selectorOrdenamiento2 = new Selector<CriteriosCommand>(selector2) => [
-			allowNull(false) 
+			allowNull(false)
 			width = 200
 		]
 		listaCommand2 = new LinkedList<CriteriosCommand>
@@ -91,18 +96,24 @@ class GenerarEquiposWindow extends SimpleWindow<Partido> {
 		listaCommand2.add(new CriterioHandicap)
 		listaCommand2.add(new CriterioNCalificaciones)
 		selectorOrdenamiento2.allowNull(false)
- 		//selectorOrdenamiento.bindValueToProperty("pais")
- 		var propiedadOrdenamiento2 = selectorOrdenamiento2.bindItems(new ObservableProperty(this, "listaCommand2"))
- 		propiedadOrdenamiento2.adapter = new PropertyAdapter(typeof(CriteriosCommand), "nombre")
-		
-		
-		
 
-		//new Label(selector3).text = " "
+		selectorOrdenamiento2.bindValueToProperty("algoritmoOrdenamiento")
+		var propiedadOrdenamiento2 = selectorOrdenamiento2.bindItems(new ObservableProperty(this, "listaCommand2"))
+		propiedadOrdenamiento2.adapter = new PropertyAdapter(typeof(CriteriosCommand), "nombre")
+
+		new Label(selector3).bindValueToProperty("cantEquipoA")
 		val botonGenerar = new Button(selector3) => [
 			width = 200
 			heigth = 45
 			caption = "Generar Equipos"
+			onClick[ |
+				modelObject.equipoA = new ArrayList<Jugador>
+				modelObject.ordenarJugadores(modelObject.algoritmoOrdenamiento)
+				modelObject.dividirEquipos(modelObject.algoritmoDivision)
+				modelObject.jugadores.add(new Jugador("hola"))
+				ObservableUtils.firePropertyChanged(modelObject,"equipoA",modelObject.equipoA)
+				ObservableUtils.firePropertyChanged(modelObject,"equipoB",modelObject.equipoB)
+			]
 		]
 
 		createListaJugadores(panelListaJugadores)
@@ -125,25 +136,23 @@ class GenerarEquiposWindow extends SimpleWindow<Partido> {
 			fontSize = 20
 		]
 
-		var table3 = new Table<Jugador>(panelJugadores, typeof(Jugador))
-		table3.heigth = 200
-		table3.width = 285
-		table3.bindItemsToProperty("jugadores")
-		new Column<Jugador>(table3) //
-		.setTitle("Nombre").bindContentsToProperty("nombre")
+		var tableListaInscriptos = new Table<Jugador>(panelJugadores, typeof(Jugador))
+		tableListaInscriptos.heigth = 200
+		tableListaInscriptos.width = 285
+		tableListaInscriptos.bindItemsToProperty("jugadores")
+		new Column<Jugador>(tableListaInscriptos).setTitle("Nombre").bindContentsToProperty("nombre")
 
-		var table = new Table<Jugador>(panelJugadores, typeof(Jugador))
-		table.heigth = 200
-		table.width = 285
-		table.bindItemsToProperty("equipoA")
-		new Column<Jugador>(table) //
-		.setTitle("Nombre").bindContentsToProperty("nombre")
+		tableListaEquipoA = new Table<Jugador>(panelJugadores, typeof(Jugador))
+		tableListaEquipoA.heigth = 200
+		tableListaEquipoA.width = 285
+		tableListaEquipoA.bindItemsToProperty("equipoA")
+		new Column<Jugador>(tableListaEquipoA).setTitle("Nombre").bindContentsToProperty("nombre")
 
-		var table2 = new Table<Jugador>(panelJugadores, typeof(Jugador))
-		table2.heigth = 200
-		table2.width = 285
-		table.bindItemsToProperty("equipoB")
-		new Column<Jugador>(table2) //
+		var tableListaEquipoB = new Table<Jugador>(panelJugadores, typeof(Jugador))
+		tableListaEquipoB.heigth = 200
+		tableListaEquipoB.width = 285
+		tableListaEquipoB.bindItemsToProperty("equipoB")
+		new Column<Jugador>(tableListaEquipoB) //
 		.setTitle("Nombre").bindContentsToProperty("nombre")
 	}
 }
