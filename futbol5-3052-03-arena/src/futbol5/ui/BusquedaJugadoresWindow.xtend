@@ -21,14 +21,14 @@ import futbol5.homes.HomeJugadores
 
 @Observable
 class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
-		new(WindowOwner parent,Futbol5 model) {
-		super(parent, model)
+		new(WindowOwner parent,Futbol5 modelObject) {
+		super(parent, modelObject)
 	}
 	
 	new(RunnableBusquedaJugadores parent) {
-		super(parent, new  Futbol5)
+		super(parent, new Futbol5)
 	}
-					
+						
 	override createContents(Panel mainPanel) {
 		
 		title = "Busqueda de Jugadores"

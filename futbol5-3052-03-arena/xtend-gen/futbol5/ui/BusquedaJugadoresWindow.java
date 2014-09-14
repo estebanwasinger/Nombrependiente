@@ -24,8 +24,8 @@ import org.uqbar.lacar.ui.model.ControlBuilder;
 @Observable
 @SuppressWarnings("all")
 public class BusquedaJugadoresWindow extends SimpleWindow<Futbol5> {
-  public BusquedaJugadoresWindow(final WindowOwner parent, final Futbol5 model) {
-    super(parent, model);
+  public BusquedaJugadoresWindow(final WindowOwner parent, final Futbol5 modelObject) {
+    super(parent, modelObject);
   }
   
   public BusquedaJugadoresWindow(final RunnableBusquedaJugadores parent) {
