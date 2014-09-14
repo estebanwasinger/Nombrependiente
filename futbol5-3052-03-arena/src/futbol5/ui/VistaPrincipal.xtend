@@ -1,6 +1,6 @@
 package futbol5.ui
 
-import futbol5.Partido
+import futbol5.domain.Partido
 import futbol5.applicationModel.Futbol5
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.VerticalLayout

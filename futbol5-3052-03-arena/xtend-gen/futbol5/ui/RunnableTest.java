@@ -1,5 +1,7 @@
 package futbol5.ui;
 
+import futbol5.domain.Jugador;
+import futbol5.domain.Partido;
 import futbol5.ui.GenerarEquiposWindow;
 import org.uqbar.arena.Application;
 import org.uqbar.arena.windows.Window;
@@ -12,6 +14,10 @@ public class RunnableTest extends Application {
   }
   
   protected Window<?> createMainWindow() {
-    return new GenerarEquiposWindow(this);
+    Partido partidoEjemplo = new Partido();
+    Jugador _jugador = new Jugador();
+    partidoEjemplo.agregarJugador(_jugador);
+    Partido _partido = new Partido();
+    return new GenerarEquiposWindow(this, _partido);
   }
 }

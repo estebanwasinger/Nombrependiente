@@ -25,6 +25,15 @@ class Partido extends Entity {
 	/****************/
 	new(String localidad) {
 		this.localidad = localidad
+		init
+		
+	}
+	
+	new() {
+		init
+	}
+	
+	def init(){
 		jugadores = new LinkedList<Jugador>
 		jugadoresOrdenados = new LinkedList<Jugador>
 		altasObservers = new LinkedList<PartidoObserver>
@@ -32,10 +41,6 @@ class Partido extends Entity {
 		administrador = new Administrador
 		equipoA = new LinkedList<Jugador>
 		equipoB = new LinkedList<Jugador>
-	}
-	
-	new() {
-		
 	}
 
 	/********************/
