@@ -10,6 +10,8 @@ import java.util.List
 import org.uqbar.commons.model.CollectionBasedHome
 import org.uqbar.commons.model.UserException
 import org.uqbar.commons.utils.Observable
+import java.util.Date
+import inscripciones.Estandar
 
 @Observable
 class HomeJugadores extends CollectionBasedHome<Jugador> {
@@ -26,9 +28,15 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
  		jugadoresAceptados = new LinkedList<Jugador>
 		jugadoresRechazados = new LinkedList<RegistroRechazo>
 		jugadoresRecomendados = new LinkedList<Jugador>
+		
+		/*this.create("Juan", new Estandar, 22, new Infraccion, new Jugador, new Calificacion(this, new Partido, 8, "muy bien") )
+		this.create("Pedro", new Estandar, 23,)
+		this.create("María", new Estandar, 24, , ,)
+		this.create("Jose", new Estandar, 25, , ,)
+		this.create("Luisa", new Estandar, 26, , ,)*/
 	}
 
-	def void create(String nombre, TipoInscripcion tipoInscripcion, int edad, List<Infraccion> infracciones, List<Jugador> amigos, List <Calificacion> calificaciones,float nivelDeJuego,int criterioComparacion){
+	def void create(String nombre, TipoInscripcion tipoInscripcion, int edad, List<Infraccion> infracciones, List<Jugador> amigos, List <Calificacion> calificaciones,float nivelDeJuego,int criterioComparacion, String apodo, Date fechaDeNacimiento){
 		var jugador = new Jugador
 		jugador.nombre = nombre
 		jugador.tipoInscripcion = tipoInscripcion
@@ -38,6 +46,8 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 		jugador.calificaciones = calificaciones
 		jugador.nivelDeJuego = nivelDeJuego
 		jugador.criterioComparacion = criterioComparacion
+		jugador.apodo = apodo
+		jugador.fechaNacimiento = fechaDeNacimiento
 		
 		jugadoresAceptados.add(jugador)
 	}

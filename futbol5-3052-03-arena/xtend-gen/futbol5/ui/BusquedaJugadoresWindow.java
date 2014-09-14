@@ -1,5 +1,6 @@
 package futbol5.ui;
 
+import futbol5.applicationModel.Futbol5;
 import futbol5.domain.Jugador;
 import futbol5.ui.RunnableBusquedaJugadores;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
@@ -10,23 +11,25 @@ import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
+import org.uqbar.arena.widgets.SkinnableControl;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.commons.utils.Observable;
+import org.uqbar.lacar.ui.model.Action;
 import org.uqbar.lacar.ui.model.ControlBuilder;
 
 @Observable
 @SuppressWarnings("all")
-public class BusquedaJugadoresWindow extends SimpleWindow<Jugador> {
-  public BusquedaJugadoresWindow(final WindowOwner parent, final Jugador model) {
+public class BusquedaJugadoresWindow extends SimpleWindow<Futbol5> {
+  public BusquedaJugadoresWindow(final WindowOwner parent, final Futbol5 model) {
     super(parent, model);
   }
   
   public BusquedaJugadoresWindow(final RunnableBusquedaJugadores parent) {
-    super(parent, new Jugador());
+    super(parent, new Futbol5());
   }
   
   public void createContents(final Panel mainPanel) {
@@ -98,20 +101,45 @@ public class BusquedaJugadoresWindow extends SimpleWindow<Jugador> {
       }
     };
     ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_1, _function_1);
-    Button _button = new Button(busquedaSuperior);
-    final Procedure1<Button> _function_2 = new Procedure1<Button>() {
-      public void apply(final Button it) {
+    Label labelFechaNacimiento = new Label(busquedaSuperior);
+    labelFechaNacimiento.setText("Fecha de nacimiento menor a:");
+    TextBox _textBox_2 = new TextBox(busquedaSuperior);
+    final Procedure1<TextBox> _function_2 = new Procedure1<TextBox>() {
+      public void apply(final TextBox it) {
+        it.<ControlBuilder>bindValueToProperty("fechaNacimiento");
         it.setWidth(200);
-        it.setCaption("Buscar Jugadores");
       }
     };
-    final Button botonBuscar = ObjectExtensions.<Button>operator_doubleArrow(_button, _function_2);
+    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_2, _function_2);
+    Button _button = new Button(busquedaSuperior);
+    Button _setCaption = _button.setCaption("Buscar");
+    final Action _function_3 = new Action() {
+      public void execute() {
+        Futbol5 _modelObject = BusquedaJugadoresWindow.this.getModelObject();
+        _modelObject.search();
+      }
+    };
+    Button _onClick = _setCaption.onClick(_function_3);
+    SkinnableControl _setFontSize = _onClick.setFontSize(12);
+    _setFontSize.setWidth(200);
+    Button _button_1 = new Button(busquedaSuperior);
+    Button _setCaption_1 = _button_1.setCaption("Limpiar");
+    final Action _function_4 = new Action() {
+      public void execute() {
+        Futbol5 _modelObject = BusquedaJugadoresWindow.this.getModelObject();
+        _modelObject.clear();
+      }
+    };
+    Button _onClick_1 = _setCaption_1.onClick(_function_4);
+    SkinnableControl _setFontSize_1 = _onClick_1.setFontSize(12);
+    _setFontSize_1.setWidth(200);
   }
   
   public void grillaBasicaJugadores(final Panel panelJugadores) {
     Table<Jugador> table = new Table<Jugador>(panelJugadores, Jugador.class);
     table.setHeigth(200);
     table.setWidth(590);
+    table.<ControlBuilder>bindValueToProperty("seleccionJugador");
     Column<Jugador> _column = new Column<Jugador>(table);
     Column<Jugador> _setTitle = _column.setTitle("Nombre");
     Column<Jugador> _setFixedSize = _setTitle.setFixedSize(150);

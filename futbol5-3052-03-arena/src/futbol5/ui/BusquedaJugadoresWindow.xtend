@@ -13,17 +13,22 @@ import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.arena.widgets.Label
 import org.uqbar.commons.utils.Observable
+import org.uqbar.arena.bindings.DateAdapter
+import futbol5.applicationModel.Futbol5
+import org.uqbar.arena.windows.MainWindow
+import org.uqbar.commons.utils.ApplicationContext
+import futbol5.homes.HomeJugadores
 
 @Observable
-class BusquedaJugadoresWindow extends SimpleWindow<Jugador>{
-		new(WindowOwner parent,Jugador model) {
+class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
+		new(WindowOwner parent,Futbol5 model) {
 		super(parent, model)
 	}
 	
 	new(RunnableBusquedaJugadores parent) {
-		super(parent, new Jugador)
+		super(parent, new  Futbol5)
 	}
-							
+					
 	override createContents(Panel mainPanel) {
 		
 		title = "Busqueda de Jugadores"
@@ -63,7 +68,7 @@ class BusquedaJugadoresWindow extends SimpleWindow<Jugador>{
 		panelBusquedaJugadores.layout = new ColumnLayout(2)
 		
 		criteriosDeBusqueda(busquedaSuperior)
-		//grillaBasicaJugadores(panelListaJugadores)
+
 	}
 	
 	def void criteriosDeBusqueda(Panel busquedaSuperior){
@@ -71,6 +76,7 @@ class BusquedaJugadoresWindow extends SimpleWindow<Jugador>{
 		// Por nombre “comienza con” //
 		var labelNombre = new Label(busquedaSuperior)
 		labelNombre.text = "Nombre Jugador" //hay que afinar el "comienza con"
+		
 
 		new TextBox(busquedaSuperior)=>
 			[bindValueToProperty("nombre")
@@ -85,20 +91,36 @@ class BusquedaJugadoresWindow extends SimpleWindow<Jugador>{
 			width = 200]	
 			
 		// Búsqueda por fecha de nacimiento “anterior a” //
+		var labelFechaNacimiento = new Label(busquedaSuperior)
+		labelFechaNacimiento.text = "Fecha de nacimiento menor a:" //hay que afinar el "contiene"
+
+		new TextBox(busquedaSuperior)=>
+			[bindValueToProperty("fechaNacimiento")
+			width = 200]	
+			
 		//Por rango desde/hasta del hándicap (puede ingresarse sólo desde, o sólo hasta) //
 		//Por rango desde/hasta del promedio de último partido //
 		//Filtrar sólo los que tuvieron infracciones, sólo los que no tuvieron infracciones, todos //
 			
-		val botonBuscar = new Button(busquedaSuperior) => [
-			width = 200
-			caption = "Buscar Jugadores"
-		]
+		new Button(busquedaSuperior)
+			.setCaption("Buscar")
+			.onClick [ | modelObject.search ]
+			.setFontSize(12)
+			.setWidth = 200
+			
+		new Button(busquedaSuperior) 
+			.setCaption("Limpiar")
+			.onClick [ | modelObject.clear ]
+			.setFontSize(12)
+			.setWidth = 200
+		
 	}
 	
 	def void grillaBasicaJugadores(Panel panelJugadores){
 		var table = new Table<Jugador>(panelJugadores, typeof(Jugador))
 		table.heigth = 200
 		table.width = 590
+		table.bindValueToProperty("seleccionJugador")
 		new Column<Jugador>(table) //
 			.setTitle("Nombre")
 			.setFixedSize(150)

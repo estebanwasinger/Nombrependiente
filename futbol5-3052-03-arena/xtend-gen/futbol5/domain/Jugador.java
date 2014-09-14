@@ -8,6 +8,7 @@ import infracciones.Infraccion;
 import inscripciones.Estandar;
 import inscripciones.TipoInscripcion;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,16 +45,6 @@ public class Jugador extends Entity {
     this._apodo = apodo;
   }
   
-  private TipoInscripcion _tipoInscripcion;
-  
-  public TipoInscripcion getTipoInscripcion() {
-    return this._tipoInscripcion;
-  }
-  
-  public void setTipoInscripcion(final TipoInscripcion tipoInscripcion) {
-    this._tipoInscripcion = tipoInscripcion;
-  }
-  
   private int _edad;
   
   public int getEdad() {
@@ -64,6 +55,16 @@ public class Jugador extends Entity {
     this._edad = edad;
   }
   
+  private Date _fechaNacimiento;
+  
+  public Date getFechaNacimiento() {
+    return this._fechaNacimiento;
+  }
+  
+  public void setFechaNacimiento(final Date fechaNacimiento) {
+    this._fechaNacimiento = fechaNacimiento;
+  }
+  
   private String _email;
   
   public String getEmail() {
@@ -72,6 +73,16 @@ public class Jugador extends Entity {
   
   public void setEmail(final String email) {
     this._email = email;
+  }
+  
+  private TipoInscripcion _tipoInscripcion;
+  
+  public TipoInscripcion getTipoInscripcion() {
+    return this._tipoInscripcion;
+  }
+  
+  public void setTipoInscripcion(final TipoInscripcion tipoInscripcion) {
+    this._tipoInscripcion = tipoInscripcion;
   }
   
   private List<Infraccion> _infracciones;

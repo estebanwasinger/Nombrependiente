@@ -6,6 +6,7 @@ import com.google.common.base.Objects;
 import futbol5.domain.Jugador;
 import infracciones.Infraccion;
 import inscripciones.TipoInscripcion;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import org.apache.commons.collections15.Predicate;
@@ -61,7 +62,7 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     this.setJugadoresRecomendados(_linkedList_2);
   }
   
-  public void create(final String nombre, final TipoInscripcion tipoInscripcion, final int edad, final List<Infraccion> infracciones, final List<Jugador> amigos, final List<Calificacion> calificaciones, final float nivelDeJuego, final int criterioComparacion) {
+  public void create(final String nombre, final TipoInscripcion tipoInscripcion, final int edad, final List<Infraccion> infracciones, final List<Jugador> amigos, final List<Calificacion> calificaciones, final float nivelDeJuego, final int criterioComparacion, final String apodo, final Date fechaDeNacimiento) {
     Jugador jugador = new Jugador();
     jugador.setNombre(nombre);
     jugador.setTipoInscripcion(tipoInscripcion);
@@ -71,6 +72,8 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     jugador.setCalificaciones(calificaciones);
     jugador.setNivelDeJuego(nivelDeJuego);
     jugador.setCriterioComparacion(criterioComparacion);
+    jugador.setApodo(apodo);
+    jugador.setFechaNacimiento(fechaDeNacimiento);
     List<Jugador> _jugadoresAceptados = this.getJugadoresAceptados();
     _jugadoresAceptados.add(jugador);
   }

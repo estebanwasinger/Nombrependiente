@@ -14,16 +14,17 @@ import org.uqbar.commons.utils.Observable
 import org.uqbar.commons.model.Entity
 import org.uqbar.commons.model.UserException
 import org.uqbar.commons.utils.ApplicationContext
-
+import java.util.Date
 
 @Observable
 class Jugador extends Entity{
 
 	@Property String nombre
 	@Property String apodo
-	@Property TipoInscripcion tipoInscripcion
 	@Property int edad
+	@Property Date fechaNacimiento
 	@Property String email
+	@Property TipoInscripcion tipoInscripcion
 	@Property List<Infraccion> infracciones
 	@Property List<Jugador> amigos
 	@Property List <Calificacion> calificaciones
