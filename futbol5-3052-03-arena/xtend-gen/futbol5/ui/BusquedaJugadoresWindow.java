@@ -3,18 +3,23 @@ package futbol5.ui;
 import futbol5.applicationModel.Futbol5;
 import futbol5.domain.Jugador;
 import futbol5.ui.RunnableBusquedaJugadores;
+import futbol5.ui.VerDatosJugadorWindow;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
+import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
+import org.uqbar.arena.widgets.Control;
 import org.uqbar.arena.widgets.Label;
+import org.uqbar.arena.widgets.Link;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.SkinnableControl;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
+import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.commons.utils.Observable;
@@ -74,9 +79,6 @@ public class BusquedaJugadoresWindow extends SimpleWindow<Futbol5> {
     final Panel busquedaSuperior = new Panel(panelIzquierda);
     VerticalLayout _verticalLayout_1 = new VerticalLayout();
     busquedaSuperior.setLayout(_verticalLayout_1);
-    final Panel panelBusquedaJugadores = new Panel(panelIzquierda);
-    ColumnLayout _columnLayout = new ColumnLayout(2);
-    panelBusquedaJugadores.setLayout(_columnLayout);
     this.criteriosDeBusqueda(busquedaSuperior);
   }
   
@@ -155,5 +157,36 @@ public class BusquedaJugadoresWindow extends SimpleWindow<Futbol5> {
     Column<Jugador> _column_3 = new Column<Jugador>(table);
     Column<Jugador> _setTitle_3 = _column_3.setTitle("Promedio");
     _setTitle_3.setFixedSize(150);
+    Button _button = new Button(panelJugadores);
+    Button _setCaption = _button.setCaption("Ver Datos Completos");
+    final Action _function = new Action() {
+      public void execute() {
+        BusquedaJugadoresWindow.this.grillaCompletaJugador();
+      }
+    };
+    Button _onClick = _setCaption.onClick(_function);
+    Button _setAsDefault = _onClick.setAsDefault();
+    Link _disableOnError = _setAsDefault.disableOnError();
+    Control verDatos = _disableOnError.setWidth(200);
+    NotNullObservable jugadorMarcado = new NotNullObservable("seleccionJugador");
+    verDatos.<ControlBuilder>bindEnabled(jugadorMarcado);
+  }
+  
+  public void openDialog(final Dialog<?> dialog) {
+    final Action _function = new Action() {
+      public void execute() {
+        Futbol5 _modelObject = BusquedaJugadoresWindow.this.getModelObject();
+        _modelObject.search();
+      }
+    };
+    dialog.onAccept(_function);
+    dialog.open();
+  }
+  
+  public void grillaCompletaJugador() {
+    Futbol5 _modelObject = this.getModelObject();
+    Jugador _seleccionJugador = _modelObject.getSeleccionJugador();
+    VerDatosJugadorWindow _verDatosJugadorWindow = new VerDatosJugadorWindow(this, _seleccionJugador);
+    this.openDialog(_verDatosJugadorWindow);
   }
 }

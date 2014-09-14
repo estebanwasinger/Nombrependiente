@@ -29,7 +29,7 @@ class Futbol5 implements Serializable {
 	def void clear() {
 		nombre = null
 	}
-
+			
 	def HomeJugadores getHomeJugadores() {
 		ApplicationContext.instance.getSingleton(typeof(Jugador))
 	}

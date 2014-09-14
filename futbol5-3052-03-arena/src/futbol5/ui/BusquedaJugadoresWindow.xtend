@@ -18,6 +18,9 @@ import futbol5.applicationModel.Futbol5
 import org.uqbar.arena.windows.MainWindow
 import org.uqbar.commons.utils.ApplicationContext
 import futbol5.homes.HomeJugadores
+import org.uqbar.arena.widgets.Link
+import org.uqbar.arena.windows.Dialog
+import org.uqbar.arena.bindings.NotNullObservable
 
 @Observable
 class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
@@ -63,12 +66,8 @@ class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
 		panelIzquierda.layout = new VerticalLayout
 		val busquedaSuperior = new Panel(panelIzquierda)
 		busquedaSuperior.layout = new VerticalLayout
-		
-		val panelBusquedaJugadores = new Panel(panelIzquierda)
-		panelBusquedaJugadores.layout = new ColumnLayout(2)
-		
+	
 		criteriosDeBusqueda(busquedaSuperior)
-
 	}
 	
 	def void criteriosDeBusqueda(Panel busquedaSuperior){
@@ -92,7 +91,7 @@ class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
 			
 		// Búsqueda por fecha de nacimiento “anterior a” //
 		var labelFechaNacimiento = new Label(busquedaSuperior)
-		labelFechaNacimiento.text = "Fecha de nacimiento menor a:" //hay que afinar el "contiene"
+		labelFechaNacimiento.text = "Fecha de nacimiento menor a:" 
 
 		new TextBox(busquedaSuperior)=>
 			[bindValueToProperty("fechaNacimiento")
@@ -121,6 +120,8 @@ class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
 		table.heigth = 200
 		table.width = 590
 		table.bindValueToProperty("seleccionJugador")
+		//table.bindItemsToProperty("resultados")
+		
 		new Column<Jugador>(table) //
 			.setTitle("Nombre")
 			.setFixedSize(150)
@@ -137,6 +138,25 @@ class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
 			.setTitle("Promedio")
 			.setFixedSize(150)
 		//	.bindContentsToProperty("nombre")
-	}
 		
+		var verDatos = new Button(panelJugadores)
+			.setCaption("Ver Datos Completos")
+			.onClick [ | this.grillaCompletaJugador] 
+			.setAsDefault
+			.disableOnError
+			.setWidth = 200
+			
+		var jugadorMarcado = new NotNullObservable("seleccionJugador")
+		verDatos.bindEnabled(jugadorMarcado)
+	}
+	
+	def openDialog(Dialog<?> dialog) {
+		dialog.onAccept[|modelObject.search]
+		dialog.open
+	}
+	
+	 def void grillaCompletaJugador(){
+		this.openDialog(new VerDatosJugadorWindow(this, modelObject.seleccionJugador))
+	}
+			
 }
