@@ -76,9 +76,10 @@ class GenerarEquiposWindow extends SimpleWindow<Partido> {
 		new Label(selector2).text = "Criterio de Ordenamiento"
 		val selectorOrdenamiento2 = new Selector(selector2).width = 200
 		
-		new Label(selector3).text = " "
+		//new Label(selector3).text = " "
 		val botonGenerar = new Button(selector3) => [
 			width = 200
+			heigth = 45
 			caption = "Generar Equipos"
 		]
 		
@@ -87,16 +88,29 @@ class GenerarEquiposWindow extends SimpleWindow<Partido> {
 	
 	
 	def void createListaJugadores(Panel panelJugadores){
+		var labelEquipo1 = new Label(panelJugadores)=>[
+		text = "Equipo A"
+		fontSize = 20
+		]
+		
+		var labelEquipo2 = new Label(panelJugadores)=>[
+		text = "Equipo B"
+		fontSize = 20
+		]
 		var table = new Table<Jugador>(panelJugadores, typeof(Jugador))
 		table.heigth = 200
-		table.width = 450
+		table.width = 285
 		new Column<Jugador>(table) //
 			.setTitle("Nombre")
-			.setFixedSize(150)
+		//	.setFixedSize(150)
 		//	.bindContentsToProperty("nombre")
-		new Column<Jugador>(table) //
+		
+		var table2 = new Table<Jugador>(panelJugadores, typeof(Jugador))
+		table2.heigth = 200
+		table2.width = 285
+		new Column<Jugador>(table2) //
 			.setTitle("Nombre")
-			.setFixedSize(150)
+			//.setFixedSize(150)
 		//	.bindContentsToProperty("nombre")
 	}
 }
