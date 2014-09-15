@@ -25,8 +25,8 @@ class HomePartidos extends CollectionBasedHome<Partido> {
 		this.create("Quilmes")
 		this.create("Longchamps")
 		this.create("San Miguel")
-		this.createCompleto("Burzaco",crearListaDejugadores(10))
-		this.createCompleto("Adrogue",crearListaDejugadores(10))
+		this.createCompleto("Almagro",crearListaDejugadores(10))
+		this.createCompleto("Palermo",crearListaDejugadores(10))
 	}
 	
 	def create(String localidad){
@@ -46,7 +46,7 @@ class HomePartidos extends CollectionBasedHome<Partido> {
 		var int a = 0
 		jugadores = new ArrayList<Jugador>
 		while (a < max) {
-			jugadores.add(new Jugador)
+			jugadores.add(new Jugador("Carolina"))
 			a = a + 1
 	}
 	return jugadores

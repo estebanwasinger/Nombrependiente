@@ -36,7 +36,8 @@ class Futbol5 implements Serializable {
 	}
 	
 	def void searchPartido(){
-		
+		partidos = new ArrayList<Partido>
+		partidos = getHomePartidos().search(partido)
 		
 	}
 	
@@ -48,7 +49,7 @@ class Futbol5 implements Serializable {
 		ApplicationContext.instance.getSingleton(typeof(Jugador))
 	}
 	
-	def HomeJugadores getHomePartidos() {
+	def HomePartidos getHomePartidos() {
 		ApplicationContext.instance.getSingleton(typeof(Partido))
 	}
 }

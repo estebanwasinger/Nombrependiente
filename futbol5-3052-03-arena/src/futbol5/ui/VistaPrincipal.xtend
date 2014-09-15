@@ -31,8 +31,8 @@ class VistaPrincipal extends Dialog<Futbol5> {
 		var buscar = new Button(panel)
 			.setCaption("Buscar Jugador")
 		
-		var elementSelected = new NotNullObservable("partido")
-		generar.bindEnabled(elementSelected)
+		//var elementSelected = new NotNullObservable("partido")
+		//generar.bindEnabled(elementSelected)
 
 		}
 	
@@ -49,6 +49,7 @@ class VistaPrincipal extends Dialog<Futbol5> {
 	tableListaPartidos.heigth = 200
 	tableListaPartidos.width = 285
 	tableListaPartidos.bindItemsToProperty("partidos")
+	tableListaPartidos.bindValueToProperty("partido")
 	new Column<Partido>(tableListaPartidos).setTitle("Localidad").bindContentsToProperty("localidad")
 	}
 	
