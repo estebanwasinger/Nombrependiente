@@ -24,6 +24,7 @@ class Futbol5 implements Serializable {
 	@Property List<Jugador> resultados
 	@Property BusquedaJugador busquedaJugadores
 	@Property List<Partido> partidos
+	@Property Partido partido
 
 	new(){
 		partidos = (new HomePartidos).partidos
@@ -32,6 +33,11 @@ class Futbol5 implements Serializable {
 	def void search(Jugador jugador) { 
 		resultados = new ArrayList<Jugador>
 		resultados = getHomeJugadores().search(jugador)
+	}
+	
+	def void searchPartido(){
+		
+		
 	}
 	
 	def void clear() {

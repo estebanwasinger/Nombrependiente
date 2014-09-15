@@ -51,6 +51,20 @@ class HomePartidos extends CollectionBasedHome<Partido> {
 	}
 	return jugadores
 	}
+	
+	def search(Partido partidoBuscado) {
+		partidos.filter[partido|this.match(partido,partidoBuscado)].toList
+	}
+	
+	def match(Partido partido, Partido partidoBuscado) {
+		if (partido.localidad == null) {
+			return true
+		}
+		if (partidoBuscado.localidad == null) {
+			return false
+		}
+		partidoBuscado.localidad.toString().toLowerCase().contains(partido.localidad.toString().toLowerCase())
+	}
 		
 	override protected getCriterio(Partido example) {
 		null

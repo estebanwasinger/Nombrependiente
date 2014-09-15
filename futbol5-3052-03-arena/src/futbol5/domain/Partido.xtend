@@ -48,6 +48,11 @@ class Partido extends Entity {
 		equipoA = new ArrayList<Jugador>
 		equipoB = new ArrayList<Jugador>
 	}
+	
+		def copiarA(Partido partido) {
+	 	partido.localidad= this.localidad
+	 	partido.jugadores= this.jugadores
+	}
 
 	/********************/
 	/*METODOS AUXILIARES*/

@@ -1,27 +1,43 @@
 package futbol5.ui
 
-import futbol5.domain.Partido
 import futbol5.applicationModel.Futbol5
+import futbol5.domain.Partido
 import org.uqbar.arena.layout.ColumnLayout
+import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.layout.VerticalLayout
+import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
-import org.uqbar.arena.widgets.tables.Table
-import org.uqbar.arena.windows.MainWindow
-import org.uqbar.commons.utils.Observable
 import org.uqbar.arena.widgets.tables.Column
+import org.uqbar.arena.widgets.tables.Table
+import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
-import org.uqbar.arena.windows.SimpleWindow
-import org.uqbar.arena.layout.HorizontalLayout
-import org.uqbar.arena.widgets.Button
+import org.uqbar.commons.utils.Observable
+import org.uqbar.arena.bindings.NotNullObservable
 
 @Observable
-class VistaPrincipal extends SimpleWindow<Futbol5> {
+class VistaPrincipal extends Dialog<Futbol5> {
 	
 	new(WindowOwner parent, Futbol5 model) {
 		super(parent, model)
 	}
-	def ccreateContents(Panel mainPanel) {
+
+	
+	override protected addActions(Panel panel) {
+		panel.layout = new HorizontalLayout
+		var generar = new Button(panel)
+			.setCaption("Generar Equipo")
+			.onClick [ | this.generarEquipo]
+		var buscar = new Button(panel)
+			.setCaption("Buscar Jugador")
+		
+		var elementSelected = new NotNullObservable("partido")
+		generar.bindEnabled(elementSelected)
+
+		}
+	
+	
+	override protected createFormPanel(Panel mainPanel) {
 	mainPanel.layout = new VerticalLayout
 	val Panel columnPanel = new Panel(mainPanel)
 	columnPanel.layout = new ColumnLayout(2)
@@ -34,19 +50,14 @@ class VistaPrincipal extends SimpleWindow<Futbol5> {
 	tableListaPartidos.width = 285
 	tableListaPartidos.bindItemsToProperty("partidos")
 	new Column<Partido>(tableListaPartidos).setTitle("Localidad").bindContentsToProperty("localidad")
-			
 	}
 	
-	override protected addActions(Panel panel) {
-		panel.layout = new HorizontalLayout
-		new Button(panel).setCaption("Generar Equipo")
-		new Button(panel).setCaption("Buscar Jugador")
-		
-		}
-	
-	
-	override protected createFormPanel(Panel arg0) {
-		ccreateContents(arg0)
+	def void generarEquipo() {
+		this.openDialog(new GenerarEquiposWindow(this, modelObject.partido))
 	}
-	
+
+	def openDialog(Dialog<?> dialog) {
+		dialog.onAccept[|modelObject.searchPartido]
+		dialog.open
+	}
 }
