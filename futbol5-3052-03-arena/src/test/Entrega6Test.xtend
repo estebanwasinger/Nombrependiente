@@ -40,10 +40,10 @@ class Entrega6Test {
 		Assert.assertEquals(1,homeDeJugadores.search(jugadorCaroNullNombre).size)
 	}
 	
-	@Test
-	def void fechaNacMayor(){
-		Assert.assertEquals(1,homeDeJugadores.search(new Jugador(null,null,21,"09-02-2000")).size)
-	}
+//	@Test
+//	def void fechaNacMayor(){
+//		Assert.assertEquals(1,homeDeJugadores.search(new Jugador(null,null,21,"09-02-2000")).size)
+//	}
 	
 	@Test
 	def void fechaNacMenor(){

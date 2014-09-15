@@ -26,7 +26,6 @@ class RunnableTest extends Application {
 		partidoEjemplo.agregarJugador(new Jugador("Pau"))
 		partidoEjemplo.agregarJugador(new Jugador("Esteban"))
 		partidoEjemplo.agregarJugador(new Jugador("Carolina"))
-		partidoEjemplo.equipoA.add(new Jugador("Hola"))
 		
 		
 		
