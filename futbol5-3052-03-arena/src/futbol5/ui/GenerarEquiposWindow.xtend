@@ -101,7 +101,7 @@ class GenerarEquiposWindow extends SimpleWindow<Partido> {
 		var propiedadOrdenamiento2 = selectorOrdenamiento2.bindItems(new ObservableProperty(this, "listaCommand2"))
 		propiedadOrdenamiento2.adapter = new PropertyAdapter(typeof(CriteriosCommand), "nombre")
 
-		new Label(selector3).bindValueToProperty("cantEquipoA")
+		//new Label(selector3).
 		val botonGenerar = new Button(selector3) => [
 			width = 200
 			heigth = 45

@@ -15,6 +15,7 @@ import org.uqbar.commons.model.Entity
 import org.uqbar.commons.model.UserException
 import org.uqbar.commons.utils.ApplicationContext
 import java.util.Date
+import java.text.SimpleDateFormat
 
 @Observable
 class Jugador extends Entity{
@@ -30,6 +31,7 @@ class Jugador extends Entity{
 	@Property List <Calificacion> calificaciones
 	@Property float nivelDeJuego
 	@Property int criterioComparacion
+	SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
 	
 	new() {
 		init
@@ -38,6 +40,13 @@ class Jugador extends Entity{
 	new(String nombre){
 		this.nombre = nombre
 		init
+	}
+	
+	new(String nombre,String apodo, int edad, String fechaDeNacimientoStr){
+		this.nombre = nombre
+		this.apodo = apodo
+		this.edad = edad
+		this.fechaNacimiento = formateador.parse(fechaDeNacimientoStr)
 	}
 	
 	def init(){
@@ -50,7 +59,7 @@ class Jugador extends Entity{
 	
 	def validarNombre() {
 		if (nombre == null) {
-			throw new UserException("Debe ingresar un nombre de materia")
+			throw new UserException("El jugador no puede tener nombre nulo")
 		}
 	}
 	

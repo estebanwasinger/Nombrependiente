@@ -24,7 +24,7 @@ class Futbol5 implements Serializable {
 
 	def void search() { 
 		resultados = new ArrayList<Jugador>
-		resultados = getHomeJugadores().search(nombre)
+		//resultados = getHomeJugadores().search(nombre)
 	}
 	
 	def void clear() {
