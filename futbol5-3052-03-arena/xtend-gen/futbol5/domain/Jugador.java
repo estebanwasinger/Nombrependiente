@@ -7,6 +7,7 @@ import futbol5.domain.Partido;
 import infracciones.Infraccion;
 import inscripciones.Estandar;
 import inscripciones.TipoInscripcion;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -135,6 +136,8 @@ public class Jugador extends Entity {
     this._criterioComparacion = criterioComparacion;
   }
   
+  private SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+  
   public Jugador() {
     this.init();
   }
@@ -142,6 +145,18 @@ public class Jugador extends Entity {
   public Jugador(final String nombre) {
     this.setNombre(nombre);
     this.init();
+  }
+  
+  public Jugador(final String nombre, final String apodo, final int edad, final String fechaDeNacimientoStr) {
+    try {
+      this.setNombre(nombre);
+      this.setApodo(apodo);
+      this.setEdad(edad);
+      Date _parse = this.formateador.parse(fechaDeNacimientoStr);
+      this.setFechaNacimiento(_parse);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   public void init() {
@@ -160,7 +175,7 @@ public class Jugador extends Entity {
     String _nombre = this.getNombre();
     boolean _equals = Objects.equal(_nombre, null);
     if (_equals) {
-      throw new UserException("Debe ingresar un nombre de materia");
+      throw new UserException("El jugador no puede tener nombre nulo");
     }
   }
   

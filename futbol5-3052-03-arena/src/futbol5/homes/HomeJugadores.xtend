@@ -29,6 +29,15 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
  		jugadoresAceptados = new LinkedList<Jugador>
 		jugadoresRechazados = new LinkedList<RegistroRechazo>
 		jugadoresRecomendados = new LinkedList<Jugador>
+		
+		this.create("Juan","Juani", 22, "14-04-1992")
+		this.create("Maria","Juani", 23, "02-05-1991")
+		this.create("Julian","Juani", 21, "19-09-1993")
+		this.create("Julieta","Juani", 25, "14-04-1989")
+		this.create("Jose","Juani", 19, "23-01-1995")
+		this.create("Delfina","Juani", 22, "19-07-1992")
+		this.create("Candelaria","Juani", 22, "20-07-1992")
+		this.create("Martin","Juani", 17, "01-02-1997")
 	}
 
 	def void createJugadorCompleto(String nombre, TipoInscripcion tipoInscripcion, int edad, List<Infraccion> infracciones, List<Jugador> amigos, List <Calificacion> calificaciones,float nivelDeJuego,int criterioComparacion, String apodo, Date fechaDeNacimiento){
@@ -47,7 +56,7 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 		jugadoresAceptados.add(jugador)
 	}
 	
-	
+		
 	def void create(String nombre,String apodo, int edad, String fechaDeNacimientoStr){
 		var jugador = new Jugador
 		jugador.nombre = nombre
@@ -57,23 +66,11 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 		
 		jugadoresAceptados.add(jugador)
 	}
-	
+		
 	def void agregarAceptado(Jugador jugador){
 		jugadoresAceptados.add(jugador)
 	}
 	
-//	override void validateCreate(Jugador jugador) {
-//		jugador.validarNombre()
-//		validarMateriasDuplicadas(jugador)
-//	}
-	
-//	def void validarMateriasDuplicadas(Jugador jugador) {
-//		val nombre = jugador.nombre
-//		if (!this.search(nombre).isEmpty) {
-//			throw new UserException("Ya existe una jugador con el nombre " + nombre)
-//		}
-//	}
-
 	def List<Jugador> getJugadores(){
 		jugadoresAceptados
 	}

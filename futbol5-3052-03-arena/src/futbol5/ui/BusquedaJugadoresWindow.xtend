@@ -33,10 +33,7 @@ class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
 	new(RunnableBusquedaJugadores parent) {
 		super(parent, new Futbol5)
 	}
-	
-	def getOpcionesRango() { #["Desde","Hasta"] 
-}
-						
+		
 	override createContents(Panel mainPanel) {
 		
 		title = "Busqueda de Jugadores"

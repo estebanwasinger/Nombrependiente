@@ -150,8 +150,6 @@ public class GenerarEquiposWindow extends SimpleWindow<Partido> {
     Binding<ListBuilder<CriteriosCommand>> propiedadOrdenamiento2 = selectorOrdenamiento2.bindItems(_observableProperty_1);
     PropertyAdapter _propertyAdapter_1 = new PropertyAdapter(CriteriosCommand.class, "nombre");
     propiedadOrdenamiento2.setAdapter(_propertyAdapter_1);
-    Label _label_2 = new Label(selector3);
-    _label_2.<ControlBuilder>bindValueToProperty("cantEquipoA");
     Button _button = new Button(selector3);
     final Procedure1<Button> _function_2 = new Procedure1<Button>() {
       public void apply(final Button it) {

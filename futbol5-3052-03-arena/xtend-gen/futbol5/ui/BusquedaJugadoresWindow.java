@@ -1,12 +1,9 @@
 package futbol5.ui;
 
-import com.google.common.collect.Lists;
 import futbol5.applicationModel.Futbol5;
 import futbol5.domain.Jugador;
 import futbol5.ui.RunnableBusquedaJugadores;
 import futbol5.ui.VerDatosJugadorWindow;
-import java.util.Collections;
-import java.util.List;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.arena.bindings.NotNullObservable;
@@ -40,10 +37,6 @@ public class BusquedaJugadoresWindow extends SimpleWindow<Futbol5> {
   
   public BusquedaJugadoresWindow(final RunnableBusquedaJugadores parent) {
     super(parent, new Futbol5());
-  }
-  
-  public List<String> getOpcionesRango() {
-    return Collections.<String>unmodifiableList(Lists.<String>newArrayList("Desde", "Hasta"));
   }
   
   public void createContents(final Panel mainPanel) {

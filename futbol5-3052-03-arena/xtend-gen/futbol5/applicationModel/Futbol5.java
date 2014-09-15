@@ -105,10 +105,6 @@ public class Futbol5 implements Serializable {
   public void search() {
     ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
     this.setResultados(_arrayList);
-    HomeJugadores _homeJugadores = this.getHomeJugadores();
-    String _nombre = this.getNombre();
-    List<Jugador> _search = _homeJugadores.search(_nombre);
-    this.setResultados(_search);
   }
   
   public void clear() {
