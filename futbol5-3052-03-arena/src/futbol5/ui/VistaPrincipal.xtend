@@ -12,6 +12,8 @@ import org.uqbar.commons.utils.Observable
 import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.arena.windows.SimpleWindow
+import org.uqbar.arena.layout.HorizontalLayout
+import org.uqbar.arena.widgets.Button
 
 @Observable
 class VistaPrincipal extends SimpleWindow<Futbol5> {
@@ -29,13 +31,20 @@ class VistaPrincipal extends SimpleWindow<Futbol5> {
 	val Label titulo = new Label(panelIzq).text = "Futbol 5"
 	var Label ultimosPartidos = new Label(panelIzq).text = "Ultimos Partidos"
 	var Table tableListaPartidos = new Table<Partido>(panelIzq, typeof(Partido))
+	tableListaPartidos.heigth = 200
+	tableListaPartidos.width = 285
 	tableListaPartidos.bindItemsToProperty("partidos")
 	new Column<Partido>(tableListaPartidos).setTitle("Localidad").bindContentsToProperty("localidad")
 			
 	}
 	
-	override protected addActions(Panel arg0) {
-	}
+	override protected addActions(Panel panel) {
+		panel.layout = new HorizontalLayout
+		new Button(panel).setCaption("Generar Equipo")
+		new Button(panel).setCaption("Buscar Jugador")
+		
+		}
+	
 	
 	override protected createFormPanel(Panel arg0) {
 		ccreateContents(arg0)
