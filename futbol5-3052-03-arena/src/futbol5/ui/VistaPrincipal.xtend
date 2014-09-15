@@ -21,7 +21,6 @@ class VistaPrincipal extends SimpleWindow<Futbol5> {
 	new(WindowOwner parent, Futbol5 model) {
 		super(parent, model)
 	}
-	
 	def ccreateContents(Panel mainPanel) {
 	mainPanel.layout = new VerticalLayout
 	val Panel columnPanel = new Panel(mainPanel)

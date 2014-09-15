@@ -19,6 +19,7 @@ class RunnableBusquedaJugadores extends Application {
 	//	var Partido partidoEjemplo = new Partido("San Miguel")
 	//	partidoEjemplo.agregarJugador(new Jugador("Esteban"))
 	//	partidoEjemplo.agregarJugador(new Jugador("Carolina"))
+
 		
 		
 		

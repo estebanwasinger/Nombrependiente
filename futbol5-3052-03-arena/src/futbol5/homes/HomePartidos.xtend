@@ -5,6 +5,7 @@ import org.uqbar.commons.model.CollectionBasedHome
 import java.util.LinkedList
 import java.util.List
 import futbol5.domain.Jugador
+import java.util.ArrayList
 
 class HomePartidos extends CollectionBasedHome<Partido> {
 	
@@ -43,9 +44,9 @@ class HomePartidos extends CollectionBasedHome<Partido> {
 	
 	def crearListaDejugadores(int max){
 		var int a = 0
+		jugadores = new ArrayList<Jugador>
 		while (a < max) {
-			var jugador = new Jugador
-			jugadores.add(jugador)
+			jugadores.add(new Jugador)
 			a = a + 1
 	}
 	return jugadores

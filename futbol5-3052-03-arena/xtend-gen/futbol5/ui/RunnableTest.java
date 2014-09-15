@@ -3,7 +3,6 @@ package futbol5.ui;
 import futbol5.domain.Jugador;
 import futbol5.domain.Partido;
 import futbol5.ui.GenerarEquiposWindow;
-import java.util.List;
 import org.uqbar.arena.Application;
 import org.uqbar.arena.windows.Window;
 
@@ -36,9 +35,6 @@ public class RunnableTest extends Application {
     partidoEjemplo.agregarJugador(_jugador_8);
     Jugador _jugador_9 = new Jugador("Carolina");
     partidoEjemplo.agregarJugador(_jugador_9);
-    List<Jugador> _equipoA = partidoEjemplo.getEquipoA();
-    Jugador _jugador_10 = new Jugador("Hola");
-    _equipoA.add(_jugador_10);
     return new GenerarEquiposWindow(this, partidoEjemplo);
   }
 }

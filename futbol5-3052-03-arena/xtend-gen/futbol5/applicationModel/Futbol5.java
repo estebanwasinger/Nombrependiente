@@ -2,7 +2,9 @@ package futbol5.applicationModel;
 
 import futbol5.applicationModel.BusquedaJugador;
 import futbol5.domain.Jugador;
+import futbol5.domain.Partido;
 import futbol5.homes.HomeJugadores;
+import futbol5.homes.HomePartidos;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -103,6 +105,22 @@ public class Futbol5 implements Serializable {
     this._busquedaJugadores = busquedaJugadores;
   }
   
+  private List<Partido> _partidos;
+  
+  public List<Partido> getPartidos() {
+    return this._partidos;
+  }
+  
+  public void setPartidos(final List<Partido> partidos) {
+    this._partidos = partidos;
+  }
+  
+  public Futbol5() {
+    HomePartidos _homePartidos = new HomePartidos();
+    List<Partido> _partidos = _homePartidos.getPartidos();
+    this.setPartidos(_partidos);
+  }
+  
   public void search(final Jugador jugador) {
     ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
     this.setResultados(_arrayList);
@@ -118,5 +136,10 @@ public class Futbol5 implements Serializable {
   public HomeJugadores getHomeJugadores() {
     ApplicationContext _instance = ApplicationContext.getInstance();
     return _instance.<HomeJugadores>getSingleton(Jugador.class);
+  }
+  
+  public HomeJugadores getHomePartidos() {
+    ApplicationContext _instance = ApplicationContext.getInstance();
+    return _instance.<HomeJugadores>getSingleton(Partido.class);
   }
 }

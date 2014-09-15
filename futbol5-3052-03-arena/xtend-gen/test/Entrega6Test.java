@@ -52,14 +52,6 @@ public class Entrega6Test {
   }
   
   @Test
-  public void fechaNacMayor() {
-    Jugador _jugador = new Jugador(null, null, 21, "09-02-2000");
-    List<Jugador> _search = this.homeDeJugadores.search(_jugador);
-    int _size = _search.size();
-    Assert.assertEquals(1, _size);
-  }
-  
-  @Test
   public void fechaNacMenor() {
     Jugador _jugador = new Jugador(null, null, 21, "09-02-1900");
     List<Jugador> _search = this.homeDeJugadores.search(_jugador);

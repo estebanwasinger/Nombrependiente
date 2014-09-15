@@ -9,6 +9,7 @@ import futbol5.domain.Jugador
 import futbol5.homes.HomeJugadores
 import java.util.Date
 import futbol5.domain.Partido
+import futbol5.homes.HomePartidos
 
 @Observable
 class Futbol5 implements Serializable {
@@ -24,6 +25,10 @@ class Futbol5 implements Serializable {
 	@Property BusquedaJugador busquedaJugadores
 	@Property List<Partido> partidos
 
+	new(){
+		partidos = (new HomePartidos).partidos
+	}
+	
 	def void search(Jugador jugador) { 
 		resultados = new ArrayList<Jugador>
 		resultados = getHomeJugadores().search(jugador)
@@ -35,5 +40,9 @@ class Futbol5 implements Serializable {
 			
 	def HomeJugadores getHomeJugadores() {
 		ApplicationContext.instance.getSingleton(typeof(Jugador))
+	}
+	
+	def HomeJugadores getHomePartidos() {
+		ApplicationContext.instance.getSingleton(typeof(Partido))
 	}
 }

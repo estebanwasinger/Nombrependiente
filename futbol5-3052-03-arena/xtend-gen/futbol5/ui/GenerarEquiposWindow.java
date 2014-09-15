@@ -9,7 +9,6 @@ import commands.CriteriosCommand;
 import commands.DivisionDeEquiposCommand;
 import futbol5.domain.Jugador;
 import futbol5.domain.Partido;
-import futbol5.ui.RunnableTest;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,24 +39,24 @@ import org.uqbar.lacar.ui.model.bindings.Binding;
 public class GenerarEquiposWindow extends SimpleWindow<Partido> {
   private Table<Jugador> tableListaEquipoA;
   
-  private List<DivisionDeEquiposCommand> _listaCommand;
+  private List<DivisionDeEquiposCommand> _listaCritDivision;
   
-  public List<DivisionDeEquiposCommand> getListaCommand() {
-    return this._listaCommand;
+  public List<DivisionDeEquiposCommand> getListaCritDivision() {
+    return this._listaCritDivision;
   }
   
-  public void setListaCommand(final List<DivisionDeEquiposCommand> listaCommand) {
-    this._listaCommand = listaCommand;
+  public void setListaCritDivision(final List<DivisionDeEquiposCommand> listaCritDivision) {
+    this._listaCritDivision = listaCritDivision;
   }
   
-  private List<CriteriosCommand> _listaCommand2;
+  private List<CriteriosCommand> _listaCritOrdenamiento;
   
-  public List<CriteriosCommand> getListaCommand2() {
-    return this._listaCommand2;
+  public List<CriteriosCommand> getListaCritOrdenamiento() {
+    return this._listaCritOrdenamiento;
   }
   
-  public void setListaCommand2(final List<CriteriosCommand> listaCommand2) {
-    this._listaCommand2 = listaCommand2;
+  public void setListaCritOrdenamiento(final List<CriteriosCommand> listaCritOrdenamiento) {
+    this._listaCritOrdenamiento = listaCritOrdenamiento;
   }
   
   private Partido model;
@@ -65,10 +64,25 @@ public class GenerarEquiposWindow extends SimpleWindow<Partido> {
   public GenerarEquiposWindow(final WindowOwner parent, final Partido model) {
     super(parent, model);
     this.model = model;
-  }
-  
-  public GenerarEquiposWindow(final RunnableTest parent) {
-    super(parent, new Partido());
+    LinkedList<DivisionDeEquiposCommand> _linkedList = new LinkedList<DivisionDeEquiposCommand>();
+    this.setListaCritDivision(_linkedList);
+    List<DivisionDeEquiposCommand> _listaCritDivision = this.getListaCritDivision();
+    AlgoritmoImparPar _algoritmoImparPar = new AlgoritmoImparPar();
+    _listaCritDivision.add(_algoritmoImparPar);
+    List<DivisionDeEquiposCommand> _listaCritDivision_1 = this.getListaCritDivision();
+    AlgoritmoLoco _algoritmoLoco = new AlgoritmoLoco();
+    _listaCritDivision_1.add(_algoritmoLoco);
+    LinkedList<CriteriosCommand> _linkedList_1 = new LinkedList<CriteriosCommand>();
+    this.setListaCritOrdenamiento(_linkedList_1);
+    List<CriteriosCommand> _listaCritOrdenamiento = this.getListaCritOrdenamiento();
+    CriterioCalifiUltimoPartido _criterioCalifiUltimoPartido = new CriterioCalifiUltimoPartido();
+    _listaCritOrdenamiento.add(_criterioCalifiUltimoPartido);
+    List<CriteriosCommand> _listaCritOrdenamiento_1 = this.getListaCritOrdenamiento();
+    CriterioHandicap _criterioHandicap = new CriterioHandicap();
+    _listaCritOrdenamiento_1.add(_criterioHandicap);
+    List<CriteriosCommand> _listaCritOrdenamiento_2 = this.getListaCritOrdenamiento();
+    CriterioNCalificaciones _criterioNCalificaciones = new CriterioNCalificaciones();
+    _listaCritOrdenamiento_2.add(_criterioNCalificaciones);
   }
   
   protected void addActions(final Panel actionPanel) {
@@ -90,68 +104,23 @@ public class GenerarEquiposWindow extends SimpleWindow<Partido> {
     final Panel panelListaJugadores = new Panel(mainPanel);
     ColumnLayout _columnLayout = new ColumnLayout(3);
     panelListaJugadores.setLayout(_columnLayout);
-    final Panel selector1 = new Panel(botoneraSuperior);
+    final Panel panelSelector1 = new Panel(botoneraSuperior);
     VerticalLayout _verticalLayout_1 = new VerticalLayout();
-    selector1.setLayout(_verticalLayout_1);
-    final Panel selector2 = new Panel(botoneraSuperior);
+    panelSelector1.setLayout(_verticalLayout_1);
+    final Panel panelSelector2 = new Panel(botoneraSuperior);
     VerticalLayout _verticalLayout_2 = new VerticalLayout();
-    selector2.setLayout(_verticalLayout_2);
-    final Panel selector3 = new Panel(botoneraSuperior);
+    panelSelector2.setLayout(_verticalLayout_2);
+    final Panel panelSelector3 = new Panel(botoneraSuperior);
     VerticalLayout _verticalLayout_3 = new VerticalLayout();
-    selector3.setLayout(_verticalLayout_3);
-    Label _label = new Label(selector1);
-    _label.setText("Criterio de Selección");
-    Selector<DivisionDeEquiposCommand> _selector = new Selector<DivisionDeEquiposCommand>(selector1);
-    final Procedure1<Selector<DivisionDeEquiposCommand>> _function = new Procedure1<Selector<DivisionDeEquiposCommand>>() {
-      public void apply(final Selector<DivisionDeEquiposCommand> it) {
-        it.setWidth(200);
-        GenerarEquiposWindow.this.setTitle("Generar equipos tentativos");
-      }
-    };
-    final Selector<DivisionDeEquiposCommand> selectorOrdenamiento = ObjectExtensions.<Selector<DivisionDeEquiposCommand>>operator_doubleArrow(_selector, _function);
-    LinkedList<DivisionDeEquiposCommand> _linkedList = new LinkedList<DivisionDeEquiposCommand>();
-    this.setListaCommand(_linkedList);
-    List<DivisionDeEquiposCommand> _listaCommand = this.getListaCommand();
-    AlgoritmoImparPar _algoritmoImparPar = new AlgoritmoImparPar();
-    _listaCommand.add(_algoritmoImparPar);
-    List<DivisionDeEquiposCommand> _listaCommand_1 = this.getListaCommand();
-    AlgoritmoLoco _algoritmoLoco = new AlgoritmoLoco();
-    _listaCommand_1.add(_algoritmoLoco);
-    selectorOrdenamiento.allowNull(false);
-    selectorOrdenamiento.<ControlBuilder>bindValueToProperty("algoritmoDivision");
-    ObservableProperty _observableProperty = new ObservableProperty(this, "listaCommand");
-    Binding<ListBuilder<DivisionDeEquiposCommand>> propiedadOrdenamiento = selectorOrdenamiento.bindItems(_observableProperty);
-    PropertyAdapter _propertyAdapter = new PropertyAdapter(DivisionDeEquiposCommand.class, "nombre");
-    propiedadOrdenamiento.setAdapter(_propertyAdapter);
-    Label _label_1 = new Label(selector2);
-    _label_1.setText("Criterio de Ordenamiento");
-    Selector<CriteriosCommand> _selector_1 = new Selector<CriteriosCommand>(selector2);
-    final Procedure1<Selector<CriteriosCommand>> _function_1 = new Procedure1<Selector<CriteriosCommand>>() {
-      public void apply(final Selector<CriteriosCommand> it) {
-        it.allowNull(false);
-        it.setWidth(200);
-      }
-    };
-    final Selector<CriteriosCommand> selectorOrdenamiento2 = ObjectExtensions.<Selector<CriteriosCommand>>operator_doubleArrow(_selector_1, _function_1);
-    LinkedList<CriteriosCommand> _linkedList_1 = new LinkedList<CriteriosCommand>();
-    this.setListaCommand2(_linkedList_1);
-    List<CriteriosCommand> _listaCommand2 = this.getListaCommand2();
-    CriterioCalifiUltimoPartido _criterioCalifiUltimoPartido = new CriterioCalifiUltimoPartido();
-    _listaCommand2.add(_criterioCalifiUltimoPartido);
-    List<CriteriosCommand> _listaCommand2_1 = this.getListaCommand2();
-    CriterioHandicap _criterioHandicap = new CriterioHandicap();
-    _listaCommand2_1.add(_criterioHandicap);
-    List<CriteriosCommand> _listaCommand2_2 = this.getListaCommand2();
-    CriterioNCalificaciones _criterioNCalificaciones = new CriterioNCalificaciones();
-    _listaCommand2_2.add(_criterioNCalificaciones);
-    selectorOrdenamiento2.allowNull(false);
-    selectorOrdenamiento2.<ControlBuilder>bindValueToProperty("algoritmoOrdenamiento");
-    ObservableProperty _observableProperty_1 = new ObservableProperty(this, "listaCommand2");
-    Binding<ListBuilder<CriteriosCommand>> propiedadOrdenamiento2 = selectorOrdenamiento2.bindItems(_observableProperty_1);
-    PropertyAdapter _propertyAdapter_1 = new PropertyAdapter(CriteriosCommand.class, "nombre");
-    propiedadOrdenamiento2.setAdapter(_propertyAdapter_1);
-    Button _button = new Button(selector3);
-    final Procedure1<Button> _function_2 = new Procedure1<Button>() {
+    panelSelector3.setLayout(_verticalLayout_3);
+    this.crearSelectoresCommands(panelSelector1, panelSelector2);
+    this.crearBotonGenerar(panelSelector3);
+    this.createListaJugadores(panelListaJugadores);
+  }
+  
+  private void crearBotonGenerar(final Panel panelSelector3) {
+    Button _button = new Button(panelSelector3);
+    final Procedure1<Button> _function = new Procedure1<Button>() {
       public void apply(final Button it) {
         it.setWidth(200);
         it.setHeigth(45);
@@ -186,8 +155,44 @@ public class GenerarEquiposWindow extends SimpleWindow<Partido> {
         it.onClick(_function);
       }
     };
-    final Button botonGenerar = ObjectExtensions.<Button>operator_doubleArrow(_button, _function_2);
-    this.createListaJugadores(panelListaJugadores);
+    final Button botonGenerar = ObjectExtensions.<Button>operator_doubleArrow(_button, _function);
+  }
+  
+  public Binding<ListBuilder<CriteriosCommand>> crearSelectoresCommands(final Panel panelSelector1, final Panel panelSelector2) {
+    Binding<ListBuilder<CriteriosCommand>> _xblockexpression = null;
+    {
+      Label _label = new Label(panelSelector1);
+      _label.setText("Criterio de Selección");
+      Selector<DivisionDeEquiposCommand> _selector = new Selector<DivisionDeEquiposCommand>(panelSelector1);
+      final Procedure1<Selector<DivisionDeEquiposCommand>> _function = new Procedure1<Selector<DivisionDeEquiposCommand>>() {
+        public void apply(final Selector<DivisionDeEquiposCommand> it) {
+          it.setWidth(200);
+          it.allowNull(false);
+          it.<ControlBuilder>bindValueToProperty("algoritmoDivision");
+        }
+      };
+      final Selector<DivisionDeEquiposCommand> selectorCritDivision = ObjectExtensions.<Selector<DivisionDeEquiposCommand>>operator_doubleArrow(_selector, _function);
+      ObservableProperty _observableProperty = new ObservableProperty(this, "listaCritDivision");
+      Binding<ListBuilder<DivisionDeEquiposCommand>> propiedadDivision = selectorCritDivision.bindItems(_observableProperty);
+      PropertyAdapter _propertyAdapter = new PropertyAdapter(DivisionDeEquiposCommand.class, "nombre");
+      propiedadDivision.setAdapter(_propertyAdapter);
+      Label _label_1 = new Label(panelSelector2);
+      _label_1.setText("Criterio de Ordenamiento");
+      Selector<CriteriosCommand> _selector_1 = new Selector<CriteriosCommand>(panelSelector2);
+      final Procedure1<Selector<CriteriosCommand>> _function_1 = new Procedure1<Selector<CriteriosCommand>>() {
+        public void apply(final Selector<CriteriosCommand> it) {
+          it.allowNull(false);
+          it.setWidth(200);
+          it.<ControlBuilder>bindValueToProperty("algoritmoOrdenamiento");
+        }
+      };
+      final Selector<CriteriosCommand> selectorCritOrdeamiento = ObjectExtensions.<Selector<CriteriosCommand>>operator_doubleArrow(_selector_1, _function_1);
+      ObservableProperty _observableProperty_1 = new ObservableProperty(this, "listaCritOrdenamiento");
+      Binding<ListBuilder<CriteriosCommand>> propiedadOrdenamiento = selectorCritOrdeamiento.bindItems(_observableProperty_1);
+      PropertyAdapter _propertyAdapter_1 = new PropertyAdapter(CriteriosCommand.class, "nombre");
+      _xblockexpression = propiedadOrdenamiento.setAdapter(_propertyAdapter_1);
+    }
+    return _xblockexpression;
   }
   
   public void createListaJugadores(final Panel panelJugadores) {

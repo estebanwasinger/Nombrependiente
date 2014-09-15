@@ -10,11 +10,11 @@ import inscripciones.TipoInscripcion;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
 import observers.PartidoObserver;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.commons.model.Entity;
 import org.uqbar.commons.utils.Observable;
 
@@ -179,22 +179,22 @@ public class Partido extends Entity {
   
   public void notificarInscripcion(final Jugador jugador) {
     List<PartidoObserver> _altasObservers = this.getAltasObservers();
-    final Consumer<PartidoObserver> _function = new Consumer<PartidoObserver>() {
-      public void accept(final PartidoObserver observador) {
+    final Procedure1<PartidoObserver> _function = new Procedure1<PartidoObserver>() {
+      public void apply(final PartidoObserver observador) {
         observador.notificarInscripcion(Partido.this, jugador);
       }
     };
-    _altasObservers.forEach(_function);
+    IterableExtensions.<PartidoObserver>forEach(_altasObservers, _function);
   }
   
   public void notificarBaja(final Jugador jugador, final Jugador reemplazo) {
     List<PartidoObserver> _bajasObservers = this.getBajasObservers();
-    final Consumer<PartidoObserver> _function = new Consumer<PartidoObserver>() {
-      public void accept(final PartidoObserver observador) {
+    final Procedure1<PartidoObserver> _function = new Procedure1<PartidoObserver>() {
+      public void apply(final PartidoObserver observador) {
         observador.notificarBaja(Partido.this, jugador, reemplazo);
       }
     };
-    _bajasObservers.forEach(_function);
+    IterableExtensions.<PartidoObserver>forEach(_bajasObservers, _function);
   }
   
   public int cantJugadores() {
@@ -300,7 +300,7 @@ public class Partido extends Entity {
         return;
       }
       List<Jugador> _jugadores = this.getJugadores();
-      final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
+      final Function1<Jugador, Boolean> _function = new Function1<Jugador, Boolean>() {
         public Boolean apply(final Jugador inscripto) {
           return Boolean.valueOf(jugador.tieneMasPrioridadQue(inscripto));
         }
@@ -311,7 +311,7 @@ public class Partido extends Entity {
         throw new BusinessException("No hay mas cupo");
       }
       List<Jugador> _jugadores_1 = this.getJugadores();
-      final Function1<Jugador,Boolean> _function_1 = new Function1<Jugador,Boolean>() {
+      final Function1<Jugador, Boolean> _function_1 = new Function1<Jugador, Boolean>() {
         public Boolean apply(final Jugador unJugador) {
           int _prioridad = unJugador.prioridad();
           int _prioridad_1 = jugador.prioridad();
