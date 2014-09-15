@@ -49,9 +49,6 @@ class GenerarEquiposWindow extends SimpleWindow<Partido> {
 		getListaCritOrdenamiento.add(new CriterioNCalificaciones)
 	}
 
-	new(RunnableTest parent) {
-		super(parent, new Partido)
-	}
 
 	override protected addActions(Panel actionPanel) {
 		actionPanel.layout = new HorizontalLayout

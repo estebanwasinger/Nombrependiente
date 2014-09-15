@@ -9,12 +9,15 @@ import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.MainWindow
 import org.uqbar.commons.utils.Observable
+import org.uqbar.arena.widgets.tables.Column
+import org.uqbar.arena.windows.WindowOwner
+import org.uqbar.arena.windows.SimpleWindow
 
 @Observable
-class VistaPrincipal extends MainWindow<Futbol5> {
+class VistaPrincipal extends SimpleWindow<Futbol5> {
 	
-	new(Futbol5 model) {
-		super(model)
+	new(WindowOwner parent, Futbol5 model) {
+		super(parent, model)
 	}
 	
 	override createContents(Panel mainPanel) {
@@ -23,7 +26,18 @@ class VistaPrincipal extends MainWindow<Futbol5> {
 	val Panel panelDer = new Panel(mainPanel).layout = new VerticalLayout
 	val Label titulo = new Label(panelIzq).text = "Futbol 5"
 	var Label ultimosPartidos = new Label(panelIzq).text = "Ultimos Partidos"
-	var Table listaPartidos = new Table<Partido>(panelIzq, typeof(Partido))
+	var Table tableListaPartidos = new Table<Partido>(panelIzq, typeof(Partido))
+	tableListaPartidos.bindItemsToProperty("partidos")
+	new Column<Partido>(tableListaPartidos).setTitle("Localidad").bindContentsToProperty("localidad")
 			
 	}
+	
+	override protected addActions(Panel arg0) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	override protected createFormPanel(Panel arg0) {
+		createContents(arg0)
+	}
+	
 }

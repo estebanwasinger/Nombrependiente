@@ -8,6 +8,7 @@ import org.uqbar.commons.utils.Observable
 import futbol5.domain.Jugador
 import futbol5.homes.HomeJugadores
 import java.util.Date
+import futbol5.domain.Partido
 
 @Observable
 class Futbol5 implements Serializable {
@@ -21,6 +22,7 @@ class Futbol5 implements Serializable {
 	@Property Jugador seleccionJugador
 	@Property List<Jugador> resultados
 	@Property BusquedaJugador busquedaJugadores
+	@Property List<Partido> partidos
 
 	def void search(Jugador jugador) { 
 		resultados = new ArrayList<Jugador>
