@@ -23,9 +23,10 @@ import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.bindings.ObservableProperty
 import org.uqbar.arena.widgets.RadioSelector
+import org.uqbar.arena.windows.Dialog
 
 @Observable
-class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
+class BusquedaJugadoresWindow extends Dialog<Futbol5>{
 		new(WindowOwner parent,Futbol5 modelObject) {
 		super(parent, modelObject)
 	}

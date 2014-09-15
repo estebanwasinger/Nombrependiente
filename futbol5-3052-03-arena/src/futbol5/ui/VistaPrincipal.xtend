@@ -30,9 +30,10 @@ class VistaPrincipal extends Dialog<Futbol5> {
 			.onClick [ | this.generarEquipo]
 		var buscar = new Button(panel)
 			.setCaption("Buscar Jugador")
+			.onClick [ | this.buscarEquipo]
 		
-		//var elementSelected = new NotNullObservable("partido")
-		//generar.bindEnabled(elementSelected)
+		var elementSelected = new NotNullObservable("partido")
+		generar.bindEnabled(elementSelected)
 
 		}
 	
@@ -61,4 +62,9 @@ class VistaPrincipal extends Dialog<Futbol5> {
 		dialog.onAccept[|modelObject.searchPartido]
 		dialog.open
 	}
+	
+	def void buscarEquipo(){
+			this.openDialog(new BusquedaJugadoresWindow(this, modelObject))
+	}
+	
 }
