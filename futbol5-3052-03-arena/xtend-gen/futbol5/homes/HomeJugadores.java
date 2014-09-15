@@ -125,46 +125,72 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
   }
   
   public boolean match(final Jugador jugadorEnLista, final Jugador jugadorBuscado) {
+    boolean _and = false;
+    boolean _and_1 = false;
+    boolean _matcheaNombre = this.matcheaNombre(jugadorEnLista, jugadorBuscado);
+    if (!_matcheaNombre) {
+      _and_1 = false;
+    } else {
+      boolean _matcheaApodo = this.matcheaApodo(jugadorEnLista, jugadorBuscado);
+      _and_1 = _matcheaApodo;
+    }
+    if (!_and_1) {
+      _and = false;
+    } else {
+      boolean _esMenorAnioNacimiento = this.esMenorAnioNacimiento(jugadorEnLista, jugadorBuscado);
+      boolean _not = (!_esMenorAnioNacimiento);
+      _and = _not;
+    }
+    return _and;
+  }
+  
+  public boolean matcheaNombre(final Jugador jugadorEnLista, final Jugador jugadorBuscado) {
+    boolean _or = false;
     String _nombre = jugadorBuscado.getNombre();
     boolean _equals = Objects.equal(_nombre, null);
     if (_equals) {
+      _or = true;
     } else {
       String _nombre_1 = jugadorEnLista.getNombre();
       String _lowerCase = _nombre_1.toLowerCase();
       String _nombre_2 = jugadorBuscado.getNombre();
       String _lowerCase_1 = _nombre_2.toLowerCase();
       boolean _startsWith = _lowerCase.startsWith(_lowerCase_1);
-      boolean _not = (!_startsWith);
-      if (_not) {
-        return false;
-      }
+      _or = _startsWith;
     }
+    return _or;
+  }
+  
+  public boolean matcheaApodo(final Jugador jugadorEnLista, final Jugador jugadorBuscado) {
+    boolean _or = false;
     String _apodo = jugadorBuscado.getApodo();
-    boolean _equals_1 = Objects.equal(_apodo, null);
-    if (_equals_1) {
+    boolean _equals = Objects.equal(_apodo, null);
+    if (_equals) {
+      _or = true;
     } else {
       String _apodo_1 = jugadorEnLista.getApodo();
-      String _lowerCase_2 = _apodo_1.toLowerCase();
+      String _lowerCase = _apodo_1.toLowerCase();
       String _apodo_2 = jugadorBuscado.getApodo();
-      String _lowerCase_3 = _apodo_2.toLowerCase();
-      boolean _contains = _lowerCase_2.contains(_lowerCase_3);
-      boolean _not_1 = (!_contains);
-      if (_not_1) {
-        return false;
-      }
+      String _lowerCase_1 = _apodo_2.toLowerCase();
+      boolean _contains = _lowerCase.contains(_lowerCase_1);
+      _or = _contains;
     }
+    return _or;
+  }
+  
+  public boolean esMenorAnioNacimiento(final Jugador jugadorEnLista, final Jugador jugadorBuscado) {
+    boolean _or = false;
     Date _fechaNacimiento = jugadorBuscado.getFechaNacimiento();
-    boolean _equals_2 = Objects.equal(_fechaNacimiento, null);
-    if (_equals_2) {
+    boolean _equals = Objects.equal(_fechaNacimiento, null);
+    if (_equals) {
+      _or = true;
     } else {
       Date _fechaNacimiento_1 = jugadorBuscado.getFechaNacimiento();
       Date _fechaNacimiento_2 = jugadorEnLista.getFechaNacimiento();
       boolean _lessThan = (_fechaNacimiento_1.compareTo(_fechaNacimiento_2) < 0);
-      if (_lessThan) {
-        return false;
-      }
+      _or = _lessThan;
     }
-    return true;
+    return _or;
   }
   
   public Class<Jugador> getEntityType() {

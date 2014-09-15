@@ -33,6 +33,8 @@ class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
 	new(RunnableBusquedaJugadores parent) {
 		super(parent, new Futbol5)
 	}
+	
+	var jugador = new Jugador
 		
 	override createContents(Panel mainPanel) {
 		
@@ -80,7 +82,7 @@ class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
 		
 
 		new TextBox(busquedaSuperior)=>
-			[bindValueToProperty("nombre")
+			[bindValueToProperty("jugador.nombre")
 			width = 200]
 		
 		//Por apodo “contiene” //	
@@ -88,7 +90,7 @@ class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
 		labelApodo.text = "Apodo Jugador" //hay que afinar el "contiene"
 
 		new TextBox(busquedaSuperior)=>
-			[bindValueToProperty("apodo")
+			[bindValueToProperty("jugador.apodo")
 			width = 200]	
 			
 		// Búsqueda por fecha de nacimiento “anterior a” //
@@ -96,27 +98,23 @@ class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
 		labelFechaNacimiento.text = "Fecha de nacimiento menor a:" 
 
 		new TextBox(busquedaSuperior)=>
-			[bindValueToProperty("fechaNacimiento")
+			[bindValueToProperty("jugador.fechaNacimiento")
 			width = 200]	
 			
 		//Por rango desde/hasta del hándicap (puede ingresarse sólo desde, o sólo hasta) //
-		var labelRangoHandicap = new Label(busquedaSuperior)
-		labelRangoHandicap.text = "Handicap" 
+
+		var searchFormPanel = new Panel(busquedaSuperior)
+		searchFormPanel.setLayout(new ColumnLayout(2))
 		
-		 new RadioSelector(busquedaSuperior) => [
-		 bindItems(new ObservableProperty(this, "opcionesRango"))
-		 allowNull = false
-		 ]
-		 
-		 new TextBox(busquedaSuperior)=>
-			[bindValueToProperty("nivelDeJuego")
-			width = 200]	
+		crearTextBox(busquedaSuperior, "Handicap desde", "busquedaJugadores.handicapDesde")
+		crearTextBox(busquedaSuperior, "Handicap hasta", "busquedaJugadores.handicapHasta")
+		
 		//Por rango desde/hasta del promedio de último partido //
 		//Filtrar sólo los que tuvieron infracciones, sólo los que no tuvieron infracciones, todos //
 			
 		new Button(busquedaSuperior)
 			.setCaption("Buscar")
-			.onClick [ | modelObject.search ]
+			.onClick [ | modelObject.search(jugador) ]
 			.setFontSize(12)
 			.setWidth = 200
 			
@@ -126,6 +124,13 @@ class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
 			.setFontSize(12)
 			.setWidth = 200
 		
+	}
+	
+		def crearTextBox(Panel searchFormPanel, String label, String binding) {
+		var labelNumero = new Label(searchFormPanel)
+		labelNumero.text = label
+		val textBox = new TextBox(searchFormPanel)
+		textBox.bindValueToProperty(binding)
 	}
 	
 	def void grillaBasicaJugadores(Panel panelJugadores){
@@ -164,7 +169,7 @@ class BusquedaJugadoresWindow extends SimpleWindow<Futbol5>{
 	}
 	
 	def openDialog(Dialog<?> dialog) {
-		dialog.onAccept[|modelObject.search]
+		dialog.onAccept[|modelObject.search(jugador)]
 		dialog.open
 	}
 	

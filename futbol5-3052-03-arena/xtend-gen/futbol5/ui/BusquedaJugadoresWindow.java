@@ -7,7 +7,6 @@ import futbol5.ui.VerDatosJugadorWindow;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.arena.bindings.NotNullObservable;
-import org.uqbar.arena.bindings.ObservableProperty;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
@@ -16,7 +15,6 @@ import org.uqbar.arena.widgets.Control;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Link;
 import org.uqbar.arena.widgets.Panel;
-import org.uqbar.arena.widgets.RadioSelector;
 import org.uqbar.arena.widgets.SkinnableControl;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.tables.Column;
@@ -27,6 +25,7 @@ import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.commons.utils.Observable;
 import org.uqbar.lacar.ui.model.Action;
 import org.uqbar.lacar.ui.model.ControlBuilder;
+import org.uqbar.lacar.ui.model.bindings.Binding;
 
 @Observable
 @SuppressWarnings("all")
@@ -38,6 +37,8 @@ public class BusquedaJugadoresWindow extends SimpleWindow<Futbol5> {
   public BusquedaJugadoresWindow(final RunnableBusquedaJugadores parent) {
     super(parent, new Futbol5());
   }
+  
+  private Jugador jugador = new Jugador();
   
   public void createContents(final Panel mainPanel) {
     this.setTitle("Busqueda de Jugadores");
@@ -90,7 +91,7 @@ public class BusquedaJugadoresWindow extends SimpleWindow<Futbol5> {
     TextBox _textBox = new TextBox(busquedaSuperior);
     final Procedure1<TextBox> _function = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
-        it.<ControlBuilder>bindValueToProperty("nombre");
+        it.<ControlBuilder>bindValueToProperty("jugador.nombre");
         it.setWidth(200);
       }
     };
@@ -100,7 +101,7 @@ public class BusquedaJugadoresWindow extends SimpleWindow<Futbol5> {
     TextBox _textBox_1 = new TextBox(busquedaSuperior);
     final Procedure1<TextBox> _function_1 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
-        it.<ControlBuilder>bindValueToProperty("apodo");
+        it.<ControlBuilder>bindValueToProperty("jugador.apodo");
         it.setWidth(200);
       }
     };
@@ -110,52 +111,49 @@ public class BusquedaJugadoresWindow extends SimpleWindow<Futbol5> {
     TextBox _textBox_2 = new TextBox(busquedaSuperior);
     final Procedure1<TextBox> _function_2 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
-        it.<ControlBuilder>bindValueToProperty("fechaNacimiento");
+        it.<ControlBuilder>bindValueToProperty("jugador.fechaNacimiento");
         it.setWidth(200);
       }
     };
     ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_2, _function_2);
-    Label labelRangoHandicap = new Label(busquedaSuperior);
-    labelRangoHandicap.setText("Handicap");
-    RadioSelector<Object> _radioSelector = new RadioSelector<Object>(busquedaSuperior);
-    final Procedure1<RadioSelector<Object>> _function_3 = new Procedure1<RadioSelector<Object>>() {
-      public void apply(final RadioSelector<Object> it) {
-        ObservableProperty _observableProperty = new ObservableProperty(BusquedaJugadoresWindow.this, "opcionesRango");
-        it.bindItems(_observableProperty);
-        it.allowNull(false);
-      }
-    };
-    ObjectExtensions.<RadioSelector<Object>>operator_doubleArrow(_radioSelector, _function_3);
-    TextBox _textBox_3 = new TextBox(busquedaSuperior);
-    final Procedure1<TextBox> _function_4 = new Procedure1<TextBox>() {
-      public void apply(final TextBox it) {
-        it.<ControlBuilder>bindValueToProperty("nivelDeJuego");
-        it.setWidth(200);
-      }
-    };
-    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_3, _function_4);
+    Panel searchFormPanel = new Panel(busquedaSuperior);
+    ColumnLayout _columnLayout = new ColumnLayout(2);
+    searchFormPanel.setLayout(_columnLayout);
+    this.crearTextBox(busquedaSuperior, "Handicap desde", "busquedaJugadores.handicapDesde");
+    this.crearTextBox(busquedaSuperior, "Handicap hasta", "busquedaJugadores.handicapHasta");
     Button _button = new Button(busquedaSuperior);
     Button _setCaption = _button.setCaption("Buscar");
-    final Action _function_5 = new Action() {
+    final Action _function_3 = new Action() {
       public void execute() {
         Futbol5 _modelObject = BusquedaJugadoresWindow.this.getModelObject();
-        _modelObject.search();
+        _modelObject.search(BusquedaJugadoresWindow.this.jugador);
       }
     };
-    Button _onClick = _setCaption.onClick(_function_5);
+    Button _onClick = _setCaption.onClick(_function_3);
     SkinnableControl _setFontSize = _onClick.setFontSize(12);
     _setFontSize.setWidth(200);
     Button _button_1 = new Button(busquedaSuperior);
     Button _setCaption_1 = _button_1.setCaption("Limpiar");
-    final Action _function_6 = new Action() {
+    final Action _function_4 = new Action() {
       public void execute() {
         Futbol5 _modelObject = BusquedaJugadoresWindow.this.getModelObject();
         _modelObject.clear();
       }
     };
-    Button _onClick_1 = _setCaption_1.onClick(_function_6);
+    Button _onClick_1 = _setCaption_1.onClick(_function_4);
     SkinnableControl _setFontSize_1 = _onClick_1.setFontSize(12);
     _setFontSize_1.setWidth(200);
+  }
+  
+  public Binding<ControlBuilder> crearTextBox(final Panel searchFormPanel, final String label, final String binding) {
+    Binding<ControlBuilder> _xblockexpression = null;
+    {
+      Label labelNumero = new Label(searchFormPanel);
+      labelNumero.setText(label);
+      final TextBox textBox = new TextBox(searchFormPanel);
+      _xblockexpression = textBox.<ControlBuilder>bindValueToProperty(binding);
+    }
+    return _xblockexpression;
   }
   
   public void grillaBasicaJugadores(final Panel panelJugadores) {
@@ -197,7 +195,7 @@ public class BusquedaJugadoresWindow extends SimpleWindow<Futbol5> {
     final Action _function = new Action() {
       public void execute() {
         Futbol5 _modelObject = BusquedaJugadoresWindow.this.getModelObject();
-        _modelObject.search();
+        _modelObject.search(BusquedaJugadoresWindow.this.jugador);
       }
     };
     dialog.onAccept(_function);

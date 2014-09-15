@@ -12,19 +12,19 @@ import java.util.Date
 @Observable
 class Futbol5 implements Serializable {
 
+	@Property Jugador jugador
 	@Property Integer numero
 	@Property String apodo
 	@Property String nombre
 	@Property Date fechaNacimiento
 	@Property int nivelDeJuego
 	@Property Jugador seleccionJugador
-	@Property List<Jugador> jugadores
-	@Property Jugador jugadorSeleccionado
 	@Property List<Jugador> resultados
+	@Property BusquedaJugador busquedaJugadores
 
-	def void search() { 
+	def void search(Jugador jugador) { 
 		resultados = new ArrayList<Jugador>
-		//resultados = getHomeJugadores().search(nombre)
+		resultados = getHomeJugadores().search(jugador)
 	}
 	
 	def void clear() {

@@ -1,5 +1,6 @@
 package futbol5.applicationModel;
 
+import futbol5.applicationModel.BusquedaJugador;
 import futbol5.domain.Jugador;
 import futbol5.homes.HomeJugadores;
 import java.io.Serializable;
@@ -12,6 +13,16 @@ import org.uqbar.commons.utils.Observable;
 @Observable
 @SuppressWarnings("all")
 public class Futbol5 implements Serializable {
+  private Jugador _jugador;
+  
+  public Jugador getJugador() {
+    return this._jugador;
+  }
+  
+  public void setJugador(final Jugador jugador) {
+    this._jugador = jugador;
+  }
+  
   private Integer _numero;
   
   public Integer getNumero() {
@@ -72,26 +83,6 @@ public class Futbol5 implements Serializable {
     this._seleccionJugador = seleccionJugador;
   }
   
-  private List<Jugador> _jugadores;
-  
-  public List<Jugador> getJugadores() {
-    return this._jugadores;
-  }
-  
-  public void setJugadores(final List<Jugador> jugadores) {
-    this._jugadores = jugadores;
-  }
-  
-  private Jugador _jugadorSeleccionado;
-  
-  public Jugador getJugadorSeleccionado() {
-    return this._jugadorSeleccionado;
-  }
-  
-  public void setJugadorSeleccionado(final Jugador jugadorSeleccionado) {
-    this._jugadorSeleccionado = jugadorSeleccionado;
-  }
-  
   private List<Jugador> _resultados;
   
   public List<Jugador> getResultados() {
@@ -102,9 +93,22 @@ public class Futbol5 implements Serializable {
     this._resultados = resultados;
   }
   
-  public void search() {
+  private BusquedaJugador _busquedaJugadores;
+  
+  public BusquedaJugador getBusquedaJugadores() {
+    return this._busquedaJugadores;
+  }
+  
+  public void setBusquedaJugadores(final BusquedaJugador busquedaJugadores) {
+    this._busquedaJugadores = busquedaJugadores;
+  }
+  
+  public void search(final Jugador jugador) {
     ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
     this.setResultados(_arrayList);
+    HomeJugadores _homeJugadores = this.getHomeJugadores();
+    List<Jugador> _search = _homeJugadores.search(jugador);
+    this.setResultados(_search);
   }
   
   public void clear() {
