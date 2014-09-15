@@ -33,7 +33,6 @@ class Partido extends Entity {
 	new(String localidad) {
 		this.localidad = localidad
 		init
-
 	}
 	
 	new() {

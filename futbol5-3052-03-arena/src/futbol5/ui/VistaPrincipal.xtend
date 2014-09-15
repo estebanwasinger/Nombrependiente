@@ -20,10 +20,12 @@ class VistaPrincipal extends SimpleWindow<Futbol5> {
 		super(parent, model)
 	}
 	
-	override createContents(Panel mainPanel) {
-	mainPanel.layout = new ColumnLayout(2)
-	val Panel panelIzq = new Panel(mainPanel).layout = new VerticalLayout
-	val Panel panelDer = new Panel(mainPanel).layout = new VerticalLayout
+	def ccreateContents(Panel mainPanel) {
+	mainPanel.layout = new VerticalLayout
+	val Panel columnPanel = new Panel(mainPanel)
+	columnPanel.layout = new ColumnLayout(2)
+	val Panel panelIzq = new Panel(columnPanel).layout = new VerticalLayout
+	val Panel panelDer = new Panel(columnPanel).layout = new VerticalLayout
 	val Label titulo = new Label(panelIzq).text = "Futbol 5"
 	var Label ultimosPartidos = new Label(panelIzq).text = "Ultimos Partidos"
 	var Table tableListaPartidos = new Table<Partido>(panelIzq, typeof(Partido))
@@ -33,11 +35,10 @@ class VistaPrincipal extends SimpleWindow<Futbol5> {
 	}
 	
 	override protected addActions(Panel arg0) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 	
 	override protected createFormPanel(Panel arg0) {
-		createContents(arg0)
+		ccreateContents(arg0)
 	}
 	
 }
