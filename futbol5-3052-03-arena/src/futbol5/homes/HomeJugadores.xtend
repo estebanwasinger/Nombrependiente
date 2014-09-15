@@ -80,25 +80,21 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 	}
 	
 	def match(Jugador jugadorEnLista, Jugador jugadorBuscado) {
-		if (jugadorBuscado.nombre == null) {
-		} 
-		else {
-			if(!jugadorEnLista.nombre.toLowerCase.startsWith(jugadorBuscado.nombre.toLowerCase)) return false
-		}
-		
-		if (jugadorBuscado.apodo == null) {
-		} 
-		else {
-			if(!jugadorEnLista.apodo.toLowerCase.contains(jugadorBuscado.apodo.toLowerCase)) return false
-		}
-		
-		if(jugadorBuscado.fechaNacimiento == null){}else{
-		if(jugadorBuscado.fechaNacimiento < jugadorEnLista.fechaNacimiento) {
-			return false
-			}
-		}
-		return true
+		matcheaNombre(jugadorEnLista,jugadorBuscado) && 
+		matcheaApodo(jugadorEnLista,jugadorBuscado) &&
+		!esMenorAnioNacimiento(jugadorEnLista,jugadorBuscado)
 	}
+	
+	def matcheaNombre( Jugador jugadorEnLista, Jugador jugadorBuscado){
+	jugadorBuscado.nombre == null || jugadorEnLista.nombre.toLowerCase.startsWith(jugadorBuscado.nombre.toLowerCase)
+	}
+	def matcheaApodo( Jugador jugadorEnLista, Jugador jugadorBuscado){
+		jugadorBuscado.apodo == null || jugadorEnLista.apodo.toLowerCase.contains(jugadorBuscado.apodo.toLowerCase)
+	}
+	def esMenorAnioNacimiento( Jugador jugadorEnLista, Jugador jugadorBuscado){
+		jugadorBuscado.fechaNacimiento == null || jugadorBuscado.fechaNacimiento < jugadorEnLista.fechaNacimiento
+	}
+	
 
 	override def getEntityType() {
 		typeof(Jugador)
