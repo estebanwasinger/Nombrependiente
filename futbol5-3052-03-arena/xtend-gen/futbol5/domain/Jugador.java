@@ -136,6 +136,16 @@ public class Jugador extends Entity {
     this._criterioComparacion = criterioComparacion;
   }
   
+  private int _cantidadPartidos;
+  
+  public int getCantidadPartidos() {
+    return this._cantidadPartidos;
+  }
+  
+  public void setCantidadPartidos(final int cantidadPartidos) {
+    this._cantidadPartidos = cantidadPartidos;
+  }
+  
   private SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
   
   public Jugador() {
@@ -147,13 +157,17 @@ public class Jugador extends Entity {
     this.init();
   }
   
-  public Jugador(final String nombre, final String apodo, final int edad, final String fechaDeNacimientoStr) {
+  public Jugador(final String nombre, final String apodo, final int edad, final String fechaDeNacimientoStr, final int nivelDeJuego, final List<Jugador> amigos, final List<Calificacion> calificaciones, final int cantidadPartidos) {
     try {
       this.setNombre(nombre);
       this.setApodo(apodo);
       this.setEdad(edad);
       Date _parse = this.formateador.parse(fechaDeNacimientoStr);
       this.setFechaNacimiento(_parse);
+      this.setNivelDeJuego(nivelDeJuego);
+      this.setAmigos(amigos);
+      this.setCalificaciones(calificaciones);
+      this.setCantidadPartidos(cantidadPartidos);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -270,20 +284,20 @@ public class Jugador extends Entity {
   
   public int promedioDeUnPartido(final Partido partido) {
     List<Calificacion> _calificaciones = this.getCalificaciones();
-    final Function1<Calificacion, Boolean> _function = new Function1<Calificacion, Boolean>() {
+    final Function1<Calificacion,Boolean> _function = new Function1<Calificacion,Boolean>() {
       public Boolean apply(final Calificacion calificacion) {
         Partido _partido = calificacion.getPartido();
         return Boolean.valueOf(Objects.equal(_partido, partido));
       }
     };
     Iterable<Calificacion> calificacionesUltimoPartido = IterableExtensions.<Calificacion>filter(_calificaciones, _function);
-    final Function1<Calificacion, Integer> _function_1 = new Function1<Calificacion, Integer>() {
+    final Function1<Calificacion,Integer> _function_1 = new Function1<Calificacion,Integer>() {
       public Integer apply(final Calificacion calificacion) {
         return Integer.valueOf(calificacion.getNota());
       }
     };
     Iterable<Integer> _map = IterableExtensions.<Calificacion, Integer>map(calificacionesUltimoPartido, _function_1);
-    final Function2<Integer, Integer, Integer> _function_2 = new Function2<Integer, Integer, Integer>() {
+    final Function2<Integer,Integer,Integer> _function_2 = new Function2<Integer,Integer,Integer>() {
       public Integer apply(final Integer a, final Integer b) {
         return Integer.valueOf(((a).intValue() + (b).intValue()));
       }

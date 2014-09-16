@@ -9,11 +9,13 @@ import commands.CriteriosCommand;
 import commands.DivisionDeEquiposCommand;
 import futbol5.domain.Jugador;
 import futbol5.domain.Partido;
+import futbol5.ui.VerDatosJugadorWindow;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
+import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.bindings.ObservableProperty;
 import org.uqbar.arena.bindings.PropertyAdapter;
 import org.uqbar.arena.layout.ColumnLayout;
@@ -25,7 +27,7 @@ import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.Selector;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
-import org.uqbar.arena.windows.SimpleWindow;
+import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.commons.model.ObservableUtils;
 import org.uqbar.commons.utils.Observable;
@@ -36,7 +38,9 @@ import org.uqbar.lacar.ui.model.bindings.Binding;
 
 @Observable
 @SuppressWarnings("all")
-public class GenerarEquiposWindow extends SimpleWindow<Partido> {
+public class GenerarEquiposWindow extends Dialog<Partido> {
+  private Partido original;
+  
   private Table<Jugador> tableListaEquipoA;
   
   private List<DivisionDeEquiposCommand> _listaCritDivision;
@@ -89,9 +93,35 @@ public class GenerarEquiposWindow extends SimpleWindow<Partido> {
     HorizontalLayout _horizontalLayout = new HorizontalLayout();
     actionPanel.setLayout(_horizontalLayout);
     Button _button = new Button(actionPanel);
-    _button.setCaption("Cancelar");
+    Button _setCaption = _button.setCaption("Cancelar");
+    final Action _function = new Action() {
+      public void execute() {
+        Partido _modelObject = GenerarEquiposWindow.this.getModelObject();
+        GenerarEquiposWindow.this.original.copiarA(_modelObject);
+        GenerarEquiposWindow.this.cancel();
+      }
+    };
+    _setCaption.onClick(_function);
     Button _button_1 = new Button(actionPanel);
-    _button_1.setCaption("Aceptar");
+    Button _setCaption_1 = _button_1.setCaption("Aceptar");
+    final Action _function_1 = new Action() {
+      public void execute() {
+        GenerarEquiposWindow.this.accept();
+      }
+    };
+    Button _onClick = _setCaption_1.onClick(_function_1);
+    Button _setAsDefault = _onClick.setAsDefault();
+    _setAsDefault.disableOnError();
+    Button _button_2 = new Button(actionPanel);
+    Button _setCaption_2 = _button_2.setCaption("Buscar Jugador");
+    final Action _function_2 = new Action() {
+      public void execute() {
+        GenerarEquiposWindow.this.buscarJugador();
+      }
+    };
+    Button buscar = _setCaption_2.onClick(_function_2);
+    NotNullObservable elementSelected = new NotNullObservable("jugadorSeleccionado");
+    buscar.<ControlBuilder>bindEnabled(elementSelected);
   }
   
   protected void createFormPanel(final Panel mainPanel) {
@@ -224,6 +254,7 @@ public class GenerarEquiposWindow extends SimpleWindow<Partido> {
     tableListaInscriptos.setHeigth(200);
     tableListaInscriptos.setWidth(285);
     tableListaInscriptos.bindItemsToProperty("jugadores");
+    tableListaInscriptos.<ControlBuilder>bindValueToProperty("jugadorSeleccionado");
     Column<Jugador> _column = new Column<Jugador>(tableListaInscriptos);
     Column<Jugador> _setTitle = _column.setTitle("Nombre");
     _setTitle.bindContentsToProperty("nombre");
@@ -242,5 +273,21 @@ public class GenerarEquiposWindow extends SimpleWindow<Partido> {
     Column<Jugador> _column_2 = new Column<Jugador>(tableListaEquipoB);
     Column<Jugador> _setTitle_2 = _column_2.setTitle("Nombre");
     _setTitle_2.bindContentsToProperty("nombre");
+  }
+  
+  public void buscarJugador() {
+    Partido _modelObject = this.getModelObject();
+    Jugador _jugadorSeleccionado = _modelObject.getJugadorSeleccionado();
+    VerDatosJugadorWindow _verDatosJugadorWindow = new VerDatosJugadorWindow(this, _jugadorSeleccionado);
+    this.openDialog(_verDatosJugadorWindow);
+  }
+  
+  public void openDialog(final Dialog<?> dialog) {
+    final Action _function = new Action() {
+      public void execute() {
+      }
+    };
+    dialog.onAccept(_function);
+    dialog.open();
   }
 }

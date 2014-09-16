@@ -10,11 +10,11 @@ import inscripciones.TipoInscripcion;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Consumer;
 import observers.PartidoObserver;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.commons.model.Entity;
 import org.uqbar.commons.utils.Observable;
 
@@ -151,6 +151,16 @@ public class Partido extends Entity {
     this._AlgoritmoOrdenamiento = AlgoritmoOrdenamiento;
   }
   
+  private Jugador _jugadorSeleccionado;
+  
+  public Jugador getJugadorSeleccionado() {
+    return this._jugadorSeleccionado;
+  }
+  
+  public void setJugadorSeleccionado(final Jugador jugadorSeleccionado) {
+    this._jugadorSeleccionado = jugadorSeleccionado;
+  }
+  
   public Partido(final String localidad) {
     this.setLocalidad(localidad);
     this.init();
@@ -177,24 +187,31 @@ public class Partido extends Entity {
     this.setEquipoB(_arrayList_1);
   }
   
+  public void copiarA(final Partido partido) {
+    String _localidad = this.getLocalidad();
+    partido.setLocalidad(_localidad);
+    List<Jugador> _jugadores = this.getJugadores();
+    partido.setJugadores(_jugadores);
+  }
+  
   public void notificarInscripcion(final Jugador jugador) {
     List<PartidoObserver> _altasObservers = this.getAltasObservers();
-    final Procedure1<PartidoObserver> _function = new Procedure1<PartidoObserver>() {
-      public void apply(final PartidoObserver observador) {
+    final Consumer<PartidoObserver> _function = new Consumer<PartidoObserver>() {
+      public void accept(final PartidoObserver observador) {
         observador.notificarInscripcion(Partido.this, jugador);
       }
     };
-    IterableExtensions.<PartidoObserver>forEach(_altasObservers, _function);
+    _altasObservers.forEach(_function);
   }
   
   public void notificarBaja(final Jugador jugador, final Jugador reemplazo) {
     List<PartidoObserver> _bajasObservers = this.getBajasObservers();
-    final Procedure1<PartidoObserver> _function = new Procedure1<PartidoObserver>() {
-      public void apply(final PartidoObserver observador) {
+    final Consumer<PartidoObserver> _function = new Consumer<PartidoObserver>() {
+      public void accept(final PartidoObserver observador) {
         observador.notificarBaja(Partido.this, jugador, reemplazo);
       }
     };
-    IterableExtensions.<PartidoObserver>forEach(_bajasObservers, _function);
+    _bajasObservers.forEach(_function);
   }
   
   public int cantJugadores() {
@@ -300,7 +317,7 @@ public class Partido extends Entity {
         return;
       }
       List<Jugador> _jugadores = this.getJugadores();
-      final Function1<Jugador, Boolean> _function = new Function1<Jugador, Boolean>() {
+      final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
         public Boolean apply(final Jugador inscripto) {
           return Boolean.valueOf(jugador.tieneMasPrioridadQue(inscripto));
         }
@@ -311,7 +328,7 @@ public class Partido extends Entity {
         throw new BusinessException("No hay mas cupo");
       }
       List<Jugador> _jugadores_1 = this.getJugadores();
-      final Function1<Jugador, Boolean> _function_1 = new Function1<Jugador, Boolean>() {
+      final Function1<Jugador,Boolean> _function_1 = new Function1<Jugador,Boolean>() {
         public Boolean apply(final Jugador unJugador) {
           int _prioridad = unJugador.prioridad();
           int _prioridad_1 = jugador.prioridad();

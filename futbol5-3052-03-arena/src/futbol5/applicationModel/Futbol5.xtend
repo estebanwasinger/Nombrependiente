@@ -10,6 +10,7 @@ import futbol5.homes.HomeJugadores
 import java.util.Date
 import futbol5.domain.Partido
 import futbol5.homes.HomePartidos
+import infracciones.Infraccion
 
 @Observable
 class Futbol5 implements Serializable {
@@ -26,6 +27,7 @@ class Futbol5 implements Serializable {
 	@Property List<Partido> partidos
 	@Property Partido partido
 	@Property Jugador jugadorSeleccionado
+	@Property List<Infraccion> infracciones
 
 	new(){
 		partidos = (new HomePartidos).partidos

@@ -115,7 +115,7 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
   
   public List<Jugador> search(final Jugador jugadorBuscado) {
     List<Jugador> _jugadoresAceptados = this.getJugadoresAceptados();
-    final Function1<Jugador, Boolean> _function = new Function1<Jugador, Boolean>() {
+    final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
       public Boolean apply(final Jugador jugador) {
         return Boolean.valueOf(HomeJugadores.this.match(jugador, jugadorBuscado));
       }

@@ -5,6 +5,7 @@ import futbol5.domain.Jugador;
 import futbol5.domain.Partido;
 import futbol5.homes.HomeJugadores;
 import futbol5.homes.HomePartidos;
+import infracciones.Infraccion;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -133,6 +134,16 @@ public class Futbol5 implements Serializable {
   
   public void setJugadorSeleccionado(final Jugador jugadorSeleccionado) {
     this._jugadorSeleccionado = jugadorSeleccionado;
+  }
+  
+  private List<Infraccion> _infracciones;
+  
+  public List<Infraccion> getInfracciones() {
+    return this._infracciones;
+  }
+  
+  public void setInfracciones(final List<Infraccion> infracciones) {
+    this._infracciones = infracciones;
   }
   
   public Futbol5() {

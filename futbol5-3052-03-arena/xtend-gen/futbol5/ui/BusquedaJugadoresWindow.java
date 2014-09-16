@@ -1,12 +1,18 @@
 package futbol5.ui;
 
+import com.google.common.collect.Lists;
 import futbol5.applicationModel.Futbol5;
 import futbol5.domain.Jugador;
+import futbol5.ui.DateTextFilter;
 import futbol5.ui.RunnableBusquedaJugadores;
 import futbol5.ui.VerDatosJugadorWindow;
+import java.util.Collections;
+import java.util.List;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
+import org.uqbar.arena.bindings.DateAdapter;
 import org.uqbar.arena.bindings.NotNullObservable;
+import org.uqbar.arena.bindings.ObservableProperty;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
@@ -15,12 +21,12 @@ import org.uqbar.arena.widgets.Control;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Link;
 import org.uqbar.arena.widgets.Panel;
+import org.uqbar.arena.widgets.Selector;
 import org.uqbar.arena.widgets.SkinnableControl;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.Dialog;
-import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.commons.utils.Observable;
 import org.uqbar.lacar.ui.model.Action;
@@ -29,7 +35,7 @@ import org.uqbar.lacar.ui.model.bindings.Binding;
 
 @Observable
 @SuppressWarnings("all")
-public class BusquedaJugadoresWindow extends SimpleWindow<Futbol5> {
+public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
   public BusquedaJugadoresWindow(final WindowOwner parent, final Futbol5 modelObject) {
     super(parent, modelObject);
   }
@@ -106,21 +112,31 @@ public class BusquedaJugadoresWindow extends SimpleWindow<Futbol5> {
       }
     };
     ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_1, _function_1);
-    Label labelFechaNacimiento = new Label(busquedaSuperior);
-    labelFechaNacimiento.setText("Fecha de nacimiento menor a:");
-    TextBox _textBox_2 = new TextBox(busquedaSuperior);
-    final Procedure1<TextBox> _function_2 = new Procedure1<TextBox>() {
-      public void apply(final TextBox it) {
-        it.<ControlBuilder>bindValueToProperty("jugador.fechaNacimiento");
-        it.setWidth(200);
-      }
-    };
-    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_2, _function_2);
+    Label _label = new Label(busquedaSuperior);
+    _label.setText("Fecha de nacimiento menor a:");
+    final TextBox textBoxFecha = new TextBox(busquedaSuperior);
+    DateTextFilter _dateTextFilter = new DateTextFilter();
+    textBoxFecha.withFilter(_dateTextFilter);
+    final Binding<ControlBuilder> binding = textBoxFecha.<ControlBuilder>bindValueToProperty("fechaNacimiento");
+    DateAdapter _dateAdapter = new DateAdapter();
+    binding.setTransformer(_dateAdapter);
     Panel searchFormPanel = new Panel(busquedaSuperior);
     ColumnLayout _columnLayout = new ColumnLayout(2);
     searchFormPanel.setLayout(_columnLayout);
     this.crearTextBox(busquedaSuperior, "Handicap desde", "busquedaJugadores.handicapDesde");
     this.crearTextBox(busquedaSuperior, "Handicap hasta", "busquedaJugadores.handicapHasta");
+    Label labelInfraccion = new Label(busquedaSuperior);
+    labelInfraccion.setText("Infracciones");
+    Selector<Object> _selector = new Selector<Object>(busquedaSuperior);
+    final Procedure1<Selector<Object>> _function_2 = new Procedure1<Selector<Object>>() {
+      public void apply(final Selector<Object> it) {
+        it.allowNull(false);
+        ObservableProperty _observableProperty = new ObservableProperty(BusquedaJugadoresWindow.this, "eligeInfracciones");
+        it.bindItems(_observableProperty);
+        it.<ControlBuilder>bindValueToProperty("infracciones");
+      }
+    };
+    ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector, _function_2);
     Button _button = new Button(busquedaSuperior);
     Button _setCaption = _button.setCaption("Buscar");
     final Action _function_3 = new Action() {
@@ -207,5 +223,9 @@ public class BusquedaJugadoresWindow extends SimpleWindow<Futbol5> {
     Jugador _seleccionJugador = _modelObject.getSeleccionJugador();
     VerDatosJugadorWindow _verDatosJugadorWindow = new VerDatosJugadorWindow(this, _seleccionJugador);
     this.openDialog(_verDatosJugadorWindow);
+  }
+  
+  public List<String> getEligeInfracciones() {
+    return Collections.<String>unmodifiableList(Lists.<String>newArrayList("Solo Infracciones", "Solo No Infracciones", "Todos"));
   }
 }

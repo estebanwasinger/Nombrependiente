@@ -24,6 +24,7 @@ import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.bindings.ObservableProperty
 import org.uqbar.arena.widgets.RadioSelector
 import org.uqbar.arena.windows.Dialog
+import org.uqbar.arena.widgets.Selector
 
 @Observable
 class BusquedaJugadoresWindow extends Dialog<Futbol5>{
@@ -95,12 +96,12 @@ class BusquedaJugadoresWindow extends Dialog<Futbol5>{
 			width = 200]	
 			
 		// Búsqueda por fecha de nacimiento “anterior a” //
-		var labelFechaNacimiento = new Label(busquedaSuperior)
-		labelFechaNacimiento.text = "Fecha de nacimiento menor a:" 
-
-		new TextBox(busquedaSuperior)=>
-			[bindValueToProperty("jugador.fechaNacimiento")
-			width = 200]	
+		new Label(busquedaSuperior).setText = "Fecha de nacimiento menor a:" 
+		val textBoxFecha = new TextBox(busquedaSuperior)
+		textBoxFecha.withFilter(new DateTextFilter)
+		val binding = textBoxFecha.bindValueToProperty("fechaNacimiento")
+		binding.setTransformer(new DateAdapter)
+			
 			
 		//Por rango desde/hasta del hándicap (puede ingresarse sólo desde, o sólo hasta) //
 
@@ -112,6 +113,15 @@ class BusquedaJugadoresWindow extends Dialog<Futbol5>{
 		
 		//Por rango desde/hasta del promedio de último partido //
 		//Filtrar sólo los que tuvieron infracciones, sólo los que no tuvieron infracciones, todos //
+		var labelInfraccion = new Label(busquedaSuperior)
+		labelInfraccion.text = "Infracciones" 
+
+		new Selector(busquedaSuperior)=>[
+			allowNull = false
+			bindItems(new ObservableProperty(this, "eligeInfracciones"))
+			bindValueToProperty("infracciones")
+		]
+
 			
 		new Button(busquedaSuperior)
 			.setCaption("Buscar")
@@ -126,7 +136,7 @@ class BusquedaJugadoresWindow extends Dialog<Futbol5>{
 			.setWidth = 200
 		
 	}
-	
+		
 		def crearTextBox(Panel searchFormPanel, String label, String binding) {
 		var labelNumero = new Label(searchFormPanel)
 		labelNumero.text = label
@@ -177,5 +187,20 @@ class BusquedaJugadoresWindow extends Dialog<Futbol5>{
 	 def void grillaCompletaJugador(){
 		this.openDialog(new VerDatosJugadorWindow(this, modelObject.seleccionJugador))
 	}
+
+	def getEligeInfracciones() {
+			#["Solo Infracciones","Solo No Infracciones","Todos"]
+		}
+}
+class DateBox extends TextBox {
+	new(Panel container) {
+		super(container)
+	}
+
+	override bindValueToProperty(String propertyName) {
+		val binding = super.bindValueToProperty(propertyName)
+		this.withFilter(new DateTextFilter)
+		binding
+	}		
 			
 }
