@@ -63,6 +63,7 @@ class Jugador extends Entity{
 		}
 	}
 	
+	
 	def agregarAmigo(Jugador jugador) {
 		this.amigos.add(jugador)
 	}

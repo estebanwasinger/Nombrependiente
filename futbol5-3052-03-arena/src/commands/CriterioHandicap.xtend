@@ -16,7 +16,7 @@ class CriterioHandicap extends CriteriosCommand{
 	
 	override List<Jugador> ordenar(List<Jugador> jugadores){
 		if (jugadores.exists[jugador | (jugador.nivelDeJuego) == 0]) {
-			throw new BusinessException("No todos los jugadores tienen un nivel de juego asignado");
+			//throw new BusinessException("No todos los jugadores tienen un nivel de juego asignado");
 		}
 		super.ordenar(jugadores);
 	}

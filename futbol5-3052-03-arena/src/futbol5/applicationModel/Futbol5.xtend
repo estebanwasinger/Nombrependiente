@@ -25,6 +25,7 @@ class Futbol5 implements Serializable {
 	@Property BusquedaJugador busquedaJugadores
 	@Property List<Partido> partidos
 	@Property Partido partido
+	@Property Jugador jugadorSeleccionado
 
 	new(){
 		partidos = (new HomePartidos).partidos

@@ -26,6 +26,7 @@ class Partido extends Entity {
 	@Property var Administrador administrador
 	@Property var DivisionDeEquiposCommand AlgoritmoDivision
 	@Property var CriteriosCommand AlgoritmoOrdenamiento
+	@Property var Jugador jugadorSeleccionado
 
 	/****************/
 	/*CONSTRUCTORES*/

@@ -27,6 +27,7 @@ import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.ObservableUtils
 import org.uqbar.commons.utils.Observable
+import org.uqbar.arena.bindings.NotNullObservable
 
 @Observable
 class GenerarEquiposWindow extends Dialog<Partido> {
@@ -63,6 +64,14 @@ class GenerarEquiposWindow extends Dialog<Partido> {
 			.setCaption("Aceptar")
 			.onClick [|this.accept]
 			.setAsDefault.disableOnError
+			
+		var buscar = new Button(actionPanel)
+			.setCaption("Buscar Jugador")
+			.onClick [ | this.buscarJugador]
+		
+		var elementSelected = new NotNullObservable("jugadorSeleccionado")
+		buscar.bindEnabled(elementSelected)
+		
 	}
 
 	override protected createFormPanel(Panel mainPanel) {
@@ -149,6 +158,7 @@ class GenerarEquiposWindow extends Dialog<Partido> {
 		tableListaInscriptos.heigth = 200
 		tableListaInscriptos.width = 285
 		tableListaInscriptos.bindItemsToProperty("jugadores")
+		tableListaInscriptos.bindValueToProperty("jugadorSeleccionado")
 		new Column<Jugador>(tableListaInscriptos).setTitle("Nombre").bindContentsToProperty("nombre")
 
 		tableListaEquipoA = new Table<Jugador>(panelJugadores, typeof(Jugador))
@@ -163,5 +173,14 @@ class GenerarEquiposWindow extends Dialog<Partido> {
 		tableListaEquipoB.bindItemsToProperty("equipoB")
 		new Column<Jugador>(tableListaEquipoB) //
 		.setTitle("Nombre").bindContentsToProperty("nombre")
+	}
+	
+	def void buscarJugador() {
+		this.openDialog(new VerDatosJugadorWindow(this, modelObject.jugadorSeleccionado))
+	}
+
+	def openDialog(Dialog<?> dialog) {
+		dialog.onAccept[|]
+		dialog.open
 	}
 }

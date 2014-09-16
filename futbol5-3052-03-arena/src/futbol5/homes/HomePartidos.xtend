@@ -18,15 +18,14 @@ class HomePartidos extends CollectionBasedHome<Partido> {
 	
 	def void init(){
 		partidos = new LinkedList<Partido>
-		this.create("Burzaco")
-		this.create("Adrogue")
-		this.create("Bandfiel")
-		this.create("Lomas de Zamora")
-		this.create("Quilmes")
-		this.create("Longchamps")
-		this.create("San Miguel")
-		this.createCompleto("Almagro",crearListaDejugadores(10))
-		this.createCompleto("Palermo",crearListaDejugadores(10))
+		this.createCompleto("Burzaco",crearListaDejugadores(10))
+		this.createCompleto("Adrogue",crearListaDejugadores(10))
+		this.createCompleto("Bandfiel",crearListaDejugadores(10))
+		this.createCompleto("Lomas de Zamora",crearListaDejugadores(10))
+		this.createCompleto("Quilmes",crearListaDejugadores(10))
+		this.createCompleto("Longchamps",crearListaDejugadores(10))
+		this.createCompleto("San Miguel",crearListaDejugadores(10))
+
 	}
 	
 	def create(String localidad){
