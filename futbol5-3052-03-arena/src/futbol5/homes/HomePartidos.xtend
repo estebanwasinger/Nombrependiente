@@ -6,6 +6,7 @@ import java.util.LinkedList
 import java.util.List
 import futbol5.domain.Jugador
 import java.util.ArrayList
+import calificaciones.Calificacion
 
 class HomePartidos extends CollectionBasedHome<Partido> {
 	
@@ -45,11 +46,31 @@ class HomePartidos extends CollectionBasedHome<Partido> {
 		var int a = 0
 		jugadores = new ArrayList<Jugador>
 		while (a < max) {
-			jugadores.add(new Jugador("Carolina"))
+			jugadores.add(new Jugador("Carolina", "caro",21,"09-01-1993", 2, listaAmigos(8), listaCalificaciones(3),5))
 			a = a + 1
 	}
 	return jugadores
 	}
+	
+	def listaAmigos(int max){
+		var int a=0
+		var amigos = new ArrayList<Jugador>
+		while (a<max){
+			amigos.add(new Jugador("Esteban"))
+			a=a+1
+		}
+	return amigos
+	}
+	
+	def listaCalificaciones(int max){
+		var int a=0
+		var calificaciones = new ArrayList<Calificacion>
+		while (a<max){
+			calificaciones.add(new Calificacion(5))
+			a=a+1
+		}
+		return calificaciones
+		}
 	
 	def search(Partido partidoBuscado) {
 		partidos.filter[partido|this.match(partido,partidoBuscado)].toList

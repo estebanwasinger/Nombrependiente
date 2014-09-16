@@ -115,6 +115,26 @@ public class Futbol5 implements Serializable {
     this._partidos = partidos;
   }
   
+  private Partido _partido;
+  
+  public Partido getPartido() {
+    return this._partido;
+  }
+  
+  public void setPartido(final Partido partido) {
+    this._partido = partido;
+  }
+  
+  private Jugador _jugadorSeleccionado;
+  
+  public Jugador getJugadorSeleccionado() {
+    return this._jugadorSeleccionado;
+  }
+  
+  public void setJugadorSeleccionado(final Jugador jugadorSeleccionado) {
+    this._jugadorSeleccionado = jugadorSeleccionado;
+  }
+  
   public Futbol5() {
     HomePartidos _homePartidos = new HomePartidos();
     List<Partido> _partidos = _homePartidos.getPartidos();
@@ -129,6 +149,15 @@ public class Futbol5 implements Serializable {
     this.setResultados(_search);
   }
   
+  public void searchPartido() {
+    ArrayList<Partido> _arrayList = new ArrayList<Partido>();
+    this.setPartidos(_arrayList);
+    HomePartidos _homePartidos = this.getHomePartidos();
+    Partido _partido = this.getPartido();
+    List<Partido> _search = _homePartidos.search(_partido);
+    this.setPartidos(_search);
+  }
+  
   public void clear() {
     this.setNombre(null);
   }
@@ -138,8 +167,8 @@ public class Futbol5 implements Serializable {
     return _instance.<HomeJugadores>getSingleton(Jugador.class);
   }
   
-  public HomeJugadores getHomePartidos() {
+  public HomePartidos getHomePartidos() {
     ApplicationContext _instance = ApplicationContext.getInstance();
-    return _instance.<HomeJugadores>getSingleton(Partido.class);
+    return _instance.<HomePartidos>getSingleton(Partido.class);
   }
 }

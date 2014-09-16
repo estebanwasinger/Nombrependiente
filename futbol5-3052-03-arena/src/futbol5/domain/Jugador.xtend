@@ -31,6 +31,7 @@ class Jugador extends Entity{
 	@Property List <Calificacion> calificaciones
 	@Property float nivelDeJuego
 	@Property int criterioComparacion
+	@Property int cantidadPartidos
 	SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
 	
 	new() {
@@ -42,11 +43,15 @@ class Jugador extends Entity{
 		init
 	}
 	
-	new(String nombre,String apodo, int edad, String fechaDeNacimientoStr){
+	new(String nombre,String apodo, int edad, String fechaDeNacimientoStr, int nivelDeJuego, List<Jugador> amigos, List <Calificacion> calificaciones, int cantidadPartidos){
 		this.nombre = nombre
 		this.apodo = apodo
 		this.edad = edad
 		this.fechaNacimiento = formateador.parse(fechaDeNacimientoStr)
+		this.nivelDeJuego= nivelDeJuego
+		this.amigos=amigos
+		this.calificaciones= calificaciones
+		this.cantidadPartidos=cantidadPartidos
 	}
 	
 	def init(){

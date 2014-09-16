@@ -16,4 +16,7 @@ class Calificacion {
 			this.nota = nota
 			this.critica = critica
 		}
+	new(int nota){
+		this.nota=nota
+	}	
 	}
