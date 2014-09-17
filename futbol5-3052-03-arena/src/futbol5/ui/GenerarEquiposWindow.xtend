@@ -54,15 +54,8 @@ class GenerarEquiposWindow extends Dialog<Partido> {
 	override protected addActions(Panel actionPanel) {
 		actionPanel.layout = new HorizontalLayout
 		new Button(actionPanel)
-			.setCaption("Cancelar")
-			.onClick [|
-				original.copiarA(this.modelObject)
-				this.cancel
-			]
-
-		new Button(actionPanel)
 			.setCaption("Aceptar")
-			.onClick [|this.accept]
+			.onClick [|this.close]
 			.setAsDefault.disableOnError
 			
 		var buscar = new Button(actionPanel)

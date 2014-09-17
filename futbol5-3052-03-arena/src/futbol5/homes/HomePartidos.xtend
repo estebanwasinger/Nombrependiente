@@ -45,7 +45,9 @@ class HomePartidos extends CollectionBasedHome<Partido> {
 	
 	
 	def search(Partido partidoBuscado) {
-		partidos.filter[partido|this.match(partido,partidoBuscado)].toList
+		if(partidoBuscado!=null){
+		partidos.filter[partido|this.match(partido,partidoBuscado)].toList}else
+		{init()}
 	}
 	
 	def match(Partido partido, Partido partidoBuscado) {
