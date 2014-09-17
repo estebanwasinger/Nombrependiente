@@ -7,7 +7,7 @@ import java.util.List
 import futbol5.domain.Jugador
 import java.util.ArrayList
 import calificaciones.Calificacion
-import futbol5.aux.InicializadorJugador
+import futbol5.auxUtils.InicializadorJugador
 
 class HomePartidos extends CollectionBasedHome<Partido> {
 	

@@ -1,4 +1,4 @@
-package futbol5.aux;
+package futbol5.auxUtils;
 
 import calificaciones.Calificacion;
 import futbol5.domain.Jugador;

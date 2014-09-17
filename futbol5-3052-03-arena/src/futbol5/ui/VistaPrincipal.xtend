@@ -39,6 +39,8 @@ class VistaPrincipal extends Dialog<Futbol5> {
 	
 	
 	override protected createFormPanel(Panel mainPanel) {
+		
+		title = "Organizador de Futbol5"
 	mainPanel.layout = new VerticalLayout
 	val Panel columnPanel = new Panel(mainPanel)
 	columnPanel.layout = new ColumnLayout(2)
