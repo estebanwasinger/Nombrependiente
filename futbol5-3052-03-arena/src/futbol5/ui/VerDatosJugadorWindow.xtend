@@ -44,10 +44,10 @@ new(WindowOwner owner, Jugador model) {
 		new Label(panel).bindValueToProperty("cantidadPartidos")
 		new Label(panel).text = "Handicap:"
 		new Label(panel).bindValueToProperty("nivelDeJuego")
-		new Label(panel).text = "Calificaciones:"
-		new Label(panel).bindValueToProperty("calificaciones.size")
-		new Label(panel).text = "Amigos:"
-		new Label(panel).bindValueToProperty("amigos.size")
+//		new Label(panel).text = "Calificaciones:"
+//		new Label(panel).bindValueToProperty("calificaciones.size")
+//		new Label(panel).text = "Amigos:"
+//		new Label(panel).bindValueToProperty("amigos.size")
 		new Label(panel).text = "Nacicmiento:"
 		new Label(panel).bindValueToProperty("fechaNacimiento")
 	
@@ -62,6 +62,9 @@ new(WindowOwner owner, Jugador model) {
 	var Table tableListaInfracciones = new Table<Jugador>(panel, typeof(Jugador))
 	tableListaInfracciones.heigth = 200
 	tableListaInfracciones.width = 285
+	tableListaInfracciones.bindItemsToProperty("infracciones")
+	new Column<Jugador>(tableListaInfracciones).setTitle("Infracciones").bindContentsToProperty("nombre")
+	
 	}
 override protected void addActions(Panel actions) {
 		new Button(actions) 

@@ -15,7 +15,7 @@ import infracciones.Infraccion
 @Observable
 class Futbol5 implements Serializable {
 
-	@Property Jugador jugador
+	@Property Jugador jugadorEjemplo
 	@Property Integer numero
 	@Property String apodo
 	@Property String nombre
@@ -28,14 +28,17 @@ class Futbol5 implements Serializable {
 	@Property Partido partido
 	@Property Jugador jugadorSeleccionado
 	@Property List<Infraccion> infracciones
+	@Property HomeJugadores homeJugadores
 
 	new(){
 		partidos = (new HomePartidos).partidos
-	}
-	
+		homeJugadores = new HomeJugadores
+		jugadorEjemplo = new Jugador
+		}
 	def void search(Jugador jugador) { 
 		resultados = new ArrayList<Jugador>
 		resultados = getHomeJugadores().search(jugador)
+		println(resultados.size)
 	}
 	
 	def void searchPartido(){
@@ -45,12 +48,12 @@ class Futbol5 implements Serializable {
 	}
 	
 	def void clear() {
-		nombre = null
+		jugadorEjemplo = new Jugador
 	}
 			
-	def HomeJugadores getHomeJugadores() {
+	/*def HomeJugadores getHomeJugadores() {
 		ApplicationContext.instance.getSingleton(typeof(Jugador))
-	}
+	}*/
 	
 	def HomePartidos getHomePartidos() {
 		ApplicationContext.instance.getSingleton(typeof(Partido))

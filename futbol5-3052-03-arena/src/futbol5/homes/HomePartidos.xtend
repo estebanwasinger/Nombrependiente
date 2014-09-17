@@ -7,6 +7,7 @@ import java.util.List
 import futbol5.domain.Jugador
 import java.util.ArrayList
 import calificaciones.Calificacion
+import futbol5.aux.InicializadorJugador
 
 class HomePartidos extends CollectionBasedHome<Partido> {
 	
@@ -19,13 +20,13 @@ class HomePartidos extends CollectionBasedHome<Partido> {
 	
 	def void init(){
 		partidos = new LinkedList<Partido>
-		this.createCompleto("Burzaco",crearListaDejugadores(10))
-		this.createCompleto("Adrogue",crearListaDejugadores(10))
-		this.createCompleto("Bandfiel",crearListaDejugadores(10))
-		this.createCompleto("Lomas de Zamora",crearListaDejugadores(10))
-		this.createCompleto("Quilmes",crearListaDejugadores(10))
-		this.createCompleto("Longchamps",crearListaDejugadores(10))
-		this.createCompleto("San Miguel",crearListaDejugadores(10))
+		this.createCompleto("Burzaco",InicializadorJugador.crearListaDejugadores(10))
+		this.createCompleto("Adrogue",InicializadorJugador.crearListaDejugadores(10))
+		this.createCompleto("Bandfiel",InicializadorJugador.crearListaDejugadores(10))
+		this.createCompleto("Lomas de Zamora",InicializadorJugador.crearListaDejugadores(10))
+		this.createCompleto("Quilmes",InicializadorJugador.crearListaDejugadores(10))
+		this.createCompleto("Longchamps",InicializadorJugador.crearListaDejugadores(10))
+		this.createCompleto("San Miguel",InicializadorJugador.crearListaDejugadores(10))
 
 	}
 	
@@ -42,35 +43,6 @@ class HomePartidos extends CollectionBasedHome<Partido> {
 		partidos.add(partido)
 	}
 	
-	def crearListaDejugadores(int max){
-		var int a = 0
-		jugadores = new ArrayList<Jugador>
-		while (a < max) {
-			jugadores.add(new Jugador("Carolina", "caro",21,"09-01-1993", 2, listaAmigos(8), listaCalificaciones(3),5))
-			a = a + 1
-	}
-	return jugadores
-	}
-	
-	def listaAmigos(int max){
-		var int a=0
-		var amigos = new ArrayList<Jugador>
-		while (a<max){
-			amigos.add(new Jugador("Esteban"))
-			a=a+1
-		}
-	return amigos
-	}
-	
-	def listaCalificaciones(int max){
-		var int a=0
-		var calificaciones = new ArrayList<Calificacion>
-		while (a<max){
-			calificaciones.add(new Calificacion(5))
-			a=a+1
-		}
-		return calificaciones
-		}
 	
 	def search(Partido partidoBuscado) {
 		partidos.filter[partido|this.match(partido,partidoBuscado)].toList

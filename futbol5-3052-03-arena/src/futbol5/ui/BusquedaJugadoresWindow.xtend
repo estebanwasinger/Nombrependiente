@@ -84,7 +84,7 @@ class BusquedaJugadoresWindow extends Dialog<Futbol5>{
 		
 
 		new TextBox(busquedaSuperior)=>
-			[bindValueToProperty("jugador.nombre")
+			[bindValueToProperty("jugadorEjemplo.nombre")
 			width = 200]
 		
 		//Por apodo “contiene” //	
@@ -92,7 +92,7 @@ class BusquedaJugadoresWindow extends Dialog<Futbol5>{
 		labelApodo.text = "Apodo Jugador" //hay que afinar el "contiene"
 
 		new TextBox(busquedaSuperior)=>
-			[bindValueToProperty("jugador.apodo")
+			[bindValueToProperty("jugadorEjemplo.apodo")
 			width = 200]	
 			
 		// Búsqueda por fecha de nacimiento “anterior a” //
@@ -125,7 +125,7 @@ class BusquedaJugadoresWindow extends Dialog<Futbol5>{
 			
 		new Button(busquedaSuperior)
 			.setCaption("Buscar")
-			.onClick [ | modelObject.search(jugador) ]
+			.onClick [ | modelObject.search(modelObject.jugadorEjemplo) ]
 			.setFontSize(12)
 			.setWidth = 200
 			
@@ -146,10 +146,10 @@ class BusquedaJugadoresWindow extends Dialog<Futbol5>{
 	
 	def void grillaBasicaJugadores(Panel panelJugadores){
 		var table = new Table<Jugador>(panelJugadores, typeof(Jugador))
-		table.heigth = 200
+		table.heigth = 360
 		table.width = 590
-		table.bindValueToProperty("seleccionJugador")
-		//table.bindItemsToProperty("resultados")
+		table.bindValueToProperty("jugadorSeleccionado")
+		table.bindItemsToProperty("resultados")
 		
 		new Column<Jugador>(table) //
 			.setTitle("Nombre")
@@ -166,7 +166,7 @@ class BusquedaJugadoresWindow extends Dialog<Futbol5>{
 		new Column<Jugador>(table) //
 			.setTitle("Promedio")
 			.setFixedSize(150)
-		//	.bindContentsToProperty("nombre")
+			.bindContentsToProperty("nombre")
 		
 		var verDatos = new Button(panelJugadores)
 			.setCaption("Ver Datos Completos")
@@ -175,7 +175,7 @@ class BusquedaJugadoresWindow extends Dialog<Futbol5>{
 			.disableOnError
 			.setWidth = 200
 			
-		var jugadorMarcado = new NotNullObservable("seleccionJugador")
+		var jugadorMarcado = new NotNullObservable("jugadorSeleccionado")
 		verDatos.bindEnabled(jugadorMarcado)
 	}
 	
@@ -185,7 +185,7 @@ class BusquedaJugadoresWindow extends Dialog<Futbol5>{
 	}
 	
 	 def void grillaCompletaJugador(){
-		this.openDialog(new VerDatosJugadorWindow(this, modelObject.seleccionJugador))
+		this.openDialog(new VerDatosJugadorWindow(this, modelObject.jugadorSeleccionado))
 	}
 
 	def getEligeInfracciones() {

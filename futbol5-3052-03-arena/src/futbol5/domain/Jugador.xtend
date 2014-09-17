@@ -47,11 +47,20 @@ class Jugador extends Entity{
 		this.nombre = nombre
 		this.apodo = apodo
 		this.edad = edad
-		this.fechaNacimiento = formateador.parse(fechaDeNacimientoStr)
+		if(fechaDeNacimientoStr!= null){
+		this.fechaNacimiento = formateador.parse(fechaDeNacimientoStr)}
 		this.nivelDeJuego= nivelDeJuego
 		this.amigos=amigos
 		this.calificaciones= calificaciones
 		this.cantidadPartidos=cantidadPartidos
+	}
+	
+	new(String nombre, String apodo, int edad,String fechaDeNacimientoStr){
+		this.nombre = nombre
+		this.apodo = apodo
+		this.edad = edad
+		if(fechaDeNacimientoStr!= null){
+		this.fechaNacimiento = formateador.parse(fechaDeNacimientoStr)}
 	}
 	
 	def init(){
@@ -129,5 +138,27 @@ class Jugador extends Entity{
 				}
 		calificaciones.add(new Calificacion(this, partido, nota, critica))
 	}
+	
+	
+	/**
+	 * Matcheador de jugadores by Example
+	 * 
+	 */
+	def boolean matchea(Jugador jugador) {
+	matcheaNombre(jugador) && 
+		matcheaApodo(jugador) &&
+		esMenorAnioNacimiento(jugador)
+	}
+	
+	def matcheaNombre(Jugador jugadorBuscado){
+	jugadorBuscado.nombre == null || this.nombre.toLowerCase.startsWith(jugadorBuscado.nombre.toLowerCase)
+	}
+	def matcheaApodo(Jugador jugadorBuscado){
+		jugadorBuscado.apodo == null || this.apodo.toLowerCase.contains(jugadorBuscado.apodo.toLowerCase)
+	}
+	def esMenorAnioNacimiento(Jugador jugadorBuscado){
+		jugadorBuscado.fechaNacimiento == null || jugadorBuscado.fechaNacimiento > this.fechaNacimiento
+	}
+	
 	
 }

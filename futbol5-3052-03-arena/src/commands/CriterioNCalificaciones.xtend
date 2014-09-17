@@ -11,6 +11,7 @@ class CriterioNCalificaciones extends CriteriosCommand{
 	}
 	
 	new(int n) {
+		nombre = "Ultimos "+n+" Partidos"
 		this.n = n
 	}
 		

@@ -47,7 +47,7 @@ class GenerarEquiposWindow extends Dialog<Partido> {
 		listaCritOrdenamiento = new LinkedList<CriteriosCommand>
 		getListaCritOrdenamiento.add(new CriterioCalifiUltimoPartido)
 		getListaCritOrdenamiento.add(new CriterioHandicap)
-		getListaCritOrdenamiento.add(new CriterioNCalificaciones)
+		getListaCritOrdenamiento.add(new CriterioNCalificaciones(3))
 	}
 
 
@@ -109,7 +109,6 @@ class GenerarEquiposWindow extends Dialog<Partido> {
 				modelObject.equipoA = new ArrayList<Jugador>
 				modelObject.ordenarJugadores(modelObject.algoritmoOrdenamiento)
 				modelObject.dividirEquipos(modelObject.algoritmoDivision)
-				modelObject.jugadores.add(new Jugador("hola"))
 				ObservableUtils.firePropertyChanged(modelObject, "equipoA", modelObject.equipoA)
 				ObservableUtils.firePropertyChanged(modelObject, "equipoB", modelObject.equipoB)
 			]

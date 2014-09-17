@@ -76,10 +76,10 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 	}
 	
 	def search(Jugador jugadorBuscado) {
-		jugadoresAceptados.filter[jugador|this.match(jugador,jugadorBuscado)].toList
+		jugadoresAceptados.filter[jugador|jugador.matchea(jugadorBuscado)].toList
 	}
 	
-	def match(Jugador jugadorEnLista, Jugador jugadorBuscado) {
+	/*def match(Jugador jugadorEnLista, Jugador jugadorBuscado) {
 		matcheaNombre(jugadorEnLista,jugadorBuscado) && 
 		matcheaApodo(jugadorEnLista,jugadorBuscado) &&
 		!esMenorAnioNacimiento(jugadorEnLista,jugadorBuscado)
@@ -93,7 +93,7 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 	}
 	def esMenorAnioNacimiento( Jugador jugadorEnLista, Jugador jugadorBuscado){
 		jugadorBuscado.fechaNacimiento == null || jugadorBuscado.fechaNacimiento < jugadorEnLista.fechaNacimiento
-	}
+	}*/
 	
 
 	override def getEntityType() {
