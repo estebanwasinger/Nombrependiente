@@ -1,4 +1,4 @@
-package futbol5.aux
+package futbol5.auxiliar
 
 import futbol5.domain.Jugador
 import java.util.ArrayList
