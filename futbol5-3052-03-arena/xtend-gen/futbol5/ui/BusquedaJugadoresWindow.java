@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import futbol5.applicationModel.Futbol5;
 import futbol5.domain.Jugador;
 import futbol5.ui.DateTextFilter;
-import futbol5.ui.RunnableBusquedaJugadores;
 import futbol5.ui.VerDatosJugadorWindow;
 import java.util.Collections;
 import java.util.List;
@@ -38,10 +37,6 @@ import org.uqbar.lacar.ui.model.bindings.Binding;
 public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
   public BusquedaJugadoresWindow(final WindowOwner parent, final Futbol5 modelObject) {
     super(parent, modelObject);
-  }
-  
-  public BusquedaJugadoresWindow(final RunnableBusquedaJugadores parent) {
-    super(parent, new Futbol5());
   }
   
   private Jugador jugador = new Jugador();
@@ -78,7 +73,13 @@ public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
     HorizontalLayout _horizontalLayout = new HorizontalLayout();
     actionPanel.setLayout(_horizontalLayout);
     Button _button = new Button(actionPanel);
-    _button.setCaption("Regresar");
+    Button _setCaption = _button.setCaption("Regresar");
+    final Action _function = new Action() {
+      public void execute() {
+        BusquedaJugadoresWindow.this.close();
+      }
+    };
+    _setCaption.onClick(_function);
   }
   
   public void createFormPanel(final Panel panelIzquierda) {
@@ -97,7 +98,7 @@ public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
     TextBox _textBox = new TextBox(busquedaSuperior);
     final Procedure1<TextBox> _function = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
-        it.<ControlBuilder>bindValueToProperty("jugador.nombre");
+        it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.nombre");
         it.setWidth(200);
       }
     };
@@ -107,7 +108,7 @@ public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
     TextBox _textBox_1 = new TextBox(busquedaSuperior);
     final Procedure1<TextBox> _function_1 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
-        it.<ControlBuilder>bindValueToProperty("jugador.apodo");
+        it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.apodo");
         it.setWidth(200);
       }
     };
@@ -142,7 +143,9 @@ public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
     final Action _function_3 = new Action() {
       public void execute() {
         Futbol5 _modelObject = BusquedaJugadoresWindow.this.getModelObject();
-        _modelObject.search(BusquedaJugadoresWindow.this.jugador);
+        Futbol5 _modelObject_1 = BusquedaJugadoresWindow.this.getModelObject();
+        Jugador _jugadorEjemplo = _modelObject_1.getJugadorEjemplo();
+        _modelObject.search(_jugadorEjemplo);
       }
     };
     Button _onClick = _setCaption.onClick(_function_3);
@@ -174,9 +177,10 @@ public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
   
   public void grillaBasicaJugadores(final Panel panelJugadores) {
     Table<Jugador> table = new Table<Jugador>(panelJugadores, Jugador.class);
-    table.setHeigth(200);
+    table.setHeigth(360);
     table.setWidth(590);
-    table.<ControlBuilder>bindValueToProperty("seleccionJugador");
+    table.<ControlBuilder>bindValueToProperty("jugadorSeleccionado");
+    table.bindItemsToProperty("resultados");
     Column<Jugador> _column = new Column<Jugador>(table);
     Column<Jugador> _setTitle = _column.setTitle("Nombre");
     Column<Jugador> _setFixedSize = _setTitle.setFixedSize(150);
@@ -191,7 +195,8 @@ public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
     _setFixedSize_2.bindContentsToProperty("nivelDeJuego");
     Column<Jugador> _column_3 = new Column<Jugador>(table);
     Column<Jugador> _setTitle_3 = _column_3.setTitle("Promedio");
-    _setTitle_3.setFixedSize(150);
+    Column<Jugador> _setFixedSize_3 = _setTitle_3.setFixedSize(150);
+    _setFixedSize_3.bindContentsToProperty("promedio");
     Button _button = new Button(panelJugadores);
     Button _setCaption = _button.setCaption("Ver Datos Completos");
     final Action _function = new Action() {
@@ -203,7 +208,7 @@ public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
     Button _setAsDefault = _onClick.setAsDefault();
     Link _disableOnError = _setAsDefault.disableOnError();
     Control verDatos = _disableOnError.setWidth(200);
-    NotNullObservable jugadorMarcado = new NotNullObservable("seleccionJugador");
+    NotNullObservable jugadorMarcado = new NotNullObservable("jugadorSeleccionado");
     verDatos.<ControlBuilder>bindEnabled(jugadorMarcado);
   }
   
@@ -220,8 +225,8 @@ public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
   
   public void grillaCompletaJugador() {
     Futbol5 _modelObject = this.getModelObject();
-    Jugador _seleccionJugador = _modelObject.getSeleccionJugador();
-    VerDatosJugadorWindow _verDatosJugadorWindow = new VerDatosJugadorWindow(this, _seleccionJugador);
+    Jugador _jugadorSeleccionado = _modelObject.getJugadorSeleccionado();
+    VerDatosJugadorWindow _verDatosJugadorWindow = new VerDatosJugadorWindow(this, _jugadorSeleccionado);
     this.openDialog(_verDatosJugadorWindow);
   }
   

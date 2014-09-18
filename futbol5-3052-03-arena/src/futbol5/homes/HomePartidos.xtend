@@ -10,46 +10,42 @@ import calificaciones.Calificacion
 import futbol5.auxUtils.InicializadorJugador
 
 class HomePartidos extends CollectionBasedHome<Partido> {
-	
-	@Property var List<Partido> partidos
-	@Property var List<Jugador> jugadores
-	
-	new(){
+
+	new() {
 		this.init
 	}
-	
-	def void init(){
-		partidos = new LinkedList<Partido>
-		this.createCompleto("Burzaco",InicializadorJugador.crearListaDejugadores(10))
-		this.createCompleto("Adrogue",InicializadorJugador.crearListaDejugadores(10))
-		this.createCompleto("Bandfiel",InicializadorJugador.crearListaDejugadores(10))
-		this.createCompleto("Lomas de Zamora",InicializadorJugador.crearListaDejugadores(10))
-		this.createCompleto("Quilmes",InicializadorJugador.crearListaDejugadores(10))
-		this.createCompleto("Longchamps",InicializadorJugador.crearListaDejugadores(10))
-		this.createCompleto("San Miguel",InicializadorJugador.crearListaDejugadores(10))
 
+	def void init() {
+		this.createCompleto("Burzaco", InicializadorJugador.crearListaDejugadores(10))
+		this.createCompleto("Adrogue", InicializadorJugador.crearListaDejugadores(10))
+		this.createCompleto("Bandfiel", InicializadorJugador.crearListaDejugadores(10))
+		this.createCompleto("Lomas de Zamora", InicializadorJugador.crearListaDejugadores(10))
+		this.createCompleto("Quilmes", InicializadorJugador.crearListaDejugadores(10))
+		this.createCompleto("Longchamps", InicializadorJugador.crearListaDejugadores(10))
+		this.createCompleto("San Miguel", InicializadorJugador.crearListaDejugadores(10))
 	}
-	
-	def create(String localidad){
+
+	def create(String localidad) {
 		var partido = new Partido
-		partido.localidad=localidad
-		partidos.add(partido)
+		partido.localidad = localidad
+		this.create(partido)
 	}
-	
-	def createCompleto(String localidad, List<Jugador> jugadores){
+
+	def createCompleto(String localidad, List<Jugador> jugadores) {
 		var partido = new Partido
-		partido.localidad=localidad
-		partido.jugadores=jugadores
-		partidos.add(partido)
+		partido.localidad = localidad
+		partido.jugadores = jugadores
+		this.create(partido)
 	}
-	
-	
+
 	def search(Partido partidoBuscado) {
-		if(partidoBuscado!=null){
-		partidos.filter[partido|this.match(partido,partidoBuscado)].toList}else
-		{init()}
+		if (partidoBuscado != null) {
+			allInstances.filter[partido|this.match(partido, partidoBuscado)].toList
+		} else {
+			init()
+		}
 	}
-	
+
 	def match(Partido partido, Partido partidoBuscado) {
 		if (partido.localidad == null) {
 			return true
@@ -59,17 +55,17 @@ class HomePartidos extends CollectionBasedHome<Partido> {
 		}
 		partidoBuscado.localidad.toString().toLowerCase().contains(partido.localidad.toString().toLowerCase())
 	}
-		
+
 	override protected getCriterio(Partido example) {
 		null
 	}
-	
+
 	override createExample() {
 		new Partido
 	}
-	
+
 	override getEntityType() {
 		typeof(Partido)
 	}
-	
+
 }

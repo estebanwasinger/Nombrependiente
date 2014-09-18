@@ -31,19 +31,16 @@ import org.uqbar.arena.bindings.NotNullObservable
 
 @Observable
 class GenerarEquiposWindow extends Dialog<Partido> {
-	Partido original
-	Table<Jugador> tableListaEquipoA
-
 	@Property List<DivisionDeEquiposCommand> listaCritDivision
 	@Property List<CriteriosCommand> listaCritOrdenamiento
-	Partido model
 
 	new(WindowOwner parent, Partido model) {
 		super(parent, model)
-		this.model = model
+		// Llevarlo a un método
 		listaCritDivision = new LinkedList<DivisionDeEquiposCommand>
 		getListaCritDivision.add(new AlgoritmoImparPar)
 		getListaCritDivision.add(new AlgoritmoLoco)
+		// Llevarlo a un mètodo
 		listaCritOrdenamiento = new LinkedList<CriteriosCommand>
 		getListaCritOrdenamiento.add(new CriterioCalifiUltimoPartido)
 		getListaCritOrdenamiento.add(new CriterioHandicap)
@@ -94,7 +91,7 @@ class GenerarEquiposWindow extends Dialog<Partido> {
 	}
 	
 	private def crearBotonGenerar(Panel panelSelector3) {
-		val botonGenerar = new Button(panelSelector3) => [
+		new Button(panelSelector3) => [
 			width = 200
 			heigth = 45
 			caption = "Generar Equipos"
@@ -131,17 +128,17 @@ class GenerarEquiposWindow extends Dialog<Partido> {
 
 	def void createListaJugadores(Panel panelJugadores) {
 
-		var labelJugadores = new Label(panelJugadores) => [
+		new Label(panelJugadores) => [
 			text = "Jugadores"
 			fontSize = 20
 		]
 
-		var labelEquipo1 = new Label(panelJugadores) => [
+		new Label(panelJugadores) => [
 			text = "Equipo A"
 			fontSize = 20
 		]
 
-		var labelEquipo2 = new Label(panelJugadores) => [
+		new Label(panelJugadores) => [
 			text = "Equipo B"
 			fontSize = 20
 		]
@@ -153,7 +150,7 @@ class GenerarEquiposWindow extends Dialog<Partido> {
 		tableListaInscriptos.bindValueToProperty("jugadorSeleccionado")
 		new Column<Jugador>(tableListaInscriptos).setTitle("Nombre").bindContentsToProperty("nombre")
 
-		tableListaEquipoA = new Table<Jugador>(panelJugadores, typeof(Jugador))
+		val tableListaEquipoA = new Table<Jugador>(panelJugadores, typeof(Jugador))
 		tableListaEquipoA.heigth = 200
 		tableListaEquipoA.width = 285
 		tableListaEquipoA.bindItemsToProperty("equipoA")

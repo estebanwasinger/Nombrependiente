@@ -2,10 +2,10 @@ package futbol5.ui;
 
 import futbol5.domain.Jugador;
 import futbol5.homes.HomeJugadores;
+import infracciones.Infraccion;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
-import org.uqbar.arena.widgets.Control;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.tables.Column;
@@ -62,23 +62,15 @@ public class VerDatosJugadorWindow extends Dialog<Jugador> {
       Label _label_9 = new Label(panel);
       _label_9.<ControlBuilder>bindValueToProperty("nivelDeJuego");
       Label _label_10 = new Label(panel);
-      _label_10.setText("Calificaciones:");
+      _label_10.setText("Nacicmiento:");
       Label _label_11 = new Label(panel);
-      _label_11.<ControlBuilder>bindValueToProperty("calificaciones.size");
-      Label _label_12 = new Label(panel);
-      _label_12.setText("Amigos:");
-      Label _label_13 = new Label(panel);
-      _label_13.<ControlBuilder>bindValueToProperty("amigos.size");
-      Label _label_14 = new Label(panel);
-      _label_14.setText("Nacicmiento:");
-      Label _label_15 = new Label(panel);
-      _xblockexpression = _label_15.<ControlBuilder>bindValueToProperty("fechaNacimiento");
+      _xblockexpression = _label_11.<ControlBuilder>bindValueToProperty("fechaNacimientoString");
     }
     return _xblockexpression;
   }
   
-  public Control verTablas(final Panel panel) {
-    Control _xblockexpression = null;
+  public Column<Jugador> verTablas(final Panel panel) {
+    Column<Jugador> _xblockexpression = null;
     {
       Table tableListaAmigos = new Table<Jugador>(panel, Jugador.class);
       tableListaAmigos.setHeigth(200);
@@ -87,9 +79,13 @@ public class VerDatosJugadorWindow extends Dialog<Jugador> {
       Column<Jugador> _column = new Column<Jugador>(tableListaAmigos);
       Column<Jugador> _setTitle = _column.setTitle("Nombre");
       _setTitle.bindContentsToProperty("nombre");
-      Table tableListaInfracciones = new Table<Jugador>(panel, Jugador.class);
+      Table tableListaInfracciones = new Table<Infraccion>(panel, Infraccion.class);
       tableListaInfracciones.setHeigth(200);
-      _xblockexpression = tableListaInfracciones.setWidth(285);
+      tableListaInfracciones.setWidth(285);
+      tableListaInfracciones.bindItemsToProperty("infracciones");
+      Column<Jugador> _column_1 = new Column<Jugador>(tableListaInfracciones);
+      Column<Jugador> _setTitle_1 = _column_1.setTitle("Infracciones");
+      _xblockexpression = _setTitle_1.bindContentsToProperty("motivo");
     }
     return _xblockexpression;
   }

@@ -3,25 +3,28 @@ package futbol5.auxUtils
 import futbol5.domain.Jugador
 import java.util.ArrayList
 import calificaciones.Calificacion
+import infracciones.Infraccion
 
 class InicializadorJugador {
-//	def createCompleto(String localidad, List<Jugador> jugadores){
-//		var partido = new Partido
-//		partido.localidad=localidad
-//		partido.jugadores=jugadores
-//		partidos.add(partido)
-//	}
-
 	
 	def static crearListaDejugadores(int max){
 		var ArrayList<Jugador> jugadores
 		var int a = 0
 		jugadores = new ArrayList<Jugador>
 		while (a < max) {
-			jugadores.add(new Jugador(nombreRandom(), apodoRandom,21,fechaRandom, 2, listaAmigos(8), listaCalificaciones(nRan(2,9)),nRan(2,6)))
+			jugadores.add(new Jugador(nombreRandom(), apodoRandom,21,fechaRandom, nRan(0,10), listaAmigos(8), listaCalificaciones(nRan(2,9)),nRan(2,6)))
+			crearListaNotificacioens(jugadores.get(a))
 			a = a + 1
 	}
 	return jugadores
+	}
+	
+	def static crearListaNotificacioens(Jugador jugador){
+		var int a = 0;
+		while(a<5){
+			jugador.agregarInfraccion((new Infraccion("Agresivo")))
+			a++
+		}
 	}
 	
 	def static String nombreRandom(){
@@ -30,8 +33,8 @@ class InicializadorJugador {
 	}
 	
 	def static String apodoRandom(){
-		var String[] arrayApodos = #["Carolinita","Estabnquito","Saeta","Hacha","Durex","El Mago","El messi","Fantasma","Sanguche","Sin piernas","Correcaminos","Saca corchos","Barriga","Colorado","Negro"]
-		arrayApodos.get( nRan(0,15))
+		var String[] arrayApodos = #["Carolinita","Estabnquito","Saeta","Hacha","Durex","El Mago","El messi","Fantasma","Sanguche","Sin piernas","Tronco","Estaca","El 10","Correcaminos","Saca corchos","Barriga","Colorado","Negro"]
+		arrayApodos.get( nRan(0,18))
 	}
 	
 	def static String fechaRandom(){

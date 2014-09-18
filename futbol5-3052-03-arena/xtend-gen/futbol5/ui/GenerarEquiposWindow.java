@@ -39,10 +39,6 @@ import org.uqbar.lacar.ui.model.bindings.Binding;
 @Observable
 @SuppressWarnings("all")
 public class GenerarEquiposWindow extends Dialog<Partido> {
-  private Partido original;
-  
-  private Table<Jugador> tableListaEquipoA;
-  
   private List<DivisionDeEquiposCommand> _listaCritDivision;
   
   public List<DivisionDeEquiposCommand> getListaCritDivision() {
@@ -63,11 +59,8 @@ public class GenerarEquiposWindow extends Dialog<Partido> {
     this._listaCritOrdenamiento = listaCritOrdenamiento;
   }
   
-  private Partido model;
-  
   public GenerarEquiposWindow(final WindowOwner parent, final Partido model) {
     super(parent, model);
-    this.model = model;
     LinkedList<DivisionDeEquiposCommand> _linkedList = new LinkedList<DivisionDeEquiposCommand>();
     this.setListaCritDivision(_linkedList);
     List<DivisionDeEquiposCommand> _listaCritDivision = this.getListaCritDivision();
@@ -85,7 +78,7 @@ public class GenerarEquiposWindow extends Dialog<Partido> {
     CriterioHandicap _criterioHandicap = new CriterioHandicap();
     _listaCritOrdenamiento_1.add(_criterioHandicap);
     List<CriteriosCommand> _listaCritOrdenamiento_2 = this.getListaCritOrdenamiento();
-    CriterioNCalificaciones _criterioNCalificaciones = new CriterioNCalificaciones();
+    CriterioNCalificaciones _criterioNCalificaciones = new CriterioNCalificaciones(3);
     _listaCritOrdenamiento_2.add(_criterioNCalificaciones);
   }
   
@@ -93,33 +86,23 @@ public class GenerarEquiposWindow extends Dialog<Partido> {
     HorizontalLayout _horizontalLayout = new HorizontalLayout();
     actionPanel.setLayout(_horizontalLayout);
     Button _button = new Button(actionPanel);
-    Button _setCaption = _button.setCaption("Cancelar");
+    Button _setCaption = _button.setCaption("Aceptar");
     final Action _function = new Action() {
       public void execute() {
-        Partido _modelObject = GenerarEquiposWindow.this.getModelObject();
-        GenerarEquiposWindow.this.original.copiarA(_modelObject);
-        GenerarEquiposWindow.this.cancel();
+        GenerarEquiposWindow.this.close();
       }
     };
-    _setCaption.onClick(_function);
-    Button _button_1 = new Button(actionPanel);
-    Button _setCaption_1 = _button_1.setCaption("Aceptar");
-    final Action _function_1 = new Action() {
-      public void execute() {
-        GenerarEquiposWindow.this.accept();
-      }
-    };
-    Button _onClick = _setCaption_1.onClick(_function_1);
+    Button _onClick = _setCaption.onClick(_function);
     Button _setAsDefault = _onClick.setAsDefault();
     _setAsDefault.disableOnError();
-    Button _button_2 = new Button(actionPanel);
-    Button _setCaption_2 = _button_2.setCaption("Buscar Jugador");
-    final Action _function_2 = new Action() {
+    Button _button_1 = new Button(actionPanel);
+    Button _setCaption_1 = _button_1.setCaption("Buscar Jugador");
+    final Action _function_1 = new Action() {
       public void execute() {
         GenerarEquiposWindow.this.buscarJugador();
       }
     };
-    Button buscar = _setCaption_2.onClick(_function_2);
+    Button buscar = _setCaption_1.onClick(_function_1);
     NotNullObservable elementSelected = new NotNullObservable("jugadorSeleccionado");
     buscar.<ControlBuilder>bindEnabled(elementSelected);
   }
@@ -148,7 +131,7 @@ public class GenerarEquiposWindow extends Dialog<Partido> {
     this.createListaJugadores(panelListaJugadores);
   }
   
-  private void crearBotonGenerar(final Panel panelSelector3) {
+  private Button crearBotonGenerar(final Panel panelSelector3) {
     Button _button = new Button(panelSelector3);
     final Procedure1<Button> _function = new Procedure1<Button>() {
       public void apply(final Button it) {
@@ -169,23 +152,19 @@ public class GenerarEquiposWindow extends Dialog<Partido> {
             DivisionDeEquiposCommand _algoritmoDivision = _modelObject_4.getAlgoritmoDivision();
             _modelObject_3.dividirEquipos(_algoritmoDivision);
             Partido _modelObject_5 = GenerarEquiposWindow.this.getModelObject();
-            List<Jugador> _jugadores = _modelObject_5.getJugadores();
-            Jugador _jugador = new Jugador("hola");
-            _jugadores.add(_jugador);
             Partido _modelObject_6 = GenerarEquiposWindow.this.getModelObject();
+            List<Jugador> _equipoA = _modelObject_6.getEquipoA();
+            ObservableUtils.firePropertyChanged(_modelObject_5, "equipoA", _equipoA);
             Partido _modelObject_7 = GenerarEquiposWindow.this.getModelObject();
-            List<Jugador> _equipoA = _modelObject_7.getEquipoA();
-            ObservableUtils.firePropertyChanged(_modelObject_6, "equipoA", _equipoA);
             Partido _modelObject_8 = GenerarEquiposWindow.this.getModelObject();
-            Partido _modelObject_9 = GenerarEquiposWindow.this.getModelObject();
-            List<Jugador> _equipoB = _modelObject_9.getEquipoB();
-            ObservableUtils.firePropertyChanged(_modelObject_8, "equipoB", _equipoB);
+            List<Jugador> _equipoB = _modelObject_8.getEquipoB();
+            ObservableUtils.firePropertyChanged(_modelObject_7, "equipoB", _equipoB);
           }
         };
         it.onClick(_function);
       }
     };
-    final Button botonGenerar = ObjectExtensions.<Button>operator_doubleArrow(_button, _function);
+    return ObjectExtensions.<Button>operator_doubleArrow(_button, _function);
   }
   
   public Binding<ListBuilder<CriteriosCommand>> crearSelectoresCommands(final Panel panelSelector1, final Panel panelSelector2) {
@@ -233,7 +212,7 @@ public class GenerarEquiposWindow extends Dialog<Partido> {
         it.setFontSize(20);
       }
     };
-    Label labelJugadores = ObjectExtensions.<Label>operator_doubleArrow(_label, _function);
+    ObjectExtensions.<Label>operator_doubleArrow(_label, _function);
     Label _label_1 = new Label(panelJugadores);
     final Procedure1<Label> _function_1 = new Procedure1<Label>() {
       public void apply(final Label it) {
@@ -241,7 +220,7 @@ public class GenerarEquiposWindow extends Dialog<Partido> {
         it.setFontSize(20);
       }
     };
-    Label labelEquipo1 = ObjectExtensions.<Label>operator_doubleArrow(_label_1, _function_1);
+    ObjectExtensions.<Label>operator_doubleArrow(_label_1, _function_1);
     Label _label_2 = new Label(panelJugadores);
     final Procedure1<Label> _function_2 = new Procedure1<Label>() {
       public void apply(final Label it) {
@@ -249,7 +228,7 @@ public class GenerarEquiposWindow extends Dialog<Partido> {
         it.setFontSize(20);
       }
     };
-    Label labelEquipo2 = ObjectExtensions.<Label>operator_doubleArrow(_label_2, _function_2);
+    ObjectExtensions.<Label>operator_doubleArrow(_label_2, _function_2);
     Table<Jugador> tableListaInscriptos = new Table<Jugador>(panelJugadores, Jugador.class);
     tableListaInscriptos.setHeigth(200);
     tableListaInscriptos.setWidth(285);
@@ -258,12 +237,11 @@ public class GenerarEquiposWindow extends Dialog<Partido> {
     Column<Jugador> _column = new Column<Jugador>(tableListaInscriptos);
     Column<Jugador> _setTitle = _column.setTitle("Nombre");
     _setTitle.bindContentsToProperty("nombre");
-    Table<Jugador> _table = new Table<Jugador>(panelJugadores, Jugador.class);
-    this.tableListaEquipoA = _table;
-    this.tableListaEquipoA.setHeigth(200);
-    this.tableListaEquipoA.setWidth(285);
-    this.tableListaEquipoA.bindItemsToProperty("equipoA");
-    Column<Jugador> _column_1 = new Column<Jugador>(this.tableListaEquipoA);
+    final Table<Jugador> tableListaEquipoA = new Table<Jugador>(panelJugadores, Jugador.class);
+    tableListaEquipoA.setHeigth(200);
+    tableListaEquipoA.setWidth(285);
+    tableListaEquipoA.bindItemsToProperty("equipoA");
+    Column<Jugador> _column_1 = new Column<Jugador>(tableListaEquipoA);
     Column<Jugador> _setTitle_1 = _column_1.setTitle("Nombre");
     _setTitle_1.bindContentsToProperty("nombre");
     Table<Jugador> tableListaEquipoB = new Table<Jugador>(panelJugadores, Jugador.class);

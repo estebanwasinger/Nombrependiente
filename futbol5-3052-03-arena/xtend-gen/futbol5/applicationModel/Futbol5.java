@@ -10,20 +10,21 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.uqbar.commons.utils.ApplicationContext;
 import org.uqbar.commons.utils.Observable;
 
 @Observable
 @SuppressWarnings("all")
 public class Futbol5 implements Serializable {
-  private Jugador _jugador;
+  private Jugador _jugadorEjemplo;
   
-  public Jugador getJugador() {
-    return this._jugador;
+  public Jugador getJugadorEjemplo() {
+    return this._jugadorEjemplo;
   }
   
-  public void setJugador(final Jugador jugador) {
-    this._jugador = jugador;
+  public void setJugadorEjemplo(final Jugador jugadorEjemplo) {
+    this._jugadorEjemplo = jugadorEjemplo;
   }
   
   private Integer _numero;
@@ -146,10 +147,21 @@ public class Futbol5 implements Serializable {
     this._infracciones = infracciones;
   }
   
+  private HomeJugadores _homeJugadores;
+  
+  public HomeJugadores getHomeJugadores() {
+    return this._homeJugadores;
+  }
+  
+  public void setHomeJugadores(final HomeJugadores homeJugadores) {
+    this._homeJugadores = homeJugadores;
+  }
+  
   public Futbol5() {
-    HomePartidos _homePartidos = new HomePartidos();
-    List<Partido> _partidos = _homePartidos.getPartidos();
-    this.setPartidos(_partidos);
+    HomeJugadores _homeJugadores = new HomeJugadores();
+    this.setHomeJugadores(_homeJugadores);
+    Jugador _jugador = new Jugador();
+    this.setJugadorEjemplo(_jugador);
   }
   
   public void search(final Jugador jugador) {
@@ -158,6 +170,9 @@ public class Futbol5 implements Serializable {
     HomeJugadores _homeJugadores = this.getHomeJugadores();
     List<Jugador> _search = _homeJugadores.search(jugador);
     this.setResultados(_search);
+    List<Jugador> _resultados = this.getResultados();
+    int _size = _resultados.size();
+    InputOutput.<Integer>println(Integer.valueOf(_size));
   }
   
   public void searchPartido() {
@@ -170,14 +185,15 @@ public class Futbol5 implements Serializable {
   }
   
   public void clear() {
-    this.setNombre(null);
+    Jugador _jugador = new Jugador();
+    this.setJugadorEjemplo(_jugador);
   }
   
-  public HomeJugadores getHomeJugadores() {
-    ApplicationContext _instance = ApplicationContext.getInstance();
-    return _instance.<HomeJugadores>getSingleton(Jugador.class);
-  }
-  
+  /**
+   * def HomeJugadores getHomeJugadores() {
+   * ApplicationContext.instance.getSingleton(typeof(Jugador))
+   * }
+   */
   public HomePartidos getHomePartidos() {
     ApplicationContext _instance = ApplicationContext.getInstance();
     return _instance.<HomePartidos>getSingleton(Partido.class);

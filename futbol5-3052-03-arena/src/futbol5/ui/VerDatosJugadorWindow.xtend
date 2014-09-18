@@ -14,6 +14,7 @@ import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.VerticalLayout
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.widgets.tables.Column
+import infracciones.Infraccion
 
 class VerDatosJugadorWindow extends Dialog<Jugador>{
 	
@@ -44,12 +45,8 @@ new(WindowOwner owner, Jugador model) {
 		new Label(panel).bindValueToProperty("cantidadPartidos")
 		new Label(panel).text = "Handicap:"
 		new Label(panel).bindValueToProperty("nivelDeJuego")
-//		new Label(panel).text = "Calificaciones:"
-//		new Label(panel).bindValueToProperty("calificaciones.size")
-//		new Label(panel).text = "Amigos:"
-//		new Label(panel).bindValueToProperty("amigos.size")
 		new Label(panel).text = "Nacicmiento:"
-		new Label(panel).bindValueToProperty("fechaNacimiento")
+		new Label(panel).bindValueToProperty("fechaNacimientoString")
 	
 	}
 	def verTablas(Panel panel){
@@ -59,11 +56,11 @@ new(WindowOwner owner, Jugador model) {
 	tableListaAmigos.bindItemsToProperty("amigos")
 	new Column<Jugador>(tableListaAmigos).setTitle("Nombre").bindContentsToProperty("nombre")
 	
-	var Table tableListaInfracciones = new Table<Jugador>(panel, typeof(Jugador))
+	var Table tableListaInfracciones = new Table<Infraccion>(panel, typeof(Infraccion))
 	tableListaInfracciones.heigth = 200
 	tableListaInfracciones.width = 285
 	tableListaInfracciones.bindItemsToProperty("infracciones")
-	new Column<Jugador>(tableListaInfracciones).setTitle("Infracciones").bindContentsToProperty("nombre")
+	new Column<Jugador>(tableListaInfracciones).setTitle("Infracciones").bindContentsToProperty("motivo")
 	
 	}
 override protected void addActions(Panel actions) {

@@ -25,16 +25,16 @@ class Futbol5 implements Serializable {
 	@Property List<Jugador> resultados
 	@Property BusquedaJugador busquedaJugadores
 	@Property List<Partido> partidos
-	@Property Partido partido
+	@Property Partido partido	
 	@Property Jugador jugadorSeleccionado
 	@Property List<Infraccion> infracciones
 	@Property HomeJugadores homeJugadores
 
 	new(){
-		partidos = (new HomePartidos).partidos
 		homeJugadores = new HomeJugadores
 		jugadorEjemplo = new Jugador
-		}
+	}
+		
 	def void search(Jugador jugador) { 
 		resultados = new ArrayList<Jugador>
 		resultados = getHomeJugadores().search(jugador)
@@ -58,4 +58,4 @@ class Futbol5 implements Serializable {
 	def HomePartidos getHomePartidos() {
 		ApplicationContext.instance.getSingleton(typeof(Partido))
 	}
-}
+	}

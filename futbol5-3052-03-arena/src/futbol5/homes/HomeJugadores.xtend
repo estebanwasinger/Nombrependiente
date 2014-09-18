@@ -12,6 +12,7 @@ import org.uqbar.commons.model.UserException
 import org.uqbar.commons.utils.Observable
 import java.util.Date
 import inscripciones.Estandarimport java.text.SimpleDateFormat
+import futbol5.auxUtils.InicializadorJugador
 
 @Observable
 class HomeJugadores extends CollectionBasedHome<Jugador> {
@@ -30,14 +31,7 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 		jugadoresRechazados = new LinkedList<RegistroRechazo>
 		jugadoresRecomendados = new LinkedList<Jugador>
 		
-		this.create("Juan","Juani", 22, "14-04-1992")
-		this.create("Maria","Juani", 23, "02-05-1991")
-		this.create("Julian","Juani", 21, "19-09-1993")
-		this.create("Julieta","Juani", 25, "14-04-1989")
-		this.create("Jose","Juani", 19, "23-01-1995")
-		this.create("Delfina","Juani", 22, "19-07-1992")
-		this.create("Candelaria","Juani", 22, "20-07-1992")
-		this.create("Martin","Juani", 17, "01-02-1997")
+		jugadoresAceptados = InicializadorJugador.crearListaDejugadores(10)
 	}
 
 	def void createJugadorCompleto(String nombre, TipoInscripcion tipoInscripcion, int edad, List<Infraccion> infracciones, List<Jugador> amigos, List <Calificacion> calificaciones,float nivelDeJuego,int criterioComparacion, String apodo, Date fechaDeNacimiento){

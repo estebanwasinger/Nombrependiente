@@ -2,6 +2,7 @@ package futbol5.auxUtils;
 
 import calificaciones.Calificacion;
 import futbol5.domain.Jugador;
+import infracciones.Infraccion;
 import java.util.ArrayList;
 
 @SuppressWarnings("all")
@@ -17,17 +18,33 @@ public class InicializadorJugador {
         String _nombreRandom = InicializadorJugador.nombreRandom();
         String _apodoRandom = InicializadorJugador.apodoRandom();
         String _fechaRandom = InicializadorJugador.fechaRandom();
+        int _nRan = InicializadorJugador.nRan(0, 10);
         ArrayList<Jugador> _listaAmigos = InicializadorJugador.listaAmigos(8);
-        int _nRan = InicializadorJugador.nRan(2, 9);
-        ArrayList<Calificacion> _listaCalificaciones = InicializadorJugador.listaCalificaciones(_nRan);
-        int _nRan_1 = InicializadorJugador.nRan(2, 6);
-        Jugador _jugador = new Jugador(_nombreRandom, _apodoRandom, 21, _fechaRandom, 2, _listaAmigos, _listaCalificaciones, _nRan_1);
+        int _nRan_1 = InicializadorJugador.nRan(2, 9);
+        ArrayList<Calificacion> _listaCalificaciones = InicializadorJugador.listaCalificaciones(_nRan_1);
+        int _nRan_2 = InicializadorJugador.nRan(2, 6);
+        Jugador _jugador = new Jugador(_nombreRandom, _apodoRandom, 21, _fechaRandom, _nRan, _listaAmigos, _listaCalificaciones, _nRan_2);
         jugadores.add(_jugador);
+        Jugador _get = jugadores.get(a);
+        InicializadorJugador.crearListaNotificacioens(_get);
         a = (a + 1);
       }
       _while = (a < max);
     }
     return jugadores;
+  }
+  
+  public static void crearListaNotificacioens(final Jugador jugador) {
+    int a = 0;
+    boolean _while = (a < 5);
+    while (_while) {
+      {
+        Infraccion _infraccion = new Infraccion("Agresivo");
+        jugador.agregarInfraccion(_infraccion);
+        a++;
+      }
+      _while = (a < 5);
+    }
   }
   
   public static String nombreRandom() {
@@ -42,8 +59,8 @@ public class InicializadorJugador {
   public static String apodoRandom() {
     String _xblockexpression = null;
     {
-      String[] arrayApodos = { "Carolinita", "Estabnquito", "Saeta", "Hacha", "Durex", "El Mago", "El messi", "Fantasma", "Sanguche", "Sin piernas", "Correcaminos", "Saca corchos", "Barriga", "Colorado", "Negro" };
-      int _nRan = InicializadorJugador.nRan(0, 15);
+      String[] arrayApodos = { "Carolinita", "Estabnquito", "Saeta", "Hacha", "Durex", "El Mago", "El messi", "Fantasma", "Sanguche", "Sin piernas", "Tronco", "Estaca", "El 10", "Correcaminos", "Saca corchos", "Barriga", "Colorado", "Negro" };
+      int _nRan = InicializadorJugador.nRan(0, 18);
       _xblockexpression = arrayApodos[_nRan];
     }
     return _xblockexpression;

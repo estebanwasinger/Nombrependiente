@@ -1,11 +1,10 @@
 package futbol5.homes;
 
-import calificaciones.Calificacion;
 import com.google.common.base.Objects;
+import futbol5.auxUtils.InicializadorJugador;
 import futbol5.domain.Jugador;
 import futbol5.domain.Partido;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import org.apache.commons.collections15.Predicate;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -14,130 +13,56 @@ import org.uqbar.commons.model.CollectionBasedHome;
 
 @SuppressWarnings("all")
 public class HomePartidos extends CollectionBasedHome<Partido> {
-  private List<Partido> _partidos;
-  
-  public List<Partido> getPartidos() {
-    return this._partidos;
-  }
-  
-  public void setPartidos(final List<Partido> partidos) {
-    this._partidos = partidos;
-  }
-  
-  private List<Jugador> _jugadores;
-  
-  public List<Jugador> getJugadores() {
-    return this._jugadores;
-  }
-  
-  public void setJugadores(final List<Jugador> jugadores) {
-    this._jugadores = jugadores;
-  }
-  
   public HomePartidos() {
     this.init();
   }
   
   public void init() {
-    LinkedList<Partido> _linkedList = new LinkedList<Partido>();
-    this.setPartidos(_linkedList);
-    List<Jugador> _crearListaDejugadores = this.crearListaDejugadores(10);
+    ArrayList<Jugador> _crearListaDejugadores = InicializadorJugador.crearListaDejugadores(10);
     this.createCompleto("Burzaco", _crearListaDejugadores);
-    List<Jugador> _crearListaDejugadores_1 = this.crearListaDejugadores(10);
+    ArrayList<Jugador> _crearListaDejugadores_1 = InicializadorJugador.crearListaDejugadores(10);
     this.createCompleto("Adrogue", _crearListaDejugadores_1);
-    List<Jugador> _crearListaDejugadores_2 = this.crearListaDejugadores(10);
+    ArrayList<Jugador> _crearListaDejugadores_2 = InicializadorJugador.crearListaDejugadores(10);
     this.createCompleto("Bandfiel", _crearListaDejugadores_2);
-    List<Jugador> _crearListaDejugadores_3 = this.crearListaDejugadores(10);
+    ArrayList<Jugador> _crearListaDejugadores_3 = InicializadorJugador.crearListaDejugadores(10);
     this.createCompleto("Lomas de Zamora", _crearListaDejugadores_3);
-    List<Jugador> _crearListaDejugadores_4 = this.crearListaDejugadores(10);
+    ArrayList<Jugador> _crearListaDejugadores_4 = InicializadorJugador.crearListaDejugadores(10);
     this.createCompleto("Quilmes", _crearListaDejugadores_4);
-    List<Jugador> _crearListaDejugadores_5 = this.crearListaDejugadores(10);
+    ArrayList<Jugador> _crearListaDejugadores_5 = InicializadorJugador.crearListaDejugadores(10);
     this.createCompleto("Longchamps", _crearListaDejugadores_5);
-    List<Jugador> _crearListaDejugadores_6 = this.crearListaDejugadores(10);
+    ArrayList<Jugador> _crearListaDejugadores_6 = InicializadorJugador.crearListaDejugadores(10);
     this.createCompleto("San Miguel", _crearListaDejugadores_6);
   }
   
-  public boolean create(final String localidad) {
-    boolean _xblockexpression = false;
-    {
-      Partido partido = new Partido();
-      partido.setLocalidad(localidad);
-      List<Partido> _partidos = this.getPartidos();
-      _xblockexpression = _partidos.add(partido);
-    }
-    return _xblockexpression;
+  public void create(final String localidad) {
+    Partido partido = new Partido();
+    partido.setLocalidad(localidad);
+    this.create(partido);
   }
   
-  public boolean createCompleto(final String localidad, final List<Jugador> jugadores) {
-    boolean _xblockexpression = false;
-    {
-      Partido partido = new Partido();
-      partido.setLocalidad(localidad);
-      partido.setJugadores(jugadores);
-      List<Partido> _partidos = this.getPartidos();
-      _xblockexpression = _partidos.add(partido);
-    }
-    return _xblockexpression;
-  }
-  
-  public List<Jugador> crearListaDejugadores(final int max) {
-    int a = 0;
-    ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
-    this.setJugadores(_arrayList);
-    boolean _while = (a < max);
-    while (_while) {
-      {
-        List<Jugador> _jugadores = this.getJugadores();
-        ArrayList<Jugador> _listaAmigos = this.listaAmigos(8);
-        ArrayList<Calificacion> _listaCalificaciones = this.listaCalificaciones(3);
-        Jugador _jugador = new Jugador("Carolina", "caro", 21, "09-01-1993", 2, _listaAmigos, _listaCalificaciones, 5);
-        _jugadores.add(_jugador);
-        a = (a + 1);
-      }
-      _while = (a < max);
-    }
-    return this.getJugadores();
-  }
-  
-  public ArrayList<Jugador> listaAmigos(final int max) {
-    int a = 0;
-    ArrayList<Jugador> amigos = new ArrayList<Jugador>();
-    boolean _while = (a < max);
-    while (_while) {
-      {
-        Jugador _jugador = new Jugador("Esteban");
-        amigos.add(_jugador);
-        a = (a + 1);
-      }
-      _while = (a < max);
-    }
-    return amigos;
-  }
-  
-  public ArrayList<Calificacion> listaCalificaciones(final int max) {
-    int a = 0;
-    ArrayList<Calificacion> calificaciones = new ArrayList<Calificacion>();
-    boolean _while = (a < max);
-    while (_while) {
-      {
-        Calificacion _calificacion = new Calificacion(5);
-        calificaciones.add(_calificacion);
-        a = (a + 1);
-      }
-      _while = (a < max);
-    }
-    return calificaciones;
+  public void createCompleto(final String localidad, final List<Jugador> jugadores) {
+    Partido partido = new Partido();
+    partido.setLocalidad(localidad);
+    partido.setJugadores(jugadores);
+    this.create(partido);
   }
   
   public List<Partido> search(final Partido partidoBuscado) {
-    List<Partido> _partidos = this.getPartidos();
-    final Function1<Partido,Boolean> _function = new Function1<Partido,Boolean>() {
-      public Boolean apply(final Partido partido) {
-        return Boolean.valueOf(HomePartidos.this.match(partido, partidoBuscado));
-      }
-    };
-    Iterable<Partido> _filter = IterableExtensions.<Partido>filter(_partidos, _function);
-    return IterableExtensions.<Partido>toList(_filter);
+    List<Partido> _xifexpression = null;
+    boolean _notEquals = (!Objects.equal(partidoBuscado, null));
+    if (_notEquals) {
+      List<Partido> _allInstances = this.allInstances();
+      final Function1<Partido, Boolean> _function = new Function1<Partido, Boolean>() {
+        public Boolean apply(final Partido partido) {
+          return Boolean.valueOf(HomePartidos.this.match(partido, partidoBuscado));
+        }
+      };
+      Iterable<Partido> _filter = IterableExtensions.<Partido>filter(_allInstances, _function);
+      _xifexpression = IterableExtensions.<Partido>toList(_filter);
+    } else {
+      this.init();
+    }
+    return _xifexpression;
   }
   
   public boolean match(final Partido partido, final Partido partidoBuscado) {

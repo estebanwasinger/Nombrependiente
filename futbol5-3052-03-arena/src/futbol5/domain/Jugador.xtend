@@ -43,7 +43,8 @@ class Jugador extends Entity{
 		init
 	}
 	
-	new(String nombre,String apodo, int edad, String fechaDeNacimientoStr, int nivelDeJuego, List<Jugador> amigos, List <Calificacion> calificaciones, int cantidadPartidos){
+	new(String nombre,String apodo, int edad, String fechaDeNacimientoStr, int nivelDeJuego, List<Jugador> amigos, ArrayList <Calificacion> calificaciones, int cantidadPartidos){
+		init
 		this.nombre = nombre
 		this.apodo = apodo
 		this.edad = edad
@@ -56,6 +57,7 @@ class Jugador extends Entity{
 	}
 	
 	new(String nombre, String apodo, int edad,String fechaDeNacimientoStr){
+		init
 		this.nombre = nombre
 		this.apodo = apodo
 		this.edad = edad
@@ -97,6 +99,10 @@ class Jugador extends Entity{
 	def float promedioCalificacionesUltimoPartido() {
 		promedioNPartidos(1)
 	}
+	
+	def void agregarInfraccion(Infraccion infraccion){
+		infracciones.add(infraccion)
+	}
 
 	def float promedioNPartidos(int n) {
 //		if (calificaciones.size == 0) {
@@ -125,6 +131,24 @@ class Jugador extends Entity{
 		var calificacionesUltimoPartido = calificaciones.filter[calificacion|calificacion.partido== partido]
 		var sumaCalificaciones = calificacionesUltimoPartido.map[calificacion|calificacion.nota].reduce[a, b|a + b]
 		return (sumaCalificaciones / calificacionesUltimoPartido.size);
+	}
+	
+	def getPromedio(){
+		var int promedio
+		var i = 0
+		while(i < calificaciones.size){
+			promedio+= calificaciones.get(0).nota
+			i++
+		}
+		promedio = promedio/calificaciones.size
+	}
+	
+	def getFechaNacimientoString(){
+		formateador.format(fechaNacimiento)
+	}
+	
+	def setFechaNacimientoString(String fecha){
+		fechaNacimiento = formateador.parse(fecha)
 	}
 
 			

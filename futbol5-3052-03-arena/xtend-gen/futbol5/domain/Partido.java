@@ -317,7 +317,7 @@ public class Partido extends Entity {
         return;
       }
       List<Jugador> _jugadores = this.getJugadores();
-      final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
+      final Function1<Jugador, Boolean> _function = new Function1<Jugador, Boolean>() {
         public Boolean apply(final Jugador inscripto) {
           return Boolean.valueOf(jugador.tieneMasPrioridadQue(inscripto));
         }
@@ -328,7 +328,7 @@ public class Partido extends Entity {
         throw new BusinessException("No hay mas cupo");
       }
       List<Jugador> _jugadores_1 = this.getJugadores();
-      final Function1<Jugador,Boolean> _function_1 = new Function1<Jugador,Boolean>() {
+      final Function1<Jugador, Boolean> _function_1 = new Function1<Jugador, Boolean>() {
         public Boolean apply(final Jugador unJugador) {
           int _prioridad = unJugador.prioridad();
           int _prioridad_1 = jugador.prioridad();

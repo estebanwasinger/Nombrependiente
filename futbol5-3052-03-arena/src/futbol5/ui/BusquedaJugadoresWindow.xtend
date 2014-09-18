@@ -1,39 +1,28 @@
 package futbol5.ui
 
+import futbol5.applicationModel.Futbol5
 import futbol5.domain.Jugador
+import org.uqbar.arena.bindings.DateAdapter
+import org.uqbar.arena.bindings.NotNullObservable
+import org.uqbar.arena.bindings.ObservableProperty
 import org.uqbar.arena.layout.ColumnLayout
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.layout.VerticalLayout
 import org.uqbar.arena.widgets.Button
+import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
+import org.uqbar.arena.widgets.Selector
 import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
-import org.uqbar.arena.windows.SimpleWindow
+import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
-import org.uqbar.arena.widgets.Label
 import org.uqbar.commons.utils.Observable
-import org.uqbar.arena.bindings.DateAdapter
-import futbol5.applicationModel.Futbol5
-import org.uqbar.arena.windows.MainWindow
-import org.uqbar.commons.utils.ApplicationContext
-import futbol5.homes.HomeJugadores
-import org.uqbar.arena.widgets.Link
-import org.uqbar.arena.windows.Dialog
-import org.uqbar.arena.bindings.NotNullObservable
-import org.uqbar.arena.bindings.ObservableProperty
-import org.uqbar.arena.widgets.RadioSelector
-import org.uqbar.arena.windows.Dialog
-import org.uqbar.arena.widgets.Selector
 
 @Observable
 class BusquedaJugadoresWindow extends Dialog<Futbol5>{
-		new(WindowOwner parent,Futbol5 modelObject) {
+		new(WindowOwner parent, Futbol5 modelObject) {
 		super(parent, modelObject)
-	}
-	
-	new(RunnableBusquedaJugadores parent) {
-		super(parent, new Futbol5)
 	}
 	
 	var jugador = new Jugador
@@ -63,6 +52,7 @@ class BusquedaJugadoresWindow extends Dialog<Futbol5>{
 		actionPanel.layout = new HorizontalLayout
 		new Button(actionPanel)
 			.setCaption("Regresar")
+			.onClick[|this.close]
 	}
 	
 	
@@ -100,7 +90,8 @@ class BusquedaJugadoresWindow extends Dialog<Futbol5>{
 		val textBoxFecha = new TextBox(busquedaSuperior)
 		textBoxFecha.withFilter(new DateTextFilter)
 		val binding = textBoxFecha.bindValueToProperty("fechaNacimiento")
-		binding.setTransformer(new DateAdapter)
+		binding.transformer = new DateAdapter
+		
 			
 			
 		//Por rango desde/hasta del hándicap (puede ingresarse sólo desde, o sólo hasta) //
@@ -166,7 +157,7 @@ class BusquedaJugadoresWindow extends Dialog<Futbol5>{
 		new Column<Jugador>(table) //
 			.setTitle("Promedio")
 			.setFixedSize(150)
-			.bindContentsToProperty("nombre")
+			.bindContentsToProperty("promedio")
 		
 		var verDatos = new Button(panelJugadores)
 			.setCaption("Ver Datos Completos")
