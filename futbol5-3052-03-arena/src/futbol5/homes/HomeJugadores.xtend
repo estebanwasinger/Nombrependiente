@@ -8,7 +8,6 @@ import java.util.List
 import org.uqbar.commons.model.CollectionBasedHome
 import org.uqbar.commons.utils.Observable
 
-@Observable
 class HomeJugadores extends CollectionBasedHome<Jugador> {
 	
 	@Property String tipoHandicap

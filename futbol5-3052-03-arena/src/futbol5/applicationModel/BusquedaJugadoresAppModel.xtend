@@ -9,14 +9,13 @@ import org.uqbar.commons.utils.ApplicationContext
 import org.uqbar.commons.utils.Observable
 
 @Observable
-class BusquedaJugadoresAppModel implements Serializable {
+class BusquedaJugadoresAppModel/* implements Serializable*/ {
 
 	@Property Jugador jugadorEjemplo
-	@Property ArrayList <Jugador> jugadores
-	@Property List<Jugador> resultados 
+	@Property List <Jugador> jugadores
 	@Property Jugador jugadorSeleccionado
-	@Property String tipoHandicap 
-
+	@Property String tipoHandicap
+	
 	new(){
 		//homeJugadores = new HomeJugadores
 		// jugadorEjemplo = new Jugador
@@ -26,16 +25,18 @@ class BusquedaJugadoresAppModel implements Serializable {
 
 	def void search() { 
 		getHomeJugadores()tipoHandicap = this.tipoHandicap
-		resultados = new ArrayList<Jugador>
-		resultados = getHomeJugadores().search(jugadorEjemplo)
+		jugadores = new ArrayList<Jugador>
+		jugadores = getHomeJugadores().search(jugadorEjemplo)
 	}
 	
 	def void clear() {
-		jugadorEjemplo = null
+		jugadores = new ArrayList<Jugador>
+		jugadores =  getHomeJugadores().jugadoresAceptados
 	}
 			
 	def HomeJugadores getHomeJugadores() {
 		ApplicationContext.instance.getSingleton(typeof(Jugador))
 	}
+
 
 	}

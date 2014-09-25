@@ -11,9 +11,7 @@ import org.apache.commons.collections15.Predicate;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.uqbar.commons.model.CollectionBasedHome;
-import org.uqbar.commons.utils.Observable;
 
-@Observable
 @SuppressWarnings("all")
 public class HomeJugadores extends CollectionBasedHome<Jugador> {
   private String _tipoHandicap;

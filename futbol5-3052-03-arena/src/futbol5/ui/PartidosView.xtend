@@ -15,6 +15,7 @@ import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.utils.Observable
+import futbol5.homes.HomeJugadores
 
 @Observable
 class PartidosView extends Dialog<PartidosAppModel> {

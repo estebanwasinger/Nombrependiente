@@ -2,7 +2,6 @@ package futbol5.applicationModel;
 
 import futbol5.domain.Jugador;
 import futbol5.homes.HomeJugadores;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.uqbar.commons.utils.ApplicationContext;
@@ -10,7 +9,7 @@ import org.uqbar.commons.utils.Observable;
 
 @Observable
 @SuppressWarnings("all")
-public class BusquedaJugadoresAppModel implements Serializable {
+public class BusquedaJugadoresAppModel {
   private Jugador _jugadorEjemplo;
   
   public Jugador getJugadorEjemplo() {
@@ -21,24 +20,14 @@ public class BusquedaJugadoresAppModel implements Serializable {
     this._jugadorEjemplo = jugadorEjemplo;
   }
   
-  private ArrayList<Jugador> _jugadores;
+  private List<Jugador> _jugadores;
   
-  public ArrayList<Jugador> getJugadores() {
+  public List<Jugador> getJugadores() {
     return this._jugadores;
   }
   
-  public void setJugadores(final ArrayList<Jugador> jugadores) {
+  public void setJugadores(final List<Jugador> jugadores) {
     this._jugadores = jugadores;
-  }
-  
-  private List<Jugador> _resultados;
-  
-  public List<Jugador> getResultados() {
-    return this._resultados;
-  }
-  
-  public void setResultados(final List<Jugador> resultados) {
-    this._resultados = resultados;
   }
   
   private Jugador _jugadorSeleccionado;
@@ -74,15 +63,19 @@ public class BusquedaJugadoresAppModel implements Serializable {
     String _tipoHandicap = this.getTipoHandicap();
     this.setTipoHandicap(_tipoHandicap);
     ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
-    this.setResultados(_arrayList);
+    this.setJugadores(_arrayList);
     HomeJugadores _homeJugadores = this.getHomeJugadores();
     Jugador _jugadorEjemplo = this.getJugadorEjemplo();
     List<Jugador> _search = _homeJugadores.search(_jugadorEjemplo);
-    this.setResultados(_search);
+    this.setJugadores(_search);
   }
   
   public void clear() {
-    this.setJugadorEjemplo(null);
+    ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
+    this.setJugadores(_arrayList);
+    HomeJugadores _homeJugadores = this.getHomeJugadores();
+    ArrayList<Jugador> _jugadoresAceptados = _homeJugadores.getJugadoresAceptados();
+    this.setJugadores(_jugadoresAceptados);
   }
   
   public HomeJugadores getHomeJugadores() {
