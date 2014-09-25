@@ -1,21 +1,20 @@
 package futbol5.domain
 
-import java.util.List
-import java.util.ArrayList
-import inscripciones.TipoInscripcion
-import inscripciones.Estandar
-import infracciones.Infraccion
 import calificaciones.Calificacion
 import excepciones.BusinessException
-import java.util.LinkedList
-import java.util.Set
+import infracciones.Infraccion
+import inscripciones.Estandar
+import inscripciones.TipoInscripcion
+import java.text.SimpleDateFormat
+import java.util.ArrayList
+import java.util.Date
 import java.util.HashSet
-import org.uqbar.commons.utils.Observable
+import java.util.LinkedList
+import java.util.List
+import java.util.Set
 import org.uqbar.commons.model.Entity
 import org.uqbar.commons.model.UserException
-import org.uqbar.commons.utils.ApplicationContext
-import java.util.Date
-import java.text.SimpleDateFormat
+import org.uqbar.commons.utils.Observable
 
 @Observable
 class Jugador extends Entity{
@@ -29,7 +28,7 @@ class Jugador extends Entity{
 	@Property List<Infraccion> infracciones
 	@Property List<Jugador> amigos
 	@Property List <Calificacion> calificaciones
-	@Property float nivelDeJuego
+	@Property float nivelDeJuego 
 	@Property int criterioComparacion
 	@Property int cantidadPartidos
 	SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
@@ -137,8 +136,8 @@ class Jugador extends Entity{
 		var int promedio
 		var i = 0
 		while(i < calificaciones.size){
-			promedio+= calificaciones.get(0).nota
-			i++
+			promedio = calificaciones.get(0).nota
+			i = i+1
 		}
 		promedio = promedio/calificaciones.size
 	}
@@ -163,11 +162,8 @@ class Jugador extends Entity{
 		calificaciones.add(new Calificacion(this, partido, nota, critica))
 	}
 	
-	
-	/**
-	 * Matcheador de jugadores by Example
-	 * 
-	 */
+	/*
+
 	def boolean matchea(Jugador jugador) {
 	matcheaNombre(jugador) && 
 		matcheaApodo(jugador) &&
@@ -182,7 +178,6 @@ class Jugador extends Entity{
 	}
 	def esMenorAnioNacimiento(Jugador jugadorBuscado){
 		jugadorBuscado.fechaNacimiento == null || jugadorBuscado.fechaNacimiento > this.fechaNacimiento
-	}
-	
+	}*/
 	
 }

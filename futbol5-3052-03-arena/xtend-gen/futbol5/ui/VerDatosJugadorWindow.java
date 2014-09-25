@@ -101,7 +101,7 @@ public class VerDatosJugadorWindow extends Dialog<Jugador> {
     _setCaption.onClick(_function);
   }
   
-  public HomeJugadores homeMaterias() {
+  public HomeJugadores homeJugadores() {
     ApplicationContext _instance = ApplicationContext.getInstance();
     Object _singleton = _instance.<Object>getSingleton(Jugador.class);
     return ((HomeJugadores) _singleton);

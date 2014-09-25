@@ -11,7 +11,7 @@ class CriterioMix extends CriteriosCommand {
 		this.criterios = criterios
 	}
 
-	override (Jugador)=>float criterioComparacion() {
+	override (Jugador)=> float criterioComparacion() {
 		[ jugador | 
 			criterios.fold(0f, [ acum, criterio | acum + criterio.criterioComparacion.apply(jugador) ])
 			/

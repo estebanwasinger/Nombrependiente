@@ -52,7 +52,7 @@ public class HomePartidos extends CollectionBasedHome<Partido> {
     boolean _notEquals = (!Objects.equal(partidoBuscado, null));
     if (_notEquals) {
       List<Partido> _allInstances = this.allInstances();
-      final Function1<Partido, Boolean> _function = new Function1<Partido, Boolean>() {
+      final Function1<Partido,Boolean> _function = new Function1<Partido,Boolean>() {
         public Boolean apply(final Partido partido) {
           return Boolean.valueOf(HomePartidos.this.match(partido, partidoBuscado));
         }

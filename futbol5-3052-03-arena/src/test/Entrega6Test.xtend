@@ -22,7 +22,7 @@ class Entrega6Test {
 	@Before
 	def void setUP(){
 		homeDeJugadores = new HomeJugadores
-		homeDeJugadores.create("Carolina","La Carito de Burzaco",21,"09-01-1993")
+		//homeDeJugadores.create("Carolina","La Carito de Burzaco",21,"09-01-1993")
 		jugadorCaro = new Jugador ("Carolina","La Carito de Burzaco",21,"09-01-1993")
 		jugadorCaroJoven = new Jugador ("Carolina","La Carito de Burzaco",21,"09-01-1995")
 		jugadorNull = new Jugador(null,null,0,null)
@@ -31,7 +31,7 @@ class Entrega6Test {
 		
 	}
 	
-	@Test
+/* 	@Test
 	def void matchearJugadorNull(){
 		Assert.assertEquals(true, jugadorCaro.matchea(jugadorNull))
 			}
@@ -58,9 +58,9 @@ class Entrega6Test {
 	var int i = 0
 	while(i<10){
 	println(randomNum = 0 + (Math.random()*10)as int)
-	i++
+	i = i+1
 	}
 	}
-	
+	*/
 	
 }

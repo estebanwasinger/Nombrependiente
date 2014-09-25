@@ -18,12 +18,12 @@ public class InicializadorJugador {
         String _nombreRandom = InicializadorJugador.nombreRandom();
         String _apodoRandom = InicializadorJugador.apodoRandom();
         String _fechaRandom = InicializadorJugador.fechaRandom();
-        int _nRan = InicializadorJugador.nRan(0, 10);
+        int _handicapRandom = InicializadorJugador.handicapRandom();
         ArrayList<Jugador> _listaAmigos = InicializadorJugador.listaAmigos(8);
-        int _nRan_1 = InicializadorJugador.nRan(2, 9);
-        ArrayList<Calificacion> _listaCalificaciones = InicializadorJugador.listaCalificaciones(_nRan_1);
-        int _nRan_2 = InicializadorJugador.nRan(2, 6);
-        Jugador _jugador = new Jugador(_nombreRandom, _apodoRandom, 21, _fechaRandom, _nRan, _listaAmigos, _listaCalificaciones, _nRan_2);
+        int _nRan = InicializadorJugador.nRan(2, 9);
+        ArrayList<Calificacion> _listaCalificaciones = InicializadorJugador.listaCalificaciones(_nRan);
+        int _nRan_1 = InicializadorJugador.nRan(2, 6);
+        Jugador _jugador = new Jugador(_nombreRandom, _apodoRandom, 21, _fechaRandom, _handicapRandom, _listaAmigos, _listaCalificaciones, _nRan_1);
         jugadores.add(_jugador);
         Jugador _get = jugadores.get(a);
         InicializadorJugador.crearListaNotificacioens(_get);
@@ -41,7 +41,7 @@ public class InicializadorJugador {
       {
         Infraccion _infraccion = new Infraccion("Agresivo");
         jugador.agregarInfraccion(_infraccion);
-        a++;
+        a = (a + 1);
       }
       _while = (a < 5);
     }
@@ -90,6 +90,10 @@ public class InicializadorJugador {
       _while = (a < max);
     }
     return amigos;
+  }
+  
+  public static int handicapRandom() {
+    return InicializadorJugador.nRan(1, 10);
   }
   
   public static int nRan(final int min, final int max) {

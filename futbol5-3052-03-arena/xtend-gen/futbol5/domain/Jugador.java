@@ -309,20 +309,20 @@ public class Jugador extends Entity {
   
   public int promedioDeUnPartido(final Partido partido) {
     List<Calificacion> _calificaciones = this.getCalificaciones();
-    final Function1<Calificacion, Boolean> _function = new Function1<Calificacion, Boolean>() {
+    final Function1<Calificacion,Boolean> _function = new Function1<Calificacion,Boolean>() {
       public Boolean apply(final Calificacion calificacion) {
         Partido _partido = calificacion.getPartido();
         return Boolean.valueOf(Objects.equal(_partido, partido));
       }
     };
     Iterable<Calificacion> calificacionesUltimoPartido = IterableExtensions.<Calificacion>filter(_calificaciones, _function);
-    final Function1<Calificacion, Integer> _function_1 = new Function1<Calificacion, Integer>() {
+    final Function1<Calificacion,Integer> _function_1 = new Function1<Calificacion,Integer>() {
       public Integer apply(final Calificacion calificacion) {
         return Integer.valueOf(calificacion.getNota());
       }
     };
     Iterable<Integer> _map = IterableExtensions.<Calificacion, Integer>map(calificacionesUltimoPartido, _function_1);
-    final Function2<Integer, Integer, Integer> _function_2 = new Function2<Integer, Integer, Integer>() {
+    final Function2<Integer,Integer,Integer> _function_2 = new Function2<Integer,Integer,Integer>() {
       public Integer apply(final Integer a, final Integer b) {
         return Integer.valueOf(((a).intValue() + (b).intValue()));
       }
@@ -343,12 +343,11 @@ public class Jugador extends Entity {
       boolean _while = _lessThan;
       while (_while) {
         {
-          int _promedio = promedio;
           List<Calificacion> _calificaciones_1 = this.getCalificaciones();
           Calificacion _get = _calificaciones_1.get(0);
           int _nota = _get.getNota();
-          promedio = (_promedio + _nota);
-          i++;
+          promedio = _nota;
+          i = (i + 1);
         }
         List<Calificacion> _calificaciones_1 = this.getCalificaciones();
         int _size_1 = _calificaciones_1.size();
@@ -394,76 +393,5 @@ public class Jugador extends Entity {
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
-  }
-  
-  /**
-   * Matcheador de jugadores by Example
-   */
-  public boolean matchea(final Jugador jugador) {
-    boolean _and = false;
-    boolean _and_1 = false;
-    boolean _matcheaNombre = this.matcheaNombre(jugador);
-    if (!_matcheaNombre) {
-      _and_1 = false;
-    } else {
-      boolean _matcheaApodo = this.matcheaApodo(jugador);
-      _and_1 = _matcheaApodo;
-    }
-    if (!_and_1) {
-      _and = false;
-    } else {
-      boolean _esMenorAnioNacimiento = this.esMenorAnioNacimiento(jugador);
-      _and = _esMenorAnioNacimiento;
-    }
-    return _and;
-  }
-  
-  public boolean matcheaNombre(final Jugador jugadorBuscado) {
-    boolean _or = false;
-    String _nombre = jugadorBuscado.getNombre();
-    boolean _equals = Objects.equal(_nombre, null);
-    if (_equals) {
-      _or = true;
-    } else {
-      String _nombre_1 = this.getNombre();
-      String _lowerCase = _nombre_1.toLowerCase();
-      String _nombre_2 = jugadorBuscado.getNombre();
-      String _lowerCase_1 = _nombre_2.toLowerCase();
-      boolean _startsWith = _lowerCase.startsWith(_lowerCase_1);
-      _or = _startsWith;
-    }
-    return _or;
-  }
-  
-  public boolean matcheaApodo(final Jugador jugadorBuscado) {
-    boolean _or = false;
-    String _apodo = jugadorBuscado.getApodo();
-    boolean _equals = Objects.equal(_apodo, null);
-    if (_equals) {
-      _or = true;
-    } else {
-      String _apodo_1 = this.getApodo();
-      String _lowerCase = _apodo_1.toLowerCase();
-      String _apodo_2 = jugadorBuscado.getApodo();
-      String _lowerCase_1 = _apodo_2.toLowerCase();
-      boolean _contains = _lowerCase.contains(_lowerCase_1);
-      _or = _contains;
-    }
-    return _or;
-  }
-  
-  public boolean esMenorAnioNacimiento(final Jugador jugadorBuscado) {
-    boolean _or = false;
-    Date _fechaNacimiento = jugadorBuscado.getFechaNacimiento();
-    boolean _equals = Objects.equal(_fechaNacimiento, null);
-    if (_equals) {
-      _or = true;
-    } else {
-      Date _fechaNacimiento_1 = jugadorBuscado.getFechaNacimiento();
-      Date _fechaNacimiento_2 = this.getFechaNacimiento();
-      boolean _greaterThan = (_fechaNacimiento_1.compareTo(_fechaNacimiento_2) > 0);
-      _or = _greaterThan;
-    }
-    return _or;
   }
 }

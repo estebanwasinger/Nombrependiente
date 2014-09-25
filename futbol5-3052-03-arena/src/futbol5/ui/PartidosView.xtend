@@ -1,5 +1,6 @@
 package futbol5.ui
 
+import futbol5.applicationModel.BusquedaJugadoresAppModel
 import futbol5.domain.Partido
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.layout.ColumnLayout
@@ -13,7 +14,6 @@ import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.utils.Observable
-import futbol5.applicationModel.Futbol5
 
 @Observable
 class PartidosView extends Dialog<PartidosAppModel> {
@@ -25,7 +25,7 @@ class PartidosView extends Dialog<PartidosAppModel> {
 	override protected addActions(Panel panel) {
 		panel.layout = new HorizontalLayout
 		var generar = new Button(panel).setCaption("Generar Equipo").onClick[|this.generarEquipo]
-		var buscar = new Button(panel).setCaption("Buscar Jugador").onClick[|this.buscarEquipo]
+		var buscar = new Button(panel).setCaption("Buscar Jugador").onClick[|this.buscarJugador]
 
 		var elementSelected = new NotNullObservable("partidoSeleccionado")
 		generar.bindEnabled(elementSelected)
@@ -59,8 +59,8 @@ class PartidosView extends Dialog<PartidosAppModel> {
 		dialog.open
 	}
 
-	def void buscarEquipo() {
-		this.openDialog(new BusquedaJugadoresWindow(this, new Futbol5))
+	def void buscarJugador() {
+		this.openDialog(new BusquedaJugadoresWindow(this, new BusquedaJugadoresAppModel))
 	}
 
 }

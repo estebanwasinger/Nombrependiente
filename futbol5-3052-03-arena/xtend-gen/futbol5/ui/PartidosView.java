@@ -1,6 +1,6 @@
 package futbol5.ui;
 
-import futbol5.applicationModel.Futbol5;
+import futbol5.applicationModel.BusquedaJugadoresAppModel;
 import futbol5.domain.Partido;
 import futbol5.ui.BusquedaJugadoresWindow;
 import futbol5.ui.GenerarEquiposWindow;
@@ -44,7 +44,7 @@ public class PartidosView extends Dialog<PartidosAppModel> {
     Button _setCaption_1 = _button_1.setCaption("Buscar Jugador");
     final Action _function_1 = new Action() {
       public void execute() {
-        PartidosView.this.buscarEquipo();
+        PartidosView.this.buscarJugador();
       }
     };
     Button buscar = _setCaption_1.onClick(_function_1);
@@ -102,9 +102,9 @@ public class PartidosView extends Dialog<PartidosAppModel> {
     dialog.open();
   }
   
-  public void buscarEquipo() {
-    Futbol5 _futbol5 = new Futbol5();
-    BusquedaJugadoresWindow _busquedaJugadoresWindow = new BusquedaJugadoresWindow(this, _futbol5);
+  public void buscarJugador() {
+    BusquedaJugadoresAppModel _busquedaJugadoresAppModel = new BusquedaJugadoresAppModel();
+    BusquedaJugadoresWindow _busquedaJugadoresWindow = new BusquedaJugadoresWindow(this, _busquedaJugadoresAppModel);
     this.openDialog(_busquedaJugadoresWindow);
   }
 }

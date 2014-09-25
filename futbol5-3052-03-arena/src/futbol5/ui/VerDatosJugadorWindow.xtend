@@ -69,7 +69,7 @@ override protected void addActions(Panel actions) {
 			.onClick [|this.cancel]
 	}
 
-	def homeMaterias() {
+	def homeJugadores() {
 		ApplicationContext::instance.getSingleton(typeof(Jugador)) as HomeJugadores
 	}
 	

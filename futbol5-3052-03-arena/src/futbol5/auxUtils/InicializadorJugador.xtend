@@ -12,7 +12,7 @@ class InicializadorJugador {
 		var int a = 0
 		jugadores = new ArrayList<Jugador>
 		while (a < max) {
-			jugadores.add(new Jugador(nombreRandom(), apodoRandom,21,fechaRandom, nRan(0,10), listaAmigos(8), listaCalificaciones(nRan(2,9)),nRan(2,6)))
+			jugadores.add(new Jugador(nombreRandom(), apodoRandom,21,fechaRandom, handicapRandom(), listaAmigos(8), listaCalificaciones(nRan(2,9)),nRan(2,6)))
 			crearListaNotificacioens(jugadores.get(a))
 			a = a + 1
 	}
@@ -23,7 +23,7 @@ class InicializadorJugador {
 		var int a = 0;
 		while(a<5){
 			jugador.agregarInfraccion((new Infraccion("Agresivo")))
-			a++
+			a = a+1
 		}
 	}
 	
@@ -50,6 +50,10 @@ class InicializadorJugador {
 			a=a+1
 		}
 	return amigos
+	}
+	
+		def static int handicapRandom(){
+		 nRan(1,10)
 	}
 	
 	def static int nRan(int min, int max){

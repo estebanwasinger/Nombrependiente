@@ -1,7 +1,7 @@
 package futbol5.ui;
 
 import com.google.common.collect.Lists;
-import futbol5.applicationModel.Futbol5;
+import futbol5.applicationModel.BusquedaJugadoresAppModel;
 import futbol5.domain.Jugador;
 import futbol5.ui.DateTextFilter;
 import futbol5.ui.VerDatosJugadorWindow;
@@ -14,7 +14,6 @@ import org.uqbar.arena.bindings.NotNullObservable;
 import org.uqbar.arena.bindings.ObservableProperty;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
-import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Control;
 import org.uqbar.arena.widgets.Label;
@@ -34,12 +33,10 @@ import org.uqbar.lacar.ui.model.bindings.Binding;
 
 @Observable
 @SuppressWarnings("all")
-public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
-  public BusquedaJugadoresWindow(final WindowOwner parent, final Futbol5 modelObject) {
+public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
+  public BusquedaJugadoresWindow(final WindowOwner parent, final BusquedaJugadoresAppModel modelObject) {
     super(parent, modelObject);
   }
-  
-  private Jugador jugador = new Jugador();
   
   public void createContents(final Panel mainPanel) {
     this.setTitle("Busqueda de Jugadores");
@@ -52,7 +49,7 @@ public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
     final Procedure1<Label> _function = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Busqueda");
-        it.setFontSize(20);
+        it.setFontSize(30);
       }
     };
     ObjectExtensions.<Label>operator_doubleArrow(_label, _function);
@@ -60,7 +57,7 @@ public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
     final Procedure1<Label> _function_1 = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Resultados");
-        it.setFontSize(20);
+        it.setFontSize(30);
       }
     };
     ObjectExtensions.<Label>operator_doubleArrow(_label_1, _function_1);
@@ -84,18 +81,15 @@ public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
   
   public void createFormPanel(final Panel panelIzquierda) {
     this.setTitle("Busqueda Jugador");
-    VerticalLayout _verticalLayout = new VerticalLayout();
-    panelIzquierda.setLayout(_verticalLayout);
-    final Panel busquedaSuperior = new Panel(panelIzquierda);
-    VerticalLayout _verticalLayout_1 = new VerticalLayout();
-    busquedaSuperior.setLayout(_verticalLayout_1);
-    this.criteriosDeBusqueda(busquedaSuperior);
-  }
-  
-  public void criteriosDeBusqueda(final Panel busquedaSuperior) {
-    Label labelNombre = new Label(busquedaSuperior);
-    labelNombre.setText("Nombre Jugador");
-    TextBox _textBox = new TextBox(busquedaSuperior);
+    Panel panelBusqueda = new Panel(panelIzquierda);
+    ColumnLayout _columnLayout = new ColumnLayout(2);
+    panelBusqueda.setLayout(_columnLayout);
+    Panel izquierda = new Panel(panelBusqueda);
+    Panel derecha = new Panel(panelBusqueda);
+    Label labelNombre = new Label(izquierda);
+    labelNombre.setFontSize(10);
+    labelNombre.setText("Nombre comienza con..");
+    TextBox _textBox = new TextBox(derecha);
     final Procedure1<TextBox> _function = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
         it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.nombre");
@@ -103,9 +97,10 @@ public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
       }
     };
     ObjectExtensions.<TextBox>operator_doubleArrow(_textBox, _function);
-    Label labelApodo = new Label(busquedaSuperior);
-    labelApodo.setText("Apodo Jugador");
-    TextBox _textBox_1 = new TextBox(busquedaSuperior);
+    Label labelApodo = new Label(izquierda);
+    labelApodo.setFontSize(10);
+    labelApodo.setText("Apodo contiene...");
+    TextBox _textBox_1 = new TextBox(derecha);
     final Procedure1<TextBox> _function_1 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
         it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.apodo");
@@ -113,53 +108,76 @@ public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
       }
     };
     ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_1, _function_1);
-    Label _label = new Label(busquedaSuperior);
-    _label.setText("Fecha de nacimiento menor a:");
-    final TextBox textBoxFecha = new TextBox(busquedaSuperior);
-    DateTextFilter _dateTextFilter = new DateTextFilter();
-    textBoxFecha.withFilter(_dateTextFilter);
-    final Binding<ControlBuilder> binding = textBoxFecha.<ControlBuilder>bindValueToProperty("fechaNacimiento");
-    DateAdapter _dateAdapter = new DateAdapter();
-    binding.setTransformer(_dateAdapter);
-    Panel searchFormPanel = new Panel(busquedaSuperior);
-    ColumnLayout _columnLayout = new ColumnLayout(2);
-    searchFormPanel.setLayout(_columnLayout);
-    this.crearTextBox(busquedaSuperior, "Handicap desde", "busquedaJugadores.handicapDesde");
-    this.crearTextBox(busquedaSuperior, "Handicap hasta", "busquedaJugadores.handicapHasta");
-    Label labelInfraccion = new Label(busquedaSuperior);
+    Label labelFecha = new Label(izquierda);
+    labelFecha.setText("Fecha de nacimiento menor a:");
+    labelFecha.setFontSize(10);
+    TextBox _textBox_2 = new TextBox(derecha);
+    final Procedure1<TextBox> _function_2 = new Procedure1<TextBox>() {
+      public void apply(final TextBox it) {
+        DateTextFilter _dateTextFilter = new DateTextFilter();
+        it.withFilter(_dateTextFilter);
+        Binding<ControlBuilder> _bindValueToProperty = it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.fechaNacimiento");
+        DateAdapter _dateAdapter = new DateAdapter();
+        _bindValueToProperty.setTransformer(_dateAdapter);
+      }
+    };
+    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_2, _function_2);
+    Label labelHandicap = new Label(izquierda);
+    labelHandicap.setFontSize(10);
+    labelHandicap.setText("Handicap");
+    Selector<Object> _selector = new Selector<Object>(izquierda);
+    final Procedure1<Selector<Object>> _function_3 = new Procedure1<Selector<Object>>() {
+      public void apply(final Selector<Object> it) {
+        it.allowNull(false);
+        ObservableProperty _observableProperty = new ObservableProperty(BusquedaJugadoresWindow.this, "eligeHandicap");
+        it.bindItems(_observableProperty);
+        it.<ControlBuilder>bindValueToProperty("tipoHandicap");
+      }
+    };
+    ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector, _function_3);
+    TextBox _textBox_3 = new TextBox(derecha);
+    final Procedure1<TextBox> _function_4 = new Procedure1<TextBox>() {
+      public void apply(final TextBox it) {
+        it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.nivelDeJuego");
+        it.setWidth(20);
+      }
+    };
+    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_3, _function_4);
+    Label labelInfraccion = new Label(izquierda);
+    labelInfraccion.setFontSize(10);
     labelInfraccion.setText("Infracciones");
-    Selector<Object> _selector = new Selector<Object>(busquedaSuperior);
-    final Procedure1<Selector<Object>> _function_2 = new Procedure1<Selector<Object>>() {
+    Selector<Object> _selector_1 = new Selector<Object>(derecha);
+    final Procedure1<Selector<Object>> _function_5 = new Procedure1<Selector<Object>>() {
       public void apply(final Selector<Object> it) {
         it.allowNull(false);
         ObservableProperty _observableProperty = new ObservableProperty(BusquedaJugadoresWindow.this, "eligeInfracciones");
         it.bindItems(_observableProperty);
-        it.<ControlBuilder>bindValueToProperty("infracciones");
+        it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.infracciones");
       }
     };
-    ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector, _function_2);
-    Button _button = new Button(busquedaSuperior);
+    ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector_1, _function_5);
+    Button _button = new Button(panelBusqueda);
     Button _setCaption = _button.setCaption("Buscar");
-    final Action _function_3 = new Action() {
+    final Action _function_6 = new Action() {
       public void execute() {
-        Futbol5 _modelObject = BusquedaJugadoresWindow.this.getModelObject();
-        Futbol5 _modelObject_1 = BusquedaJugadoresWindow.this.getModelObject();
+        BusquedaJugadoresAppModel _modelObject = BusquedaJugadoresWindow.this.getModelObject();
+        BusquedaJugadoresAppModel _modelObject_1 = BusquedaJugadoresWindow.this.getModelObject();
         Jugador _jugadorEjemplo = _modelObject_1.getJugadorEjemplo();
         _modelObject.search(_jugadorEjemplo);
       }
     };
-    Button _onClick = _setCaption.onClick(_function_3);
+    Button _onClick = _setCaption.onClick(_function_6);
     SkinnableControl _setFontSize = _onClick.setFontSize(12);
     _setFontSize.setWidth(200);
-    Button _button_1 = new Button(busquedaSuperior);
+    Button _button_1 = new Button(panelBusqueda);
     Button _setCaption_1 = _button_1.setCaption("Limpiar");
-    final Action _function_4 = new Action() {
+    final Action _function_7 = new Action() {
       public void execute() {
-        Futbol5 _modelObject = BusquedaJugadoresWindow.this.getModelObject();
+        BusquedaJugadoresAppModel _modelObject = BusquedaJugadoresWindow.this.getModelObject();
         _modelObject.clear();
       }
     };
-    Button _onClick_1 = _setCaption_1.onClick(_function_4);
+    Button _onClick_1 = _setCaption_1.onClick(_function_7);
     SkinnableControl _setFontSize_1 = _onClick_1.setFontSize(12);
     _setFontSize_1.setWidth(200);
   }
@@ -175,12 +193,12 @@ public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
     return _xblockexpression;
   }
   
-  public void grillaBasicaJugadores(final Panel panelJugadores) {
-    Table<Jugador> table = new Table<Jugador>(panelJugadores, Jugador.class);
+  public void grillaBasicaJugadores(final Panel panelResultados) {
+    Table<Jugador> table = new Table<Jugador>(panelResultados, Jugador.class);
     table.setHeigth(360);
     table.setWidth(590);
     table.<ControlBuilder>bindValueToProperty("jugadorSeleccionado");
-    table.bindItemsToProperty("resultados");
+    table.bindItemsToProperty("jugadores");
     Column<Jugador> _column = new Column<Jugador>(table);
     Column<Jugador> _setTitle = _column.setTitle("Nombre");
     Column<Jugador> _setFixedSize = _setTitle.setFixedSize(150);
@@ -197,7 +215,7 @@ public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
     Column<Jugador> _setTitle_3 = _column_3.setTitle("Promedio");
     Column<Jugador> _setFixedSize_3 = _setTitle_3.setFixedSize(150);
     _setFixedSize_3.bindContentsToProperty("promedio");
-    Button _button = new Button(panelJugadores);
+    Button _button = new Button(panelResultados);
     Button _setCaption = _button.setCaption("Ver Datos Completos");
     final Action _function = new Action() {
       public void execute() {
@@ -215,8 +233,6 @@ public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
   public void openDialog(final Dialog<?> dialog) {
     final Action _function = new Action() {
       public void execute() {
-        Futbol5 _modelObject = BusquedaJugadoresWindow.this.getModelObject();
-        _modelObject.search(BusquedaJugadoresWindow.this.jugador);
       }
     };
     dialog.onAccept(_function);
@@ -224,13 +240,17 @@ public class BusquedaJugadoresWindow extends Dialog<Futbol5> {
   }
   
   public void grillaCompletaJugador() {
-    Futbol5 _modelObject = this.getModelObject();
+    BusquedaJugadoresAppModel _modelObject = this.getModelObject();
     Jugador _jugadorSeleccionado = _modelObject.getJugadorSeleccionado();
     VerDatosJugadorWindow _verDatosJugadorWindow = new VerDatosJugadorWindow(this, _jugadorSeleccionado);
     this.openDialog(_verDatosJugadorWindow);
   }
   
   public List<String> getEligeInfracciones() {
-    return Collections.<String>unmodifiableList(Lists.<String>newArrayList("Solo Infracciones", "Solo No Infracciones", "Todos"));
+    return Collections.<String>unmodifiableList(Lists.<String>newArrayList("Con Infracciones", "Sin Infracciones", "Todos"));
+  }
+  
+  public List<String> getEligeHandicap() {
+    return Collections.<String>unmodifiableList(Lists.<String>newArrayList("Desde", "Hasta"));
   }
 }

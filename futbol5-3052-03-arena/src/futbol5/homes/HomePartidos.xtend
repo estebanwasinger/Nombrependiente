@@ -1,13 +1,10 @@
 package futbol5.homes
 
-import futbol5.domain.Partido
-import org.uqbar.commons.model.CollectionBasedHome
-import java.util.LinkedList
-import java.util.List
-import futbol5.domain.Jugador
-import java.util.ArrayList
-import calificaciones.Calificacion
 import futbol5.auxUtils.InicializadorJugador
+import futbol5.domain.Jugador
+import futbol5.domain.Partido
+import java.util.List
+import org.uqbar.commons.model.CollectionBasedHome
 
 class HomePartidos extends CollectionBasedHome<Partido> {
 

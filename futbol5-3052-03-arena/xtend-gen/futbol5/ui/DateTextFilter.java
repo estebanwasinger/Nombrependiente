@@ -18,7 +18,7 @@ public class DateTextFilter implements TextFilter {
     {
       final ArrayList<String> expected = new ArrayList<String>(Collections.<String>unmodifiableList(Lists.<String>newArrayList("\\d", "\\d?", "/", "\\d", "\\d?", "/", "\\d{0,4}")));
       List<String> _reverse = ListExtensions.<String>reverse(expected);
-      final Function2<String, String, String> _function = new Function2<String, String, String>() {
+      final Function2<String,String,String> _function = new Function2<String,String,String>() {
         public String apply(final String result, final String element) {
           StringConcatenation _builder = new StringConcatenation();
           _builder.append("(");
