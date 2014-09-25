@@ -1,10 +1,8 @@
-package futbol5.ui
+package futbol5.runnable
 
-import org.uqbar.arena.Application
-import org.uqbar.arena.windows.Window
-import org.uqbar.commons.utils.ApplicationContext
-import futbol5.domain.Partido
 import futbol5.domain.Jugador
+import futbol5.ui.VerDatosJugadorWindow
+import org.uqbar.arena.Application
 
 class RunnableJugador extends Application {
 	

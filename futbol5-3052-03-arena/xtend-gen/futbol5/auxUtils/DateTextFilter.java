@@ -1,4 +1,4 @@
-package futbol5.ui;
+package futbol5.auxUtils;
 
 import com.google.common.collect.Lists;
 import java.util.ArrayList;

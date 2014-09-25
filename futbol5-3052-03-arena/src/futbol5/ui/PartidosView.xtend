@@ -1,6 +1,7 @@
 package futbol5.ui
 
 import futbol5.applicationModel.BusquedaJugadoresAppModel
+import futbol5.applicationModel.PartidosAppModel
 import futbol5.domain.Partido
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.layout.ColumnLayout

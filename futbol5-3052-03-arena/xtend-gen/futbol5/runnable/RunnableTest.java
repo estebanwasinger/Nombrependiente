@@ -1,4 +1,4 @@
-package futbol5.ui;
+package futbol5.runnable;
 
 import futbol5.domain.Jugador;
 import futbol5.domain.Partido;

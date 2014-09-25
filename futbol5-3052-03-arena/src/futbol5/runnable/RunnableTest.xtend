@@ -1,10 +1,10 @@
-package futbol5.ui
+package futbol5.runnable
 
+import futbol5.domain.Jugador
+import futbol5.domain.Partido
+import futbol5.ui.GenerarEquiposWindow
 import org.uqbar.arena.Application
 import org.uqbar.arena.windows.Window
-import org.uqbar.commons.utils.ApplicationContext
-import futbol5.domain.Partido
-import futbol5.domain.Jugador
 
 class RunnableTest extends Application {
 	

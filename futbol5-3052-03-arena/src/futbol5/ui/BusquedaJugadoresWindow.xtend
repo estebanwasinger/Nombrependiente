@@ -1,6 +1,7 @@
 package futbol5.ui
 
 import futbol5.applicationModel.BusquedaJugadoresAppModel
+import futbol5.auxUtils.DateTextFilter
 import futbol5.domain.Jugador
 import futbol5.homes.HomeJugadores
 import org.uqbar.arena.bindings.DateAdapter
@@ -123,7 +124,7 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 			
 		new Button(panelBusqueda)
 			.setCaption("Buscar")
-			.onClick [ | modelObject.search(modelObject.jugadorEjemplo) ]
+			.onClick [ | modelObject.search() ]
 			.setFontSize(12)
 			.setWidth = 200
 			
@@ -200,11 +201,11 @@ class DateBox extends TextBox {
 		super(container)
 	}
 
-	override bindValueToProperty(String propertyName) {
+	/*override bindValueToProperty(String propertyName) {
 		val binding = super.bindValueToProperty(propertyName)
 		this.withFilter(new DateTextFilter)
 		binding
-		}	
+		}	*/
 		
 		def homeJugadores() {
 		ApplicationContext::instance.getSingleton(typeof(Jugador)) as HomeJugadores

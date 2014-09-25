@@ -1,4 +1,4 @@
-package futbol5.ui
+package futbol5.applicationModel
 
 import futbol5.domain.Partido
 import futbol5.homes.HomePartidos

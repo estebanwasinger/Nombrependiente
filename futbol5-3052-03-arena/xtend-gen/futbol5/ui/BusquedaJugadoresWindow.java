@@ -2,8 +2,8 @@ package futbol5.ui;
 
 import com.google.common.collect.Lists;
 import futbol5.applicationModel.BusquedaJugadoresAppModel;
+import futbol5.auxUtils.DateTextFilter;
 import futbol5.domain.Jugador;
-import futbol5.ui.DateTextFilter;
 import futbol5.ui.VerDatosJugadorWindow;
 import java.util.Collections;
 import java.util.List;
@@ -161,9 +161,7 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     final Action _function_6 = new Action() {
       public void execute() {
         BusquedaJugadoresAppModel _modelObject = BusquedaJugadoresWindow.this.getModelObject();
-        BusquedaJugadoresAppModel _modelObject_1 = BusquedaJugadoresWindow.this.getModelObject();
-        Jugador _jugadorEjemplo = _modelObject_1.getJugadorEjemplo();
-        _modelObject.search(_jugadorEjemplo);
+        _modelObject.search();
       }
     };
     Button _onClick = _setCaption.onClick(_function_6);

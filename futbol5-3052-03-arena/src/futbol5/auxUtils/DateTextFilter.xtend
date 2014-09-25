@@ -1,4 +1,4 @@
-package futbol5.ui
+package futbol5.auxUtils
 
 import org.uqbar.arena.widgets.TextFilter
 import org.uqbar.arena.widgets.TextInputEvent

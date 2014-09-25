@@ -1,10 +1,10 @@
 package futbol5.ui;
 
 import futbol5.applicationModel.BusquedaJugadoresAppModel;
+import futbol5.applicationModel.PartidosAppModel;
 import futbol5.domain.Partido;
 import futbol5.ui.BusquedaJugadoresWindow;
 import futbol5.ui.GenerarEquiposWindow;
-import futbol5.ui.PartidosAppModel;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.arena.bindings.NotNullObservable;

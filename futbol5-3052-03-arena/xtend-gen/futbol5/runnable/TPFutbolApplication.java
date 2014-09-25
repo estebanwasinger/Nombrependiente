@@ -1,10 +1,10 @@
-package futbol5.ui;
+package futbol5.runnable;
 
+import futbol5.applicationModel.PartidosAppModel;
 import futbol5.domain.Jugador;
 import futbol5.domain.Partido;
 import futbol5.homes.HomeJugadores;
 import futbol5.homes.HomePartidos;
-import futbol5.ui.PartidosAppModel;
 import futbol5.ui.PartidosView;
 import org.uqbar.arena.Application;
 import org.uqbar.arena.windows.Window;
