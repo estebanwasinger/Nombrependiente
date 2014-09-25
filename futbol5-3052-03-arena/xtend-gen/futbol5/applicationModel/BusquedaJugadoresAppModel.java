@@ -2,6 +2,7 @@ package futbol5.applicationModel;
 
 import futbol5.domain.Jugador;
 import futbol5.homes.HomeJugadores;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.uqbar.commons.utils.ApplicationContext;
@@ -9,7 +10,7 @@ import org.uqbar.commons.utils.Observable;
 
 @Observable
 @SuppressWarnings("all")
-public class BusquedaJugadoresAppModel {
+public class BusquedaJugadoresAppModel implements Serializable {
   private Jugador _jugadorEjemplo;
   
   public Jugador getJugadorEjemplo() {
@@ -54,7 +55,7 @@ public class BusquedaJugadoresAppModel {
     ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
     this.setJugadores(_arrayList);
     HomeJugadores _homeJugadores = this.getHomeJugadores();
-    ArrayList<Jugador> _jugadoresAceptados = _homeJugadores.getJugadoresAceptados();
+    List<Jugador> _jugadoresAceptados = _homeJugadores.getJugadoresAceptados();
     this.setJugadores(_jugadoresAceptados);
   }
   
@@ -71,11 +72,8 @@ public class BusquedaJugadoresAppModel {
   }
   
   public void clear() {
-    ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
-    this.setJugadores(_arrayList);
-    HomeJugadores _homeJugadores = this.getHomeJugadores();
-    ArrayList<Jugador> _jugadoresAceptados = _homeJugadores.getJugadoresAceptados();
-    this.setJugadores(_jugadoresAceptados);
+    this.setJugadorEjemplo(null);
+    this.setJugadorSeleccionado(null);
   }
   
   public HomeJugadores getHomeJugadores() {

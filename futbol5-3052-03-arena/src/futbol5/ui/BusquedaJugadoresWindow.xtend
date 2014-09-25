@@ -20,6 +20,7 @@ import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.utils.ApplicationContext
 import org.uqbar.commons.utils.Observable
+import org.uqbar.arena.widgets.Link
 
 @Observable
 class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
@@ -207,7 +208,7 @@ class DateBox extends TextBox {
 		binding
 		}	*/
 		
-		def homeJugadores() {
+	/*	def homeJugadores() {
 		ApplicationContext::instance.getSingleton(typeof(Jugador)) as HomeJugadores
-	}			
+	}	*/		
 }

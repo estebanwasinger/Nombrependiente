@@ -11,9 +11,7 @@ import org.uqbar.commons.utils.Observable
 class HomeJugadores extends CollectionBasedHome<Jugador> {
 	
 	@Property String tipoHandicap
-	@Property var ArrayList<Jugador> jugadoresAceptados
-	/*@Property var List<RegistroRechazo> jugadoresRechazados
-	@Property var LinkedList<Jugador> jugadoresRecomendados*/
+	@Property var List <Jugador> jugadoresAceptados
 	SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
 
 	new() {
@@ -22,8 +20,6 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 
 	def void init() {
  		jugadoresAceptados = new ArrayList<Jugador>
-		/*jugadoresRechazados = new LinkedList<RegistroRechazo>
-		jugadoresRecomendados = new LinkedList<Jugador>*/		
 		jugadoresAceptados = InicializadorJugador.crearListaDejugadores(10)
 	}
 
@@ -57,29 +53,21 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 	/*def void agregarAceptado(Jugador jugador){
 		jugadoresAceptados.add(jugador)
 	}
-	
-	def List<Jugador> getJugadores(){
-		jugadoresAceptados
-	}
 	*/
+	
 	def search(Jugador jugadorBuscado) {
-	//	jugadoresAceptados.filter[jugador|jugador.matchea(jugadorBuscado)].toList
-			if (jugadorBuscado != null) {
-			allInstances.filter[jugador|this.match(jugador, jugadorBuscado)].toList
-		} else {
-			init()
-		}
+			jugadoresAceptados.filter[jugador|this.match(jugador,jugadorBuscado)].toList
 	}
 		
 	def match(Jugador jugadorEnLista, Jugador jugadorBuscado) {
-		matcheaNombre(jugadorEnLista,jugadorBuscado) && 
-		matcheaApodo(jugadorEnLista,jugadorBuscado) &&
-		matcheaFecha(jugadorEnLista,jugadorBuscado) &&
+		matcheaNombre(jugadorEnLista,jugadorBuscado) || 
+		matcheaApodo(jugadorEnLista,jugadorBuscado) ||
+		matcheaFecha(jugadorEnLista,jugadorBuscado) ||
 		matcheaHandicap(jugadorEnLista,jugadorBuscado)
 	}
-	
+
 	def matcheaNombre( Jugador jugadorEnLista, Jugador jugadorBuscado){
-	jugadorBuscado.nombre == null || jugadorEnLista.nombre.toLowerCase.startsWith(jugadorBuscado.nombre.toLowerCase)
+		jugadorBuscado.nombre == null || jugadorEnLista.nombre.toLowerCase.startsWith(jugadorBuscado.nombre.toLowerCase)
 	}
 	def matcheaApodo( Jugador jugadorEnLista, Jugador jugadorBuscado){
 		jugadorBuscado.apodo == null || jugadorEnLista.apodo.toLowerCase.contains(jugadorBuscado.apodo.toLowerCase)
@@ -95,9 +83,10 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 		 nivel.toString == null || (jugadorEnLista.nivelDeJuego < jugadorBuscado.nivelDeJuego)
 		 }
 	}
+
 	
 	def List<Jugador> getJugadores(){
-		allInstances
+		jugadoresAceptados
 	}
 	
 	override def getEntityType() {

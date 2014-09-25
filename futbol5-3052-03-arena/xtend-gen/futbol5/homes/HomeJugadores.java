@@ -24,20 +24,16 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     this._tipoHandicap = tipoHandicap;
   }
   
-  private ArrayList<Jugador> _jugadoresAceptados;
+  private List<Jugador> _jugadoresAceptados;
   
-  public ArrayList<Jugador> getJugadoresAceptados() {
+  public List<Jugador> getJugadoresAceptados() {
     return this._jugadoresAceptados;
   }
   
-  public void setJugadoresAceptados(final ArrayList<Jugador> jugadoresAceptados) {
+  public void setJugadoresAceptados(final List<Jugador> jugadoresAceptados) {
     this._jugadoresAceptados = jugadoresAceptados;
   }
   
-  /**
-   * @Property var List<RegistroRechazo> jugadoresRechazados
-   * @Property var LinkedList<Jugador> jugadoresRecomendados
-   */
   private SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
   
   public HomeJugadores() {
@@ -55,53 +51,42 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
    * def void agregarAceptado(Jugador jugador){
    * jugadoresAceptados.add(jugador)
    * }
-   * 
-   * def List<Jugador> getJugadores(){
-   * jugadoresAceptados
-   * }
    */
   public List<Jugador> search(final Jugador jugadorBuscado) {
-    List<Jugador> _xifexpression = null;
-    boolean _notEquals = (!Objects.equal(jugadorBuscado, null));
-    if (_notEquals) {
-      List<Jugador> _allInstances = this.allInstances();
-      final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
-        public Boolean apply(final Jugador jugador) {
-          return Boolean.valueOf(HomeJugadores.this.match(jugador, jugadorBuscado));
-        }
-      };
-      Iterable<Jugador> _filter = IterableExtensions.<Jugador>filter(_allInstances, _function);
-      _xifexpression = IterableExtensions.<Jugador>toList(_filter);
-    } else {
-      this.init();
-    }
-    return _xifexpression;
+    List<Jugador> _jugadoresAceptados = this.getJugadoresAceptados();
+    final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
+      public Boolean apply(final Jugador jugador) {
+        return Boolean.valueOf(HomeJugadores.this.match(jugador, jugadorBuscado));
+      }
+    };
+    Iterable<Jugador> _filter = IterableExtensions.<Jugador>filter(_jugadoresAceptados, _function);
+    return IterableExtensions.<Jugador>toList(_filter);
   }
   
   public boolean match(final Jugador jugadorEnLista, final Jugador jugadorBuscado) {
-    boolean _and = false;
-    boolean _and_1 = false;
-    boolean _and_2 = false;
+    boolean _or = false;
+    boolean _or_1 = false;
+    boolean _or_2 = false;
     boolean _matcheaNombre = this.matcheaNombre(jugadorEnLista, jugadorBuscado);
-    if (!_matcheaNombre) {
-      _and_2 = false;
+    if (_matcheaNombre) {
+      _or_2 = true;
     } else {
       boolean _matcheaApodo = this.matcheaApodo(jugadorEnLista, jugadorBuscado);
-      _and_2 = _matcheaApodo;
+      _or_2 = _matcheaApodo;
     }
-    if (!_and_2) {
-      _and_1 = false;
+    if (_or_2) {
+      _or_1 = true;
     } else {
       boolean _matcheaFecha = this.matcheaFecha(jugadorEnLista, jugadorBuscado);
-      _and_1 = _matcheaFecha;
+      _or_1 = _matcheaFecha;
     }
-    if (!_and_1) {
-      _and = false;
+    if (_or_1) {
+      _or = true;
     } else {
       boolean _matcheaHandicap = this.matcheaHandicap(jugadorEnLista, jugadorBuscado);
-      _and = _matcheaHandicap;
+      _or = _matcheaHandicap;
     }
-    return _and;
+    return _or;
   }
   
   public boolean matcheaNombre(final Jugador jugadorEnLista, final Jugador jugadorBuscado) {
@@ -194,7 +179,7 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
   }
   
   public List<Jugador> getJugadores() {
-    return this.allInstances();
+    return this.getJugadoresAceptados();
   }
   
   public Class<Jugador> getEntityType() {
