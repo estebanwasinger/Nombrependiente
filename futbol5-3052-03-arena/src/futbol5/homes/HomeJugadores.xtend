@@ -60,10 +60,10 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 	}
 		
 	def match(Jugador jugadorEnLista, Jugador jugadorBuscado) {
-		matcheaNombre(jugadorEnLista,jugadorBuscado) || 
-		matcheaApodo(jugadorEnLista,jugadorBuscado) ||
-		matcheaFecha(jugadorEnLista,jugadorBuscado) ||
-		matcheaHandicap(jugadorEnLista,jugadorBuscado)
+		matcheaNombre(jugadorEnLista,jugadorBuscado) && 
+		matcheaApodo(jugadorEnLista,jugadorBuscado) //&&
+		//matcheaFecha(jugadorEnLista,jugadorBuscado) &&
+		//matcheaHandicap(jugadorEnLista,jugadorBuscado)
 	}
 
 	def matcheaNombre( Jugador jugadorEnLista, Jugador jugadorBuscado){

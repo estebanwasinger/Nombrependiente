@@ -17,6 +17,7 @@ class BusquedaJugadoresAppModel implements Serializable{
 	@Property String tipoHandicap
 	
 	new(){
+		jugadorEjemplo = new Jugador
 		jugadores = new ArrayList<Jugador>
 		jugadores =  getHomeJugadores().jugadoresAceptados
 	}
