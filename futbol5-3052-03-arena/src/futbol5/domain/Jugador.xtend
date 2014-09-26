@@ -161,23 +161,5 @@ class Jugador extends Entity{
 				}
 		calificaciones.add(new Calificacion(this, partido, nota, critica))
 	}
-	
-	/*
-
-	def boolean matchea(Jugador jugador) {
-	matcheaNombre(jugador) && 
-		matcheaApodo(jugador) &&
-		esMenorAnioNacimiento(jugador)
-	}
-	
-	def matcheaNombre(Jugador jugadorBuscado){
-	jugadorBuscado.nombre == null || this.nombre.toLowerCase.startsWith(jugadorBuscado.nombre.toLowerCase)
-	}
-	def matcheaApodo(Jugador jugadorBuscado){
-		jugadorBuscado.apodo == null || this.apodo.toLowerCase.contains(jugadorBuscado.apodo.toLowerCase)
-	}
-	def esMenorAnioNacimiento(Jugador jugadorBuscado){
-		jugadorBuscado.fechaNacimiento == null || jugadorBuscado.fechaNacimiento > this.fechaNacimiento
-	}*/
-	
+		
 }

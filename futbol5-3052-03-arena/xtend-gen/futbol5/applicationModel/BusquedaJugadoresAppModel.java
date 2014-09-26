@@ -1,5 +1,6 @@
 package futbol5.applicationModel;
 
+import futbol5.auxUtils.ModeloBusquedaHyP;
 import futbol5.domain.Jugador;
 import futbol5.homes.HomeJugadores;
 import java.io.Serializable;
@@ -41,26 +42,22 @@ public class BusquedaJugadoresAppModel implements Serializable {
     this._jugadorSeleccionado = jugadorSeleccionado;
   }
   
-  private Float _handicapDesde;
+  private ModeloBusquedaHyP _modelo;
   
-  public Float getHandicapDesde() {
-    return this._handicapDesde;
+  public ModeloBusquedaHyP getModelo() {
+    return this._modelo;
   }
   
-  public void setHandicapDesde(final Float handicapDesde) {
-    this._handicapDesde = handicapDesde;
+  public void setModelo(final ModeloBusquedaHyP modelo) {
+    this._modelo = modelo;
   }
   
-  private Float _handicapHasta;
-  
-  public Float getHandicapHasta() {
-    return this._handicapHasta;
-  }
-  
-  public void setHandicapHasta(final Float handicapHasta) {
-    this._handicapHasta = handicapHasta;
-  }
-  
+  /**
+   * @Property Float handicapDesde
+   * @Property Float handicapHasta
+   * @Property int promedioDesde
+   * @Property int promedioHasta
+   */
   public BusquedaJugadoresAppModel() {
     Jugador _jugador = new Jugador();
     this.setJugadorEjemplo(_jugador);
@@ -69,24 +66,18 @@ public class BusquedaJugadoresAppModel implements Serializable {
     HomeJugadores _homeJugadores = this.getHomeJugadores();
     List<Jugador> _jugadoresAceptados = _homeJugadores.getJugadoresAceptados();
     this.setJugadores(_jugadoresAceptados);
-    Float _float = new Float(0.0F);
-    this.setHandicapDesde(_float);
-    Float _float_1 = new Float(0.0F);
-    this.setHandicapHasta(_float_1);
+    ModeloBusquedaHyP _modeloBusquedaHyP = new ModeloBusquedaHyP();
+    this.setModelo(_modeloBusquedaHyP);
   }
   
   public void search() {
-    HomeJugadores _homeJugadores = this.getHomeJugadores();
-    Float _handicapDesde = this.getHandicapDesde();
-    _homeJugadores.setHandicapDesde(_handicapDesde);
-    HomeJugadores _homeJugadores_1 = this.getHomeJugadores();
-    Float _handicapHasta = this.getHandicapHasta();
-    _homeJugadores_1.setHandicapHasta(_handicapHasta);
+    this.setJugadorSeleccionado(null);
     ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
     this.setJugadores(_arrayList);
-    HomeJugadores _homeJugadores_2 = this.getHomeJugadores();
+    HomeJugadores _homeJugadores = this.getHomeJugadores();
     Jugador _jugadorEjemplo = this.getJugadorEjemplo();
-    List<Jugador> _search = _homeJugadores_2.search(_jugadorEjemplo);
+    ModeloBusquedaHyP _modelo = this.getModelo();
+    List<Jugador> _search = _homeJugadores.search(_jugadorEjemplo, _modelo);
     this.setJugadores(_search);
   }
   
@@ -94,8 +85,8 @@ public class BusquedaJugadoresAppModel implements Serializable {
     Jugador _jugador = new Jugador();
     this.setJugadorEjemplo(_jugador);
     this.setJugadorSeleccionado(null);
-    this.setHandicapDesde(Float.valueOf(0.0F));
-    this.setHandicapHasta(Float.valueOf(0.0F));
+    ModeloBusquedaHyP _modeloBusquedaHyP = new ModeloBusquedaHyP();
+    this.setModelo(_modeloBusquedaHyP);
     this.search();
   }
   

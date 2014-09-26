@@ -1,16 +1,14 @@
 package futbol5.homes
 
 import futbol5.auxUtils.InicializadorJugador
+import futbol5.auxUtils.ModeloBusquedaHyP
 import futbol5.domain.Jugador
-import java.text.SimpleDateFormat
 import java.util.ArrayList
 import java.util.List
 import org.uqbar.commons.model.CollectionBasedHome
 
 class HomeJugadores extends CollectionBasedHome<Jugador> {
 	
-	@Property Float handicapDesde
-	@Property Float handicapHasta 
 	@Property var List <Jugador> jugadoresAceptados
 	// SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -21,19 +19,20 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 	def void init() {
  		jugadoresAceptados = new ArrayList<Jugador>
 		jugadoresAceptados = InicializadorJugador.crearListaDejugadores(10)
-		handicapDesde = new Float(0.0F)
-		handicapHasta = new Float(0.0F)
 	}
 		
-	def search(Jugador jugadorBuscado) {
-			jugadoresAceptados.filter[jugador|this.match(jugador,jugadorBuscado)].toList
+	def search(Jugador jugadorBuscado, ModeloBusquedaHyP modelo){ //Float hdesde, Float hhasta, int pdesde, int phasta) {
+			jugadoresAceptados.filter[jugador|this.match(jugador,jugadorBuscado,modelo)].toList
 	}
 		
-	def match(Jugador jugadorEnLista, Jugador jugadorBuscado) {
+	def match(Jugador jugadorEnLista, Jugador jugadorBuscado, ModeloBusquedaHyP modelo){//Float hdesde, Float hhasta, int pdesde, int phasta) {
 		matcheaNombre(jugadorEnLista,jugadorBuscado) && 
 		matcheaApodo(jugadorEnLista,jugadorBuscado) &&
 		matcheaFecha(jugadorEnLista,jugadorBuscado) &&
-		matcheaHandicap(jugadorEnLista)
+		matcheaHandicapMin(jugadorEnLista, modelo) &&
+		matcheaHandicapMax(jugadorEnLista, modelo) && //hdesde, hhasta) &&
+		matcheaPromedioMin(jugadorEnLista, modelo) && // pdesde, phasta)
+		matcheaPromedioMax(jugadorEnLista, modelo)
 	}
 
 	def matcheaNombre(Jugador jugadorEnLista, Jugador jugadorBuscado){
@@ -43,12 +42,20 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 		jugadorBuscado.apodo == null || jugadorEnLista.apodo.toLowerCase.contains(jugadorBuscado.apodo.toLowerCase)
 	}
 	def matcheaFecha(Jugador jugadorEnLista, Jugador jugadorBuscado){
-		jugadorBuscado.fechaNacimiento == null ||jugadorBuscado.fechaNacimiento > jugadorEnLista.fechaNacimiento
+		jugadorBuscado.fechaNacimiento == null ||jugadorBuscado.fechaNacimiento >= jugadorEnLista.fechaNacimiento
 	}	
-	def matcheaHandicap (Jugador jugadorEnLista){
-		(jugadorEnLista.nivelDeJuego > handicapDesde || jugadorEnLista.nivelDeJuego < handicapHasta) || 
-		(jugadorEnLista.nivelDeJuego > handicapDesde && handicapHasta == 0.0F) ||
-		(jugadorEnLista.nivelDeJuego < handicapHasta && handicapDesde == 0.0F)
+	def matcheaHandicapMin (Jugador jugadorEnLista, ModeloBusquedaHyP modelo){ //Float hdesde, Float hhasta){
+		Math.round(jugadorEnLista.nivelDeJuego) >= modelo.handicapDesde
+		//modelo.handicapDesde <= modelo.handicapHasta
+	}
+	def matcheaHandicapMax(Jugador jugadorEnLista, ModeloBusquedaHyP modelo){
+		Math.round(jugadorEnLista.nivelDeJuego) <= modelo.handicapHasta
+	}
+	def matcheaPromedioMin(Jugador jugadorEnLista, ModeloBusquedaHyP modelo){//int pdesde,int phasta){
+		Math.round(jugadorEnLista.promedio) >= modelo.promedioDesde
+	}
+		def matcheaPromedioMax(Jugador jugadorEnLista, ModeloBusquedaHyP modelo){//int pdesde,int phasta){
+		 Math.round(jugadorEnLista.promedio) <= modelo.promedioHasta
 	}
 	
 	def List<Jugador> getJugadores(){

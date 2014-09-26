@@ -119,12 +119,14 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     binding.setTransformer(_dateAdapter);
     Label labelHandicapD = new Label(izquierda);
     labelHandicapD.setText("Handicap desde:");
+    labelHandicapD.setFontSize(10);
     Label labelHandicapH = new Label(derecha);
     labelHandicapH.setText("Handicap hasta:");
+    labelHandicapH.setFontSize(10);
     TextBox _textBox_2 = new TextBox(izquierda);
     final Procedure1<TextBox> _function_2 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
-        it.<ControlBuilder>bindValueToProperty("handicapDesde");
+        it.<ControlBuilder>bindValueToProperty("modelo.handicapDesde");
         it.setWidth(100);
       }
     };
@@ -132,43 +134,65 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     TextBox _textBox_3 = new TextBox(derecha);
     final Procedure1<TextBox> _function_3 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
-        it.<ControlBuilder>bindValueToProperty("handicapHasta");
+        it.<ControlBuilder>bindValueToProperty("modelo.handicapHasta");
         it.setWidth(100);
       }
     };
     ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_3, _function_3);
+    Label labelPromedioD = new Label(izquierda);
+    labelPromedioD.setText("Promedio desde:");
+    labelPromedioD.setFontSize(10);
+    Label labelPromedioH = new Label(derecha);
+    labelPromedioH.setText("Promedio hasta:");
+    labelPromedioH.setFontSize(10);
+    TextBox _textBox_4 = new TextBox(izquierda);
+    final Procedure1<TextBox> _function_4 = new Procedure1<TextBox>() {
+      public void apply(final TextBox it) {
+        it.<ControlBuilder>bindValueToProperty("modelo.promedioDesde");
+        it.setWidth(100);
+      }
+    };
+    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_4, _function_4);
+    TextBox _textBox_5 = new TextBox(derecha);
+    final Procedure1<TextBox> _function_5 = new Procedure1<TextBox>() {
+      public void apply(final TextBox it) {
+        it.<ControlBuilder>bindValueToProperty("modelo.promedioHasta");
+        it.setWidth(100);
+      }
+    };
+    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_5, _function_5);
     Label labelInfraccion = new Label(izquierda);
     labelInfraccion.setFontSize(10);
     labelInfraccion.setText("Infracciones");
     Selector<Object> _selector = new Selector<Object>(derecha);
-    final Procedure1<Selector<Object>> _function_4 = new Procedure1<Selector<Object>>() {
+    final Procedure1<Selector<Object>> _function_6 = new Procedure1<Selector<Object>>() {
       public void apply(final Selector<Object> it) {
         ObservableProperty _observableProperty = new ObservableProperty(BusquedaJugadoresWindow.this, "eligeInfracciones");
         it.bindItems(_observableProperty);
         it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.infracciones");
       }
     };
-    ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector, _function_4);
+    ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector, _function_6);
     Button _button = new Button(panelBusqueda);
     Button _setCaption = _button.setCaption("Buscar");
-    final Action _function_5 = new Action() {
+    final Action _function_7 = new Action() {
       public void execute() {
         BusquedaJugadoresAppModel _modelObject = BusquedaJugadoresWindow.this.getModelObject();
         _modelObject.search();
       }
     };
-    Button _onClick = _setCaption.onClick(_function_5);
+    Button _onClick = _setCaption.onClick(_function_7);
     SkinnableControl _setFontSize = _onClick.setFontSize(12);
     _setFontSize.setWidth(200);
     Button _button_1 = new Button(panelBusqueda);
     Button _setCaption_1 = _button_1.setCaption("Limpiar");
-    final Action _function_6 = new Action() {
+    final Action _function_8 = new Action() {
       public void execute() {
         BusquedaJugadoresAppModel _modelObject = BusquedaJugadoresWindow.this.getModelObject();
         _modelObject.clear();
       }
     };
-    Button _onClick_1 = _setCaption_1.onClick(_function_6);
+    Button _onClick_1 = _setCaption_1.onClick(_function_8);
     SkinnableControl _setFontSize_1 = _onClick_1.setFontSize(12);
     _setFontSize_1.setWidth(200);
   }

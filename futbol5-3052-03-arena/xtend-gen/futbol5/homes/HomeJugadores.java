@@ -2,6 +2,7 @@ package futbol5.homes;
 
 import com.google.common.base.Objects;
 import futbol5.auxUtils.InicializadorJugador;
+import futbol5.auxUtils.ModeloBusquedaHyP;
 import futbol5.domain.Jugador;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,26 +14,6 @@ import org.uqbar.commons.model.CollectionBasedHome;
 
 @SuppressWarnings("all")
 public class HomeJugadores extends CollectionBasedHome<Jugador> {
-  private Float _handicapDesde;
-  
-  public Float getHandicapDesde() {
-    return this._handicapDesde;
-  }
-  
-  public void setHandicapDesde(final Float handicapDesde) {
-    this._handicapDesde = handicapDesde;
-  }
-  
-  private Float _handicapHasta;
-  
-  public Float getHandicapHasta() {
-    return this._handicapHasta;
-  }
-  
-  public void setHandicapHasta(final Float handicapHasta) {
-    this._handicapHasta = handicapHasta;
-  }
-  
   private List<Jugador> _jugadoresAceptados;
   
   public List<Jugador> getJugadoresAceptados() {
@@ -52,45 +33,62 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     this.setJugadoresAceptados(_arrayList);
     ArrayList<Jugador> _crearListaDejugadores = InicializadorJugador.crearListaDejugadores(10);
     this.setJugadoresAceptados(_crearListaDejugadores);
-    Float _float = new Float(0.0F);
-    this.setHandicapDesde(_float);
-    Float _float_1 = new Float(0.0F);
-    this.setHandicapHasta(_float_1);
   }
   
-  public List<Jugador> search(final Jugador jugadorBuscado) {
+  public List<Jugador> search(final Jugador jugadorBuscado, final ModeloBusquedaHyP modelo) {
     List<Jugador> _jugadoresAceptados = this.getJugadoresAceptados();
     final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
       public Boolean apply(final Jugador jugador) {
-        return Boolean.valueOf(HomeJugadores.this.match(jugador, jugadorBuscado));
+        return Boolean.valueOf(HomeJugadores.this.match(jugador, jugadorBuscado, modelo));
       }
     };
     Iterable<Jugador> _filter = IterableExtensions.<Jugador>filter(_jugadoresAceptados, _function);
     return IterableExtensions.<Jugador>toList(_filter);
   }
   
-  public boolean match(final Jugador jugadorEnLista, final Jugador jugadorBuscado) {
+  public boolean match(final Jugador jugadorEnLista, final Jugador jugadorBuscado, final ModeloBusquedaHyP modelo) {
     boolean _and = false;
     boolean _and_1 = false;
     boolean _and_2 = false;
+    boolean _and_3 = false;
+    boolean _and_4 = false;
+    boolean _and_5 = false;
     boolean _matcheaNombre = this.matcheaNombre(jugadorEnLista, jugadorBuscado);
     if (!_matcheaNombre) {
-      _and_2 = false;
+      _and_5 = false;
     } else {
       boolean _matcheaApodo = this.matcheaApodo(jugadorEnLista, jugadorBuscado);
-      _and_2 = _matcheaApodo;
+      _and_5 = _matcheaApodo;
+    }
+    if (!_and_5) {
+      _and_4 = false;
+    } else {
+      boolean _matcheaFecha = this.matcheaFecha(jugadorEnLista, jugadorBuscado);
+      _and_4 = _matcheaFecha;
+    }
+    if (!_and_4) {
+      _and_3 = false;
+    } else {
+      boolean _matcheaHandicapMin = this.matcheaHandicapMin(jugadorEnLista, modelo);
+      _and_3 = _matcheaHandicapMin;
+    }
+    if (!_and_3) {
+      _and_2 = false;
+    } else {
+      boolean _matcheaHandicapMax = this.matcheaHandicapMax(jugadorEnLista, modelo);
+      _and_2 = _matcheaHandicapMax;
     }
     if (!_and_2) {
       _and_1 = false;
     } else {
-      boolean _matcheaFecha = this.matcheaFecha(jugadorEnLista, jugadorBuscado);
-      _and_1 = _matcheaFecha;
+      boolean _matcheaPromedioMin = this.matcheaPromedioMin(jugadorEnLista, modelo);
+      _and_1 = _matcheaPromedioMin;
     }
     if (!_and_1) {
       _and = false;
     } else {
-      boolean _matcheaHandicap = this.matcheaHandicap(jugadorEnLista);
-      _and = _matcheaHandicap;
+      boolean _matcheaPromedioMax = this.matcheaPromedioMax(jugadorEnLista, modelo);
+      _and = _matcheaPromedioMax;
     }
     return _and;
   }
@@ -138,60 +136,38 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     } else {
       Date _fechaNacimiento_1 = jugadorBuscado.getFechaNacimiento();
       Date _fechaNacimiento_2 = jugadorEnLista.getFechaNacimiento();
-      boolean _greaterThan = (_fechaNacimiento_1.compareTo(_fechaNacimiento_2) > 0);
-      _or = _greaterThan;
+      boolean _greaterEqualsThan = (_fechaNacimiento_1.compareTo(_fechaNacimiento_2) >= 0);
+      _or = _greaterEqualsThan;
     }
     return _or;
   }
   
-  public boolean matcheaHandicap(final Jugador jugadorEnLista) {
-    boolean _or = false;
-    boolean _or_1 = false;
-    boolean _or_2 = false;
+  public boolean matcheaHandicapMin(final Jugador jugadorEnLista, final ModeloBusquedaHyP modelo) {
     float _nivelDeJuego = jugadorEnLista.getNivelDeJuego();
-    Float _handicapDesde = this.getHandicapDesde();
-    boolean _greaterThan = (_nivelDeJuego > (_handicapDesde).floatValue());
-    if (_greaterThan) {
-      _or_2 = true;
-    } else {
-      float _nivelDeJuego_1 = jugadorEnLista.getNivelDeJuego();
-      Float _handicapHasta = this.getHandicapHasta();
-      boolean _lessThan = (_nivelDeJuego_1 < (_handicapHasta).floatValue());
-      _or_2 = _lessThan;
-    }
-    if (_or_2) {
-      _or_1 = true;
-    } else {
-      boolean _and = false;
-      float _nivelDeJuego_2 = jugadorEnLista.getNivelDeJuego();
-      Float _handicapDesde_1 = this.getHandicapDesde();
-      boolean _greaterThan_1 = (_nivelDeJuego_2 > (_handicapDesde_1).floatValue());
-      if (!_greaterThan_1) {
-        _and = false;
-      } else {
-        Float _handicapHasta_1 = this.getHandicapHasta();
-        boolean _equals = ((_handicapHasta_1).floatValue() == 0.0F);
-        _and = _equals;
-      }
-      _or_1 = _and;
-    }
-    if (_or_1) {
-      _or = true;
-    } else {
-      boolean _and_1 = false;
-      float _nivelDeJuego_3 = jugadorEnLista.getNivelDeJuego();
-      Float _handicapHasta_2 = this.getHandicapHasta();
-      boolean _lessThan_1 = (_nivelDeJuego_3 < (_handicapHasta_2).floatValue());
-      if (!_lessThan_1) {
-        _and_1 = false;
-      } else {
-        Float _handicapDesde_2 = this.getHandicapDesde();
-        boolean _equals_1 = ((_handicapDesde_2).floatValue() == 0.0F);
-        _and_1 = _equals_1;
-      }
-      _or = _and_1;
-    }
-    return _or;
+    int _round = Math.round(_nivelDeJuego);
+    int _handicapDesde = modelo.getHandicapDesde();
+    return (_round >= _handicapDesde);
+  }
+  
+  public boolean matcheaHandicapMax(final Jugador jugadorEnLista, final ModeloBusquedaHyP modelo) {
+    float _nivelDeJuego = jugadorEnLista.getNivelDeJuego();
+    int _round = Math.round(_nivelDeJuego);
+    int _handicapHasta = modelo.getHandicapHasta();
+    return (_round <= _handicapHasta);
+  }
+  
+  public boolean matcheaPromedioMin(final Jugador jugadorEnLista, final ModeloBusquedaHyP modelo) {
+    int _promedio = jugadorEnLista.getPromedio();
+    int _round = Math.round(_promedio);
+    int _promedioDesde = modelo.getPromedioDesde();
+    return (_round >= _promedioDesde);
+  }
+  
+  public boolean matcheaPromedioMax(final Jugador jugadorEnLista, final ModeloBusquedaHyP modelo) {
+    int _promedio = jugadorEnLista.getPromedio();
+    int _round = Math.round(_promedio);
+    int _promedioHasta = modelo.getPromedioHasta();
+    return (_round <= _promedioHasta);
   }
   
   public List<Jugador> getJugadores() {

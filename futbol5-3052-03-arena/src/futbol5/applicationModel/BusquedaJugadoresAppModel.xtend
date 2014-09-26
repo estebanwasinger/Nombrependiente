@@ -1,5 +1,6 @@
 package futbol5.applicationModel
 
+import futbol5.auxUtils.ModeloBusquedaHyP
 import futbol5.domain.Jugador
 import futbol5.homes.HomeJugadores
 import java.io.Serializable
@@ -14,29 +15,37 @@ class BusquedaJugadoresAppModel implements Serializable{
 	@Property Jugador jugadorEjemplo
 	@Property List <Jugador> jugadores
 	@Property Jugador jugadorSeleccionado
-	@Property Float handicapDesde
+	@Property ModeloBusquedaHyP modelo
+	/*@Property Float handicapDesde 
 	@Property Float handicapHasta
+	@Property int promedioDesde 
+	@Property int promedioHasta */
 	
 	new(){
 		jugadorEjemplo = new Jugador
 		jugadores = new ArrayList<Jugador>
 		jugadores =  getHomeJugadores().jugadoresAceptados
-		handicapDesde = new Float(0.0F)
-		handicapHasta = new Float(0.0F)
+		/*handicapDesde = new Float(1.0F)
+		handicapHasta = new Float(10.0F)
+		promedioDesde = 0
+		promedioHasta = 10*/
+		modelo = new ModeloBusquedaHyP
 	}
 
 	def void search() { 
-		getHomeJugadores().handicapDesde = this.handicapDesde
-		getHomeJugadores().handicapHasta = this.handicapHasta
+		jugadorSeleccionado = null
 		jugadores = new ArrayList<Jugador>
-		jugadores = getHomeJugadores().search(jugadorEjemplo)
+		jugadores = getHomeJugadores().search(jugadorEjemplo,modelo)//, handicapDesde, handicapHasta, promedioDesde, promedioHasta)
 	}
 	
 	def void clear() {
 		jugadorEjemplo = new Jugador
 		jugadorSeleccionado = null
-		handicapDesde = 0.0F
-		handicapHasta = 0.0F
+		/*handicapDesde = new Float(1.0F)
+		handicapHasta = new Float(10.0F)
+		promedioDesde = 0
+		promedioHasta = 10*/
+		modelo = new ModeloBusquedaHyP
 		search()
 	}
 	

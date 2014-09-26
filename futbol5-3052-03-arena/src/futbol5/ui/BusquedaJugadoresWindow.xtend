@@ -93,31 +93,34 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		//Por rango desde/hasta del hándicap (puede ingresarse sólo desde, o sólo hasta) //
 		
 		var labelHandicapD = new Label(izquierda)
-		labelHandicapD.setText = "Handicap desde:" 		
+		labelHandicapD.setText = "Handicap desde:" 	
+		labelHandicapD.fontSize = 10	
 		var labelHandicapH = new Label(derecha)
 		labelHandicapH.setText = "Handicap hasta:" 
+		labelHandicapH.fontSize = 10
 		
 		new TextBox(izquierda)=>
-			[bindValueToProperty("handicapDesde")
+			[bindValueToProperty("modelo.handicapDesde")
 			width = 100]	
 		new TextBox(derecha)=>
-			[bindValueToProperty("handicapHasta")
+			[bindValueToProperty("modelo.handicapHasta")
 			width = 100]	
-		
-		/* new Selector(izquierda)=>[
-			//allowNull = false
-			bindItems(new ObservableProperty(this, "eligeHandicap"))
-			//ObservableUtils.firePropertyChanged(modelObject, "tipoHandicap", this.eligeHandicap)
-			bindValueToProperty("tipoHandicap")
-				]
-		
-		new TextBox(derecha)=>[
-			bindValueToProperty("jugadorEjemplo.nivelDeJuego")
-			width =20
-			]	*/
 		
 		//Por rango desde/hasta del promedio de último partido //
 		
+		var labelPromedioD = new Label(izquierda)
+		labelPromedioD.setText = "Promedio desde:" 	
+		labelPromedioD.fontSize = 10	
+		var labelPromedioH = new Label(derecha)
+		labelPromedioH.setText = "Promedio hasta:" 
+		labelPromedioH.fontSize = 10
+		
+		new TextBox(izquierda)=>
+			[bindValueToProperty("modelo.promedioDesde")
+			width = 100]	
+		new TextBox(derecha)=>
+			[bindValueToProperty("modelo.promedioHasta")
+			width = 100]			
 
 		//Filtrar sólo los que tuvieron infracciones, sólo los que no tuvieron infracciones, todos //
 		var labelInfraccion = new Label(izquierda)
