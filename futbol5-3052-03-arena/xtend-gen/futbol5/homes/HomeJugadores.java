@@ -3,7 +3,6 @@ package futbol5.homes;
 import com.google.common.base.Objects;
 import futbol5.auxUtils.InicializadorJugador;
 import futbol5.domain.Jugador;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,14 +13,24 @@ import org.uqbar.commons.model.CollectionBasedHome;
 
 @SuppressWarnings("all")
 public class HomeJugadores extends CollectionBasedHome<Jugador> {
-  private String _tipoHandicap;
+  private Float _handicapDesde;
   
-  public String getTipoHandicap() {
-    return this._tipoHandicap;
+  public Float getHandicapDesde() {
+    return this._handicapDesde;
   }
   
-  public void setTipoHandicap(final String tipoHandicap) {
-    this._tipoHandicap = tipoHandicap;
+  public void setHandicapDesde(final Float handicapDesde) {
+    this._handicapDesde = handicapDesde;
+  }
+  
+  private Float _handicapHasta;
+  
+  public Float getHandicapHasta() {
+    return this._handicapHasta;
+  }
+  
+  public void setHandicapHasta(final Float handicapHasta) {
+    this._handicapHasta = handicapHasta;
   }
   
   private List<Jugador> _jugadoresAceptados;
@@ -34,8 +43,6 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     this._jugadoresAceptados = jugadoresAceptados;
   }
   
-  private SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
-  
   public HomeJugadores() {
     this.init();
   }
@@ -45,13 +52,12 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     this.setJugadoresAceptados(_arrayList);
     ArrayList<Jugador> _crearListaDejugadores = InicializadorJugador.crearListaDejugadores(10);
     this.setJugadoresAceptados(_crearListaDejugadores);
+    Float _float = new Float(0.0F);
+    this.setHandicapDesde(_float);
+    Float _float_1 = new Float(0.0F);
+    this.setHandicapHasta(_float_1);
   }
   
-  /**
-   * def void agregarAceptado(Jugador jugador){
-   * jugadoresAceptados.add(jugador)
-   * }
-   */
   public List<Jugador> search(final Jugador jugadorBuscado) {
     List<Jugador> _jugadoresAceptados = this.getJugadoresAceptados();
     final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
@@ -64,29 +70,29 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
   }
   
   public boolean match(final Jugador jugadorEnLista, final Jugador jugadorBuscado) {
-    boolean _or = false;
-    boolean _or_1 = false;
-    boolean _or_2 = false;
+    boolean _and = false;
+    boolean _and_1 = false;
+    boolean _and_2 = false;
     boolean _matcheaNombre = this.matcheaNombre(jugadorEnLista, jugadorBuscado);
-    if (_matcheaNombre) {
-      _or_2 = true;
+    if (!_matcheaNombre) {
+      _and_2 = false;
     } else {
       boolean _matcheaApodo = this.matcheaApodo(jugadorEnLista, jugadorBuscado);
-      _or_2 = _matcheaApodo;
+      _and_2 = _matcheaApodo;
     }
-    if (_or_2) {
-      _or_1 = true;
+    if (!_and_2) {
+      _and_1 = false;
     } else {
       boolean _matcheaFecha = this.matcheaFecha(jugadorEnLista, jugadorBuscado);
-      _or_1 = _matcheaFecha;
+      _and_1 = _matcheaFecha;
     }
-    if (_or_1) {
-      _or = true;
+    if (!_and_1) {
+      _and = false;
     } else {
-      boolean _matcheaHandicap = this.matcheaHandicap(jugadorEnLista, jugadorBuscado);
-      _or = _matcheaHandicap;
+      boolean _matcheaHandicap = this.matcheaHandicap(jugadorEnLista);
+      _and = _matcheaHandicap;
     }
-    return _or;
+    return _and;
   }
   
   public boolean matcheaNombre(final Jugador jugadorEnLista, final Jugador jugadorBuscado) {
@@ -138,44 +144,54 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     return _or;
   }
   
-  public boolean matcheaHandicap(final Jugador jugadorEnLista, final Jugador jugadorBuscado) {
-    boolean _xblockexpression = false;
-    {
-      float _nivelDeJuego = jugadorBuscado.getNivelDeJuego();
-      int nivel = Math.round(_nivelDeJuego);
-      boolean _xifexpression = false;
-      String _tipoHandicap = this.getTipoHandicap();
-      boolean _equals = Objects.equal(_tipoHandicap, "Desde");
-      if (_equals) {
-        boolean _or = false;
-        String _string = Integer.valueOf(nivel).toString();
-        boolean _equals_1 = Objects.equal(_string, null);
-        if (_equals_1) {
-          _or = true;
-        } else {
-          float _nivelDeJuego_1 = jugadorEnLista.getNivelDeJuego();
-          float _nivelDeJuego_2 = jugadorBuscado.getNivelDeJuego();
-          boolean _greaterThan = (_nivelDeJuego_1 > _nivelDeJuego_2);
-          _or = _greaterThan;
-        }
-        _xifexpression = _or;
-      } else {
-        boolean _or_1 = false;
-        String _string_1 = Integer.valueOf(nivel).toString();
-        boolean _equals_2 = Objects.equal(_string_1, null);
-        if (_equals_2) {
-          _or_1 = true;
-        } else {
-          float _nivelDeJuego_3 = jugadorEnLista.getNivelDeJuego();
-          float _nivelDeJuego_4 = jugadorBuscado.getNivelDeJuego();
-          boolean _lessThan = (_nivelDeJuego_3 < _nivelDeJuego_4);
-          _or_1 = _lessThan;
-        }
-        _xifexpression = _or_1;
-      }
-      _xblockexpression = _xifexpression;
+  public boolean matcheaHandicap(final Jugador jugadorEnLista) {
+    boolean _or = false;
+    boolean _or_1 = false;
+    boolean _or_2 = false;
+    float _nivelDeJuego = jugadorEnLista.getNivelDeJuego();
+    Float _handicapDesde = this.getHandicapDesde();
+    boolean _greaterThan = (_nivelDeJuego > (_handicapDesde).floatValue());
+    if (_greaterThan) {
+      _or_2 = true;
+    } else {
+      float _nivelDeJuego_1 = jugadorEnLista.getNivelDeJuego();
+      Float _handicapHasta = this.getHandicapHasta();
+      boolean _lessThan = (_nivelDeJuego_1 < (_handicapHasta).floatValue());
+      _or_2 = _lessThan;
     }
-    return _xblockexpression;
+    if (_or_2) {
+      _or_1 = true;
+    } else {
+      boolean _and = false;
+      float _nivelDeJuego_2 = jugadorEnLista.getNivelDeJuego();
+      Float _handicapDesde_1 = this.getHandicapDesde();
+      boolean _greaterThan_1 = (_nivelDeJuego_2 > (_handicapDesde_1).floatValue());
+      if (!_greaterThan_1) {
+        _and = false;
+      } else {
+        Float _handicapHasta_1 = this.getHandicapHasta();
+        boolean _equals = ((_handicapHasta_1).floatValue() == 0.0F);
+        _and = _equals;
+      }
+      _or_1 = _and;
+    }
+    if (_or_1) {
+      _or = true;
+    } else {
+      boolean _and_1 = false;
+      float _nivelDeJuego_3 = jugadorEnLista.getNivelDeJuego();
+      Float _handicapHasta_2 = this.getHandicapHasta();
+      boolean _lessThan_1 = (_nivelDeJuego_3 < (_handicapHasta_2).floatValue());
+      if (!_lessThan_1) {
+        _and_1 = false;
+      } else {
+        Float _handicapDesde_2 = this.getHandicapDesde();
+        boolean _equals_1 = ((_handicapDesde_2).floatValue() == 0.0F);
+        _and_1 = _equals_1;
+      }
+      _or = _and_1;
+    }
+    return _or;
   }
   
   public List<Jugador> getJugadores() {

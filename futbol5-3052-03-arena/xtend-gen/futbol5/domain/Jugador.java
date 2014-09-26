@@ -202,7 +202,6 @@ public class Jugador extends Entity {
     this.setInfracciones(_arrayList_1);
     LinkedList<Calificacion> _linkedList = new LinkedList<Calificacion>();
     this.setCalificaciones(_linkedList);
-    this.setNivelDeJuego(0);
   }
   
   public void validarNombre() {

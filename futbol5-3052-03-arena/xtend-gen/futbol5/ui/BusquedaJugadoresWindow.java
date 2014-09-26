@@ -111,71 +111,64 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     Label labelFecha = new Label(izquierda);
     labelFecha.setText("Fecha de nacimiento menor a:");
     labelFecha.setFontSize(10);
-    TextBox _textBox_2 = new TextBox(derecha);
+    final TextBox textBoxFecha = new TextBox(derecha);
+    DateTextFilter _dateTextFilter = new DateTextFilter();
+    textBoxFecha.withFilter(_dateTextFilter);
+    final Binding<ControlBuilder> binding = textBoxFecha.<ControlBuilder>bindValueToProperty("jugadorEjemplo.fechaNacimiento");
+    DateAdapter _dateAdapter = new DateAdapter();
+    binding.setTransformer(_dateAdapter);
+    Label labelHandicapD = new Label(izquierda);
+    labelHandicapD.setText("Handicap desde:");
+    Label labelHandicapH = new Label(derecha);
+    labelHandicapH.setText("Handicap hasta:");
+    TextBox _textBox_2 = new TextBox(izquierda);
     final Procedure1<TextBox> _function_2 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
-        DateTextFilter _dateTextFilter = new DateTextFilter();
-        it.withFilter(_dateTextFilter);
-        Binding<ControlBuilder> _bindValueToProperty = it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.fechaNacimiento");
-        DateAdapter _dateAdapter = new DateAdapter();
-        _bindValueToProperty.setTransformer(_dateAdapter);
+        it.<ControlBuilder>bindValueToProperty("handicapDesde");
+        it.setWidth(100);
       }
     };
     ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_2, _function_2);
-    Label labelHandicap = new Label(izquierda);
-    labelHandicap.setFontSize(10);
-    labelHandicap.setText("Handicap");
-    Selector<Object> _selector = new Selector<Object>(izquierda);
-    final Procedure1<Selector<Object>> _function_3 = new Procedure1<Selector<Object>>() {
-      public void apply(final Selector<Object> it) {
-        it.allowNull(false);
-        ObservableProperty _observableProperty = new ObservableProperty(BusquedaJugadoresWindow.this, "eligeHandicap");
-        it.bindItems(_observableProperty);
-        it.<ControlBuilder>bindValueToProperty("tipoHandicap");
-      }
-    };
-    ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector, _function_3);
     TextBox _textBox_3 = new TextBox(derecha);
-    final Procedure1<TextBox> _function_4 = new Procedure1<TextBox>() {
+    final Procedure1<TextBox> _function_3 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
-        it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.nivelDeJuego");
-        it.setWidth(20);
+        it.<ControlBuilder>bindValueToProperty("handicapHasta");
+        it.setWidth(100);
       }
     };
-    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_3, _function_4);
+    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_3, _function_3);
     Label labelInfraccion = new Label(izquierda);
     labelInfraccion.setFontSize(10);
     labelInfraccion.setText("Infracciones");
-    Selector<Object> _selector_1 = new Selector<Object>(derecha);
-    final Procedure1<Selector<Object>> _function_5 = new Procedure1<Selector<Object>>() {
+    Selector<Object> _selector = new Selector<Object>(derecha);
+    final Procedure1<Selector<Object>> _function_4 = new Procedure1<Selector<Object>>() {
       public void apply(final Selector<Object> it) {
-        it.allowNull(false);
         ObservableProperty _observableProperty = new ObservableProperty(BusquedaJugadoresWindow.this, "eligeInfracciones");
         it.bindItems(_observableProperty);
         it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.infracciones");
       }
     };
-    ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector_1, _function_5);
+    ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector, _function_4);
     Button _button = new Button(panelBusqueda);
     Button _setCaption = _button.setCaption("Buscar");
-    final Action _function_6 = new Action() {
+    final Action _function_5 = new Action() {
       public void execute() {
         BusquedaJugadoresAppModel _modelObject = BusquedaJugadoresWindow.this.getModelObject();
         _modelObject.search();
       }
     };
-    Button _onClick = _setCaption.onClick(_function_6);
+    Button _onClick = _setCaption.onClick(_function_5);
     SkinnableControl _setFontSize = _onClick.setFontSize(12);
     _setFontSize.setWidth(200);
     Button _button_1 = new Button(panelBusqueda);
     Button _setCaption_1 = _button_1.setCaption("Limpiar");
-    final Action _function_7 = new Action() {
+    final Action _function_6 = new Action() {
       public void execute() {
         BusquedaJugadoresAppModel _modelObject = BusquedaJugadoresWindow.this.getModelObject();
         _modelObject.clear();
       }
     };
-    Button _onClick_1 = _setCaption_1.onClick(_function_7);
+    Button _onClick_1 = _setCaption_1.onClick(_function_6);
     SkinnableControl _setFontSize_1 = _onClick_1.setFontSize(12);
     _setFontSize_1.setWidth(200);
   }
@@ -249,6 +242,6 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
   }
   
   public List<String> getEligeHandicap() {
-    return Collections.<String>unmodifiableList(Lists.<String>newArrayList("Desde", "Hasta"));
+    return Collections.<String>unmodifiableList(Lists.<String>newArrayList("Handicap desde", "Handicap hasta"));
   }
 }

@@ -69,8 +69,8 @@ public class InicializadorJugador {
   public static String fechaRandom() {
     String _xblockexpression = null;
     {
-      String[] arrayFechas = { "09-01-1991", "09-01-1993", "09-01-1999", "09-01-2000", "09-01-2003", "09-01-1993" };
-      int _nRan = InicializadorJugador.nRan(0, 6);
+      String[] arrayFechas = { "09-01-1991", "09-01-1993", "09-01-1999", "09-01-2000", "09-01-2003", "09-01-1997", "09-01-1987", "09-01-2006", "09-01-2007", "09-01-2009" };
+      int _nRan = InicializadorJugador.nRan(0, 10);
       _xblockexpression = arrayFechas[_nRan];
     }
     return _xblockexpression;

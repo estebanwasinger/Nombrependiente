@@ -3,7 +3,6 @@ package futbol5.ui
 import futbol5.applicationModel.BusquedaJugadoresAppModel
 import futbol5.auxUtils.DateTextFilter
 import futbol5.domain.Jugador
-import futbol5.homes.HomeJugadores
 import org.uqbar.arena.bindings.DateAdapter
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.bindings.ObservableProperty
@@ -18,9 +17,8 @@ import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
-import org.uqbar.commons.utils.ApplicationContext
+import org.uqbar.commons.model.ObservableUtils
 import org.uqbar.commons.utils.Observable
-import org.uqbar.arena.widgets.Link
 
 @Observable
 class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
@@ -72,8 +70,7 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		
 		new TextBox(derecha)=>
 			[bindValueToProperty("jugadorEjemplo.nombre")
-			width = 200
-			]
+			width = 200]
 		
 		//Por apodo “contiene” //	
 		var labelApodo = new Label(izquierda)
@@ -88,26 +85,36 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		var labelFecha = new Label(izquierda)
 		labelFecha.setText = "Fecha de nacimiento menor a:" 
 		labelFecha.fontSize = 10
-		new TextBox(derecha) =>[
-			withFilter(new DateTextFilter)
-			bindValueToProperty("jugadorEjemplo.fechaNacimiento").transformer = new DateAdapter		
-			]
+		val textBoxFecha = new TextBox(derecha)
+		textBoxFecha.withFilter(new DateTextFilter)
+		val binding = textBoxFecha.bindValueToProperty("jugadorEjemplo.fechaNacimiento")
+		binding.setTransformer(new DateAdapter)
 			
 		//Por rango desde/hasta del hándicap (puede ingresarse sólo desde, o sólo hasta) //
-		var labelHandicap = new Label(izquierda)
-		labelHandicap.fontSize = 10
-		labelHandicap.text = "Handicap" 
 		
-		 new Selector(izquierda)=>[
-			allowNull = false
+		var labelHandicapD = new Label(izquierda)
+		labelHandicapD.setText = "Handicap desde:" 		
+		var labelHandicapH = new Label(derecha)
+		labelHandicapH.setText = "Handicap hasta:" 
+		
+		new TextBox(izquierda)=>
+			[bindValueToProperty("handicapDesde")
+			width = 100]	
+		new TextBox(derecha)=>
+			[bindValueToProperty("handicapHasta")
+			width = 100]	
+		
+		/* new Selector(izquierda)=>[
+			//allowNull = false
 			bindItems(new ObservableProperty(this, "eligeHandicap"))
+			//ObservableUtils.firePropertyChanged(modelObject, "tipoHandicap", this.eligeHandicap)
 			bindValueToProperty("tipoHandicap")
 				]
 		
 		new TextBox(derecha)=>[
 			bindValueToProperty("jugadorEjemplo.nivelDeJuego")
 			width =20
-			]	
+			]	*/
 		
 		//Por rango desde/hasta del promedio de último partido //
 		
@@ -118,7 +125,7 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		labelInfraccion.text = "Infracciones" 
 
 		new Selector(derecha)=>[
-			allowNull = false
+			//allowNull = false
 			bindItems(new ObservableProperty(this, "eligeInfracciones"))
 			bindValueToProperty("jugadorEjemplo.infracciones")
 		]
@@ -192,9 +199,8 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		}
 		
 	def getEligeHandicap() {
-			#["Desde","Hasta"]
-		}
-		
+			#["Handicap desde","Handicap hasta"]
+		}		
 	}
 	
 class DateBox extends TextBox {
@@ -202,13 +208,9 @@ class DateBox extends TextBox {
 		super(container)
 	}
 
-	/*override bindValueToProperty(String propertyName) {
+override bindValueToProperty(String propertyName) {
 		val binding = super.bindValueToProperty(propertyName)
 		this.withFilter(new DateTextFilter)
 		binding
-		}	*/
-		
-	/*	def homeJugadores() {
-		ApplicationContext::instance.getSingleton(typeof(Jugador)) as HomeJugadores
-	}	*/		
+		}	
 }

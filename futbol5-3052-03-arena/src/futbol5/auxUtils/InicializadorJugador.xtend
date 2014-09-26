@@ -38,8 +38,8 @@ class InicializadorJugador {
 	}
 	
 	def static String fechaRandom(){
-		var String[] arrayFechas = #["09-01-1991","09-01-1993","09-01-1999","09-01-2000","09-01-2003","09-01-1993"]
-		arrayFechas.get( nRan(0,6))
+		var String[] arrayFechas = #["09-01-1991","09-01-1993","09-01-1999","09-01-2000","09-01-2003","09-01-1997","09-01-1987","09-01-2006","09-01-2007","09-01-2009"]
+		arrayFechas.get( nRan(0,10))
 	}
 	
 	def static listaAmigos(int max){

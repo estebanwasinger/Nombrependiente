@@ -41,39 +41,62 @@ public class BusquedaJugadoresAppModel implements Serializable {
     this._jugadorSeleccionado = jugadorSeleccionado;
   }
   
-  private String _tipoHandicap;
+  private Float _handicapDesde;
   
-  public String getTipoHandicap() {
-    return this._tipoHandicap;
+  public Float getHandicapDesde() {
+    return this._handicapDesde;
   }
   
-  public void setTipoHandicap(final String tipoHandicap) {
-    this._tipoHandicap = tipoHandicap;
+  public void setHandicapDesde(final Float handicapDesde) {
+    this._handicapDesde = handicapDesde;
+  }
+  
+  private Float _handicapHasta;
+  
+  public Float getHandicapHasta() {
+    return this._handicapHasta;
+  }
+  
+  public void setHandicapHasta(final Float handicapHasta) {
+    this._handicapHasta = handicapHasta;
   }
   
   public BusquedaJugadoresAppModel() {
+    Jugador _jugador = new Jugador();
+    this.setJugadorEjemplo(_jugador);
     ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
     this.setJugadores(_arrayList);
     HomeJugadores _homeJugadores = this.getHomeJugadores();
     List<Jugador> _jugadoresAceptados = _homeJugadores.getJugadoresAceptados();
     this.setJugadores(_jugadoresAceptados);
+    Float _float = new Float(0.0F);
+    this.setHandicapDesde(_float);
+    Float _float_1 = new Float(0.0F);
+    this.setHandicapHasta(_float_1);
   }
   
   public void search() {
-    this.getHomeJugadores();
-    String _tipoHandicap = this.getTipoHandicap();
-    this.setTipoHandicap(_tipoHandicap);
+    HomeJugadores _homeJugadores = this.getHomeJugadores();
+    Float _handicapDesde = this.getHandicapDesde();
+    _homeJugadores.setHandicapDesde(_handicapDesde);
+    HomeJugadores _homeJugadores_1 = this.getHomeJugadores();
+    Float _handicapHasta = this.getHandicapHasta();
+    _homeJugadores_1.setHandicapHasta(_handicapHasta);
     ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
     this.setJugadores(_arrayList);
-    HomeJugadores _homeJugadores = this.getHomeJugadores();
+    HomeJugadores _homeJugadores_2 = this.getHomeJugadores();
     Jugador _jugadorEjemplo = this.getJugadorEjemplo();
-    List<Jugador> _search = _homeJugadores.search(_jugadorEjemplo);
+    List<Jugador> _search = _homeJugadores_2.search(_jugadorEjemplo);
     this.setJugadores(_search);
   }
   
   public void clear() {
-    this.setJugadorEjemplo(null);
+    Jugador _jugador = new Jugador();
+    this.setJugadorEjemplo(_jugador);
     this.setJugadorSeleccionado(null);
+    this.setHandicapDesde(Float.valueOf(0.0F));
+    this.setHandicapHasta(Float.valueOf(0.0F));
+    this.search();
   }
   
   public HomeJugadores getHomeJugadores() {

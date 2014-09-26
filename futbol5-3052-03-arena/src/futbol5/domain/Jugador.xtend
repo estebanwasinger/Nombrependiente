@@ -69,7 +69,7 @@ class Jugador extends Entity{
 		amigos = new ArrayList<Jugador>
 		infracciones = new ArrayList<Infraccion>
 		calificaciones = new LinkedList<Calificacion>
-		nivelDeJuego = 0
+		//nivelDeJuego = 0
 	}
 	
 	def validarNombre() {
