@@ -52,12 +52,6 @@ public class BusquedaJugadoresAppModel implements Serializable {
     this._modelo = modelo;
   }
   
-  /**
-   * @Property Float handicapDesde
-   * @Property Float handicapHasta
-   * @Property int promedioDesde
-   * @Property int promedioHasta
-   */
   public BusquedaJugadoresAppModel() {
     Jugador _jugador = new Jugador();
     this.setJugadorEjemplo(_jugador);

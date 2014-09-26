@@ -10,7 +10,6 @@ import org.uqbar.commons.model.CollectionBasedHome
 class HomeJugadores extends CollectionBasedHome<Jugador> {
 	
 	@Property var List <Jugador> jugadoresAceptados
-	// SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
 
 	new() {
 		this.init
@@ -19,20 +18,23 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 	def void init() {
  		jugadoresAceptados = new ArrayList<Jugador>
 		jugadoresAceptados = InicializadorJugador.crearListaDejugadores(10)
+		jugadoresAceptados.get(3).infracciones.clear
+		jugadoresAceptados.get(5).infracciones.clear
 	}
 		
-	def search(Jugador jugadorBuscado, ModeloBusquedaHyP modelo){ //Float hdesde, Float hhasta, int pdesde, int phasta) {
+	def search(Jugador jugadorBuscado, ModeloBusquedaHyP modelo){ 
 			jugadoresAceptados.filter[jugador|this.match(jugador,jugadorBuscado,modelo)].toList
 	}
 		
-	def match(Jugador jugadorEnLista, Jugador jugadorBuscado, ModeloBusquedaHyP modelo){//Float hdesde, Float hhasta, int pdesde, int phasta) {
+	def match(Jugador jugadorEnLista, Jugador jugadorBuscado, ModeloBusquedaHyP modelo){
 		matcheaNombre(jugadorEnLista,jugadorBuscado) && 
 		matcheaApodo(jugadorEnLista,jugadorBuscado) &&
 		matcheaFecha(jugadorEnLista,jugadorBuscado) &&
 		matcheaHandicapMin(jugadorEnLista, modelo) &&
-		matcheaHandicapMax(jugadorEnLista, modelo) && //hdesde, hhasta) &&
-		matcheaPromedioMin(jugadorEnLista, modelo) && // pdesde, phasta)
-		matcheaPromedioMax(jugadorEnLista, modelo)
+		matcheaHandicapMax(jugadorEnLista, modelo) &&
+		matcheaPromedioMin(jugadorEnLista, modelo) && 
+		matcheaPromedioMax(jugadorEnLista, modelo) &&
+		matcheaInfracciones(jugadorEnLista, modelo)
 	}
 
 	def matcheaNombre(Jugador jugadorEnLista, Jugador jugadorBuscado){
@@ -44,19 +46,25 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 	def matcheaFecha(Jugador jugadorEnLista, Jugador jugadorBuscado){
 		jugadorBuscado.fechaNacimiento == null ||jugadorBuscado.fechaNacimiento >= jugadorEnLista.fechaNacimiento
 	}	
-	def matcheaHandicapMin (Jugador jugadorEnLista, ModeloBusquedaHyP modelo){ //Float hdesde, Float hhasta){
+	def matcheaHandicapMin (Jugador jugadorEnLista, ModeloBusquedaHyP modelo){ 
 		Math.round(jugadorEnLista.nivelDeJuego) >= modelo.handicapDesde
-		//modelo.handicapDesde <= modelo.handicapHasta
 	}
 	def matcheaHandicapMax(Jugador jugadorEnLista, ModeloBusquedaHyP modelo){
 		Math.round(jugadorEnLista.nivelDeJuego) <= modelo.handicapHasta
 	}
-	def matcheaPromedioMin(Jugador jugadorEnLista, ModeloBusquedaHyP modelo){//int pdesde,int phasta){
+	def matcheaPromedioMin(Jugador jugadorEnLista, ModeloBusquedaHyP modelo){
 		Math.round(jugadorEnLista.promedio) >= modelo.promedioDesde
 	}
-		def matcheaPromedioMax(Jugador jugadorEnLista, ModeloBusquedaHyP modelo){//int pdesde,int phasta){
+		def matcheaPromedioMax(Jugador jugadorEnLista, ModeloBusquedaHyP modelo){
 		 Math.round(jugadorEnLista.promedio) <= modelo.promedioHasta
 	}
+		def matcheaInfracciones(Jugador jugadorEnLista,ModeloBusquedaHyP modelo ){
+			if (modelo.infracciones == "Todos"){
+				return true
+			}else if (modelo.infracciones == "Con Infracciones"){
+						!jugadorEnLista.infracciones.empty
+			}else jugadorEnLista.infracciones.empty
+		}
 	
 	def List<Jugador> getJugadores(){
 		jugadoresAceptados

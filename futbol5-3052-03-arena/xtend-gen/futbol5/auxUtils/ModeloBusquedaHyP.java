@@ -46,10 +46,21 @@ public class ModeloBusquedaHyP extends Entity {
     this._promedioHasta = promedioHasta;
   }
   
+  private String _infracciones;
+  
+  public String getInfracciones() {
+    return this._infracciones;
+  }
+  
+  public void setInfracciones(final String infracciones) {
+    this._infracciones = infracciones;
+  }
+  
   public ModeloBusquedaHyP() {
-    this.setHandicapDesde(0);
+    this.setHandicapDesde(1);
     this.setHandicapHasta(10);
     this.setPromedioDesde(0);
     this.setPromedioHasta(10);
+    this.setInfracciones("Todos");
   }
 }

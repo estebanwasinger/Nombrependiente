@@ -9,13 +9,14 @@ class ModeloBusquedaHyP extends Entity {
 	@Property int handicapHasta
 	@Property int promedioDesde
 	@Property int promedioHasta
-	
+	@Property String infracciones 	
 	
 new(){
-	handicapDesde = 0
+	handicapDesde = 1
 	handicapHasta = 10
 	promedioDesde = 0
 	promedioHasta = 10
+	infracciones = "Todos"
 }
 	
 }

@@ -5,6 +5,7 @@ import futbol5.applicationModel.BusquedaJugadoresAppModel;
 import futbol5.auxUtils.DateTextFilter;
 import futbol5.domain.Jugador;
 import futbol5.ui.VerDatosJugadorWindow;
+import java.awt.Color;
 import java.util.Collections;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
@@ -49,15 +50,19 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     final Procedure1<Label> _function = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Busqueda");
-        it.setFontSize(30);
+        it.setFontSize(25);
+        it.setForeground(Color.MAGENTA);
       }
     };
     ObjectExtensions.<Label>operator_doubleArrow(_label, _function);
+    Label line1 = new Label(panelIzquierda);
+    line1.setText("_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
     Label _label_1 = new Label(panelDerecha);
     final Procedure1<Label> _function_1 = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Resultados");
-        it.setFontSize(30);
+        it.setFontSize(25);
+        it.setForeground(Color.RED);
       }
     };
     ObjectExtensions.<Label>operator_doubleArrow(_label_1, _function_1);
@@ -76,7 +81,8 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
         BusquedaJugadoresWindow.this.close();
       }
     };
-    _setCaption.onClick(_function);
+    Button _onClick = _setCaption.onClick(_function);
+    _onClick.setFontSize(11);
   }
   
   public void createFormPanel(final Panel panelIzquierda) {
@@ -89,6 +95,7 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     Label labelNombre = new Label(izquierda);
     labelNombre.setFontSize(10);
     labelNombre.setText("Nombre comienza con..");
+    labelNombre.setForeground(Color.DARK_GRAY);
     TextBox _textBox = new TextBox(derecha);
     final Procedure1<TextBox> _function = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
@@ -97,9 +104,12 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
       }
     };
     ObjectExtensions.<TextBox>operator_doubleArrow(_textBox, _function);
+    Label line1 = new Label(panelIzquierda);
+    line1.setText("_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
     Label labelApodo = new Label(izquierda);
     labelApodo.setFontSize(10);
     labelApodo.setText("Apodo contiene...");
+    labelApodo.setForeground(Color.DARK_GRAY);
     TextBox _textBox_1 = new TextBox(derecha);
     final Procedure1<TextBox> _function_1 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
@@ -111,6 +121,7 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     Label labelFecha = new Label(izquierda);
     labelFecha.setText("Fecha de nacimiento menor a:");
     labelFecha.setFontSize(10);
+    labelFecha.setForeground(Color.DARK_GRAY);
     final TextBox textBoxFecha = new TextBox(derecha);
     DateTextFilter _dateTextFilter = new DateTextFilter();
     textBoxFecha.withFilter(_dateTextFilter);
@@ -120,9 +131,11 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     Label labelHandicapD = new Label(izquierda);
     labelHandicapD.setText("Handicap desde:");
     labelHandicapD.setFontSize(10);
+    labelHandicapD.setForeground(Color.DARK_GRAY);
     Label labelHandicapH = new Label(derecha);
     labelHandicapH.setText("Handicap hasta:");
     labelHandicapH.setFontSize(10);
+    labelHandicapH.setForeground(Color.DARK_GRAY);
     TextBox _textBox_2 = new TextBox(izquierda);
     final Procedure1<TextBox> _function_2 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
@@ -142,9 +155,11 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     Label labelPromedioD = new Label(izquierda);
     labelPromedioD.setText("Promedio desde:");
     labelPromedioD.setFontSize(10);
+    labelPromedioD.setForeground(Color.DARK_GRAY);
     Label labelPromedioH = new Label(derecha);
     labelPromedioH.setText("Promedio hasta:");
     labelPromedioH.setFontSize(10);
+    labelPromedioH.setForeground(Color.DARK_GRAY);
     TextBox _textBox_4 = new TextBox(izquierda);
     final Procedure1<TextBox> _function_4 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
@@ -164,12 +179,13 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     Label labelInfraccion = new Label(izquierda);
     labelInfraccion.setFontSize(10);
     labelInfraccion.setText("Infracciones");
+    labelInfraccion.setForeground(Color.DARK_GRAY);
     Selector<Object> _selector = new Selector<Object>(derecha);
     final Procedure1<Selector<Object>> _function_6 = new Procedure1<Selector<Object>>() {
       public void apply(final Selector<Object> it) {
         ObservableProperty _observableProperty = new ObservableProperty(BusquedaJugadoresWindow.this, "eligeInfracciones");
         it.bindItems(_observableProperty);
-        it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.infracciones");
+        it.<ControlBuilder>bindValueToProperty("modelo.infracciones");
       }
     };
     ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector, _function_6);
@@ -210,7 +226,7 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
   
   public void grillaBasicaJugadores(final Panel panelResultados) {
     Table<Jugador> table = new Table<Jugador>(panelResultados, Jugador.class);
-    table.setHeigth(360);
+    table.setHeigth(220);
     table.setWidth(590);
     table.<ControlBuilder>bindValueToProperty("jugadorSeleccionado");
     table.bindItemsToProperty("jugadores");
@@ -240,7 +256,8 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     Button _onClick = _setCaption.onClick(_function);
     Button _setAsDefault = _onClick.setAsDefault();
     Link _disableOnError = _setAsDefault.disableOnError();
-    Control verDatos = _disableOnError.setWidth(200);
+    SkinnableControl _setFontSize = _disableOnError.setFontSize(14);
+    Control verDatos = _setFontSize.setWidth(200);
     NotNullObservable jugadorMarcado = new NotNullObservable("jugadorSeleccionado");
     verDatos.<ControlBuilder>bindEnabled(jugadorMarcado);
   }

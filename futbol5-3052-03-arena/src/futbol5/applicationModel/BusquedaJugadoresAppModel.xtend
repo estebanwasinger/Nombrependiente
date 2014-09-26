@@ -16,35 +16,23 @@ class BusquedaJugadoresAppModel implements Serializable{
 	@Property List <Jugador> jugadores
 	@Property Jugador jugadorSeleccionado
 	@Property ModeloBusquedaHyP modelo
-	/*@Property Float handicapDesde 
-	@Property Float handicapHasta
-	@Property int promedioDesde 
-	@Property int promedioHasta */
 	
 	new(){
 		jugadorEjemplo = new Jugador
 		jugadores = new ArrayList<Jugador>
 		jugadores =  getHomeJugadores().jugadoresAceptados
-		/*handicapDesde = new Float(1.0F)
-		handicapHasta = new Float(10.0F)
-		promedioDesde = 0
-		promedioHasta = 10*/
 		modelo = new ModeloBusquedaHyP
 	}
 
 	def void search() { 
 		jugadorSeleccionado = null
 		jugadores = new ArrayList<Jugador>
-		jugadores = getHomeJugadores().search(jugadorEjemplo,modelo)//, handicapDesde, handicapHasta, promedioDesde, promedioHasta)
+		jugadores = getHomeJugadores().search(jugadorEjemplo,modelo)
 	}
 	
 	def void clear() {
 		jugadorEjemplo = new Jugador
 		jugadorSeleccionado = null
-		/*handicapDesde = new Float(1.0F)
-		handicapHasta = new Float(10.0F)
-		promedioDesde = 0
-		promedioHasta = 10*/
 		modelo = new ModeloBusquedaHyP
 		search()
 	}

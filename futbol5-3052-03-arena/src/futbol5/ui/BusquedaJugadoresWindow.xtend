@@ -17,8 +17,8 @@ import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
-import org.uqbar.commons.model.ObservableUtils
 import org.uqbar.commons.utils.Observable
+import java.awt.Color
 
 @Observable
 class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
@@ -35,11 +35,15 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		var panelDerecha = new Panel(panel2Columnas)
 		new Label(panelIzquierda) => [
 			text = "Busqueda" //le doy un titulo al panel izquierdo que va a contener los tipos de busqueda
-			fontSize = 30
+			fontSize = 25
+			setForeground(Color.MAGENTA)
 			]
+		var line1 = new Label (panelIzquierda)
+		line1.text = "_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_" 
 		new Label(panelDerecha) => [
 			text = "Resultados" //le doy un titulo al panel derecho que va a mostrar los resultados de la busqueda
-			fontSize = 30
+			fontSize = 25
+			setForeground(Color.RED)
 		]
 		
 		addActions(mainPanel) 
@@ -52,6 +56,7 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		new Button(actionPanel)
 			.setCaption("Regresar")
 			.onClick[|this.close]
+			.setFontSize(11)
 	}
 	
 	
@@ -66,16 +71,21 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		// Por nombre “comienza con” 
 		var labelNombre = new Label(izquierda)
 		labelNombre.fontSize = 10
-		labelNombre.text = "Nombre comienza con.." 
+		labelNombre.text = "Nombre comienza con.."
+		labelNombre.setForeground(Color.DARK_GRAY) 
 		
 		new TextBox(derecha)=>
 			[bindValueToProperty("jugadorEjemplo.nombre")
 			width = 200]
+			
+		var line1 = new Label (panelIzquierda)
+		line1.text = "_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_" 
 		
 		//Por apodo “contiene” //	
 		var labelApodo = new Label(izquierda)
 		labelApodo.fontSize = 10
 		labelApodo.text = "Apodo contiene..."
+		labelApodo.setForeground(Color.DARK_GRAY) 
 
 		new TextBox(derecha)=>
 			[bindValueToProperty("jugadorEjemplo.apodo")
@@ -85,6 +95,7 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		var labelFecha = new Label(izquierda)
 		labelFecha.setText = "Fecha de nacimiento menor a:" 
 		labelFecha.fontSize = 10
+		labelFecha.setForeground(Color.DARK_GRAY) 
 		val textBoxFecha = new TextBox(derecha)
 		textBoxFecha.withFilter(new DateTextFilter)
 		val binding = textBoxFecha.bindValueToProperty("jugadorEjemplo.fechaNacimiento")
@@ -94,10 +105,12 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		
 		var labelHandicapD = new Label(izquierda)
 		labelHandicapD.setText = "Handicap desde:" 	
-		labelHandicapD.fontSize = 10	
+		labelHandicapD.fontSize = 10
+		labelHandicapD.setForeground(Color.DARK_GRAY) 	
 		var labelHandicapH = new Label(derecha)
 		labelHandicapH.setText = "Handicap hasta:" 
 		labelHandicapH.fontSize = 10
+		labelHandicapH.setForeground(Color.DARK_GRAY) 
 		
 		new TextBox(izquierda)=>
 			[bindValueToProperty("modelo.handicapDesde")
@@ -111,9 +124,11 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		var labelPromedioD = new Label(izquierda)
 		labelPromedioD.setText = "Promedio desde:" 	
 		labelPromedioD.fontSize = 10	
+		labelPromedioD.setForeground(Color.DARK_GRAY) 
 		var labelPromedioH = new Label(derecha)
 		labelPromedioH.setText = "Promedio hasta:" 
 		labelPromedioH.fontSize = 10
+		labelPromedioH.setForeground(Color.DARK_GRAY) 
 		
 		new TextBox(izquierda)=>
 			[bindValueToProperty("modelo.promedioDesde")
@@ -126,18 +141,19 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		var labelInfraccion = new Label(izquierda)
 		labelInfraccion.fontSize = 10
 		labelInfraccion.text = "Infracciones" 
+		labelInfraccion.setForeground(Color.DARK_GRAY) 
 
 		new Selector(derecha)=>[
 			//allowNull = false
 			bindItems(new ObservableProperty(this, "eligeInfracciones"))
-			bindValueToProperty("jugadorEjemplo.infracciones")
+			bindValueToProperty("modelo.infracciones")
 		]
 			
 		new Button(panelBusqueda)
 			.setCaption("Buscar")
 			.onClick [ | modelObject.search() ]
 			.setFontSize(12)
-			.setWidth = 200
+			.setWidth = 200			
 			
 		new Button(panelBusqueda) 
 			.setCaption("Limpiar")
@@ -155,8 +171,9 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 	
 	def void grillaBasicaJugadores(Panel panelResultados){
 		var table = new Table<Jugador>(panelResultados, typeof(Jugador))
-		table.heigth = 360
+		table.heigth = 220
 		table.width = 590
+
 		table.bindValueToProperty("jugadorSeleccionado")
 		table.bindItemsToProperty("jugadores")
 		
@@ -182,6 +199,7 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 			.onClick [ | this.grillaCompletaJugador] 
 			.setAsDefault
 			.disableOnError
+			.setFontSize(14)
 			.setWidth = 200
 			
 		var jugadorMarcado = new NotNullObservable("jugadorSeleccionado")

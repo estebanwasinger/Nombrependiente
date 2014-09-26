@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import futbol5.auxUtils.InicializadorJugador;
 import futbol5.auxUtils.ModeloBusquedaHyP;
 import futbol5.domain.Jugador;
+import infracciones.Infraccion;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +34,14 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     this.setJugadoresAceptados(_arrayList);
     ArrayList<Jugador> _crearListaDejugadores = InicializadorJugador.crearListaDejugadores(10);
     this.setJugadoresAceptados(_crearListaDejugadores);
+    List<Jugador> _jugadoresAceptados = this.getJugadoresAceptados();
+    Jugador _get = _jugadoresAceptados.get(3);
+    List<Infraccion> _infracciones = _get.getInfracciones();
+    _infracciones.clear();
+    List<Jugador> _jugadoresAceptados_1 = this.getJugadoresAceptados();
+    Jugador _get_1 = _jugadoresAceptados_1.get(5);
+    List<Infraccion> _infracciones_1 = _get_1.getInfracciones();
+    _infracciones_1.clear();
   }
   
   public List<Jugador> search(final Jugador jugadorBuscado, final ModeloBusquedaHyP modelo) {
@@ -53,42 +62,49 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     boolean _and_3 = false;
     boolean _and_4 = false;
     boolean _and_5 = false;
+    boolean _and_6 = false;
     boolean _matcheaNombre = this.matcheaNombre(jugadorEnLista, jugadorBuscado);
     if (!_matcheaNombre) {
-      _and_5 = false;
+      _and_6 = false;
     } else {
       boolean _matcheaApodo = this.matcheaApodo(jugadorEnLista, jugadorBuscado);
-      _and_5 = _matcheaApodo;
+      _and_6 = _matcheaApodo;
+    }
+    if (!_and_6) {
+      _and_5 = false;
+    } else {
+      boolean _matcheaFecha = this.matcheaFecha(jugadorEnLista, jugadorBuscado);
+      _and_5 = _matcheaFecha;
     }
     if (!_and_5) {
       _and_4 = false;
     } else {
-      boolean _matcheaFecha = this.matcheaFecha(jugadorEnLista, jugadorBuscado);
-      _and_4 = _matcheaFecha;
+      boolean _matcheaHandicapMin = this.matcheaHandicapMin(jugadorEnLista, modelo);
+      _and_4 = _matcheaHandicapMin;
     }
     if (!_and_4) {
       _and_3 = false;
     } else {
-      boolean _matcheaHandicapMin = this.matcheaHandicapMin(jugadorEnLista, modelo);
-      _and_3 = _matcheaHandicapMin;
+      boolean _matcheaHandicapMax = this.matcheaHandicapMax(jugadorEnLista, modelo);
+      _and_3 = _matcheaHandicapMax;
     }
     if (!_and_3) {
       _and_2 = false;
     } else {
-      boolean _matcheaHandicapMax = this.matcheaHandicapMax(jugadorEnLista, modelo);
-      _and_2 = _matcheaHandicapMax;
+      boolean _matcheaPromedioMin = this.matcheaPromedioMin(jugadorEnLista, modelo);
+      _and_2 = _matcheaPromedioMin;
     }
     if (!_and_2) {
       _and_1 = false;
     } else {
-      boolean _matcheaPromedioMin = this.matcheaPromedioMin(jugadorEnLista, modelo);
-      _and_1 = _matcheaPromedioMin;
+      boolean _matcheaPromedioMax = this.matcheaPromedioMax(jugadorEnLista, modelo);
+      _and_1 = _matcheaPromedioMax;
     }
     if (!_and_1) {
       _and = false;
     } else {
-      boolean _matcheaPromedioMax = this.matcheaPromedioMax(jugadorEnLista, modelo);
-      _and = _matcheaPromedioMax;
+      boolean _matcheaInfracciones = this.matcheaInfracciones(jugadorEnLista, modelo);
+      _and = _matcheaInfracciones;
     }
     return _and;
   }
@@ -168,6 +184,29 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     int _round = Math.round(_promedio);
     int _promedioHasta = modelo.getPromedioHasta();
     return (_round <= _promedioHasta);
+  }
+  
+  public boolean matcheaInfracciones(final Jugador jugadorEnLista, final ModeloBusquedaHyP modelo) {
+    boolean _xifexpression = false;
+    String _infracciones = modelo.getInfracciones();
+    boolean _equals = Objects.equal(_infracciones, "Todos");
+    if (_equals) {
+      return true;
+    } else {
+      boolean _xifexpression_1 = false;
+      String _infracciones_1 = modelo.getInfracciones();
+      boolean _equals_1 = Objects.equal(_infracciones_1, "Con Infracciones");
+      if (_equals_1) {
+        List<Infraccion> _infracciones_2 = jugadorEnLista.getInfracciones();
+        boolean _isEmpty = _infracciones_2.isEmpty();
+        _xifexpression_1 = (!_isEmpty);
+      } else {
+        List<Infraccion> _infracciones_3 = jugadorEnLista.getInfracciones();
+        _xifexpression_1 = _infracciones_3.isEmpty();
+      }
+      _xifexpression = _xifexpression_1;
+    }
+    return _xifexpression;
   }
   
   public List<Jugador> getJugadores() {
