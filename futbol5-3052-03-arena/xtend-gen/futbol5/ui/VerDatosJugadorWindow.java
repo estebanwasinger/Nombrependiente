@@ -6,7 +6,7 @@ import infracciones.Infraccion;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.arena.layout.ColumnLayout;
-import org.uqbar.arena.layout.VerticalLayout;
+import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
@@ -34,8 +34,8 @@ public class VerDatosJugadorWindow extends Dialog<Jugador> {
     ColumnLayout _columnLayout_1 = new ColumnLayout(2);
     Panel panelIzq = _panel_1.setLayout(_columnLayout_1);
     Panel _panel_2 = new Panel(principal);
-    VerticalLayout _verticalLayout = new VerticalLayout();
-    Panel panelDer = _panel_2.setLayout(_verticalLayout);
+    HorizontalLayout _horizontalLayout = new HorizontalLayout();
+    Panel panelDer = _panel_2.setLayout(_horizontalLayout);
     this.mostrarDatos(panelIzq);
     this.verTablas(panelDer);
   }
@@ -44,7 +44,7 @@ public class VerDatosJugadorWindow extends Dialog<Jugador> {
     Binding<ControlBuilder> _xblockexpression = null;
     {
       Label _label = new Label(panel);
-      _label.setText("Nombre del Jugador");
+      _label.setText("Nombre");
       Label _label_1 = new Label(panel);
       _label_1.<ControlBuilder>bindValueToProperty("nombre");
       Label _label_2 = new Label(panel);
@@ -52,21 +52,25 @@ public class VerDatosJugadorWindow extends Dialog<Jugador> {
       Label _label_3 = new Label(panel);
       _label_3.<ControlBuilder>bindValueToProperty("apodo");
       Label _label_4 = new Label(panel);
-      _label_4.setText("Edad");
+      _label_4.setText("Handicap");
       Label _label_5 = new Label(panel);
-      _label_5.<ControlBuilder>bindValueToProperty("edad");
+      _label_5.<ControlBuilder>bindValueToProperty("nivelDeJuego");
       Label _label_6 = new Label(panel);
-      _label_6.setText("Cantidad De Partidos:");
+      _label_6.setText("Promedio último partido");
       Label _label_7 = new Label(panel);
-      _label_7.<ControlBuilder>bindValueToProperty("cantidadPartidos");
+      _label_7.<ControlBuilder>bindValueToProperty("promedioUltimoPartido");
       Label _label_8 = new Label(panel);
-      _label_8.setText("Handicap:");
+      _label_8.setText("Promedio total");
       Label _label_9 = new Label(panel);
-      _label_9.<ControlBuilder>bindValueToProperty("nivelDeJuego");
+      _label_9.<ControlBuilder>bindValueToProperty("promedio");
       Label _label_10 = new Label(panel);
-      _label_10.setText("Nacicmiento:");
+      _label_10.setText("Fecha de nacimiento");
       Label _label_11 = new Label(panel);
-      _xblockexpression = _label_11.<ControlBuilder>bindValueToProperty("fechaNacimientoString");
+      _label_11.<ControlBuilder>bindValueToProperty("fechaNacimientoString");
+      Label _label_12 = new Label(panel);
+      _label_12.setText("Cantidad de partidos jugados");
+      Label _label_13 = new Label(panel);
+      _xblockexpression = _label_13.<ControlBuilder>bindValueToProperty("cantidadPartidos");
     }
     return _xblockexpression;
   }

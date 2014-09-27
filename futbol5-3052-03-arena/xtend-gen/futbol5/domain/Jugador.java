@@ -361,6 +361,12 @@ public class Jugador extends Entity {
     return _xblockexpression;
   }
   
+  public int getPromedioUltimoPartido() {
+    int _cantidadPartidos = this.getCantidadPartidos();
+    float _promedioNPartidos = this.promedioNPartidos(_cantidadPartidos);
+    return Math.round(_promedioNPartidos);
+  }
+  
   public String getFechaNacimientoString() {
     Date _fechaNacimiento = this.getFechaNacimiento();
     return this.formateador.format(_fechaNacimiento);

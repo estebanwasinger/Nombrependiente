@@ -142,6 +142,10 @@ class Jugador extends Entity{
 		promedio = promedio/calificaciones.size
 	}
 	
+	def getPromedioUltimoPartido(){
+		Math.round(this.promedioNPartidos(this.cantidadPartidos))
+	}
+	
 	def getFechaNacimientoString(){
 		formateador.format(fechaNacimiento)
 	}

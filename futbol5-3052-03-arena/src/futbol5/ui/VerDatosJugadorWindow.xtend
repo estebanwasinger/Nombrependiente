@@ -1,20 +1,19 @@
-
 package futbol5.ui
 
 import futbol5.domain.Jugador
+import futbol5.homes.HomeJugadores
+import infracciones.Infraccion
+import java.text.SimpleDateFormat
+import org.uqbar.arena.layout.ColumnLayout
+import org.uqbar.arena.layout.HorizontalLayout
+import org.uqbar.arena.widgets.Button
+import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
+import org.uqbar.arena.widgets.tables.Column
+import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.utils.ApplicationContext
-import futbol5.homes.HomeJugadores
-import org.uqbar.arena.widgets.Button
-import org.uqbar.arena.widgets.TextBox
-import org.uqbar.arena.widgets.Label
-import org.uqbar.arena.layout.ColumnLayout
-import org.uqbar.arena.layout.VerticalLayout
-import org.uqbar.arena.widgets.tables.Table
-import org.uqbar.arena.widgets.tables.Column
-import infracciones.Infraccion
 
 class VerDatosJugadorWindow extends Dialog<Jugador>{
 	
@@ -26,7 +25,7 @@ new(WindowOwner owner, Jugador model) {
 		title = "Datos del Jugador"
 		var principal = new Panel(mainPanel).layout = new ColumnLayout(2)
 		var panelIzq = new Panel(principal).layout = new ColumnLayout(2)
-		var panelDer = new Panel(principal).layout = new VerticalLayout
+		var panelDer = new Panel(principal).layout = new HorizontalLayout
 		
 		mostrarDatos(panelIzq)
 		verTablas(panelDer)
@@ -34,18 +33,20 @@ new(WindowOwner owner, Jugador model) {
 	
 	def mostrarDatos(Panel panel){
 		
-		new Label(panel).text = "Nombre del Jugador"
+		new Label(panel).text = "Nombre"
 		new Label(panel).bindValueToProperty("nombre")
 		new Label(panel).text = "Apodo"
 		new Label(panel).bindValueToProperty("apodo")
-		new Label(panel).text = "Edad"
-		new Label(panel).bindValueToProperty("edad")
-		new Label(panel).text = "Cantidad De Partidos:"
-		new Label(panel).bindValueToProperty("cantidadPartidos")
-		new Label(panel).text = "Handicap:"
+		new Label(panel).text = "Handicap"
 		new Label(panel).bindValueToProperty("nivelDeJuego")
-		new Label(panel).text = "Nacicmiento:"
+		new Label(panel).text = "Promedio último partido"
+		new Label(panel).bindValueToProperty("promedioUltimoPartido")
+		new Label(panel).text = "Promedio total"
+		new Label(panel).bindValueToProperty("promedio")
+		new Label(panel).text = "Fecha de nacimiento"
 		new Label(panel).bindValueToProperty("fechaNacimientoString")
+		new Label(panel).text = "Cantidad de partidos jugados"
+		new Label(panel).bindValueToProperty("cantidadPartidos")
 	
 	}
 	def verTablas(Panel panel){
