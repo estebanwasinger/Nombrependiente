@@ -1,7 +1,7 @@
 package futbol5.homes
 
+import futbol5.applicationModel.BusquedaJugadoresAppModel
 import futbol5.auxUtils.InicializadorJugador
-import futbol5.auxUtils.ModeloBusquedaHyP
 import futbol5.domain.Jugador
 import java.util.ArrayList
 import java.util.List
@@ -22,19 +22,19 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 		jugadoresAceptados.get(5).infracciones.clear
 	}
 		
-	def search(Jugador jugadorBuscado, ModeloBusquedaHyP modelo){ 
-			jugadoresAceptados.filter[jugador|this.match(jugador,jugadorBuscado,modelo)].toList
+	def search(BusquedaJugadoresAppModel modelo){ 
+			jugadoresAceptados.filter[jugador|this.match(jugador,modelo)].toList
 	}
 		
-	def match(Jugador jugadorEnLista, Jugador jugadorBuscado, ModeloBusquedaHyP modelo){
-		matcheaNombre(jugadorEnLista,jugadorBuscado) && 
-		matcheaApodo(jugadorEnLista,jugadorBuscado) &&
-		matcheaFecha(jugadorEnLista,jugadorBuscado) &&
-		matcheaHandicapMin(jugadorEnLista, modelo) &&
-		matcheaHandicapMax(jugadorEnLista, modelo) &&
-		matcheaPromedioMin(jugadorEnLista, modelo) && 
-		matcheaPromedioMax(jugadorEnLista, modelo) &&
-		matcheaInfracciones(jugadorEnLista, modelo)
+	def match(Jugador jugadorEnLista, BusquedaJugadoresAppModel modelo){
+		matcheaNombre(jugadorEnLista,modelo.jugadorEjemplo) && 
+		matcheaApodo(jugadorEnLista,modelo.jugadorEjemplo) &&
+		matcheaFecha(jugadorEnLista,modelo.jugadorEjemplo) &&
+		matcheaHandicapMin(jugadorEnLista, modelo.handicapDesde) &&
+		matcheaHandicapMax(jugadorEnLista, modelo.handicapHasta) &&
+		matcheaPromedioMin(jugadorEnLista, modelo.promedioDesde) && 
+		matcheaPromedioMax(jugadorEnLista, modelo.promedioHasta) &&
+		matcheaInfracciones(jugadorEnLista, modelo.infracciones)
 	}
 
 	def matcheaNombre(Jugador jugadorEnLista, Jugador jugadorBuscado){
@@ -46,22 +46,22 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 	def matcheaFecha(Jugador jugadorEnLista, Jugador jugadorBuscado){
 		jugadorBuscado.fechaNacimiento == null ||jugadorBuscado.fechaNacimiento >= jugadorEnLista.fechaNacimiento
 	}	
-	def matcheaHandicapMin (Jugador jugadorEnLista, ModeloBusquedaHyP modelo){ 
-		Math.round(jugadorEnLista.nivelDeJuego) >= modelo.handicapDesde
+	def matcheaHandicapMin (Jugador jugadorEnLista, int handicapDesde){ 
+		Math.round(jugadorEnLista.nivelDeJuego) >= handicapDesde
 	}
-	def matcheaHandicapMax(Jugador jugadorEnLista, ModeloBusquedaHyP modelo){
-		Math.round(jugadorEnLista.nivelDeJuego) <= modelo.handicapHasta
+	def matcheaHandicapMax(Jugador jugadorEnLista, int handicapHasta){
+		Math.round(jugadorEnLista.nivelDeJuego) <= handicapHasta
 	}
-	def matcheaPromedioMin(Jugador jugadorEnLista, ModeloBusquedaHyP modelo){
-		Math.round(jugadorEnLista.promedio) >= modelo.promedioDesde
+	def matcheaPromedioMin(Jugador jugadorEnLista, int promedioDesde){
+		Math.round(jugadorEnLista.promedio) >= promedioDesde
 	}
-		def matcheaPromedioMax(Jugador jugadorEnLista, ModeloBusquedaHyP modelo){
-		 Math.round(jugadorEnLista.promedio) <= modelo.promedioHasta
+		def matcheaPromedioMax(Jugador jugadorEnLista, int promedioHasta){
+		 Math.round(jugadorEnLista.promedio) <= promedioHasta
 	}
-		def matcheaInfracciones(Jugador jugadorEnLista,ModeloBusquedaHyP modelo ){
-			if (modelo.infracciones == "Todos"){
+		def matcheaInfracciones(Jugador jugadorEnLista, String infracciones ){
+			if (infracciones == "Todos"){
 				return true
-			}else if (modelo.infracciones == "Con Infracciones"){
+			}else if (infracciones == "Con Infracciones"){
 						!jugadorEnLista.infracciones.empty
 			}else jugadorEnLista.infracciones.empty
 		}

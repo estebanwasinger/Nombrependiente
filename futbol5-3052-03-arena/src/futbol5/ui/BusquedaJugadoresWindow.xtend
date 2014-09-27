@@ -74,87 +74,83 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		// Por nombre “comienza con” 
 		new Label(izquierda) => [
 			text = "Nombre comienza con.."
-			fontSize = 10
+			fontSize = 11
 			setForeground(Color.DARK_GRAY)] 
 		
-		new TextBox(derecha)=>[
-			bindValueToProperty("jugadorEjemplo.nombre")
-			width = 200
-			withFilter [ event | StringUtils.isAlpha(event.potentialTextResult)]]
+		new TextBox(derecha)
+			.withFilter [ event | StringUtils.isAlpha(event.potentialTextResult)]
+			.bindValueToProperty("jugadorEjemplo.nombre")
 			
 		new Label (panelIzquierda).text = "_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_" 
 		
 		//Por apodo “contiene” //	
 		new Label(izquierda) =>[
 			text = "Apodo contiene..."
-			fontSize = 10
+			fontSize = 11
 			setForeground(Color.DARK_GRAY)]
 
-		new TextBox(derecha) =>[
-			bindValueToProperty("jugadorEjemplo.apodo")
-			width = 200
-			withFilter [ event | StringUtils.isAlpha(event.potentialTextResult)]]	
+		new TextBox(derecha)
+			.withFilter [ event | StringUtils.isAlpha(event.potentialTextResult)]
+			.bindValueToProperty("jugadorEjemplo.apodo")
 			
 		// Búsqueda por fecha de nacimiento “anterior a” //
 		new Label(izquierda) => [
 			text = "Fecha de nacimiento menor a:" 
-			fontSize = 10
+			fontSize = 11
 			setForeground(Color.DARK_GRAY)]
 		
-		 new TextBox(derecha).withFilter(new DateTextFilter).bindValueToProperty("jugadorEjemplo.fechaNacimiento")
-		 .setTransformer(new DateAdapter)
+		 new TextBox(derecha)
+		 	.withFilter(new DateTextFilter)	
+		 	.bindValueToProperty("jugadorEjemplo.fechaNacimiento")
+		 	.setTransformer(new DateAdapter)
 			
 		//Por rango desde/hasta del hándicap (puede ingresarse sólo desde, o sólo hasta) //		
 		new Label(izquierda) =>[
 			setText = "Handicap desde:" 	
-			fontSize = 10
+			fontSize = 11
 			setForeground(Color.DARK_GRAY) ]
+								
+		new TextBox(derecha)
+			.withFilter [ event | StringUtils.isNumeric(event.potentialTextResult) ]
+			.bindValueToProperty("handicapDesde")
 			
-		new Label(derecha) =>[
+		new Label(izquierda) =>[
 			text = "Handicap hasta:" 
-			fontSize = 10
+			fontSize = 11
 			setForeground(Color.DARK_GRAY) ]
 		
-		new TextBox(izquierda)=>[
-			bindValueToProperty("modelo.handicapDesde")
-			width = 100
-			withFilter [ event | StringUtils.isNumeric(event.potentialTextResult) ]]	
-		
-		new TextBox(derecha)=>[
-			bindValueToProperty("modelo.handicapHasta")
-			width = 100
-			withFilter [ event | StringUtils.isNumeric(event.potentialTextResult) ]]	
+		new TextBox(derecha)
+			.withFilter [ event | StringUtils.isNumeric(event.potentialTextResult) ]
+			.bindValueToProperty("handicapHasta")
 		
 		//Por rango desde/hasta del promedio de último partido //		
 		new Label(izquierda) =>[
 			text = "Promedio desde:" 	
-			fontSize = 10	
+			fontSize = 11	
 			setForeground(Color.DARK_GRAY) ]
-		
-		new Label(derecha) =>[
+								
+		new TextBox(derecha)
+			.withFilter [ event | StringUtils.isNumeric(event.potentialTextResult) ]
+			.bindValueToProperty("promedioDesde")
+
+		new Label(izquierda) =>[
 			text = "Promedio hasta:" 
-			fontSize = 10
+			fontSize = 11
 			setForeground(Color.DARK_GRAY) ]
 		
-		new TextBox(izquierda)=>[
-			bindValueToProperty("modelo.promedioDesde")
-			withFilter [ event | StringUtils.isNumeric(event.potentialTextResult) ]
-			width = 100]	
-		
-		new TextBox(derecha)=>[
-			bindValueToProperty("modelo.promedioHasta")
-			withFilter [ event | StringUtils.isNumeric(event.potentialTextResult) ]
-			width = 100]			
+		new TextBox(derecha)
+			.withFilter [ event | StringUtils.isNumeric(event.potentialTextResult) ]	
+			.bindValueToProperty("promedioHasta")
 
 		//Filtrar sólo los que tuvieron infracciones, sólo los que no tuvieron infracciones, todos //
 		new Label(izquierda) => [
 			text = "Infracciones" 
-			fontSize = 10
+			fontSize = 11
 			setForeground(Color.DARK_GRAY) ]
 
 		new Selector(derecha) =>[
 			bindItems(new ObservableProperty(this, "eligeInfracciones"))
-			bindValueToProperty("modelo.infracciones")]
+			bindValueToProperty("infracciones")]
 			
 		new Button(panelBusqueda) => [
 			setCaption("Buscar")

@@ -1,8 +1,8 @@
 package futbol5.homes;
 
 import com.google.common.base.Objects;
+import futbol5.applicationModel.BusquedaJugadoresAppModel;
 import futbol5.auxUtils.InicializadorJugador;
-import futbol5.auxUtils.ModeloBusquedaHyP;
 import futbol5.domain.Jugador;
 import infracciones.Infraccion;
 import java.util.ArrayList;
@@ -44,18 +44,18 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     _infracciones_1.clear();
   }
   
-  public List<Jugador> search(final Jugador jugadorBuscado, final ModeloBusquedaHyP modelo) {
+  public List<Jugador> search(final BusquedaJugadoresAppModel modelo) {
     List<Jugador> _jugadoresAceptados = this.getJugadoresAceptados();
     final Function1<Jugador,Boolean> _function = new Function1<Jugador,Boolean>() {
       public Boolean apply(final Jugador jugador) {
-        return Boolean.valueOf(HomeJugadores.this.match(jugador, jugadorBuscado, modelo));
+        return Boolean.valueOf(HomeJugadores.this.match(jugador, modelo));
       }
     };
     Iterable<Jugador> _filter = IterableExtensions.<Jugador>filter(_jugadoresAceptados, _function);
     return IterableExtensions.<Jugador>toList(_filter);
   }
   
-  public boolean match(final Jugador jugadorEnLista, final Jugador jugadorBuscado, final ModeloBusquedaHyP modelo) {
+  public boolean match(final Jugador jugadorEnLista, final BusquedaJugadoresAppModel modelo) {
     boolean _and = false;
     boolean _and_1 = false;
     boolean _and_2 = false;
@@ -63,47 +63,55 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     boolean _and_4 = false;
     boolean _and_5 = false;
     boolean _and_6 = false;
-    boolean _matcheaNombre = this.matcheaNombre(jugadorEnLista, jugadorBuscado);
+    Jugador _jugadorEjemplo = modelo.getJugadorEjemplo();
+    boolean _matcheaNombre = this.matcheaNombre(jugadorEnLista, _jugadorEjemplo);
     if (!_matcheaNombre) {
       _and_6 = false;
     } else {
-      boolean _matcheaApodo = this.matcheaApodo(jugadorEnLista, jugadorBuscado);
+      Jugador _jugadorEjemplo_1 = modelo.getJugadorEjemplo();
+      boolean _matcheaApodo = this.matcheaApodo(jugadorEnLista, _jugadorEjemplo_1);
       _and_6 = _matcheaApodo;
     }
     if (!_and_6) {
       _and_5 = false;
     } else {
-      boolean _matcheaFecha = this.matcheaFecha(jugadorEnLista, jugadorBuscado);
+      Jugador _jugadorEjemplo_2 = modelo.getJugadorEjemplo();
+      boolean _matcheaFecha = this.matcheaFecha(jugadorEnLista, _jugadorEjemplo_2);
       _and_5 = _matcheaFecha;
     }
     if (!_and_5) {
       _and_4 = false;
     } else {
-      boolean _matcheaHandicapMin = this.matcheaHandicapMin(jugadorEnLista, modelo);
+      int _handicapDesde = modelo.getHandicapDesde();
+      boolean _matcheaHandicapMin = this.matcheaHandicapMin(jugadorEnLista, _handicapDesde);
       _and_4 = _matcheaHandicapMin;
     }
     if (!_and_4) {
       _and_3 = false;
     } else {
-      boolean _matcheaHandicapMax = this.matcheaHandicapMax(jugadorEnLista, modelo);
+      int _handicapHasta = modelo.getHandicapHasta();
+      boolean _matcheaHandicapMax = this.matcheaHandicapMax(jugadorEnLista, _handicapHasta);
       _and_3 = _matcheaHandicapMax;
     }
     if (!_and_3) {
       _and_2 = false;
     } else {
-      boolean _matcheaPromedioMin = this.matcheaPromedioMin(jugadorEnLista, modelo);
+      int _promedioDesde = modelo.getPromedioDesde();
+      boolean _matcheaPromedioMin = this.matcheaPromedioMin(jugadorEnLista, _promedioDesde);
       _and_2 = _matcheaPromedioMin;
     }
     if (!_and_2) {
       _and_1 = false;
     } else {
-      boolean _matcheaPromedioMax = this.matcheaPromedioMax(jugadorEnLista, modelo);
+      int _promedioHasta = modelo.getPromedioHasta();
+      boolean _matcheaPromedioMax = this.matcheaPromedioMax(jugadorEnLista, _promedioHasta);
       _and_1 = _matcheaPromedioMax;
     }
     if (!_and_1) {
       _and = false;
     } else {
-      boolean _matcheaInfracciones = this.matcheaInfracciones(jugadorEnLista, modelo);
+      String _infracciones = modelo.getInfracciones();
+      boolean _matcheaInfracciones = this.matcheaInfracciones(jugadorEnLista, _infracciones);
       _and = _matcheaInfracciones;
     }
     return _and;
@@ -158,51 +166,45 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     return _or;
   }
   
-  public boolean matcheaHandicapMin(final Jugador jugadorEnLista, final ModeloBusquedaHyP modelo) {
+  public boolean matcheaHandicapMin(final Jugador jugadorEnLista, final int handicapDesde) {
     float _nivelDeJuego = jugadorEnLista.getNivelDeJuego();
     int _round = Math.round(_nivelDeJuego);
-    int _handicapDesde = modelo.getHandicapDesde();
-    return (_round >= _handicapDesde);
+    return (_round >= handicapDesde);
   }
   
-  public boolean matcheaHandicapMax(final Jugador jugadorEnLista, final ModeloBusquedaHyP modelo) {
+  public boolean matcheaHandicapMax(final Jugador jugadorEnLista, final int handicapHasta) {
     float _nivelDeJuego = jugadorEnLista.getNivelDeJuego();
     int _round = Math.round(_nivelDeJuego);
-    int _handicapHasta = modelo.getHandicapHasta();
-    return (_round <= _handicapHasta);
+    return (_round <= handicapHasta);
   }
   
-  public boolean matcheaPromedioMin(final Jugador jugadorEnLista, final ModeloBusquedaHyP modelo) {
+  public boolean matcheaPromedioMin(final Jugador jugadorEnLista, final int promedioDesde) {
     int _promedio = jugadorEnLista.getPromedio();
     int _round = Math.round(_promedio);
-    int _promedioDesde = modelo.getPromedioDesde();
-    return (_round >= _promedioDesde);
+    return (_round >= promedioDesde);
   }
   
-  public boolean matcheaPromedioMax(final Jugador jugadorEnLista, final ModeloBusquedaHyP modelo) {
+  public boolean matcheaPromedioMax(final Jugador jugadorEnLista, final int promedioHasta) {
     int _promedio = jugadorEnLista.getPromedio();
     int _round = Math.round(_promedio);
-    int _promedioHasta = modelo.getPromedioHasta();
-    return (_round <= _promedioHasta);
+    return (_round <= promedioHasta);
   }
   
-  public boolean matcheaInfracciones(final Jugador jugadorEnLista, final ModeloBusquedaHyP modelo) {
+  public boolean matcheaInfracciones(final Jugador jugadorEnLista, final String infracciones) {
     boolean _xifexpression = false;
-    String _infracciones = modelo.getInfracciones();
-    boolean _equals = Objects.equal(_infracciones, "Todos");
+    boolean _equals = Objects.equal(infracciones, "Todos");
     if (_equals) {
       return true;
     } else {
       boolean _xifexpression_1 = false;
-      String _infracciones_1 = modelo.getInfracciones();
-      boolean _equals_1 = Objects.equal(_infracciones_1, "Con Infracciones");
+      boolean _equals_1 = Objects.equal(infracciones, "Con Infracciones");
       if (_equals_1) {
-        List<Infraccion> _infracciones_2 = jugadorEnLista.getInfracciones();
-        boolean _isEmpty = _infracciones_2.isEmpty();
+        List<Infraccion> _infracciones = jugadorEnLista.getInfracciones();
+        boolean _isEmpty = _infracciones.isEmpty();
         _xifexpression_1 = (!_isEmpty);
       } else {
-        List<Infraccion> _infracciones_3 = jugadorEnLista.getInfracciones();
-        _xifexpression_1 = _infracciones_3.isEmpty();
+        List<Infraccion> _infracciones_1 = jugadorEnLista.getInfracciones();
+        _xifexpression_1 = _infracciones_1.isEmpty();
       }
       _xifexpression = _xifexpression_1;
     }

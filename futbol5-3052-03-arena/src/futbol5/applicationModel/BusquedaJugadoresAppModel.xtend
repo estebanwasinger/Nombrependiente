@@ -1,6 +1,5 @@
 package futbol5.applicationModel
 
-import futbol5.auxUtils.ModeloBusquedaHyP
 import futbol5.domain.Jugador
 import futbol5.homes.HomeJugadores
 import java.io.Serializable
@@ -15,30 +14,41 @@ class BusquedaJugadoresAppModel implements Serializable{
 	@Property Jugador jugadorEjemplo
 	@Property List <Jugador> jugadores
 	@Property Jugador jugadorSeleccionado
-	@Property ModeloBusquedaHyP modelo
+	@Property int handicapDesde
+	@Property int handicapHasta
+	@Property int promedioDesde
+	@Property int promedioHasta
+	@Property String infracciones 	
 	
 	new(){
-		jugadorEjemplo = new Jugador
+		iniciar()
 		jugadores = new ArrayList<Jugador>
 		jugadores =  getHomeJugadores().jugadoresAceptados
-		modelo = new ModeloBusquedaHyP
 	}
 
 	def void search() { 
 		jugadorSeleccionado = null
 		jugadores = new ArrayList<Jugador>
-		jugadores = getHomeJugadores().search(jugadorEjemplo,modelo)
+		jugadores = getHomeJugadores().search(this)
 	}
 	
 	def void clear() {
-		jugadorEjemplo = new Jugador
+		iniciar()
 		jugadorSeleccionado = null
-		modelo = new ModeloBusquedaHyP
 		search()
+	}
+	
+	def void iniciar(){
+		jugadorEjemplo = new Jugador
+		handicapDesde = 1
+		handicapHasta = 10
+		promedioDesde = 0
+		promedioHasta = 10
+		infracciones = "Todos"
 	}
 	
 	def HomeJugadores getHomeJugadores() {
 		ApplicationContext.instance.getSingleton(typeof(Jugador))
-	}
+		}
 
 	}

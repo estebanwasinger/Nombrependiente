@@ -106,168 +106,132 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     final Procedure1<Label> _function = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Nombre comienza con..");
-        it.setFontSize(10);
+        it.setFontSize(11);
         it.setForeground(Color.DARK_GRAY);
       }
     };
     ObjectExtensions.<Label>operator_doubleArrow(_label, _function);
     TextBox _textBox = new TextBox(derecha);
-    final Procedure1<TextBox> _function_1 = new Procedure1<TextBox>() {
-      public void apply(final TextBox it) {
-        it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.nombre");
-        it.setWidth(200);
-        final TextFilter _function = new TextFilter() {
-          public boolean accept(final TextInputEvent event) {
-            String _potentialTextResult = event.getPotentialTextResult();
-            return StringUtils.isAlpha(_potentialTextResult);
-          }
-        };
-        it.withFilter(_function);
+    final TextFilter _function_1 = new TextFilter() {
+      public boolean accept(final TextInputEvent event) {
+        String _potentialTextResult = event.getPotentialTextResult();
+        return StringUtils.isAlpha(_potentialTextResult);
       }
     };
-    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox, _function_1);
+    TextBox _withFilter = _textBox.withFilter(_function_1);
+    _withFilter.<ControlBuilder>bindValueToProperty("jugadorEjemplo.nombre");
     Label _label_1 = new Label(panelIzquierda);
     _label_1.setText("_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
     Label _label_2 = new Label(izquierda);
     final Procedure1<Label> _function_2 = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Apodo contiene...");
-        it.setFontSize(10);
+        it.setFontSize(11);
         it.setForeground(Color.DARK_GRAY);
       }
     };
     ObjectExtensions.<Label>operator_doubleArrow(_label_2, _function_2);
     TextBox _textBox_1 = new TextBox(derecha);
-    final Procedure1<TextBox> _function_3 = new Procedure1<TextBox>() {
-      public void apply(final TextBox it) {
-        it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.apodo");
-        it.setWidth(200);
-        final TextFilter _function = new TextFilter() {
-          public boolean accept(final TextInputEvent event) {
-            String _potentialTextResult = event.getPotentialTextResult();
-            return StringUtils.isAlpha(_potentialTextResult);
-          }
-        };
-        it.withFilter(_function);
+    final TextFilter _function_3 = new TextFilter() {
+      public boolean accept(final TextInputEvent event) {
+        String _potentialTextResult = event.getPotentialTextResult();
+        return StringUtils.isAlpha(_potentialTextResult);
       }
     };
-    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_1, _function_3);
+    TextBox _withFilter_1 = _textBox_1.withFilter(_function_3);
+    _withFilter_1.<ControlBuilder>bindValueToProperty("jugadorEjemplo.apodo");
     Label _label_3 = new Label(izquierda);
     final Procedure1<Label> _function_4 = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Fecha de nacimiento menor a:");
-        it.setFontSize(10);
+        it.setFontSize(11);
         it.setForeground(Color.DARK_GRAY);
       }
     };
     ObjectExtensions.<Label>operator_doubleArrow(_label_3, _function_4);
     TextBox _textBox_2 = new TextBox(derecha);
     DateTextFilter _dateTextFilter = new DateTextFilter();
-    TextBox _withFilter = _textBox_2.withFilter(_dateTextFilter);
-    Binding<ControlBuilder> _bindValueToProperty = _withFilter.<ControlBuilder>bindValueToProperty("jugadorEjemplo.fechaNacimiento");
+    TextBox _withFilter_2 = _textBox_2.withFilter(_dateTextFilter);
+    Binding<ControlBuilder> _bindValueToProperty = _withFilter_2.<ControlBuilder>bindValueToProperty("jugadorEjemplo.fechaNacimiento");
     DateAdapter _dateAdapter = new DateAdapter();
     _bindValueToProperty.setTransformer(_dateAdapter);
     Label _label_4 = new Label(izquierda);
     final Procedure1<Label> _function_5 = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Handicap desde:");
-        it.setFontSize(10);
+        it.setFontSize(11);
         it.setForeground(Color.DARK_GRAY);
       }
     };
     ObjectExtensions.<Label>operator_doubleArrow(_label_4, _function_5);
-    Label _label_5 = new Label(derecha);
-    final Procedure1<Label> _function_6 = new Procedure1<Label>() {
+    TextBox _textBox_3 = new TextBox(derecha);
+    final TextFilter _function_6 = new TextFilter() {
+      public boolean accept(final TextInputEvent event) {
+        String _potentialTextResult = event.getPotentialTextResult();
+        return StringUtils.isNumeric(_potentialTextResult);
+      }
+    };
+    TextBox _withFilter_3 = _textBox_3.withFilter(_function_6);
+    _withFilter_3.<ControlBuilder>bindValueToProperty("handicapDesde");
+    Label _label_5 = new Label(izquierda);
+    final Procedure1<Label> _function_7 = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Handicap hasta:");
-        it.setFontSize(10);
+        it.setFontSize(11);
         it.setForeground(Color.DARK_GRAY);
       }
     };
-    ObjectExtensions.<Label>operator_doubleArrow(_label_5, _function_6);
-    TextBox _textBox_3 = new TextBox(izquierda);
-    final Procedure1<TextBox> _function_7 = new Procedure1<TextBox>() {
-      public void apply(final TextBox it) {
-        it.<ControlBuilder>bindValueToProperty("modelo.handicapDesde");
-        it.setWidth(100);
-        final TextFilter _function = new TextFilter() {
-          public boolean accept(final TextInputEvent event) {
-            String _potentialTextResult = event.getPotentialTextResult();
-            return StringUtils.isNumeric(_potentialTextResult);
-          }
-        };
-        it.withFilter(_function);
-      }
-    };
-    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_3, _function_7);
+    ObjectExtensions.<Label>operator_doubleArrow(_label_5, _function_7);
     TextBox _textBox_4 = new TextBox(derecha);
-    final Procedure1<TextBox> _function_8 = new Procedure1<TextBox>() {
-      public void apply(final TextBox it) {
-        it.<ControlBuilder>bindValueToProperty("modelo.handicapHasta");
-        it.setWidth(100);
-        final TextFilter _function = new TextFilter() {
-          public boolean accept(final TextInputEvent event) {
-            String _potentialTextResult = event.getPotentialTextResult();
-            return StringUtils.isNumeric(_potentialTextResult);
-          }
-        };
-        it.withFilter(_function);
+    final TextFilter _function_8 = new TextFilter() {
+      public boolean accept(final TextInputEvent event) {
+        String _potentialTextResult = event.getPotentialTextResult();
+        return StringUtils.isNumeric(_potentialTextResult);
       }
     };
-    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_4, _function_8);
+    TextBox _withFilter_4 = _textBox_4.withFilter(_function_8);
+    _withFilter_4.<ControlBuilder>bindValueToProperty("handicapHasta");
     Label _label_6 = new Label(izquierda);
     final Procedure1<Label> _function_9 = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Promedio desde:");
-        it.setFontSize(10);
+        it.setFontSize(11);
         it.setForeground(Color.DARK_GRAY);
       }
     };
     ObjectExtensions.<Label>operator_doubleArrow(_label_6, _function_9);
-    Label _label_7 = new Label(derecha);
-    final Procedure1<Label> _function_10 = new Procedure1<Label>() {
+    TextBox _textBox_5 = new TextBox(derecha);
+    final TextFilter _function_10 = new TextFilter() {
+      public boolean accept(final TextInputEvent event) {
+        String _potentialTextResult = event.getPotentialTextResult();
+        return StringUtils.isNumeric(_potentialTextResult);
+      }
+    };
+    TextBox _withFilter_5 = _textBox_5.withFilter(_function_10);
+    _withFilter_5.<ControlBuilder>bindValueToProperty("promedioDesde");
+    Label _label_7 = new Label(izquierda);
+    final Procedure1<Label> _function_11 = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Promedio hasta:");
-        it.setFontSize(10);
+        it.setFontSize(11);
         it.setForeground(Color.DARK_GRAY);
       }
     };
-    ObjectExtensions.<Label>operator_doubleArrow(_label_7, _function_10);
-    TextBox _textBox_5 = new TextBox(izquierda);
-    final Procedure1<TextBox> _function_11 = new Procedure1<TextBox>() {
-      public void apply(final TextBox it) {
-        it.<ControlBuilder>bindValueToProperty("modelo.promedioDesde");
-        final TextFilter _function = new TextFilter() {
-          public boolean accept(final TextInputEvent event) {
-            String _potentialTextResult = event.getPotentialTextResult();
-            return StringUtils.isNumeric(_potentialTextResult);
-          }
-        };
-        it.withFilter(_function);
-        it.setWidth(100);
-      }
-    };
-    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_5, _function_11);
+    ObjectExtensions.<Label>operator_doubleArrow(_label_7, _function_11);
     TextBox _textBox_6 = new TextBox(derecha);
-    final Procedure1<TextBox> _function_12 = new Procedure1<TextBox>() {
-      public void apply(final TextBox it) {
-        it.<ControlBuilder>bindValueToProperty("modelo.promedioHasta");
-        final TextFilter _function = new TextFilter() {
-          public boolean accept(final TextInputEvent event) {
-            String _potentialTextResult = event.getPotentialTextResult();
-            return StringUtils.isNumeric(_potentialTextResult);
-          }
-        };
-        it.withFilter(_function);
-        it.setWidth(100);
+    final TextFilter _function_12 = new TextFilter() {
+      public boolean accept(final TextInputEvent event) {
+        String _potentialTextResult = event.getPotentialTextResult();
+        return StringUtils.isNumeric(_potentialTextResult);
       }
     };
-    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_6, _function_12);
+    TextBox _withFilter_6 = _textBox_6.withFilter(_function_12);
+    _withFilter_6.<ControlBuilder>bindValueToProperty("promedioHasta");
     Label _label_8 = new Label(izquierda);
     final Procedure1<Label> _function_13 = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Infracciones");
-        it.setFontSize(10);
+        it.setFontSize(11);
         it.setForeground(Color.DARK_GRAY);
       }
     };
@@ -277,7 +241,7 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
       public void apply(final Selector<Object> it) {
         ObservableProperty _observableProperty = new ObservableProperty(BusquedaJugadoresWindow.this, "eligeInfracciones");
         it.bindItems(_observableProperty);
-        it.<ControlBuilder>bindValueToProperty("modelo.infracciones");
+        it.<ControlBuilder>bindValueToProperty("infracciones");
       }
     };
     ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector, _function_14);
