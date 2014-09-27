@@ -1,8 +1,10 @@
 package futbol5.ui
 
+import com.uqbar.commons.StringUtils
 import futbol5.applicationModel.BusquedaJugadoresAppModel
 import futbol5.auxUtils.DateTextFilter
 import futbol5.domain.Jugador
+import java.awt.Color
 import org.uqbar.arena.bindings.DateAdapter
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.bindings.ObservableProperty
@@ -18,17 +20,19 @@ import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.utils.Observable
-import java.awt.Color
+import org.uqbar.arena.windows.ErrorsPanel
 
 @Observable
 class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		
 	new(WindowOwner parent, BusquedaJugadoresAppModel modelObject) {
 		super(parent, modelObject)
+		this.delegate.setErrorViewer(this) //VER ESTO
 	}
 		
 	override createContents(Panel mainPanel) {		
 		title = "Busqueda de Jugadores"
+		new ErrorsPanel(mainPanel,"Busqueda OK") //VER ESTO
 		new Panel(mainPanel).setLayout(new ColumnLayout(2))
 		
 		var panelIzquierda = new Panel(mainPanel)
@@ -45,6 +49,7 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 			text = "Resultados" 
 			fontSize = 25
 			setForeground(Color.RED)]
+		
 		
 		addActions(mainPanel) 
 		createFormPanel(panelIzquierda)
@@ -74,7 +79,8 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		
 		new TextBox(derecha)=>[
 			bindValueToProperty("jugadorEjemplo.nombre")
-			width = 200]
+			width = 200
+			withFilter [ event | StringUtils.isAlpha(event.potentialTextResult)]]
 			
 		new Label (panelIzquierda).text = "_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_" 
 		
@@ -86,7 +92,8 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 
 		new TextBox(derecha) =>[
 			bindValueToProperty("jugadorEjemplo.apodo")
-			width = 200]	
+			width = 200
+			withFilter [ event | StringUtils.isAlpha(event.potentialTextResult)]]	
 			
 		// Búsqueda por fecha de nacimiento “anterior a” //
 		new Label(izquierda) => [
@@ -110,11 +117,13 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		
 		new TextBox(izquierda)=>[
 			bindValueToProperty("modelo.handicapDesde")
-			width = 100]	
+			width = 100
+			withFilter [ event | StringUtils.isNumeric(event.potentialTextResult) ]]	
 		
 		new TextBox(derecha)=>[
 			bindValueToProperty("modelo.handicapHasta")
-			width = 100]	
+			width = 100
+			withFilter [ event | StringUtils.isNumeric(event.potentialTextResult) ]]	
 		
 		//Por rango desde/hasta del promedio de último partido //		
 		new Label(izquierda) =>[
@@ -129,28 +138,30 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		
 		new TextBox(izquierda)=>[
 			bindValueToProperty("modelo.promedioDesde")
+			withFilter [ event | StringUtils.isNumeric(event.potentialTextResult) ]
 			width = 100]	
 		
 		new TextBox(derecha)=>[
 			bindValueToProperty("modelo.promedioHasta")
+			withFilter [ event | StringUtils.isNumeric(event.potentialTextResult) ]
 			width = 100]			
 
 		//Filtrar sólo los que tuvieron infracciones, sólo los que no tuvieron infracciones, todos //
 		new Label(izquierda) => [
-		text = "Infracciones" 
-		fontSize = 10
-		setForeground(Color.DARK_GRAY) ]
+			text = "Infracciones" 
+			fontSize = 10
+			setForeground(Color.DARK_GRAY) ]
 
 		new Selector(derecha) =>[
 			bindItems(new ObservableProperty(this, "eligeInfracciones"))
-			bindValueToProperty("modelo.infracciones")
-		]
+			bindValueToProperty("modelo.infracciones")]
 			
 		new Button(panelBusqueda) => [
 			setCaption("Buscar")
 			onClick [ | modelObject.search() ]
 			setFontSize(12)
-			setWidth = 200]		
+			setWidth = 200
+			setAsDefault]		
 			
 		new Button(panelBusqueda)  =>[
 			setCaption("Limpiar")

@@ -1,6 +1,7 @@
 package futbol5.ui;
 
 import com.google.common.collect.Lists;
+import com.uqbar.commons.StringUtils;
 import futbol5.applicationModel.BusquedaJugadoresAppModel;
 import futbol5.auxUtils.DateTextFilter;
 import futbol5.domain.Jugador;
@@ -20,13 +21,17 @@ import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.Selector;
 import org.uqbar.arena.widgets.TextBox;
+import org.uqbar.arena.widgets.TextFilter;
+import org.uqbar.arena.widgets.TextInputEvent;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.Dialog;
+import org.uqbar.arena.windows.ErrorsPanel;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.commons.utils.Observable;
 import org.uqbar.lacar.ui.model.Action;
 import org.uqbar.lacar.ui.model.ControlBuilder;
+import org.uqbar.lacar.ui.model.WindowBuilder;
 import org.uqbar.lacar.ui.model.bindings.Binding;
 
 @Observable
@@ -34,10 +39,13 @@ import org.uqbar.lacar.ui.model.bindings.Binding;
 public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
   public BusquedaJugadoresWindow(final WindowOwner parent, final BusquedaJugadoresAppModel modelObject) {
     super(parent, modelObject);
+    WindowBuilder _delegate = this.getDelegate();
+    _delegate.setErrorViewer(this);
   }
   
   public void createContents(final Panel mainPanel) {
     this.setTitle("Busqueda de Jugadores");
+    new ErrorsPanel(mainPanel, "Busqueda OK");
     Panel _panel = new Panel(mainPanel);
     ColumnLayout _columnLayout = new ColumnLayout(2);
     _panel.setLayout(_columnLayout);
@@ -108,6 +116,13 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
       public void apply(final TextBox it) {
         it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.nombre");
         it.setWidth(200);
+        final TextFilter _function = new TextFilter() {
+          public boolean accept(final TextInputEvent event) {
+            String _potentialTextResult = event.getPotentialTextResult();
+            return StringUtils.isAlpha(_potentialTextResult);
+          }
+        };
+        it.withFilter(_function);
       }
     };
     ObjectExtensions.<TextBox>operator_doubleArrow(_textBox, _function_1);
@@ -127,6 +142,13 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
       public void apply(final TextBox it) {
         it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.apodo");
         it.setWidth(200);
+        final TextFilter _function = new TextFilter() {
+          public boolean accept(final TextInputEvent event) {
+            String _potentialTextResult = event.getPotentialTextResult();
+            return StringUtils.isAlpha(_potentialTextResult);
+          }
+        };
+        it.withFilter(_function);
       }
     };
     ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_1, _function_3);
@@ -168,6 +190,13 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
       public void apply(final TextBox it) {
         it.<ControlBuilder>bindValueToProperty("modelo.handicapDesde");
         it.setWidth(100);
+        final TextFilter _function = new TextFilter() {
+          public boolean accept(final TextInputEvent event) {
+            String _potentialTextResult = event.getPotentialTextResult();
+            return StringUtils.isNumeric(_potentialTextResult);
+          }
+        };
+        it.withFilter(_function);
       }
     };
     ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_3, _function_7);
@@ -176,6 +205,13 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
       public void apply(final TextBox it) {
         it.<ControlBuilder>bindValueToProperty("modelo.handicapHasta");
         it.setWidth(100);
+        final TextFilter _function = new TextFilter() {
+          public boolean accept(final TextInputEvent event) {
+            String _potentialTextResult = event.getPotentialTextResult();
+            return StringUtils.isNumeric(_potentialTextResult);
+          }
+        };
+        it.withFilter(_function);
       }
     };
     ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_4, _function_8);
@@ -201,6 +237,13 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     final Procedure1<TextBox> _function_11 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
         it.<ControlBuilder>bindValueToProperty("modelo.promedioDesde");
+        final TextFilter _function = new TextFilter() {
+          public boolean accept(final TextInputEvent event) {
+            String _potentialTextResult = event.getPotentialTextResult();
+            return StringUtils.isNumeric(_potentialTextResult);
+          }
+        };
+        it.withFilter(_function);
         it.setWidth(100);
       }
     };
@@ -209,6 +252,13 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     final Procedure1<TextBox> _function_12 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
         it.<ControlBuilder>bindValueToProperty("modelo.promedioHasta");
+        final TextFilter _function = new TextFilter() {
+          public boolean accept(final TextInputEvent event) {
+            String _potentialTextResult = event.getPotentialTextResult();
+            return StringUtils.isNumeric(_potentialTextResult);
+          }
+        };
+        it.withFilter(_function);
         it.setWidth(100);
       }
     };
@@ -244,6 +294,7 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
         it.onClick(_function);
         it.setFontSize(12);
         it.setWidth(200);
+        it.setAsDefault();
       }
     };
     ObjectExtensions.<Button>operator_doubleArrow(_button, _function_15);
