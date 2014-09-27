@@ -29,22 +29,22 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		
 	override createContents(Panel mainPanel) {		
 		title = "Busqueda de Jugadores"
-		var panel2Columnas = new Panel(mainPanel)
-		panel2Columnas.setLayout(new ColumnLayout(2))
-		var panelIzquierda = new Panel(panel2Columnas) // divido la vista principal en dos paneles
-		var panelDerecha = new Panel(panel2Columnas)
+		new Panel(mainPanel).setLayout(new ColumnLayout(2))
+		
+		var panelIzquierda = new Panel(mainPanel)
+		var panelDerecha = new Panel(mainPanel)
+		
 		new Label(panelIzquierda) => [
-			text = "Busqueda" //le doy un titulo al panel izquierdo que va a contener los tipos de busqueda
+			text = "Busqueda" 
 			fontSize = 25
-			setForeground(Color.MAGENTA)
-			]
-		var line1 = new Label (panelIzquierda)
-		line1.text = "_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_" 
+			setForeground(Color.MAGENTA)]
+			
+		new Label (panelIzquierda).text = "_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_" 
+		
 		new Label(panelDerecha) => [
-			text = "Resultados" //le doy un titulo al panel derecho que va a mostrar los resultados de la busqueda
+			text = "Resultados" 
 			fontSize = 25
-			setForeground(Color.RED)
-		]
+			setForeground(Color.RED)]
 		
 		addActions(mainPanel) 
 		createFormPanel(panelIzquierda)
@@ -53,157 +53,149 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 	
 	override protected addActions(Panel actionPanel) {
 		actionPanel.layout = new HorizontalLayout
-		new Button(actionPanel)
-			.setCaption("Regresar")
-			.onClick[|this.close]
-			.setFontSize(11)
-	}
-	
+		new Button(actionPanel) => [
+			setCaption("Regresar")
+			onClick[|this.close]
+			setFontSize(11)]
+	}	
 	
 	override void createFormPanel(Panel panelIzquierda) {
 		title = "Busqueda Jugador"
 	
-		var panelBusqueda = new Panel(panelIzquierda)
-		panelBusqueda.setLayout(new ColumnLayout(2))
-		var izquierda = new Panel(panelBusqueda)
+		var panelBusqueda = new Panel(panelIzquierda).setLayout(new ColumnLayout(2))
+		var izquierda = new Panel(panelBusqueda) 
 		var derecha = new Panel(panelBusqueda)
 
 		// Por nombre “comienza con” 
-		var labelNombre = new Label(izquierda)
-		labelNombre.fontSize = 10
-		labelNombre.text = "Nombre comienza con.."
-		labelNombre.setForeground(Color.DARK_GRAY) 
+		new Label(izquierda) => [
+			text = "Nombre comienza con.."
+			fontSize = 10
+			setForeground(Color.DARK_GRAY)] 
 		
-		new TextBox(derecha)=>
-			[bindValueToProperty("jugadorEjemplo.nombre")
+		new TextBox(derecha)=>[
+			bindValueToProperty("jugadorEjemplo.nombre")
 			width = 200]
 			
-		var line1 = new Label (panelIzquierda)
-		line1.text = "_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_" 
+		new Label (panelIzquierda).text = "_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_" 
 		
 		//Por apodo “contiene” //	
-		var labelApodo = new Label(izquierda)
-		labelApodo.fontSize = 10
-		labelApodo.text = "Apodo contiene..."
-		labelApodo.setForeground(Color.DARK_GRAY) 
+		new Label(izquierda) =>[
+			text = "Apodo contiene..."
+			fontSize = 10
+			setForeground(Color.DARK_GRAY)]
 
-		new TextBox(derecha)=>
-			[bindValueToProperty("jugadorEjemplo.apodo")
+		new TextBox(derecha) =>[
+			bindValueToProperty("jugadorEjemplo.apodo")
 			width = 200]	
 			
 		// Búsqueda por fecha de nacimiento “anterior a” //
-		var labelFecha = new Label(izquierda)
-		labelFecha.setText = "Fecha de nacimiento menor a:" 
-		labelFecha.fontSize = 10
-		labelFecha.setForeground(Color.DARK_GRAY) 
-		val textBoxFecha = new TextBox(derecha)
-		textBoxFecha.withFilter(new DateTextFilter)
-		val binding = textBoxFecha.bindValueToProperty("jugadorEjemplo.fechaNacimiento")
-		binding.setTransformer(new DateAdapter)
+		new Label(izquierda) => [
+			text = "Fecha de nacimiento menor a:" 
+			fontSize = 10
+			setForeground(Color.DARK_GRAY)]
+		
+		 new TextBox(derecha).withFilter(new DateTextFilter).bindValueToProperty("jugadorEjemplo.fechaNacimiento")
+		 .setTransformer(new DateAdapter)
 			
-		//Por rango desde/hasta del hándicap (puede ingresarse sólo desde, o sólo hasta) //
+		//Por rango desde/hasta del hándicap (puede ingresarse sólo desde, o sólo hasta) //		
+		new Label(izquierda) =>[
+			setText = "Handicap desde:" 	
+			fontSize = 10
+			setForeground(Color.DARK_GRAY) ]
+			
+		new Label(derecha) =>[
+			text = "Handicap hasta:" 
+			fontSize = 10
+			setForeground(Color.DARK_GRAY) ]
 		
-		var labelHandicapD = new Label(izquierda)
-		labelHandicapD.setText = "Handicap desde:" 	
-		labelHandicapD.fontSize = 10
-		labelHandicapD.setForeground(Color.DARK_GRAY) 	
-		var labelHandicapH = new Label(derecha)
-		labelHandicapH.setText = "Handicap hasta:" 
-		labelHandicapH.fontSize = 10
-		labelHandicapH.setForeground(Color.DARK_GRAY) 
-		
-		new TextBox(izquierda)=>
-			[bindValueToProperty("modelo.handicapDesde")
-			width = 100]	
-		new TextBox(derecha)=>
-			[bindValueToProperty("modelo.handicapHasta")
+		new TextBox(izquierda)=>[
+			bindValueToProperty("modelo.handicapDesde")
 			width = 100]	
 		
-		//Por rango desde/hasta del promedio de último partido //
-		
-		var labelPromedioD = new Label(izquierda)
-		labelPromedioD.setText = "Promedio desde:" 	
-		labelPromedioD.fontSize = 10	
-		labelPromedioD.setForeground(Color.DARK_GRAY) 
-		var labelPromedioH = new Label(derecha)
-		labelPromedioH.setText = "Promedio hasta:" 
-		labelPromedioH.fontSize = 10
-		labelPromedioH.setForeground(Color.DARK_GRAY) 
-		
-		new TextBox(izquierda)=>
-			[bindValueToProperty("modelo.promedioDesde")
+		new TextBox(derecha)=>[
+			bindValueToProperty("modelo.handicapHasta")
 			width = 100]	
-		new TextBox(derecha)=>
-			[bindValueToProperty("modelo.promedioHasta")
+		
+		//Por rango desde/hasta del promedio de último partido //		
+		new Label(izquierda) =>[
+			text = "Promedio desde:" 	
+			fontSize = 10	
+			setForeground(Color.DARK_GRAY) ]
+		
+		new Label(derecha) =>[
+			text = "Promedio hasta:" 
+			fontSize = 10
+			setForeground(Color.DARK_GRAY) ]
+		
+		new TextBox(izquierda)=>[
+			bindValueToProperty("modelo.promedioDesde")
+			width = 100]	
+		
+		new TextBox(derecha)=>[
+			bindValueToProperty("modelo.promedioHasta")
 			width = 100]			
 
 		//Filtrar sólo los que tuvieron infracciones, sólo los que no tuvieron infracciones, todos //
-		var labelInfraccion = new Label(izquierda)
-		labelInfraccion.fontSize = 10
-		labelInfraccion.text = "Infracciones" 
-		labelInfraccion.setForeground(Color.DARK_GRAY) 
+		new Label(izquierda) => [
+		text = "Infracciones" 
+		fontSize = 10
+		setForeground(Color.DARK_GRAY) ]
 
-		new Selector(derecha)=>[
-			//allowNull = false
+		new Selector(derecha) =>[
 			bindItems(new ObservableProperty(this, "eligeInfracciones"))
 			bindValueToProperty("modelo.infracciones")
 		]
 			
-		new Button(panelBusqueda)
-			.setCaption("Buscar")
-			.onClick [ | modelObject.search() ]
-			.setFontSize(12)
-			.setWidth = 200			
+		new Button(panelBusqueda) => [
+			setCaption("Buscar")
+			onClick [ | modelObject.search() ]
+			setFontSize(12)
+			setWidth = 200]		
 			
-		new Button(panelBusqueda) 
-			.setCaption("Limpiar")
-			.onClick [ | modelObject.clear ]
-			.setFontSize(12)
-			.setWidth = 200		
+		new Button(panelBusqueda)  =>[
+			setCaption("Limpiar")
+			onClick [ | modelObject.clear ]
+			setFontSize(12)
+			setWidth = 200]		
 	}
 			
-		def crearTextBox(Panel searchFormPanel, String label, String binding) {
-		var labelNumero = new Label(searchFormPanel)
-		labelNumero.text = label
-		val textBox = new TextBox(searchFormPanel)
-		textBox.bindValueToProperty(binding)
-		}
+	def crearTextBox(Panel searchFormPanel, String label, String binding) {
+		new Label(searchFormPanel).text = label
+		new TextBox(searchFormPanel).bindValueToProperty(binding)
+	}
 	
 	def void grillaBasicaJugadores(Panel panelResultados){
-		var table = new Table<Jugador>(panelResultados, typeof(Jugador))
-		table.heigth = 220
-		table.width = 590
-
-		table.bindValueToProperty("jugadorSeleccionado")
-		table.bindItemsToProperty("jugadores")
+		var grilla = new Table<Jugador>(panelResultados, typeof(Jugador)) =>[
+			heigth = 220
+			width = 590
+			bindValueToProperty("jugadorSeleccionado")
+			bindItemsToProperty("jugadores")]
 		
-		new Column<Jugador>(table) //
-			.setTitle("Nombre")
-			.setFixedSize(150)
-			.bindContentsToProperty("nombre")
-		new Column<Jugador>(table) //
-			.setTitle("Apodo")
-			.setFixedSize(150)
-			.bindContentsToProperty("apodo")
-		new Column<Jugador>(table) //
-			.setTitle("Handicap")
-			.setFixedSize(150)
-			.bindContentsToProperty("nivelDeJuego")
-		new Column<Jugador>(table) //
-			.setTitle("Promedio")
-			.setFixedSize(150)
-			.bindContentsToProperty("promedio")
+		new Column<Jugador>(grilla) =>[
+			setTitle("Nombre")
+			setFixedSize(150)
+			bindContentsToProperty("nombre")]
+		new Column<Jugador>(grilla) =>[
+			setTitle("Apodo")
+			setFixedSize(150)
+			bindContentsToProperty("apodo")]
+		new Column<Jugador>(grilla) =>[
+			setTitle("Handicap")
+			setFixedSize(150)
+			bindContentsToProperty("nivelDeJuego")]
+		new Column<Jugador>(grilla) =>[
+			setTitle("Promedio")
+			setFixedSize(150)
+			bindContentsToProperty("promedio")]
 		
-		var verDatos = new Button(panelResultados)
-			.setCaption("Ver Datos Completos")
-			.onClick [ | this.grillaCompletaJugador] 
-			.setAsDefault
-			.disableOnError
-			.setFontSize(14)
-			.setWidth = 200
-			
-		var jugadorMarcado = new NotNullObservable("jugadorSeleccionado")
-		verDatos.bindEnabled(jugadorMarcado)
+		new Button(panelResultados) =>[
+			setCaption("Ver Datos Completos")
+			onClick [ | this.grillaCompletaJugador] 
+			setAsDefault
+			disableOnError
+			setFontSize(14)
+			setWidth = 200
+			bindEnabled( new NotNullObservable("jugadorSeleccionado"))]
 	}
 	
 	def openDialog(Dialog<?> dialog) {
@@ -218,10 +210,6 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 	def getEligeInfracciones() {
 			#["Con Infracciones","Sin Infracciones","Todos"]
 		}
-		
-	def getEligeHandicap() {
-			#["Handicap desde","Handicap hasta"]
-		}		
 	}
 	
 class DateBox extends TextBox {

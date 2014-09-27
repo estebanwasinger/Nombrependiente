@@ -24,17 +24,16 @@ new(WindowOwner owner, Jugador model) {
 
 	override protected createFormPanel(Panel mainPanel) {
 		title = "Datos del Jugador"
-		val Panel columnPanel = new Panel(mainPanel)
-		columnPanel.layout = new ColumnLayout(2)
-		val Panel panelIzq = new Panel(columnPanel).layout = new ColumnLayout(2)
-		val Panel panelDer = new Panel(columnPanel).layout = new VerticalLayout
+		var principal = new Panel(mainPanel).layout = new ColumnLayout(2)
+		var panelIzq = new Panel(principal).layout = new ColumnLayout(2)
+		var panelDer = new Panel(principal).layout = new VerticalLayout
 		
 		mostrarDatos(panelIzq)
 		verTablas(panelDer)
-
-
 	}
+	
 	def mostrarDatos(Panel panel){
+		
 		new Label(panel).text = "Nombre del Jugador"
 		new Label(panel).bindValueToProperty("nombre")
 		new Label(panel).text = "Apodo"
@@ -50,23 +49,25 @@ new(WindowOwner owner, Jugador model) {
 	
 	}
 	def verTablas(Panel panel){
-	var Table tableListaAmigos = new Table<Jugador>(panel, typeof(Jugador))
-	tableListaAmigos.heigth = 200
-	tableListaAmigos.width = 285
-	tableListaAmigos.bindItemsToProperty("amigos")
-	new Column<Jugador>(tableListaAmigos).setTitle("Nombre").bindContentsToProperty("nombre")
+		var tablaListaAmigos = new Table<Jugador>(panel, typeof(Jugador)) =>[
+			heigth = 200
+			width = 285
+			bindItemsToProperty("amigos")]
+			
+		new Column<Jugador>(tablaListaAmigos).setTitle("Nombre").bindContentsToProperty("nombre")
 	
-	var Table tableListaInfracciones = new Table<Infraccion>(panel, typeof(Infraccion))
-	tableListaInfracciones.heigth = 200
-	tableListaInfracciones.width = 285
-	tableListaInfracciones.bindItemsToProperty("infracciones")
-	new Column<Jugador>(tableListaInfracciones).setTitle("Infracciones").bindContentsToProperty("motivo")
-	
+		var tablaListaInfracciones = new Table<Infraccion>(panel, typeof(Infraccion)) => [
+			heigth = 200
+			width = 285
+			bindItemsToProperty("infracciones")]
+			
+		new Column<Infraccion>(tablaListaInfracciones).setTitle("Infracciones").bindContentsToProperty("motivo")
 	}
+	
 override protected void addActions(Panel actions) {
-		new Button(actions) 
-			.setCaption("Volver")
-			.onClick [|this.cancel]
+		new Button(actions) => [
+			setCaption("Volver")
+			onClick [|this.cancel] ]
 	}
 
 	def homeJugadores() {

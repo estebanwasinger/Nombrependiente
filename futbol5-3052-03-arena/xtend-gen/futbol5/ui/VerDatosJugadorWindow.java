@@ -3,6 +3,8 @@ package futbol5.ui;
 import futbol5.domain.Jugador;
 import futbol5.homes.HomeJugadores;
 import infracciones.Infraccion;
+import org.eclipse.xtext.xbase.lib.ObjectExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
@@ -25,15 +27,15 @@ public class VerDatosJugadorWindow extends Dialog<Jugador> {
   
   protected void createFormPanel(final Panel mainPanel) {
     this.setTitle("Datos del Jugador");
-    final Panel columnPanel = new Panel(mainPanel);
+    Panel _panel = new Panel(mainPanel);
     ColumnLayout _columnLayout = new ColumnLayout(2);
-    columnPanel.setLayout(_columnLayout);
-    Panel _panel = new Panel(columnPanel);
+    Panel principal = _panel.setLayout(_columnLayout);
+    Panel _panel_1 = new Panel(principal);
     ColumnLayout _columnLayout_1 = new ColumnLayout(2);
-    final Panel panelIzq = _panel.setLayout(_columnLayout_1);
-    Panel _panel_1 = new Panel(columnPanel);
+    Panel panelIzq = _panel_1.setLayout(_columnLayout_1);
+    Panel _panel_2 = new Panel(principal);
     VerticalLayout _verticalLayout = new VerticalLayout();
-    final Panel panelDer = _panel_1.setLayout(_verticalLayout);
+    Panel panelDer = _panel_2.setLayout(_verticalLayout);
     this.mostrarDatos(panelIzq);
     this.verTablas(panelDer);
   }
@@ -69,22 +71,32 @@ public class VerDatosJugadorWindow extends Dialog<Jugador> {
     return _xblockexpression;
   }
   
-  public Column<Jugador> verTablas(final Panel panel) {
-    Column<Jugador> _xblockexpression = null;
+  public Column<Infraccion> verTablas(final Panel panel) {
+    Column<Infraccion> _xblockexpression = null;
     {
-      Table tableListaAmigos = new Table<Jugador>(panel, Jugador.class);
-      tableListaAmigos.setHeigth(200);
-      tableListaAmigos.setWidth(285);
-      tableListaAmigos.bindItemsToProperty("amigos");
-      Column<Jugador> _column = new Column<Jugador>(tableListaAmigos);
+      Table<Jugador> _table = new Table<Jugador>(panel, Jugador.class);
+      final Procedure1<Table<Jugador>> _function = new Procedure1<Table<Jugador>>() {
+        public void apply(final Table<Jugador> it) {
+          it.setHeigth(200);
+          it.setWidth(285);
+          it.bindItemsToProperty("amigos");
+        }
+      };
+      Table<Jugador> tablaListaAmigos = ObjectExtensions.<Table<Jugador>>operator_doubleArrow(_table, _function);
+      Column<Jugador> _column = new Column<Jugador>(tablaListaAmigos);
       Column<Jugador> _setTitle = _column.setTitle("Nombre");
       _setTitle.bindContentsToProperty("nombre");
-      Table tableListaInfracciones = new Table<Infraccion>(panel, Infraccion.class);
-      tableListaInfracciones.setHeigth(200);
-      tableListaInfracciones.setWidth(285);
-      tableListaInfracciones.bindItemsToProperty("infracciones");
-      Column<Jugador> _column_1 = new Column<Jugador>(tableListaInfracciones);
-      Column<Jugador> _setTitle_1 = _column_1.setTitle("Infracciones");
+      Table<Infraccion> _table_1 = new Table<Infraccion>(panel, Infraccion.class);
+      final Procedure1<Table<Infraccion>> _function_1 = new Procedure1<Table<Infraccion>>() {
+        public void apply(final Table<Infraccion> it) {
+          it.setHeigth(200);
+          it.setWidth(285);
+          it.bindItemsToProperty("infracciones");
+        }
+      };
+      Table<Infraccion> tablaListaInfracciones = ObjectExtensions.<Table<Infraccion>>operator_doubleArrow(_table_1, _function_1);
+      Column<Infraccion> _column_1 = new Column<Infraccion>(tablaListaInfracciones);
+      Column<Infraccion> _setTitle_1 = _column_1.setTitle("Infracciones");
       _xblockexpression = _setTitle_1.bindContentsToProperty("motivo");
     }
     return _xblockexpression;
@@ -92,13 +104,18 @@ public class VerDatosJugadorWindow extends Dialog<Jugador> {
   
   protected void addActions(final Panel actions) {
     Button _button = new Button(actions);
-    Button _setCaption = _button.setCaption("Volver");
-    final Action _function = new Action() {
-      public void execute() {
-        VerDatosJugadorWindow.this.cancel();
+    final Procedure1<Button> _function = new Procedure1<Button>() {
+      public void apply(final Button it) {
+        it.setCaption("Volver");
+        final Action _function = new Action() {
+          public void execute() {
+            VerDatosJugadorWindow.this.cancel();
+          }
+        };
+        it.onClick(_function);
       }
     };
-    _setCaption.onClick(_function);
+    ObjectExtensions.<Button>operator_doubleArrow(_button, _function);
   }
   
   public HomeJugadores homeJugadores() {

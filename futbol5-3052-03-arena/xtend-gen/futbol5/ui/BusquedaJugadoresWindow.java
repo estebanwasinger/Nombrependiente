@@ -16,12 +16,9 @@ import org.uqbar.arena.bindings.ObservableProperty;
 import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.widgets.Button;
-import org.uqbar.arena.widgets.Control;
 import org.uqbar.arena.widgets.Label;
-import org.uqbar.arena.widgets.Link;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.Selector;
-import org.uqbar.arena.widgets.SkinnableControl;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
@@ -41,11 +38,11 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
   
   public void createContents(final Panel mainPanel) {
     this.setTitle("Busqueda de Jugadores");
-    Panel panel2Columnas = new Panel(mainPanel);
+    Panel _panel = new Panel(mainPanel);
     ColumnLayout _columnLayout = new ColumnLayout(2);
-    panel2Columnas.setLayout(_columnLayout);
-    Panel panelIzquierda = new Panel(panel2Columnas);
-    Panel panelDerecha = new Panel(panel2Columnas);
+    _panel.setLayout(_columnLayout);
+    Panel panelIzquierda = new Panel(mainPanel);
+    Panel panelDerecha = new Panel(mainPanel);
     Label _label = new Label(panelIzquierda);
     final Procedure1<Label> _function = new Procedure1<Label>() {
       public void apply(final Label it) {
@@ -55,9 +52,9 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
       }
     };
     ObjectExtensions.<Label>operator_doubleArrow(_label, _function);
-    Label line1 = new Label(panelIzquierda);
-    line1.setText("_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
-    Label _label_1 = new Label(panelDerecha);
+    Label _label_1 = new Label(panelIzquierda);
+    _label_1.setText("_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
+    Label _label_2 = new Label(panelDerecha);
     final Procedure1<Label> _function_1 = new Procedure1<Label>() {
       public void apply(final Label it) {
         it.setText("Resultados");
@@ -65,7 +62,7 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
         it.setForeground(Color.RED);
       }
     };
-    ObjectExtensions.<Label>operator_doubleArrow(_label_1, _function_1);
+    ObjectExtensions.<Label>operator_doubleArrow(_label_2, _function_1);
     this.addActions(mainPanel);
     this.createFormPanel(panelIzquierda);
     this.grillaBasicaJugadores(panelDerecha);
@@ -75,191 +72,276 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     HorizontalLayout _horizontalLayout = new HorizontalLayout();
     actionPanel.setLayout(_horizontalLayout);
     Button _button = new Button(actionPanel);
-    Button _setCaption = _button.setCaption("Regresar");
-    final Action _function = new Action() {
-      public void execute() {
-        BusquedaJugadoresWindow.this.close();
+    final Procedure1<Button> _function = new Procedure1<Button>() {
+      public void apply(final Button it) {
+        it.setCaption("Regresar");
+        final Action _function = new Action() {
+          public void execute() {
+            BusquedaJugadoresWindow.this.close();
+          }
+        };
+        it.onClick(_function);
+        it.setFontSize(11);
       }
     };
-    Button _onClick = _setCaption.onClick(_function);
-    _onClick.setFontSize(11);
+    ObjectExtensions.<Button>operator_doubleArrow(_button, _function);
   }
   
   public void createFormPanel(final Panel panelIzquierda) {
     this.setTitle("Busqueda Jugador");
-    Panel panelBusqueda = new Panel(panelIzquierda);
+    Panel _panel = new Panel(panelIzquierda);
     ColumnLayout _columnLayout = new ColumnLayout(2);
-    panelBusqueda.setLayout(_columnLayout);
+    Panel panelBusqueda = _panel.setLayout(_columnLayout);
     Panel izquierda = new Panel(panelBusqueda);
     Panel derecha = new Panel(panelBusqueda);
-    Label labelNombre = new Label(izquierda);
-    labelNombre.setFontSize(10);
-    labelNombre.setText("Nombre comienza con..");
-    labelNombre.setForeground(Color.DARK_GRAY);
+    Label _label = new Label(izquierda);
+    final Procedure1<Label> _function = new Procedure1<Label>() {
+      public void apply(final Label it) {
+        it.setText("Nombre comienza con..");
+        it.setFontSize(10);
+        it.setForeground(Color.DARK_GRAY);
+      }
+    };
+    ObjectExtensions.<Label>operator_doubleArrow(_label, _function);
     TextBox _textBox = new TextBox(derecha);
-    final Procedure1<TextBox> _function = new Procedure1<TextBox>() {
+    final Procedure1<TextBox> _function_1 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
         it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.nombre");
         it.setWidth(200);
       }
     };
-    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox, _function);
-    Label line1 = new Label(panelIzquierda);
-    line1.setText("_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
-    Label labelApodo = new Label(izquierda);
-    labelApodo.setFontSize(10);
-    labelApodo.setText("Apodo contiene...");
-    labelApodo.setForeground(Color.DARK_GRAY);
+    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox, _function_1);
+    Label _label_1 = new Label(panelIzquierda);
+    _label_1.setText("_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
+    Label _label_2 = new Label(izquierda);
+    final Procedure1<Label> _function_2 = new Procedure1<Label>() {
+      public void apply(final Label it) {
+        it.setText("Apodo contiene...");
+        it.setFontSize(10);
+        it.setForeground(Color.DARK_GRAY);
+      }
+    };
+    ObjectExtensions.<Label>operator_doubleArrow(_label_2, _function_2);
     TextBox _textBox_1 = new TextBox(derecha);
-    final Procedure1<TextBox> _function_1 = new Procedure1<TextBox>() {
+    final Procedure1<TextBox> _function_3 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
         it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.apodo");
         it.setWidth(200);
       }
     };
-    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_1, _function_1);
-    Label labelFecha = new Label(izquierda);
-    labelFecha.setText("Fecha de nacimiento menor a:");
-    labelFecha.setFontSize(10);
-    labelFecha.setForeground(Color.DARK_GRAY);
-    final TextBox textBoxFecha = new TextBox(derecha);
+    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_1, _function_3);
+    Label _label_3 = new Label(izquierda);
+    final Procedure1<Label> _function_4 = new Procedure1<Label>() {
+      public void apply(final Label it) {
+        it.setText("Fecha de nacimiento menor a:");
+        it.setFontSize(10);
+        it.setForeground(Color.DARK_GRAY);
+      }
+    };
+    ObjectExtensions.<Label>operator_doubleArrow(_label_3, _function_4);
+    TextBox _textBox_2 = new TextBox(derecha);
     DateTextFilter _dateTextFilter = new DateTextFilter();
-    textBoxFecha.withFilter(_dateTextFilter);
-    final Binding<ControlBuilder> binding = textBoxFecha.<ControlBuilder>bindValueToProperty("jugadorEjemplo.fechaNacimiento");
+    TextBox _withFilter = _textBox_2.withFilter(_dateTextFilter);
+    Binding<ControlBuilder> _bindValueToProperty = _withFilter.<ControlBuilder>bindValueToProperty("jugadorEjemplo.fechaNacimiento");
     DateAdapter _dateAdapter = new DateAdapter();
-    binding.setTransformer(_dateAdapter);
-    Label labelHandicapD = new Label(izquierda);
-    labelHandicapD.setText("Handicap desde:");
-    labelHandicapD.setFontSize(10);
-    labelHandicapD.setForeground(Color.DARK_GRAY);
-    Label labelHandicapH = new Label(derecha);
-    labelHandicapH.setText("Handicap hasta:");
-    labelHandicapH.setFontSize(10);
-    labelHandicapH.setForeground(Color.DARK_GRAY);
-    TextBox _textBox_2 = new TextBox(izquierda);
-    final Procedure1<TextBox> _function_2 = new Procedure1<TextBox>() {
+    _bindValueToProperty.setTransformer(_dateAdapter);
+    Label _label_4 = new Label(izquierda);
+    final Procedure1<Label> _function_5 = new Procedure1<Label>() {
+      public void apply(final Label it) {
+        it.setText("Handicap desde:");
+        it.setFontSize(10);
+        it.setForeground(Color.DARK_GRAY);
+      }
+    };
+    ObjectExtensions.<Label>operator_doubleArrow(_label_4, _function_5);
+    Label _label_5 = new Label(derecha);
+    final Procedure1<Label> _function_6 = new Procedure1<Label>() {
+      public void apply(final Label it) {
+        it.setText("Handicap hasta:");
+        it.setFontSize(10);
+        it.setForeground(Color.DARK_GRAY);
+      }
+    };
+    ObjectExtensions.<Label>operator_doubleArrow(_label_5, _function_6);
+    TextBox _textBox_3 = new TextBox(izquierda);
+    final Procedure1<TextBox> _function_7 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
         it.<ControlBuilder>bindValueToProperty("modelo.handicapDesde");
         it.setWidth(100);
       }
     };
-    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_2, _function_2);
-    TextBox _textBox_3 = new TextBox(derecha);
-    final Procedure1<TextBox> _function_3 = new Procedure1<TextBox>() {
+    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_3, _function_7);
+    TextBox _textBox_4 = new TextBox(derecha);
+    final Procedure1<TextBox> _function_8 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
         it.<ControlBuilder>bindValueToProperty("modelo.handicapHasta");
         it.setWidth(100);
       }
     };
-    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_3, _function_3);
-    Label labelPromedioD = new Label(izquierda);
-    labelPromedioD.setText("Promedio desde:");
-    labelPromedioD.setFontSize(10);
-    labelPromedioD.setForeground(Color.DARK_GRAY);
-    Label labelPromedioH = new Label(derecha);
-    labelPromedioH.setText("Promedio hasta:");
-    labelPromedioH.setFontSize(10);
-    labelPromedioH.setForeground(Color.DARK_GRAY);
-    TextBox _textBox_4 = new TextBox(izquierda);
-    final Procedure1<TextBox> _function_4 = new Procedure1<TextBox>() {
+    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_4, _function_8);
+    Label _label_6 = new Label(izquierda);
+    final Procedure1<Label> _function_9 = new Procedure1<Label>() {
+      public void apply(final Label it) {
+        it.setText("Promedio desde:");
+        it.setFontSize(10);
+        it.setForeground(Color.DARK_GRAY);
+      }
+    };
+    ObjectExtensions.<Label>operator_doubleArrow(_label_6, _function_9);
+    Label _label_7 = new Label(derecha);
+    final Procedure1<Label> _function_10 = new Procedure1<Label>() {
+      public void apply(final Label it) {
+        it.setText("Promedio hasta:");
+        it.setFontSize(10);
+        it.setForeground(Color.DARK_GRAY);
+      }
+    };
+    ObjectExtensions.<Label>operator_doubleArrow(_label_7, _function_10);
+    TextBox _textBox_5 = new TextBox(izquierda);
+    final Procedure1<TextBox> _function_11 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
         it.<ControlBuilder>bindValueToProperty("modelo.promedioDesde");
         it.setWidth(100);
       }
     };
-    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_4, _function_4);
-    TextBox _textBox_5 = new TextBox(derecha);
-    final Procedure1<TextBox> _function_5 = new Procedure1<TextBox>() {
+    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_5, _function_11);
+    TextBox _textBox_6 = new TextBox(derecha);
+    final Procedure1<TextBox> _function_12 = new Procedure1<TextBox>() {
       public void apply(final TextBox it) {
         it.<ControlBuilder>bindValueToProperty("modelo.promedioHasta");
         it.setWidth(100);
       }
     };
-    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_5, _function_5);
-    Label labelInfraccion = new Label(izquierda);
-    labelInfraccion.setFontSize(10);
-    labelInfraccion.setText("Infracciones");
-    labelInfraccion.setForeground(Color.DARK_GRAY);
+    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox_6, _function_12);
+    Label _label_8 = new Label(izquierda);
+    final Procedure1<Label> _function_13 = new Procedure1<Label>() {
+      public void apply(final Label it) {
+        it.setText("Infracciones");
+        it.setFontSize(10);
+        it.setForeground(Color.DARK_GRAY);
+      }
+    };
+    ObjectExtensions.<Label>operator_doubleArrow(_label_8, _function_13);
     Selector<Object> _selector = new Selector<Object>(derecha);
-    final Procedure1<Selector<Object>> _function_6 = new Procedure1<Selector<Object>>() {
+    final Procedure1<Selector<Object>> _function_14 = new Procedure1<Selector<Object>>() {
       public void apply(final Selector<Object> it) {
         ObservableProperty _observableProperty = new ObservableProperty(BusquedaJugadoresWindow.this, "eligeInfracciones");
         it.bindItems(_observableProperty);
         it.<ControlBuilder>bindValueToProperty("modelo.infracciones");
       }
     };
-    ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector, _function_6);
+    ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector, _function_14);
     Button _button = new Button(panelBusqueda);
-    Button _setCaption = _button.setCaption("Buscar");
-    final Action _function_7 = new Action() {
-      public void execute() {
-        BusquedaJugadoresAppModel _modelObject = BusquedaJugadoresWindow.this.getModelObject();
-        _modelObject.search();
+    final Procedure1<Button> _function_15 = new Procedure1<Button>() {
+      public void apply(final Button it) {
+        it.setCaption("Buscar");
+        final Action _function = new Action() {
+          public void execute() {
+            BusquedaJugadoresAppModel _modelObject = BusquedaJugadoresWindow.this.getModelObject();
+            _modelObject.search();
+          }
+        };
+        it.onClick(_function);
+        it.setFontSize(12);
+        it.setWidth(200);
       }
     };
-    Button _onClick = _setCaption.onClick(_function_7);
-    SkinnableControl _setFontSize = _onClick.setFontSize(12);
-    _setFontSize.setWidth(200);
+    ObjectExtensions.<Button>operator_doubleArrow(_button, _function_15);
     Button _button_1 = new Button(panelBusqueda);
-    Button _setCaption_1 = _button_1.setCaption("Limpiar");
-    final Action _function_8 = new Action() {
-      public void execute() {
-        BusquedaJugadoresAppModel _modelObject = BusquedaJugadoresWindow.this.getModelObject();
-        _modelObject.clear();
+    final Procedure1<Button> _function_16 = new Procedure1<Button>() {
+      public void apply(final Button it) {
+        it.setCaption("Limpiar");
+        final Action _function = new Action() {
+          public void execute() {
+            BusquedaJugadoresAppModel _modelObject = BusquedaJugadoresWindow.this.getModelObject();
+            _modelObject.clear();
+          }
+        };
+        it.onClick(_function);
+        it.setFontSize(12);
+        it.setWidth(200);
       }
     };
-    Button _onClick_1 = _setCaption_1.onClick(_function_8);
-    SkinnableControl _setFontSize_1 = _onClick_1.setFontSize(12);
-    _setFontSize_1.setWidth(200);
+    ObjectExtensions.<Button>operator_doubleArrow(_button_1, _function_16);
   }
   
   public Binding<ControlBuilder> crearTextBox(final Panel searchFormPanel, final String label, final String binding) {
     Binding<ControlBuilder> _xblockexpression = null;
     {
-      Label labelNumero = new Label(searchFormPanel);
-      labelNumero.setText(label);
-      final TextBox textBox = new TextBox(searchFormPanel);
-      _xblockexpression = textBox.<ControlBuilder>bindValueToProperty(binding);
+      Label _label = new Label(searchFormPanel);
+      _label.setText(label);
+      TextBox _textBox = new TextBox(searchFormPanel);
+      _xblockexpression = _textBox.<ControlBuilder>bindValueToProperty(binding);
     }
     return _xblockexpression;
   }
   
   public void grillaBasicaJugadores(final Panel panelResultados) {
-    Table<Jugador> table = new Table<Jugador>(panelResultados, Jugador.class);
-    table.setHeigth(220);
-    table.setWidth(590);
-    table.<ControlBuilder>bindValueToProperty("jugadorSeleccionado");
-    table.bindItemsToProperty("jugadores");
-    Column<Jugador> _column = new Column<Jugador>(table);
-    Column<Jugador> _setTitle = _column.setTitle("Nombre");
-    Column<Jugador> _setFixedSize = _setTitle.setFixedSize(150);
-    _setFixedSize.bindContentsToProperty("nombre");
-    Column<Jugador> _column_1 = new Column<Jugador>(table);
-    Column<Jugador> _setTitle_1 = _column_1.setTitle("Apodo");
-    Column<Jugador> _setFixedSize_1 = _setTitle_1.setFixedSize(150);
-    _setFixedSize_1.bindContentsToProperty("apodo");
-    Column<Jugador> _column_2 = new Column<Jugador>(table);
-    Column<Jugador> _setTitle_2 = _column_2.setTitle("Handicap");
-    Column<Jugador> _setFixedSize_2 = _setTitle_2.setFixedSize(150);
-    _setFixedSize_2.bindContentsToProperty("nivelDeJuego");
-    Column<Jugador> _column_3 = new Column<Jugador>(table);
-    Column<Jugador> _setTitle_3 = _column_3.setTitle("Promedio");
-    Column<Jugador> _setFixedSize_3 = _setTitle_3.setFixedSize(150);
-    _setFixedSize_3.bindContentsToProperty("promedio");
-    Button _button = new Button(panelResultados);
-    Button _setCaption = _button.setCaption("Ver Datos Completos");
-    final Action _function = new Action() {
-      public void execute() {
-        BusquedaJugadoresWindow.this.grillaCompletaJugador();
+    Table<Jugador> _table = new Table<Jugador>(panelResultados, Jugador.class);
+    final Procedure1<Table<Jugador>> _function = new Procedure1<Table<Jugador>>() {
+      public void apply(final Table<Jugador> it) {
+        it.setHeigth(220);
+        it.setWidth(590);
+        it.<ControlBuilder>bindValueToProperty("jugadorSeleccionado");
+        it.bindItemsToProperty("jugadores");
       }
     };
-    Button _onClick = _setCaption.onClick(_function);
-    Button _setAsDefault = _onClick.setAsDefault();
-    Link _disableOnError = _setAsDefault.disableOnError();
-    SkinnableControl _setFontSize = _disableOnError.setFontSize(14);
-    Control verDatos = _setFontSize.setWidth(200);
-    NotNullObservable jugadorMarcado = new NotNullObservable("jugadorSeleccionado");
-    verDatos.<ControlBuilder>bindEnabled(jugadorMarcado);
+    Table<Jugador> grilla = ObjectExtensions.<Table<Jugador>>operator_doubleArrow(_table, _function);
+    Column<Jugador> _column = new Column<Jugador>(grilla);
+    final Procedure1<Column<Jugador>> _function_1 = new Procedure1<Column<Jugador>>() {
+      public void apply(final Column<Jugador> it) {
+        it.setTitle("Nombre");
+        it.setFixedSize(150);
+        it.bindContentsToProperty("nombre");
+      }
+    };
+    ObjectExtensions.<Column<Jugador>>operator_doubleArrow(_column, _function_1);
+    Column<Jugador> _column_1 = new Column<Jugador>(grilla);
+    final Procedure1<Column<Jugador>> _function_2 = new Procedure1<Column<Jugador>>() {
+      public void apply(final Column<Jugador> it) {
+        it.setTitle("Apodo");
+        it.setFixedSize(150);
+        it.bindContentsToProperty("apodo");
+      }
+    };
+    ObjectExtensions.<Column<Jugador>>operator_doubleArrow(_column_1, _function_2);
+    Column<Jugador> _column_2 = new Column<Jugador>(grilla);
+    final Procedure1<Column<Jugador>> _function_3 = new Procedure1<Column<Jugador>>() {
+      public void apply(final Column<Jugador> it) {
+        it.setTitle("Handicap");
+        it.setFixedSize(150);
+        it.bindContentsToProperty("nivelDeJuego");
+      }
+    };
+    ObjectExtensions.<Column<Jugador>>operator_doubleArrow(_column_2, _function_3);
+    Column<Jugador> _column_3 = new Column<Jugador>(grilla);
+    final Procedure1<Column<Jugador>> _function_4 = new Procedure1<Column<Jugador>>() {
+      public void apply(final Column<Jugador> it) {
+        it.setTitle("Promedio");
+        it.setFixedSize(150);
+        it.bindContentsToProperty("promedio");
+      }
+    };
+    ObjectExtensions.<Column<Jugador>>operator_doubleArrow(_column_3, _function_4);
+    Button _button = new Button(panelResultados);
+    final Procedure1<Button> _function_5 = new Procedure1<Button>() {
+      public void apply(final Button it) {
+        it.setCaption("Ver Datos Completos");
+        final Action _function = new Action() {
+          public void execute() {
+            BusquedaJugadoresWindow.this.grillaCompletaJugador();
+          }
+        };
+        it.onClick(_function);
+        it.setAsDefault();
+        it.disableOnError();
+        it.setFontSize(14);
+        it.setWidth(200);
+        NotNullObservable _notNullObservable = new NotNullObservable("jugadorSeleccionado");
+        it.<ControlBuilder>bindEnabled(_notNullObservable);
+      }
+    };
+    ObjectExtensions.<Button>operator_doubleArrow(_button, _function_5);
   }
   
   public void openDialog(final Dialog<?> dialog) {
@@ -280,9 +362,5 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
   
   public List<String> getEligeInfracciones() {
     return Collections.<String>unmodifiableList(Lists.<String>newArrayList("Con Infracciones", "Sin Infracciones", "Todos"));
-  }
-  
-  public List<String> getEligeHandicap() {
-    return Collections.<String>unmodifiableList(Lists.<String>newArrayList("Handicap desde", "Handicap hasta"));
   }
 }
