@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.uqbar.commons.StringUtils;
 import futbol5.applicationModel.BusquedaJugadoresAppModel;
 import futbol5.auxUtils.DateTextFilter;
+import futbol5.auxUtils.Grilla;
 import futbol5.domain.Jugador;
 import futbol5.ui.VerDatosJugadorWindow;
 import java.awt.Color;
@@ -23,8 +24,6 @@ import org.uqbar.arena.widgets.Selector;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.TextFilter;
 import org.uqbar.arena.widgets.TextInputEvent;
-import org.uqbar.arena.widgets.tables.Column;
-import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.ErrorsPanel;
 import org.uqbar.arena.windows.WindowOwner;
@@ -37,10 +36,22 @@ import org.uqbar.lacar.ui.model.bindings.Binding;
 @Observable
 @SuppressWarnings("all")
 public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
+  private Grilla _grilla;
+  
+  public Grilla getGrilla() {
+    return this._grilla;
+  }
+  
+  public void setGrilla(final Grilla grilla) {
+    this._grilla = grilla;
+  }
+  
   public BusquedaJugadoresWindow(final WindowOwner parent, final BusquedaJugadoresAppModel modelObject) {
     super(parent, modelObject);
     WindowBuilder _delegate = this.getDelegate();
     _delegate.setErrorViewer(this);
+    Grilla _grilla = new Grilla();
+    this.setGrilla(_grilla);
   }
   
   public void createContents(final Panel mainPanel) {
@@ -73,7 +84,11 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     ObjectExtensions.<Label>operator_doubleArrow(_label_2, _function_1);
     this.addActions(mainPanel);
     this.createFormPanel(panelIzquierda);
-    this.grillaBasicaJugadores(panelDerecha);
+    BusquedaJugadoresAppModel _modelObject = this.getModelObject();
+    Jugador _jugadorSeleccionado = _modelObject.getJugadorSeleccionado();
+    BusquedaJugadoresAppModel _modelObject_1 = this.getModelObject();
+    List<Jugador> _jugadores = _modelObject_1.getJugadores();
+    this.grillaBasicaJugadores(panelDerecha, _jugadorSeleccionado, _jugadores);
   }
   
   protected void addActions(final Panel actionPanel) {
@@ -291,55 +306,11 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     return _xblockexpression;
   }
   
-  public void grillaBasicaJugadores(final Panel panelResultados) {
-    Table<Jugador> _table = new Table<Jugador>(panelResultados, Jugador.class);
-    final Procedure1<Table<Jugador>> _function = new Procedure1<Table<Jugador>>() {
-      public void apply(final Table<Jugador> it) {
-        it.setHeigth(220);
-        it.setWidth(590);
-        it.<ControlBuilder>bindValueToProperty("jugadorSeleccionado");
-        it.bindItemsToProperty("jugadores");
-      }
-    };
-    Table<Jugador> grilla = ObjectExtensions.<Table<Jugador>>operator_doubleArrow(_table, _function);
-    Column<Jugador> _column = new Column<Jugador>(grilla);
-    final Procedure1<Column<Jugador>> _function_1 = new Procedure1<Column<Jugador>>() {
-      public void apply(final Column<Jugador> it) {
-        it.setTitle("Nombre");
-        it.setFixedSize(150);
-        it.bindContentsToProperty("nombre");
-      }
-    };
-    ObjectExtensions.<Column<Jugador>>operator_doubleArrow(_column, _function_1);
-    Column<Jugador> _column_1 = new Column<Jugador>(grilla);
-    final Procedure1<Column<Jugador>> _function_2 = new Procedure1<Column<Jugador>>() {
-      public void apply(final Column<Jugador> it) {
-        it.setTitle("Apodo");
-        it.setFixedSize(150);
-        it.bindContentsToProperty("apodo");
-      }
-    };
-    ObjectExtensions.<Column<Jugador>>operator_doubleArrow(_column_1, _function_2);
-    Column<Jugador> _column_2 = new Column<Jugador>(grilla);
-    final Procedure1<Column<Jugador>> _function_3 = new Procedure1<Column<Jugador>>() {
-      public void apply(final Column<Jugador> it) {
-        it.setTitle("Handicap");
-        it.setFixedSize(150);
-        it.bindContentsToProperty("nivelDeJuego");
-      }
-    };
-    ObjectExtensions.<Column<Jugador>>operator_doubleArrow(_column_2, _function_3);
-    Column<Jugador> _column_3 = new Column<Jugador>(grilla);
-    final Procedure1<Column<Jugador>> _function_4 = new Procedure1<Column<Jugador>>() {
-      public void apply(final Column<Jugador> it) {
-        it.setTitle("Promedio");
-        it.setFixedSize(150);
-        it.bindContentsToProperty("promedio");
-      }
-    };
-    ObjectExtensions.<Column<Jugador>>operator_doubleArrow(_column_3, _function_4);
+  public void grillaBasicaJugadores(final Panel panelResultados, final Jugador jugadorSeleccionado, final List<Jugador> jugadores) {
+    Grilla _grilla = this.getGrilla();
+    _grilla.generar(panelResultados, jugadorSeleccionado, jugadores, "jugadorSeleccionado", "jugadores");
     Button _button = new Button(panelResultados);
-    final Procedure1<Button> _function_5 = new Procedure1<Button>() {
+    final Procedure1<Button> _function = new Procedure1<Button>() {
       public void apply(final Button it) {
         it.setCaption("Ver Datos Completos");
         final Action _function = new Action() {
@@ -356,7 +327,7 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
         it.<ControlBuilder>bindEnabled(_notNullObservable);
       }
     };
-    ObjectExtensions.<Button>operator_doubleArrow(_button, _function_5);
+    ObjectExtensions.<Button>operator_doubleArrow(_button, _function);
   }
   
   public void openDialog(final Dialog<?> dialog) {

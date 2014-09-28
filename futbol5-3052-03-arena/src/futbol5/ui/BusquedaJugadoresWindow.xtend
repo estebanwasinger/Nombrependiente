@@ -21,13 +21,19 @@ import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.utils.Observable
 import org.uqbar.arena.windows.ErrorsPanel
+import org.uqbar.commons.model.UserException
+import java.util.List
+import futbol5.auxUtils.Grilla
 
 @Observable
 class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
+	
+	@Property Grilla grilla
 		
 	new(WindowOwner parent, BusquedaJugadoresAppModel modelObject) {
 		super(parent, modelObject)
 		this.delegate.setErrorViewer(this) //VER ESTO
+		grilla = new Grilla
 	}
 		
 	override createContents(Panel mainPanel) {		
@@ -53,7 +59,7 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		
 		addActions(mainPanel) 
 		createFormPanel(panelIzquierda)
-		grillaBasicaJugadores(panelDerecha)
+		grillaBasicaJugadores(panelDerecha,modelObject.jugadorSeleccionado,modelObject.jugadores)
 	}
 	
 	override protected addActions(Panel actionPanel) {
@@ -111,7 +117,7 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 			setForeground(Color.DARK_GRAY) ]
 								
 		new TextBox(derecha)
-			.withFilter [ event | StringUtils.isNumeric(event.potentialTextResult) ]
+			.withFilter [ event | StringUtils.isNumeric(event.potentialTextResult)]
 			.bindValueToProperty("handicapDesde")
 			
 		new Label(izquierda) =>[
@@ -170,31 +176,11 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		new Label(searchFormPanel).text = label
 		new TextBox(searchFormPanel).bindValueToProperty(binding)
 	}
-	
-	def void grillaBasicaJugadores(Panel panelResultados){
-		var grilla = new Table<Jugador>(panelResultados, typeof(Jugador)) =>[
-			heigth = 220
-			width = 590
-			bindValueToProperty("jugadorSeleccionado")
-			bindItemsToProperty("jugadores")]
+
+	def void grillaBasicaJugadores(Panel panelResultados, Jugador jugadorSeleccionado, List<Jugador> jugadores ){
 		
-		new Column<Jugador>(grilla) =>[
-			setTitle("Nombre")
-			setFixedSize(150)
-			bindContentsToProperty("nombre")]
-		new Column<Jugador>(grilla) =>[
-			setTitle("Apodo")
-			setFixedSize(150)
-			bindContentsToProperty("apodo")]
-		new Column<Jugador>(grilla) =>[
-			setTitle("Handicap")
-			setFixedSize(150)
-			bindContentsToProperty("nivelDeJuego")]
-		new Column<Jugador>(grilla) =>[
-			setTitle("Promedio")
-			setFixedSize(150)
-			bindContentsToProperty("promedio")]
-		
+		grilla.generar(panelResultados, jugadorSeleccionado, jugadores,"jugadorSeleccionado", "jugadores")
+				
 		new Button(panelResultados) =>[
 			setCaption("Ver Datos Completos")
 			onClick [ | this.grillaCompletaJugador] 
@@ -210,7 +196,7 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 		dialog.open
 	}
 	
-	 def void grillaCompletaJugador(){
+	def void grillaCompletaJugador(){
 		this.openDialog(new VerDatosJugadorWindow(this, modelObject.jugadorSeleccionado))
 	}
 

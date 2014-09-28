@@ -152,11 +152,12 @@ public class Jugador extends Entity {
     this.init();
   }
   
-  public Jugador(final String nombre) {
-    this.setNombre(nombre);
-    this.init();
-  }
-  
+  /**
+   * new(String nombre){
+   * this.nombre = nombre
+   * init
+   * }
+   */
   public Jugador(final String nombre, final String apodo, final int edad, final String fechaDeNacimientoStr, final int nivelDeJuego, final List<Jugador> amigos, final ArrayList<Calificacion> calificaciones, final int cantidadPartidos) {
     try {
       this.init();
@@ -177,20 +178,12 @@ public class Jugador extends Entity {
     }
   }
   
-  public Jugador(final String nombre, final String apodo, final int edad, final String fechaDeNacimientoStr) {
-    try {
-      this.init();
-      this.setNombre(nombre);
-      this.setApodo(apodo);
-      this.setEdad(edad);
-      boolean _notEquals = (!Objects.equal(fechaDeNacimientoStr, null));
-      if (_notEquals) {
-        Date _parse = this.formateador.parse(fechaDeNacimientoStr);
-        this.setFechaNacimiento(_parse);
-      }
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
+  public Jugador(final String nombre, final String apodo, final int handicap, final List<Calificacion> calificaciones) {
+    this.init();
+    this.setNombre(nombre);
+    this.setApodo(apodo);
+    this.setNivelDeJuego(handicap);
+    this.setCalificaciones(calificaciones);
   }
   
   public void init() {

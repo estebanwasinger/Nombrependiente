@@ -92,13 +92,19 @@ public class InicializadorJugador {
   }
   
   public static ArrayList<Jugador> listaAmigos(final int max) {
+    ArrayList<Jugador> amigos = null;
     int a = 0;
-    ArrayList<Jugador> amigos = new ArrayList<Jugador>();
+    ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
+    amigos = _arrayList;
     boolean _while = (a < max);
     while (_while) {
       {
         String _nombreRandom = InicializadorJugador.nombreRandom();
-        Jugador _jugador = new Jugador(_nombreRandom);
+        String _apodoRandom = InicializadorJugador.apodoRandom();
+        int _handicapRandom = InicializadorJugador.handicapRandom();
+        int _nRan = InicializadorJugador.nRan(2, 9);
+        ArrayList<Calificacion> _listaCalificaciones = InicializadorJugador.listaCalificaciones(_nRan);
+        Jugador _jugador = new Jugador(_nombreRandom, _apodoRandom, _handicapRandom, _listaCalificaciones);
         amigos.add(_jugador);
         a = (a + 1);
       }

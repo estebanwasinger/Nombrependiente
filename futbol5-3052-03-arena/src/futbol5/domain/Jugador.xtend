@@ -37,10 +37,10 @@ class Jugador extends Entity{
 		init
 	}
 	
-	new(String nombre){
+	/*new(String nombre){
 		this.nombre = nombre
 		init
-	}
+	}*/
 	
 	new(String nombre,String apodo, int edad, String fechaDeNacimientoStr, int nivelDeJuego, List<Jugador> amigos, ArrayList <Calificacion> calificaciones, int cantidadPartidos){
 		init
@@ -55,13 +55,14 @@ class Jugador extends Entity{
 		this.cantidadPartidos=cantidadPartidos
 	}
 	
-	new(String nombre, String apodo, int edad,String fechaDeNacimientoStr){
+	new(String nombre, String apodo, int handicap, List<Calificacion>calificaciones){
 		init
 		this.nombre = nombre
 		this.apodo = apodo
-		this.edad = edad
-		if(fechaDeNacimientoStr!= null){
-		this.fechaNacimiento = formateador.parse(fechaDeNacimientoStr)}
+		this.nivelDeJuego = handicap
+		this.calificaciones = calificaciones
+		/*if(fechaDeNacimientoStr!= null){
+		this.fechaNacimiento = formateador.parse(fechaDeNacimientoStr)}*/
 	}
 	
 	def init(){

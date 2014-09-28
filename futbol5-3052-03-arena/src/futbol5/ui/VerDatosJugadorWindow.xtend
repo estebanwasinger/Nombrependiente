@@ -1,5 +1,6 @@
 package futbol5.ui
 
+import futbol5.auxUtils.Grilla
 import futbol5.domain.Jugador
 import futbol5.homes.HomeJugadores
 import infracciones.Infraccion
@@ -13,13 +14,18 @@ import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.utils.ApplicationContext
+import org.uqbar.commons.utils.Observable
 
+@Observable
 class VerDatosJugadorWindow extends Dialog<Jugador>{
 	
-new(WindowOwner owner, Jugador model) {
+	@Property Grilla grilla
+	
+	new(WindowOwner owner, Jugador model) {
 		super(owner, model)
+		grilla = new Grilla
 	}
-
+	
 	override protected createFormPanel(Panel mainPanel) {
 		title = "Datos del Jugador"
 		var principal = new Panel(mainPanel).layout = new ColumnLayout(2)
@@ -49,15 +55,17 @@ new(WindowOwner owner, Jugador model) {
 	
 	}
 	def verTablas(Panel panel){
-		new Label(panel).text=("Amigos")
+		new Label(panel).text="Amigos"
 		new Label(panel).text="Infracciones"
 		
-		var tablaAmigos = new Table<Jugador>(panel, Jugador) =>[
+		/*var tablaAmigos = new Table<Jugador>(panel, Jugador) =>[
 			heigth = 130
 			width = 285
 			bindItemsToProperty("amigos")]
 			
-		new Column<Jugador>(tablaAmigos).setTitle("Nombre").bindContentsToProperty("nombre")
+		new Column<Jugador>(tablaAmigos).setTitle("Nombre").bindContentsToProperty("nombre")*/
+		
+		grilla.generar(panel, modelObject,"amigos")
 	
 		var tablaInfracciones = new Table<Infraccion>(panel, Infraccion) => [
 			heigth = 130

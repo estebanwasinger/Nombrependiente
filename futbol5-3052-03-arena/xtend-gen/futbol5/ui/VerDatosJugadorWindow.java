@@ -1,6 +1,7 @@
 package futbol5.ui;
 
 import com.uqbar.commons.collections.Transformer;
+import futbol5.auxUtils.Grilla;
 import futbol5.domain.Jugador;
 import futbol5.homes.HomeJugadores;
 import infracciones.Infraccion;
@@ -17,14 +18,28 @@ import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.Dialog;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.commons.utils.ApplicationContext;
+import org.uqbar.commons.utils.Observable;
 import org.uqbar.lacar.ui.model.Action;
 import org.uqbar.lacar.ui.model.ControlBuilder;
 import org.uqbar.lacar.ui.model.bindings.Binding;
 
+@Observable
 @SuppressWarnings("all")
 public class VerDatosJugadorWindow extends Dialog<Jugador> {
+  private Grilla _grilla;
+  
+  public Grilla getGrilla() {
+    return this._grilla;
+  }
+  
+  public void setGrilla(final Grilla grilla) {
+    this._grilla = grilla;
+  }
+  
   public VerDatosJugadorWindow(final WindowOwner owner, final Jugador model) {
     super(owner, model);
+    Grilla _grilla = new Grilla();
+    this.setGrilla(_grilla);
   }
   
   protected void createFormPanel(final Panel mainPanel) {
@@ -84,52 +99,43 @@ public class VerDatosJugadorWindow extends Dialog<Jugador> {
       _label.setText("Amigos");
       Label _label_1 = new Label(panel);
       _label_1.setText("Infracciones");
-      Table<Jugador> _table = new Table<Jugador>(panel, Jugador.class);
-      final Procedure1<Table<Jugador>> _function = new Procedure1<Table<Jugador>>() {
-        public void apply(final Table<Jugador> it) {
-          it.setHeigth(130);
-          it.setWidth(285);
-          it.bindItemsToProperty("amigos");
-        }
-      };
-      Table<Jugador> tablaAmigos = ObjectExtensions.<Table<Jugador>>operator_doubleArrow(_table, _function);
-      Column<Jugador> _column = new Column<Jugador>(tablaAmigos);
-      Column<Jugador> _setTitle = _column.setTitle("Nombre");
-      _setTitle.bindContentsToProperty("nombre");
-      Table<Infraccion> _table_1 = new Table<Infraccion>(panel, Infraccion.class);
-      final Procedure1<Table<Infraccion>> _function_1 = new Procedure1<Table<Infraccion>>() {
+      Grilla _grilla = this.getGrilla();
+      Jugador _modelObject = this.getModelObject();
+      _grilla.generar(panel, _modelObject, "amigos");
+      Table<Infraccion> _table = new Table<Infraccion>(panel, Infraccion.class);
+      final Procedure1<Table<Infraccion>> _function = new Procedure1<Table<Infraccion>>() {
         public void apply(final Table<Infraccion> it) {
           it.setHeigth(130);
           it.setWidth(280);
           it.bindItemsToProperty("infracciones");
         }
       };
-      Table<Infraccion> tablaInfracciones = ObjectExtensions.<Table<Infraccion>>operator_doubleArrow(_table_1, _function_1);
-      Column<Infraccion> _column_1 = new Column<Infraccion>(tablaInfracciones);
-      Column<Infraccion> _setTitle_1 = _column_1.setTitle("Fecha");
-      final Transformer<Infraccion,String> _function_2 = new Transformer<Infraccion,String>() {
+      Table<Infraccion> tablaInfracciones = ObjectExtensions.<Table<Infraccion>>operator_doubleArrow(_table, _function);
+      Column<Infraccion> _column = new Column<Infraccion>(tablaInfracciones);
+      Column<Infraccion> _setTitle = _column.setTitle("Fecha");
+      final Transformer<Infraccion,String> _function_1 = new Transformer<Infraccion,String>() {
         public String transform(final Infraccion infraccion) {
           SimpleDateFormat _simpleDateFormat = new SimpleDateFormat("dd/MM/YYYY");
           Date _fecha = infraccion.getFecha();
           return _simpleDateFormat.format(_fecha);
         }
       };
-      Column<Infraccion> _bindContentsToTransformer = _setTitle_1.<String>bindContentsToTransformer(_function_2);
+      Column<Infraccion> _bindContentsToTransformer = _setTitle.<String>bindContentsToTransformer(_function_1);
       _bindContentsToTransformer.setFixedSize(75);
-      Column<Infraccion> _column_2 = new Column<Infraccion>(tablaInfracciones);
-      Column<Infraccion> _setTitle_2 = _column_2.setTitle("Hora");
-      final Transformer<Infraccion,String> _function_3 = new Transformer<Infraccion,String>() {
+      Column<Infraccion> _column_1 = new Column<Infraccion>(tablaInfracciones);
+      Column<Infraccion> _setTitle_1 = _column_1.setTitle("Hora");
+      final Transformer<Infraccion,String> _function_2 = new Transformer<Infraccion,String>() {
         public String transform(final Infraccion infraccion) {
           SimpleDateFormat _simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
           Date _fecha = infraccion.getFecha();
           return _simpleDateFormat.format(_fecha);
         }
       };
-      Column<Infraccion> _bindContentsToTransformer_1 = _setTitle_2.<String>bindContentsToTransformer(_function_3);
+      Column<Infraccion> _bindContentsToTransformer_1 = _setTitle_1.<String>bindContentsToTransformer(_function_2);
       _bindContentsToTransformer_1.setFixedSize(75);
-      Column<Infraccion> _column_3 = new Column<Infraccion>(tablaInfracciones);
-      Column<Infraccion> _setTitle_3 = _column_3.setTitle("Motivo");
-      _xblockexpression = _setTitle_3.bindContentsToProperty("motivo");
+      Column<Infraccion> _column_2 = new Column<Infraccion>(tablaInfracciones);
+      Column<Infraccion> _setTitle_2 = _column_2.setTitle("Motivo");
+      _xblockexpression = _setTitle_2.bindContentsToProperty("motivo");
     }
     return _xblockexpression;
   }

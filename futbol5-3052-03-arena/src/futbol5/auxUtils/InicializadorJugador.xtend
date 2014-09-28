@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat
 
 class InicializadorJugador {	
 	
-	def static crearListaDejugadores(int max){
+	def static ArrayList<Jugador> crearListaDejugadores(int max){
 		var ArrayList<Jugador> jugadores
 		var int a = 0
 		jugadores = new ArrayList<Jugador>
@@ -50,12 +50,13 @@ class InicializadorJugador {
 	}
 	
 	def static listaAmigos(int max){
-		var int a=0
-		var amigos = new ArrayList<Jugador>
-		while (a<max){
-			amigos.add(new Jugador(nombreRandom))
-			a=a+1
-		}
+		var ArrayList<Jugador> amigos
+		var int a = 0
+		amigos = new ArrayList<Jugador>
+		while (a < max) {
+			amigos.add(new Jugador(nombreRandom(), apodoRandom, handicapRandom(),listaCalificaciones(nRan(2,9))))
+			a = a + 1
+	}
 	return amigos
 	}
 	
