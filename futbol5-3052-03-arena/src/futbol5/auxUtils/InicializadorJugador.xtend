@@ -4,8 +4,9 @@ import futbol5.domain.Jugador
 import java.util.ArrayList
 import calificaciones.Calificacion
 import infracciones.Infraccion
+import java.text.SimpleDateFormat
 
-class InicializadorJugador {
+class InicializadorJugador {	
 	
 	def static crearListaDejugadores(int max){
 		var ArrayList<Jugador> jugadores
@@ -21,12 +22,18 @@ class InicializadorJugador {
 	
 	def static crearListaNotificacioens(Jugador jugador){
 		var int a = 0;
+		var SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+		var String[] arrayFechas = #["12/11/2013 13:00:20","12/02/2014 15:21:29","12/09/2014 09:07:59","18/12/2013 12:00:09","09/01/2014 19:32:16","24/11/2013 21:08:20"]
+		var String[] arrayMotivos = #["Agresivo","Tramposo","Insulto a un compañero","Golpeo a un compañero","Llego tarde","Ausente - Sin aviso", "Ausente - Con aviso"]
 		while(a<5){
-			jugador.agregarInfraccion((new Infraccion("Agresivo")))
+			var unMotivo = arrayMotivos.get(nRan(0,7))
+			var unaFecha = formateador.parse(arrayFechas.get(nRan(0,6)))
+			
+			jugador.agregarInfraccion((new Infraccion(unMotivo,unaFecha)))
 			a = a+1
 		}
-	}
-	
+	}	
+
 	def static String nombreRandom(){
 		var String[] arrayNombres = #["Caro","Esteban","Vero","Pau","Jorge","Rodrigo","Jose","Catalina","Luisa","Carlo","Ronaldo","Jean Carlos","Pepe","El Willy","Marcos"]
 		arrayNombres.get( 0 + (Math.random()*10)as int)

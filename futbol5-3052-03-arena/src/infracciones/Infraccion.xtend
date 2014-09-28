@@ -1,12 +1,12 @@
 package infracciones
 
-import java.util.Date;
+import java.util.Date
 import org.uqbar.commons.utils.Observable
 
 @Observable
 class Infraccion {
-		@Property var Date fecha 
-		@Property var String motivo
+		@Property Date fecha 
+		@Property String motivo
 		
 		new(){
 			fecha = new Date
@@ -14,6 +14,11 @@ class Infraccion {
 		new(String motivo){
 			this.motivo = motivo
 			fecha = new Date
+		}
+		
+		new(String motivo, Date fecha){
+			this.motivo = motivo
+			this.fecha = fecha
 		}
 		
 }

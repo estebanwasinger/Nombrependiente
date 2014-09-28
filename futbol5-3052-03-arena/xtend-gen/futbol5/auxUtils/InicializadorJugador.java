@@ -3,7 +3,10 @@ package futbol5.auxUtils;
 import calificaciones.Calificacion;
 import futbol5.domain.Jugador;
 import infracciones.Infraccion;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 
 @SuppressWarnings("all")
 public class InicializadorJugador {
@@ -35,15 +38,27 @@ public class InicializadorJugador {
   }
   
   public static void crearListaNotificacioens(final Jugador jugador) {
-    int a = 0;
-    boolean _while = (a < 5);
-    while (_while) {
-      {
-        Infraccion _infraccion = new Infraccion("Agresivo");
-        jugador.agregarInfraccion(_infraccion);
-        a = (a + 1);
+    try {
+      int a = 0;
+      SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+      String[] arrayFechas = { "12/11/2013 13:00:20", "12/02/2014 15:21:29", "12/09/2014 09:07:59", "18/12/2013 12:00:09", "09/01/2014 19:32:16", "24/11/2013 21:08:20" };
+      String[] arrayMotivos = { "Agresivo", "Tramposo", "Insulto a un compañero", "Golpeo a un compañero", "Llego tarde", "Ausente - Sin aviso", "Ausente - Con aviso" };
+      boolean _while = (a < 5);
+      while (_while) {
+        {
+          int _nRan = InicializadorJugador.nRan(0, 7);
+          String unMotivo = arrayMotivos[_nRan];
+          int _nRan_1 = InicializadorJugador.nRan(0, 6);
+          String _get = arrayFechas[_nRan_1];
+          Date unaFecha = formateador.parse(_get);
+          Infraccion _infraccion = new Infraccion(unMotivo, unaFecha);
+          jugador.agregarInfraccion(_infraccion);
+          a = (a + 1);
+        }
+        _while = (a < 5);
       }
-      _while = (a < 5);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
     }
   }
   

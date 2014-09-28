@@ -1,12 +1,14 @@
 package futbol5.ui;
 
+import com.uqbar.commons.collections.Transformer;
 import futbol5.domain.Jugador;
 import futbol5.homes.HomeJugadores;
 import infracciones.Infraccion;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.arena.layout.ColumnLayout;
-import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
@@ -34,8 +36,8 @@ public class VerDatosJugadorWindow extends Dialog<Jugador> {
     ColumnLayout _columnLayout_1 = new ColumnLayout(2);
     Panel panelIzq = _panel_1.setLayout(_columnLayout_1);
     Panel _panel_2 = new Panel(principal);
-    HorizontalLayout _horizontalLayout = new HorizontalLayout();
-    Panel panelDer = _panel_2.setLayout(_horizontalLayout);
+    ColumnLayout _columnLayout_2 = new ColumnLayout(2);
+    Panel panelDer = _panel_2.setLayout(_columnLayout_2);
     this.mostrarDatos(panelIzq);
     this.verTablas(panelDer);
   }
@@ -78,30 +80,56 @@ public class VerDatosJugadorWindow extends Dialog<Jugador> {
   public Column<Infraccion> verTablas(final Panel panel) {
     Column<Infraccion> _xblockexpression = null;
     {
+      Label _label = new Label(panel);
+      _label.setText("Amigos");
+      Label _label_1 = new Label(panel);
+      _label_1.setText("Infracciones");
       Table<Jugador> _table = new Table<Jugador>(panel, Jugador.class);
       final Procedure1<Table<Jugador>> _function = new Procedure1<Table<Jugador>>() {
         public void apply(final Table<Jugador> it) {
-          it.setHeigth(200);
+          it.setHeigth(130);
           it.setWidth(285);
           it.bindItemsToProperty("amigos");
         }
       };
-      Table<Jugador> tablaListaAmigos = ObjectExtensions.<Table<Jugador>>operator_doubleArrow(_table, _function);
-      Column<Jugador> _column = new Column<Jugador>(tablaListaAmigos);
+      Table<Jugador> tablaAmigos = ObjectExtensions.<Table<Jugador>>operator_doubleArrow(_table, _function);
+      Column<Jugador> _column = new Column<Jugador>(tablaAmigos);
       Column<Jugador> _setTitle = _column.setTitle("Nombre");
       _setTitle.bindContentsToProperty("nombre");
       Table<Infraccion> _table_1 = new Table<Infraccion>(panel, Infraccion.class);
       final Procedure1<Table<Infraccion>> _function_1 = new Procedure1<Table<Infraccion>>() {
         public void apply(final Table<Infraccion> it) {
-          it.setHeigth(200);
-          it.setWidth(285);
+          it.setHeigth(130);
+          it.setWidth(280);
           it.bindItemsToProperty("infracciones");
         }
       };
-      Table<Infraccion> tablaListaInfracciones = ObjectExtensions.<Table<Infraccion>>operator_doubleArrow(_table_1, _function_1);
-      Column<Infraccion> _column_1 = new Column<Infraccion>(tablaListaInfracciones);
-      Column<Infraccion> _setTitle_1 = _column_1.setTitle("Infracciones");
-      _xblockexpression = _setTitle_1.bindContentsToProperty("motivo");
+      Table<Infraccion> tablaInfracciones = ObjectExtensions.<Table<Infraccion>>operator_doubleArrow(_table_1, _function_1);
+      Column<Infraccion> _column_1 = new Column<Infraccion>(tablaInfracciones);
+      Column<Infraccion> _setTitle_1 = _column_1.setTitle("Fecha");
+      final Transformer<Infraccion,String> _function_2 = new Transformer<Infraccion,String>() {
+        public String transform(final Infraccion infraccion) {
+          SimpleDateFormat _simpleDateFormat = new SimpleDateFormat("dd/MM/YYYY");
+          Date _fecha = infraccion.getFecha();
+          return _simpleDateFormat.format(_fecha);
+        }
+      };
+      Column<Infraccion> _bindContentsToTransformer = _setTitle_1.<String>bindContentsToTransformer(_function_2);
+      _bindContentsToTransformer.setFixedSize(75);
+      Column<Infraccion> _column_2 = new Column<Infraccion>(tablaInfracciones);
+      Column<Infraccion> _setTitle_2 = _column_2.setTitle("Hora");
+      final Transformer<Infraccion,String> _function_3 = new Transformer<Infraccion,String>() {
+        public String transform(final Infraccion infraccion) {
+          SimpleDateFormat _simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+          Date _fecha = infraccion.getFecha();
+          return _simpleDateFormat.format(_fecha);
+        }
+      };
+      Column<Infraccion> _bindContentsToTransformer_1 = _setTitle_2.<String>bindContentsToTransformer(_function_3);
+      _bindContentsToTransformer_1.setFixedSize(75);
+      Column<Infraccion> _column_3 = new Column<Infraccion>(tablaInfracciones);
+      Column<Infraccion> _setTitle_3 = _column_3.setTitle("Motivo");
+      _xblockexpression = _setTitle_3.bindContentsToProperty("motivo");
     }
     return _xblockexpression;
   }

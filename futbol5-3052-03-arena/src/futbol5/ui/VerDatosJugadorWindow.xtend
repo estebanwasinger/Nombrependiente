@@ -5,7 +5,6 @@ import futbol5.homes.HomeJugadores
 import infracciones.Infraccion
 import java.text.SimpleDateFormat
 import org.uqbar.arena.layout.ColumnLayout
-import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
@@ -25,7 +24,7 @@ new(WindowOwner owner, Jugador model) {
 		title = "Datos del Jugador"
 		var principal = new Panel(mainPanel).layout = new ColumnLayout(2)
 		var panelIzq = new Panel(principal).layout = new ColumnLayout(2)
-		var panelDer = new Panel(principal).layout = new HorizontalLayout
+		var panelDer = new Panel(principal).layout = new ColumnLayout(2)
 		
 		mostrarDatos(panelIzq)
 		verTablas(panelDer)
@@ -50,19 +49,31 @@ new(WindowOwner owner, Jugador model) {
 	
 	}
 	def verTablas(Panel panel){
-		var tablaListaAmigos = new Table<Jugador>(panel, typeof(Jugador)) =>[
-			heigth = 200
+		new Label(panel).text=("Amigos")
+		new Label(panel).text="Infracciones"
+		
+		var tablaAmigos = new Table<Jugador>(panel, Jugador) =>[
+			heigth = 130
 			width = 285
 			bindItemsToProperty("amigos")]
 			
-		new Column<Jugador>(tablaListaAmigos).setTitle("Nombre").bindContentsToProperty("nombre")
+		new Column<Jugador>(tablaAmigos).setTitle("Nombre").bindContentsToProperty("nombre")
 	
-		var tablaListaInfracciones = new Table<Infraccion>(panel, typeof(Infraccion)) => [
-			heigth = 200
-			width = 285
+		var tablaInfracciones = new Table<Infraccion>(panel, Infraccion) => [
+			heigth = 130
+			width = 280
 			bindItemsToProperty("infracciones")]
 			
-		new Column<Infraccion>(tablaListaInfracciones).setTitle("Infracciones").bindContentsToProperty("motivo")
+		new Column<Infraccion>(tablaInfracciones).setTitle("Fecha")
+		.bindContentsToTransformer([ infraccion | new SimpleDateFormat("dd/MM/YYYY").format(infraccion.fecha)])
+		.setFixedSize(75)
+		
+		new Column<Infraccion>(tablaInfracciones).setTitle("Hora")
+		.bindContentsToTransformer([ infraccion | new SimpleDateFormat("HH:mm:ss").format(infraccion.fecha)])
+		.setFixedSize(75)
+		
+		new Column<Infraccion>(tablaInfracciones).setTitle("Motivo")
+		.bindContentsToProperty("motivo")
 	}
 	
 override protected void addActions(Panel actions) {
