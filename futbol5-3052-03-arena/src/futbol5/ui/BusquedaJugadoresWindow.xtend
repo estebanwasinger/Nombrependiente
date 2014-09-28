@@ -3,8 +3,10 @@ package futbol5.ui
 import com.uqbar.commons.StringUtils
 import futbol5.applicationModel.BusquedaJugadoresAppModel
 import futbol5.auxUtils.DateTextFilter
+import futbol5.auxUtils.Grilla
 import futbol5.domain.Jugador
 import java.awt.Color
+import java.util.List
 import org.uqbar.arena.bindings.DateAdapter
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.bindings.ObservableProperty
@@ -15,15 +17,10 @@ import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.Selector
 import org.uqbar.arena.widgets.TextBox
-import org.uqbar.arena.widgets.tables.Column
-import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
+import org.uqbar.arena.windows.ErrorsPanel
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.utils.Observable
-import org.uqbar.arena.windows.ErrorsPanel
-import org.uqbar.commons.model.UserException
-import java.util.List
-import futbol5.auxUtils.Grilla
 
 @Observable
 class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{

@@ -7,6 +7,7 @@ import futbol5.homes.HomeJugadores;
 import infracciones.Infraccion;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.arena.layout.ColumnLayout;
@@ -101,7 +102,9 @@ public class VerDatosJugadorWindow extends Dialog<Jugador> {
       _label_1.setText("Infracciones");
       Grilla _grilla = this.getGrilla();
       Jugador _modelObject = this.getModelObject();
-      _grilla.generar(panel, _modelObject, "amigos");
+      Jugador _modelObject_1 = this.getModelObject();
+      List<Jugador> _amigos = _modelObject_1.getAmigos();
+      _grilla.generar(panel, _modelObject, _amigos, "", "amigos");
       Table<Infraccion> _table = new Table<Infraccion>(panel, Infraccion.class);
       final Procedure1<Table<Infraccion>> _function = new Procedure1<Table<Infraccion>>() {
         public void apply(final Table<Infraccion> it) {

@@ -14,34 +14,8 @@ class Grilla {
 		var grilla = new Table<Jugador>(panelResultados, typeof(Jugador)) =>[
 			heigth = 220
 			width = 590
-			bindValueToProperty(valor)
+			if (valor != ""){bindValueToProperty(valor)}
 			bindItemsToProperty(items)]
-		
-		new Column<Jugador>(grilla) =>[
-			setTitle("Nombre")
-			setFixedSize(150)
-			bindContentsToProperty("nombre")]
-		new Column<Jugador>(grilla) =>[
-			setTitle("Apodo")
-			setFixedSize(150)
-			bindContentsToProperty("apodo")]
-		new Column<Jugador>(grilla) =>[
-			setTitle("Handicap")
-			setFixedSize(150)
-			bindContentsToProperty("nivelDeJuego")]
-		new Column<Jugador>(grilla) =>[
-			setTitle("Promedio")
-			setFixedSize(150)
-			bindContentsToProperty("promedio")]
-	
-	return grilla
-	}
-	
-	 def Table<Jugador> generar(Panel panelDeAmigos, Jugador jugadorVisualizado, String amigosDelJugador){
-		var grilla = new Table<Jugador>(panelDeAmigos, typeof(Jugador)) =>[
-			heigth = 220
-			width = 590
-			bindItemsToProperty(amigosDelJugador)]
 		
 		new Column<Jugador>(grilla) =>[
 			setTitle("Nombre")

@@ -58,14 +58,7 @@ class VerDatosJugadorWindow extends Dialog<Jugador>{
 		new Label(panel).text="Amigos"
 		new Label(panel).text="Infracciones"
 		
-		/*var tablaAmigos = new Table<Jugador>(panel, Jugador) =>[
-			heigth = 130
-			width = 285
-			bindItemsToProperty("amigos")]
-			
-		new Column<Jugador>(tablaAmigos).setTitle("Nombre").bindContentsToProperty("nombre")*/
-		
-		grilla.generar(panel, modelObject,"amigos")
+		grilla.generar(panel, modelObject,modelObject.amigos,"","amigos")
 	
 		var tablaInfracciones = new Table<Infraccion>(panel, Infraccion) => [
 			heigth = 130
