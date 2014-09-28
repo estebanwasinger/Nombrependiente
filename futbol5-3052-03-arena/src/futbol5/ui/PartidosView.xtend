@@ -15,7 +15,6 @@ import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.utils.Observable
-import futbol5.homes.HomeJugadores
 
 @Observable
 class PartidosView extends Dialog<PartidosAppModel> {
@@ -27,7 +26,7 @@ class PartidosView extends Dialog<PartidosAppModel> {
 	override protected addActions(Panel panel) {
 		panel.layout = new HorizontalLayout
 		var generar = new Button(panel).setCaption("Generar Equipo").onClick[|this.generarEquipo]
-		var buscar = new Button(panel).setCaption("Buscar Jugador").onClick[|this.buscarJugador]
+		new Button(panel).setCaption("Buscar Jugador").onClick[|this.buscarJugador]
 
 		var elementSelected = new NotNullObservable("partidoSeleccionado")
 		generar.bindEnabled(elementSelected)
@@ -45,7 +44,7 @@ class PartidosView extends Dialog<PartidosAppModel> {
 		new Label(panelIzq).text = "Ultimos Partidos"
 		new Table<Partido>(panelIzq, typeof(Partido)) => [
 			heigth = 200
-			width = 285
+			width = 150
 			bindItemsToProperty("partidos")
 			bindValueToProperty("partidoSeleccionado")
 			new Column<Partido>(it).setTitle("Localidad").bindContentsToProperty("localidad")

@@ -13,7 +13,7 @@ class InicializadorJugador {
 		var int a = 0
 		jugadores = new ArrayList<Jugador>
 		while (a < max) {
-			jugadores.add(new Jugador(nombreRandom(), apodoRandom,21,fechaRandom, handicapRandom(), listaAmigos(8), listaCalificaciones(nRan(2,9)),nRan(2,6)))
+			jugadores.add(new Jugador(nombreRandom(), apodoRandom,21,fechaRandom, handicapRandom(), listaAmigos(15), listaCalificaciones(nRan(2,9)),nRan(2,6)))
 			crearListaNotificacioens(jugadores.get(a))
 			a = a + 1
 	}

@@ -15,6 +15,7 @@ import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.utils.ApplicationContext
 import org.uqbar.commons.utils.Observable
+import java.awt.Color
 
 @Observable
 class VerDatosJugadorWindow extends Dialog<Jugador>{
@@ -36,27 +37,26 @@ class VerDatosJugadorWindow extends Dialog<Jugador>{
 		verTablas(panelDer)
 	}
 	
-	def mostrarDatos(Panel panel){
-		
-		new Label(panel).text = "Nombre"
-		new Label(panel).bindValueToProperty("nombre")
-		new Label(panel).text = "Apodo"
-		new Label(panel).bindValueToProperty("apodo")
-		new Label(panel).text = "Handicap"
+	def mostrarDatos(Panel panel){		
+		new Label(panel)=>[bindValueToProperty("nombre") setFontSize(16)setForeground(Color.RED)]
+		new Label(panel)=>[text ="" setFontSize(16)]
+		new Label(panel)=>[bindValueToProperty("apodo")setFontSize(14)setForeground(Color.LIGHT_GRAY)]
+		new Label(panel)=>[text ="" setFontSize(14)]
+		new Label(panel).text = "Handicap =>"
 		new Label(panel).bindValueToProperty("nivelDeJuego")
-		new Label(panel).text = "Promedio último partido"
+		new Label(panel).text = "Promedio último partido =>"
 		new Label(panel).bindValueToProperty("promedioUltimoPartido")
-		new Label(panel).text = "Promedio total"
+		new Label(panel).text = "Promedio total =>"
 		new Label(panel).bindValueToProperty("promedio")
-		new Label(panel).text = "Fecha de nacimiento"
+		new Label(panel).text = "Fecha de nacimiento =>"
 		new Label(panel).bindValueToProperty("fechaNacimientoString")
-		new Label(panel).text = "Cantidad de partidos jugados"
+		new Label(panel).text = "Cantidad de partidos jugados =>"
 		new Label(panel).bindValueToProperty("cantidadPartidos")
-	
 	}
+	
 	def verTablas(Panel panel){
-		new Label(panel).text="Amigos"
-		new Label(panel).text="Infracciones"
+		new Label(panel) =>[text="Amigos" setFontSize(12) setForeground(Color.DARK_GRAY)]
+		new Label(panel)=>[text="Infracciones" setFontSize(12) setForeground(Color.DARK_GRAY)]
 		
 		grilla.generar(panel, modelObject,modelObject.amigos,"","amigos")
 	

@@ -5,6 +5,7 @@ import futbol5.auxUtils.Grilla;
 import futbol5.domain.Jugador;
 import futbol5.homes.HomeJugadores;
 import infracciones.Infraccion;
+import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -62,31 +63,57 @@ public class VerDatosJugadorWindow extends Dialog<Jugador> {
     Binding<ControlBuilder> _xblockexpression = null;
     {
       Label _label = new Label(panel);
-      _label.setText("Nombre");
+      final Procedure1<Label> _function = new Procedure1<Label>() {
+        public void apply(final Label it) {
+          it.<ControlBuilder>bindValueToProperty("nombre");
+          it.setFontSize(16);
+          it.setForeground(Color.RED);
+        }
+      };
+      ObjectExtensions.<Label>operator_doubleArrow(_label, _function);
       Label _label_1 = new Label(panel);
-      _label_1.<ControlBuilder>bindValueToProperty("nombre");
+      final Procedure1<Label> _function_1 = new Procedure1<Label>() {
+        public void apply(final Label it) {
+          it.setText("");
+          it.setFontSize(16);
+        }
+      };
+      ObjectExtensions.<Label>operator_doubleArrow(_label_1, _function_1);
       Label _label_2 = new Label(panel);
-      _label_2.setText("Apodo");
+      final Procedure1<Label> _function_2 = new Procedure1<Label>() {
+        public void apply(final Label it) {
+          it.<ControlBuilder>bindValueToProperty("apodo");
+          it.setFontSize(14);
+          it.setForeground(Color.LIGHT_GRAY);
+        }
+      };
+      ObjectExtensions.<Label>operator_doubleArrow(_label_2, _function_2);
       Label _label_3 = new Label(panel);
-      _label_3.<ControlBuilder>bindValueToProperty("apodo");
+      final Procedure1<Label> _function_3 = new Procedure1<Label>() {
+        public void apply(final Label it) {
+          it.setText("");
+          it.setFontSize(14);
+        }
+      };
+      ObjectExtensions.<Label>operator_doubleArrow(_label_3, _function_3);
       Label _label_4 = new Label(panel);
-      _label_4.setText("Handicap");
+      _label_4.setText("Handicap =>");
       Label _label_5 = new Label(panel);
       _label_5.<ControlBuilder>bindValueToProperty("nivelDeJuego");
       Label _label_6 = new Label(panel);
-      _label_6.setText("Promedio último partido");
+      _label_6.setText("Promedio último partido =>");
       Label _label_7 = new Label(panel);
       _label_7.<ControlBuilder>bindValueToProperty("promedioUltimoPartido");
       Label _label_8 = new Label(panel);
-      _label_8.setText("Promedio total");
+      _label_8.setText("Promedio total =>");
       Label _label_9 = new Label(panel);
       _label_9.<ControlBuilder>bindValueToProperty("promedio");
       Label _label_10 = new Label(panel);
-      _label_10.setText("Fecha de nacimiento");
+      _label_10.setText("Fecha de nacimiento =>");
       Label _label_11 = new Label(panel);
       _label_11.<ControlBuilder>bindValueToProperty("fechaNacimientoString");
       Label _label_12 = new Label(panel);
-      _label_12.setText("Cantidad de partidos jugados");
+      _label_12.setText("Cantidad de partidos jugados =>");
       Label _label_13 = new Label(panel);
       _xblockexpression = _label_13.<ControlBuilder>bindValueToProperty("cantidadPartidos");
     }
@@ -97,44 +124,58 @@ public class VerDatosJugadorWindow extends Dialog<Jugador> {
     Column<Infraccion> _xblockexpression = null;
     {
       Label _label = new Label(panel);
-      _label.setText("Amigos");
+      final Procedure1<Label> _function = new Procedure1<Label>() {
+        public void apply(final Label it) {
+          it.setText("Amigos");
+          it.setFontSize(12);
+          it.setForeground(Color.DARK_GRAY);
+        }
+      };
+      ObjectExtensions.<Label>operator_doubleArrow(_label, _function);
       Label _label_1 = new Label(panel);
-      _label_1.setText("Infracciones");
+      final Procedure1<Label> _function_1 = new Procedure1<Label>() {
+        public void apply(final Label it) {
+          it.setText("Infracciones");
+          it.setFontSize(12);
+          it.setForeground(Color.DARK_GRAY);
+        }
+      };
+      ObjectExtensions.<Label>operator_doubleArrow(_label_1, _function_1);
       Grilla _grilla = this.getGrilla();
       Jugador _modelObject = this.getModelObject();
       Jugador _modelObject_1 = this.getModelObject();
       List<Jugador> _amigos = _modelObject_1.getAmigos();
       _grilla.generar(panel, _modelObject, _amigos, "", "amigos");
       Table<Infraccion> _table = new Table<Infraccion>(panel, Infraccion.class);
-      final Procedure1<Table<Infraccion>> _function = new Procedure1<Table<Infraccion>>() {
+      final Procedure1<Table<Infraccion>> _function_2 = new Procedure1<Table<Infraccion>>() {
         public void apply(final Table<Infraccion> it) {
           it.setHeigth(130);
           it.setWidth(280);
           it.bindItemsToProperty("infracciones");
         }
       };
-      Table<Infraccion> tablaInfracciones = ObjectExtensions.<Table<Infraccion>>operator_doubleArrow(_table, _function);
+      Table<Infraccion> tablaInfracciones = ObjectExtensions.<Table<Infraccion>>operator_doubleArrow(_table, _function_2);
       Column<Infraccion> _column = new Column<Infraccion>(tablaInfracciones);
       Column<Infraccion> _setTitle = _column.setTitle("Fecha");
-      final Transformer<Infraccion,String> _function_1 = new Transformer<Infraccion,String>() {
+      final Transformer<Infraccion,String> _function_3 = new Transformer<Infraccion,String>() {
         public String transform(final Infraccion infraccion) {
           SimpleDateFormat _simpleDateFormat = new SimpleDateFormat("dd/MM/YYYY");
           Date _fecha = infraccion.getFecha();
           return _simpleDateFormat.format(_fecha);
         }
       };
-      Column<Infraccion> _bindContentsToTransformer = _setTitle.<String>bindContentsToTransformer(_function_1);
+      Column<Infraccion> _bindContentsToTransformer = _setTitle.<String>bindContentsToTransformer(_function_3);
       _bindContentsToTransformer.setFixedSize(75);
       Column<Infraccion> _column_1 = new Column<Infraccion>(tablaInfracciones);
       Column<Infraccion> _setTitle_1 = _column_1.setTitle("Hora");
-      final Transformer<Infraccion,String> _function_2 = new Transformer<Infraccion,String>() {
+      final Transformer<Infraccion,String> _function_4 = new Transformer<Infraccion,String>() {
         public String transform(final Infraccion infraccion) {
           SimpleDateFormat _simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
           Date _fecha = infraccion.getFecha();
           return _simpleDateFormat.format(_fecha);
         }
       };
-      Column<Infraccion> _bindContentsToTransformer_1 = _setTitle_1.<String>bindContentsToTransformer(_function_2);
+      Column<Infraccion> _bindContentsToTransformer_1 = _setTitle_1.<String>bindContentsToTransformer(_function_4);
       _bindContentsToTransformer_1.setFixedSize(75);
       Column<Infraccion> _column_2 = new Column<Infraccion>(tablaInfracciones);
       Column<Infraccion> _setTitle_2 = _column_2.setTitle("Motivo");

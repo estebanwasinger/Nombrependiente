@@ -21,6 +21,7 @@ import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.ErrorsPanel
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.utils.Observable
+import org.uqbar.commons.model.UserException
 
 @Observable
 class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
@@ -133,7 +134,7 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel>{
 			setForeground(Color.DARK_GRAY) ]
 								
 		new TextBox(derecha)
-			.withFilter [ event | StringUtils.isNumeric(event.potentialTextResult) ]
+			.withFilter [ event | StringUtils.isNumeric(event.potentialTextResult)]
 			.bindValueToProperty("promedioDesde")
 
 		new Label(izquierda) =>[

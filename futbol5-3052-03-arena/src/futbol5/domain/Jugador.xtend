@@ -36,12 +36,7 @@ class Jugador extends Entity{
 	new() {
 		init
 	}
-	
-	/*new(String nombre){
-		this.nombre = nombre
-		init
-	}*/
-	
+
 	new(String nombre,String apodo, int edad, String fechaDeNacimientoStr, int nivelDeJuego, List<Jugador> amigos, ArrayList <Calificacion> calificaciones, int cantidadPartidos){
 		init
 		this.nombre = nombre
@@ -61,8 +56,6 @@ class Jugador extends Entity{
 		this.apodo = apodo
 		this.nivelDeJuego = handicap
 		this.calificaciones = calificaciones
-		/*if(fechaDeNacimientoStr!= null){
-		this.fechaNacimiento = formateador.parse(fechaDeNacimientoStr)}*/
 	}
 	
 	def init(){
@@ -105,9 +98,6 @@ class Jugador extends Entity{
 	}
 
 	def float promedioNPartidos(int n) {
-//		if (calificaciones.size == 0) {
-//			throw new BusinessException("El jugador no fue calificado aun")
-//		}
 		if (calificaciones.size != 0){
 		var int calificacionTotal
 		var Set<Partido> partidos = new HashSet<Partido>

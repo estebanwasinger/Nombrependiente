@@ -47,7 +47,7 @@ public class PartidosView extends Dialog<PartidosAppModel> {
         PartidosView.this.buscarJugador();
       }
     };
-    Button buscar = _setCaption_1.onClick(_function_1);
+    _setCaption_1.onClick(_function_1);
     NotNullObservable elementSelected = new NotNullObservable("partidoSeleccionado");
     generar.<ControlBuilder>bindEnabled(elementSelected);
   }
@@ -73,7 +73,7 @@ public class PartidosView extends Dialog<PartidosAppModel> {
     final Procedure1<Table<Partido>> _function = new Procedure1<Table<Partido>>() {
       public void apply(final Table<Partido> it) {
         it.setHeigth(200);
-        it.setWidth(285);
+        it.setWidth(150);
         it.bindItemsToProperty("partidos");
         it.<ControlBuilder>bindValueToProperty("partidoSeleccionado");
         Column<Partido> _column = new Column<Partido>(it);

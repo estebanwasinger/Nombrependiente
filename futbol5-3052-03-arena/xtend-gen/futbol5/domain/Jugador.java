@@ -152,12 +152,6 @@ public class Jugador extends Entity {
     this.init();
   }
   
-  /**
-   * new(String nombre){
-   * this.nombre = nombre
-   * init
-   * }
-   */
   public Jugador(final String nombre, final String apodo, final int edad, final String fechaDeNacimientoStr, final int nivelDeJuego, final List<Jugador> amigos, final ArrayList<Calificacion> calificaciones, final int cantidadPartidos) {
     try {
       this.init();

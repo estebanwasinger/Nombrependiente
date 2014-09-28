@@ -20,51 +20,50 @@ public class Grilla {
     final Procedure1<Table<Jugador>> _function = new Procedure1<Table<Jugador>>() {
       public void apply(final Table<Jugador> it) {
         it.setHeigth(220);
-        it.setWidth(590);
+        it.setWidth(360);
         boolean _notEquals = (!Objects.equal(valor, ""));
         if (_notEquals) {
           it.<ControlBuilder>bindValueToProperty(valor);
         }
         it.bindItemsToProperty(items);
+        Column<Jugador> _column = new Column<Jugador>(it);
+        final Procedure1<Column<Jugador>> _function = new Procedure1<Column<Jugador>>() {
+          public void apply(final Column<Jugador> it) {
+            it.setTitle("Nombre");
+            it.setFixedSize(100);
+            it.bindContentsToProperty("nombre");
+          }
+        };
+        ObjectExtensions.<Column<Jugador>>operator_doubleArrow(_column, _function);
+        Column<Jugador> _column_1 = new Column<Jugador>(it);
+        final Procedure1<Column<Jugador>> _function_1 = new Procedure1<Column<Jugador>>() {
+          public void apply(final Column<Jugador> it) {
+            it.setTitle("Apodo");
+            it.setFixedSize(100);
+            it.bindContentsToProperty("apodo");
+          }
+        };
+        ObjectExtensions.<Column<Jugador>>operator_doubleArrow(_column_1, _function_1);
+        Column<Jugador> _column_2 = new Column<Jugador>(it);
+        final Procedure1<Column<Jugador>> _function_2 = new Procedure1<Column<Jugador>>() {
+          public void apply(final Column<Jugador> it) {
+            it.setTitle("Handicap");
+            it.setFixedSize(80);
+            it.bindContentsToProperty("nivelDeJuego");
+          }
+        };
+        ObjectExtensions.<Column<Jugador>>operator_doubleArrow(_column_2, _function_2);
+        Column<Jugador> _column_3 = new Column<Jugador>(it);
+        final Procedure1<Column<Jugador>> _function_3 = new Procedure1<Column<Jugador>>() {
+          public void apply(final Column<Jugador> it) {
+            it.setTitle("Promedio");
+            it.setFixedSize(80);
+            it.bindContentsToProperty("promedio");
+          }
+        };
+        ObjectExtensions.<Column<Jugador>>operator_doubleArrow(_column_3, _function_3);
       }
     };
-    Table<Jugador> grilla = ObjectExtensions.<Table<Jugador>>operator_doubleArrow(_table, _function);
-    Column<Jugador> _column = new Column<Jugador>(grilla);
-    final Procedure1<Column<Jugador>> _function_1 = new Procedure1<Column<Jugador>>() {
-      public void apply(final Column<Jugador> it) {
-        it.setTitle("Nombre");
-        it.setFixedSize(150);
-        it.bindContentsToProperty("nombre");
-      }
-    };
-    ObjectExtensions.<Column<Jugador>>operator_doubleArrow(_column, _function_1);
-    Column<Jugador> _column_1 = new Column<Jugador>(grilla);
-    final Procedure1<Column<Jugador>> _function_2 = new Procedure1<Column<Jugador>>() {
-      public void apply(final Column<Jugador> it) {
-        it.setTitle("Apodo");
-        it.setFixedSize(150);
-        it.bindContentsToProperty("apodo");
-      }
-    };
-    ObjectExtensions.<Column<Jugador>>operator_doubleArrow(_column_1, _function_2);
-    Column<Jugador> _column_2 = new Column<Jugador>(grilla);
-    final Procedure1<Column<Jugador>> _function_3 = new Procedure1<Column<Jugador>>() {
-      public void apply(final Column<Jugador> it) {
-        it.setTitle("Handicap");
-        it.setFixedSize(150);
-        it.bindContentsToProperty("nivelDeJuego");
-      }
-    };
-    ObjectExtensions.<Column<Jugador>>operator_doubleArrow(_column_2, _function_3);
-    Column<Jugador> _column_3 = new Column<Jugador>(grilla);
-    final Procedure1<Column<Jugador>> _function_4 = new Procedure1<Column<Jugador>>() {
-      public void apply(final Column<Jugador> it) {
-        it.setTitle("Promedio");
-        it.setFixedSize(150);
-        it.bindContentsToProperty("promedio");
-      }
-    };
-    ObjectExtensions.<Column<Jugador>>operator_doubleArrow(_column_3, _function_4);
-    return grilla;
+    return ObjectExtensions.<Table<Jugador>>operator_doubleArrow(_table, _function);
   }
 }

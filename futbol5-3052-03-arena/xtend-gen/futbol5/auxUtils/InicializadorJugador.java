@@ -22,7 +22,7 @@ public class InicializadorJugador {
         String _apodoRandom = InicializadorJugador.apodoRandom();
         String _fechaRandom = InicializadorJugador.fechaRandom();
         int _handicapRandom = InicializadorJugador.handicapRandom();
-        ArrayList<Jugador> _listaAmigos = InicializadorJugador.listaAmigos(8);
+        ArrayList<Jugador> _listaAmigos = InicializadorJugador.listaAmigos(15);
         int _nRan = InicializadorJugador.nRan(2, 9);
         ArrayList<Calificacion> _listaCalificaciones = InicializadorJugador.listaCalificaciones(_nRan);
         int _nRan_1 = InicializadorJugador.nRan(2, 6);
