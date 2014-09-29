@@ -44,9 +44,10 @@ class BusquedaJugadoresAppModel implements Serializable {
 	def void iniciar() {
 		jugadorEjemplo = new Jugador
 		handicap = null
-		promedioDesde = 0
-		promedioHasta = 10
+		promedioDesde = null
+		promedioHasta = null
 		infracciones = "Todos"
+		metodoHandicap = handicaps.get(0)
 	}
 
 	def HomeJugadores getHomeJugadores() {
