@@ -20,5 +20,4 @@ class Infraccion {
 			this.motivo = motivo
 			this.fecha = fecha
 		}
-		
 }

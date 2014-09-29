@@ -29,7 +29,7 @@ class InicializadorJugador {
 			var unMotivo = arrayMotivos.get(nRan(0,7))
 			var unaFecha = formateador.parse(arrayFechas.get(nRan(0,6)))
 			
-			jugador.agregarInfraccion((new Infraccion(unMotivo,unaFecha)))
+			jugador.agregarInfraccion(new Infraccion(unMotivo,unaFecha))
 			a = a+1
 		}
 	}	

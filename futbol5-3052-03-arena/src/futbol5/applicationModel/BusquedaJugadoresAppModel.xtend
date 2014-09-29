@@ -7,48 +7,54 @@ import java.util.ArrayList
 import java.util.List
 import org.uqbar.commons.utils.ApplicationContext
 import org.uqbar.commons.utils.Observable
+import strategyHandicap.HandicapStrategy
+import strategyHandicap.HandicapHasta
+import strategyHandicap.HandicapDesde
 
 @Observable
-class BusquedaJugadoresAppModel implements Serializable{
+class BusquedaJugadoresAppModel implements Serializable {
 
 	@Property Jugador jugadorEjemplo
-	@Property List <Jugador> jugadores
+	@Property List<Jugador> jugadores
 	@Property Jugador jugadorSeleccionado
-	@Property int handicapDesde
-	@Property int handicapHasta
-	@Property int promedioDesde
-	@Property int promedioHasta
-	@Property String infracciones 	
-	
-	new(){
+	@Property Integer handicap
+	@Property Integer promedioDesde
+	@Property Integer promedioHasta
+	@Property String infracciones
+	@Property HandicapStrategy metodoHandicap
+
+	new() {
 		iniciar()
 		jugadores = new ArrayList<Jugador>
-		jugadores =  getHomeJugadores().jugadoresAceptados
+		jugadores = getHomeJugadores().jugadoresAceptados
 	}
 
-	def void search() { 
+	def void search() {
 		jugadorSeleccionado = null
 		jugadores = new ArrayList<Jugador>
 		jugadores = getHomeJugadores().search(this)
 	}
-	
+
 	def void clear() {
 		iniciar()
 		jugadorSeleccionado = null
 		search()
 	}
-	
-	def void iniciar(){
+
+	def void iniciar() {
 		jugadorEjemplo = new Jugador
-		handicapDesde = 1
-		handicapHasta = 10
+		handicap = null
 		promedioDesde = 0
 		promedioHasta = 10
 		infracciones = "Todos"
 	}
-	
+
 	def HomeJugadores getHomeJugadores() {
 		ApplicationContext.instance.getSingleton(typeof(Jugador))
-		}
-
 	}
+
+	def getHandicaps() {
+		#[new HandicapHasta, new HandicapDesde]
+	}
+
+}

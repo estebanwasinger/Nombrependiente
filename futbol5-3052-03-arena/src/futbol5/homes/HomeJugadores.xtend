@@ -30,8 +30,7 @@ class HomeJugadores extends CollectionBasedHome<Jugador> {
 		matcheaNombre(jugadorEnLista,modelo.jugadorEjemplo) && 
 		matcheaApodo(jugadorEnLista,modelo.jugadorEjemplo) &&
 		matcheaFecha(jugadorEnLista,modelo.jugadorEjemplo) &&
-		matcheaHandicapMin(jugadorEnLista, modelo.handicapDesde) &&
-		matcheaHandicapMax(jugadorEnLista, modelo.handicapHasta) &&
+		modelo.metodoHandicap.calcular(jugadorEnLista, modelo.handicap)&&
 		matcheaPromedioMin(jugadorEnLista, modelo.promedioDesde) && 
 		matcheaPromedioMax(jugadorEnLista, modelo.promedioHasta) &&
 		matcheaInfracciones(jugadorEnLista, modelo.infracciones)
