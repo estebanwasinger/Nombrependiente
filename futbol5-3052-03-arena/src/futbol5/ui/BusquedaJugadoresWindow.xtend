@@ -30,6 +30,8 @@ import strategyHandicap.HandicapDesde
 class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
 
 	@Property Grilla grilla
+	
+	ErrorsPanel panelErrores
 
 	new(WindowOwner parent, BusquedaJugadoresAppModel modelObject) {
 		super(parent, modelObject)
@@ -39,7 +41,8 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
 
 	override createContents(Panel mainPanel) {
 		title = "Busqueda de Jugadores"
-		new ErrorsPanel(mainPanel, "Busqueda OK") //VER ESTO
+		panelErrores = new ErrorsPanel(mainPanel, "Busqueda OK") //VER ESTO
+		println(panelErrores.container.toString)
 		new Panel(mainPanel).setLayout(new ColumnLayout(2))
 
 		var panelIzquierda = new Panel(mainPanel)
@@ -73,7 +76,7 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
 		var derecha = new Panel(panelBusqueda)
 
 		// Por nombre “comienza con” 
-		new Label(izquierda) => [text = "Nombre comienza con.." fontSize = 11 setForeground(Color.DARK_GRAY)]
+		new Label(izquierda) => [text = "Nombre comienza con.." fontSize = 15 setForeground(Color.DARK_GRAY)]
 
 		new TextBox(derecha).withFilter[event|StringUtils.isAlpha(event.potentialTextResult)].
 			bindValueToProperty("jugadorEjemplo.nombre")
@@ -81,13 +84,13 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
 		new Label(panelIzquierda).text = "_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_"
 
 		//Por apodo “contiene” //	
-		new Label(izquierda) => [text = "Apodo contiene..." fontSize = 11 setForeground(Color.DARK_GRAY)]
+		new Label(izquierda) => [text = "Apodo contiene..." fontSize = 15 setForeground(Color.DARK_GRAY)]
 
 		new TextBox(derecha).withFilter[event|StringUtils.isAlpha(event.potentialTextResult)].
 			bindValueToProperty("jugadorEjemplo.apodo")
 
 		// Búsqueda por fecha de nacimiento “anterior a” //
-		new Label(izquierda) => [text = "Fecha de nacimiento menor a:" fontSize = 11 setForeground(Color.DARK_GRAY)]
+		new Label(izquierda) => [text = "Fecha de nacimiento menor a:" fontSize = 15 setForeground(Color.DARK_GRAY)]
 
 		new TextBox(derecha).withFilter(new DateTextFilter).bindValueToProperty("jugadorEjemplo.fechaNacimiento").
 			setTransformer(new DateAdapter)
@@ -96,29 +99,31 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
 			new RadioSelector(izquierda) => [
 			bindItemsToProperty("handicaps")
 			bindValueToProperty("metodoHandicap")
+			allowNull(true)
 		]
 
 		new TextBox(derecha).withFilter[event|StringUtils.isNumeric(event.potentialTextResult)].
 			bindValueToProperty("handicap")
 
 		//Por rango desde/hasta del promedio de último partido //		
-		new Label(izquierda) => [text = "Promedio desde:" fontSize = 11 setForeground(Color.DARK_GRAY)]
+		new Label(izquierda) => [text = "Promedio desde:" fontSize = 15 setForeground(Color.DARK_GRAY)]
 
 		new TextBox(derecha).withFilter[event|StringUtils.isNumeric(event.potentialTextResult)].
 			bindValueToProperty("promedioDesde")
 
-		new Label(izquierda) => [text = "Promedio hasta:" fontSize = 11 setForeground(Color.DARK_GRAY)]
+		new Label(izquierda) => [text = "Promedio hasta:" fontSize = 15 setForeground(Color.DARK_GRAY)]
 
 		new TextBox(derecha).withFilter[event|StringUtils.isNumeric(event.potentialTextResult)].
 			bindValueToProperty("promedioHasta")
 
 		//Filtrar sólo los que tuvieron infracciones, sólo los que no tuvieron infracciones, todos //
-		new Label(izquierda) => [text = "Infracciones" fontSize = 11 setForeground(Color.DARK_GRAY)]
+		new Label(izquierda) => [text = "Infracciones" fontSize = 15 setForeground(Color.DARK_GRAY)]
 
 		new Selector(derecha) => [bindItems(new ObservableProperty(this, "eligeInfracciones"))
 			bindValueToProperty("infracciones")]
 
-		new Button(panelBusqueda) => [setCaption("Buscar") onClick [|modelObject.search()] setFontSize(12)
+		new Button(panelBusqueda) => [setCaption("Buscar") onClick [|modelObject.search()
+		] setFontSize(12)
 			setWidth = 200 setAsDefault]
 
 		new Button(panelBusqueda) => [setCaption("Limpiar") onClick [|modelObject.clear] setFontSize(12)

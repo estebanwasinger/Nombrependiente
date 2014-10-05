@@ -12,6 +12,7 @@ import futbol5.domain.Partido
 import java.util.ArrayList
 import java.util.LinkedList
 import java.util.List
+import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.bindings.ObservableProperty
 import org.uqbar.arena.bindings.PropertyAdapter
 import org.uqbar.arena.layout.ColumnLayout
@@ -27,7 +28,6 @@ import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.ObservableUtils
 import org.uqbar.commons.utils.Observable
-import org.uqbar.arena.bindings.NotNullObservable
 
 @Observable
 class GenerarEquiposWindow extends Dialog<Partido> {
@@ -36,10 +36,12 @@ class GenerarEquiposWindow extends Dialog<Partido> {
 
 	new(WindowOwner parent, Partido model) {
 		super(parent, model)
+
 		// Llevarlo a un método
 		listaCritDivision = new LinkedList<DivisionDeEquiposCommand>
 		getListaCritDivision.add(new AlgoritmoImparPar)
 		getListaCritDivision.add(new AlgoritmoLoco)
+
 		// Llevarlo a un mètodo
 		listaCritOrdenamiento = new LinkedList<CriteriosCommand>
 		getListaCritOrdenamiento.add(new CriterioCalifiUltimoPartido)
@@ -47,21 +49,15 @@ class GenerarEquiposWindow extends Dialog<Partido> {
 		getListaCritOrdenamiento.add(new CriterioNCalificaciones(3))
 	}
 
-
 	override protected addActions(Panel actionPanel) {
 		actionPanel.layout = new HorizontalLayout
-		new Button(actionPanel)
-			.setCaption("Aceptar")
-			.onClick [|this.close]
-			.setAsDefault.disableOnError
-			
-		var buscar = new Button(actionPanel)
-			.setCaption("Buscar Jugador")
-			.onClick [ | this.buscarJugador]
-		
+		new Button(actionPanel).setCaption("Aceptar").onClick[|this.close].setAsDefault.disableOnError
+
+		var buscar = new Button(actionPanel).setCaption("Buscar Jugador").onClick[|this.buscarJugador]
+
 		var elementSelected = new NotNullObservable("jugadorSeleccionado")
 		buscar.bindEnabled(elementSelected)
-		
+
 	}
 
 	override protected createFormPanel(Panel mainPanel) {
@@ -80,16 +76,13 @@ class GenerarEquiposWindow extends Dialog<Partido> {
 		val panelSelector3 = new Panel(botoneraSuperior)
 		panelSelector3.layout = new VerticalLayout
 
-		/* RELLENO DE LOS SELECTORES ES HORRIBLE PERO POR AHORA FUNCIONA
-		 * lo que hay que ver es tipo los algoritmos que necesitan que le pases algun parametro para que funcione como ultimos N partidos
-		 */
 		crearSelectoresCommands(panelSelector1, panelSelector2)
 
 		crearBotonGenerar(panelSelector3)
 
 		createListaJugadores(panelListaJugadores)
 	}
-	
+
 	private def crearBotonGenerar(Panel panelSelector3) {
 		new Button(panelSelector3) => [
 			width = 200
@@ -104,7 +97,7 @@ class GenerarEquiposWindow extends Dialog<Partido> {
 			]
 		]
 	}
-	
+
 	def crearSelectoresCommands(Panel panelSelector1, Panel panelSelector2) {
 		new Label(panelSelector1).text = "Criterio de Selección"
 		val selectorCritDivision = new Selector<DivisionDeEquiposCommand>(panelSelector1) => [
@@ -114,7 +107,7 @@ class GenerarEquiposWindow extends Dialog<Partido> {
 		]
 		var propiedadDivision = selectorCritDivision.bindItems(new ObservableProperty(this, "listaCritDivision"))
 		propiedadDivision.adapter = new PropertyAdapter(typeof(DivisionDeEquiposCommand), "nombre")
-		
+
 		new Label(panelSelector2).text = "Criterio de Ordenamiento"
 		val selectorCritOrdeamiento = new Selector<CriteriosCommand>(panelSelector2) => [
 			allowNull(false)
@@ -150,20 +143,18 @@ class GenerarEquiposWindow extends Dialog<Partido> {
 		tableListaInscriptos.bindValueToProperty("jugadorSeleccionado")
 		new Column<Jugador>(tableListaInscriptos).setTitle("Nombre").bindContentsToProperty("nombre")
 
+		createTableEquipo(panelJugadores, "equipoA")
+		createTableEquipo(panelJugadores, "equipoB")
+	}
+
+	private def createTableEquipo(Panel panelJugadores, String teamToBind) {
 		val tableListaEquipoA = new Table<Jugador>(panelJugadores, typeof(Jugador))
 		tableListaEquipoA.heigth = 200
 		tableListaEquipoA.width = 285
-		tableListaEquipoA.bindItemsToProperty("equipoA")
+		tableListaEquipoA.bindItemsToProperty(teamToBind)
 		new Column<Jugador>(tableListaEquipoA).setTitle("Nombre").bindContentsToProperty("nombre")
-
-		var tableListaEquipoB = new Table<Jugador>(panelJugadores, typeof(Jugador))
-		tableListaEquipoB.heigth = 200
-		tableListaEquipoB.width = 285
-		tableListaEquipoB.bindItemsToProperty("equipoB")
-		new Column<Jugador>(tableListaEquipoB) //
-		.setTitle("Nombre").bindContentsToProperty("nombre")
 	}
-	
+
 	def void buscarJugador() {
 		this.openDialog(new VerDatosJugadorWindow(this, modelObject.jugadorSeleccionado))
 	}

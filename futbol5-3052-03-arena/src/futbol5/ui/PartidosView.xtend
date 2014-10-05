@@ -36,15 +36,13 @@ class PartidosView extends Dialog<PartidosAppModel> {
 	override protected createFormPanel(Panel mainPanel) {
 		title = "Organizador de Futbol5"
 		mainPanel.layout = new VerticalLayout
-		val Panel columnPanel = new Panel(mainPanel)
-		columnPanel.layout = new ColumnLayout(2)
-		val Panel panelIzq = new Panel(columnPanel).layout = new VerticalLayout
-		new Panel(columnPanel).layout = new VerticalLayout
-		new Label(panelIzq).text = "Futbol 5"
-		new Label(panelIzq).text = "Ultimos Partidos"
-		new Table<Partido>(panelIzq, typeof(Partido)) => [
+		new Label(mainPanel) => [
+			text = "Futbol 5"
+			fontSize = 20
+			]
+		new Label(mainPanel).text = "Ultimos Partidos"
+		new Table<Partido>(mainPanel, typeof(Partido)) => [
 			heigth = 200
-			width = 150
 			bindItemsToProperty("partidos")
 			bindValueToProperty("partidoSeleccionado")
 			new Column<Partido>(it).setTitle("Localidad").bindContentsToProperty("localidad")

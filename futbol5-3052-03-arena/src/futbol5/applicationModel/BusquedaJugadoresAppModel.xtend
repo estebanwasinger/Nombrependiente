@@ -10,6 +10,7 @@ import org.uqbar.commons.utils.Observable
 import strategyHandicap.HandicapStrategy
 import strategyHandicap.HandicapHasta
 import strategyHandicap.HandicapDesde
+import org.uqbar.commons.model.UserException
 
 @Observable
 class BusquedaJugadoresAppModel implements Serializable {
