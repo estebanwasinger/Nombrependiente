@@ -15,22 +15,21 @@ import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
+import org.uqbar.arena.widgets.RadioSelector
 import org.uqbar.arena.widgets.Selector
 import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.ErrorsPanel
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.utils.Observable
-import org.uqbar.commons.model.UserException
-import org.uqbar.arena.widgets.RadioSelector
-import strategyHandicap.HandicapHasta
 import strategyHandicap.HandicapDesde
+import strategyHandicap.HandicapHasta
 
 @Observable
 class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
 
 	@Property Grilla grilla
-	
+
 	ErrorsPanel panelErrores
 
 	new(WindowOwner parent, BusquedaJugadoresAppModel modelObject) {
@@ -72,67 +71,77 @@ class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
 		title = "Busqueda Jugador"
 
 		var panelBusqueda = new Panel(panelIzquierda).setLayout(new ColumnLayout(2))
-		var izquierda = new Panel(panelBusqueda)
-		var derecha = new Panel(panelBusqueda)
 
 		// Por nombre “comienza con” 
-		new Label(izquierda) => [text = "Nombre comienza con.." fontSize = 15 setForeground(Color.DARK_GRAY)]
-
-		new TextBox(derecha).withFilter[event|StringUtils.isAlpha(event.potentialTextResult)].
-			bindValueToProperty("jugadorEjemplo.nombre")
+		createLabel("Nombre comienza con:", panelBusqueda)
+		createTextBoxForNames(panelBusqueda, "jugadorEjemplo.nombre")
 
 		new Label(panelIzquierda).text = "_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_"
 
 		//Por apodo “contiene” //	
-		new Label(izquierda) => [text = "Apodo contiene..." fontSize = 15 setForeground(Color.DARK_GRAY)]
-
-		new TextBox(derecha).withFilter[event|StringUtils.isAlpha(event.potentialTextResult)].
-			bindValueToProperty("jugadorEjemplo.apodo")
+		createLabel("Apodo contiene:", panelBusqueda)
+		createTextBoxForNames(panelBusqueda, "jugadorEjemplo.apodo")
 
 		// Búsqueda por fecha de nacimiento “anterior a” //
-		new Label(izquierda) => [text = "Fecha de nacimiento menor a:" fontSize = 15 setForeground(Color.DARK_GRAY)]
+		createLabel("Fecha de nacimiento menor a:", panelBusqueda)
 
-		new TextBox(derecha).withFilter(new DateTextFilter).bindValueToProperty("jugadorEjemplo.fechaNacimiento").
-			setTransformer(new DateAdapter)
+		new TextBox(panelBusqueda) => [
+			withFilter(new DateTextFilter)
+			width = 250
+			bindValueToProperty("jugadorEjemplo.fechaNacimiento").setTransformer(new DateAdapter)
+		]
 
 		//Por rango desde/hasta del hándicap (puede ingresarse sólo desde, o sólo hasta) //		
-			new RadioSelector(izquierda) => [
+		new RadioSelector(panelBusqueda) => [
 			bindItemsToProperty("handicaps")
 			bindValueToProperty("metodoHandicap")
 			allowNull(true)
 		]
+		createTextBoxForNumerics(panelBusqueda, "handicap");
 
-		new TextBox(derecha).withFilter[event|StringUtils.isNumeric(event.potentialTextResult)].
-			bindValueToProperty("handicap")
+		//Por rango desde/hasta del promedio de último partido //
+		createLabel("Promedio desde:", panelBusqueda)
+		createTextBoxForNumerics(panelBusqueda, "promedioDesde");
 
-		//Por rango desde/hasta del promedio de último partido //		
-		new Label(izquierda) => [text = "Promedio desde:" fontSize = 15 setForeground(Color.DARK_GRAY)]
-
-		new TextBox(derecha).withFilter[event|StringUtils.isNumeric(event.potentialTextResult)].
-			bindValueToProperty("promedioDesde")
-
-		new Label(izquierda) => [text = "Promedio hasta:" fontSize = 15 setForeground(Color.DARK_GRAY)]
-
-		new TextBox(derecha).withFilter[event|StringUtils.isNumeric(event.potentialTextResult)].
-			bindValueToProperty("promedioHasta")
+		createLabel("Promedio hasta:", panelBusqueda)
+		createTextBoxForNumerics(panelBusqueda, "promedioHasta");
 
 		//Filtrar sólo los que tuvieron infracciones, sólo los que no tuvieron infracciones, todos //
-		new Label(izquierda) => [text = "Infracciones" fontSize = 15 setForeground(Color.DARK_GRAY)]
+		createLabel("Infracciones:", panelBusqueda)
 
-		new Selector(derecha) => [bindItems(new ObservableProperty(this, "eligeInfracciones"))
+		new Selector(panelBusqueda) => [bindItems(new ObservableProperty(this, "eligeInfracciones"))
 			bindValueToProperty("infracciones")]
 
-		new Button(panelBusqueda) => [setCaption("Buscar") onClick [|modelObject.search()
-		] setFontSize(12)
-			setWidth = 200 setAsDefault]
+		new Button(panelBusqueda) => [setCaption("Buscar")
+			onClick [ |
+				modelObject.search()
+			] setFontSize(12) setWidth = 200 setAsDefault]
 
 		new Button(panelBusqueda) => [setCaption("Limpiar") onClick [|modelObject.clear] setFontSize(12)
 			setWidth = 200]
 	}
 
-	def crearTextBox(Panel searchFormPanel, String label, String binding) {
-		new Label(searchFormPanel).text = label
-		new TextBox(searchFormPanel).bindValueToProperty(binding)
+	def createTextBoxForNumerics(Panel panel, String propertyName) {
+		createTextBox(panel, propertyName) => [
+			withFilter[event|StringUtils.isNumeric(event.potentialTextResult)]
+		]
+	}
+
+	def createTextBoxForNames(Panel panel, String propertyName) {
+		createTextBox(panel, propertyName) => [
+			withFilter[event|StringUtils.isAlpha(event.potentialTextResult)]
+		]
+	}
+
+	def createTextBox(Panel panel, String propertyName) {
+		return new TextBox(panel) => [
+			bindValueToProperty(propertyName)
+			width = 250
+		]
+	}
+
+	def void createLabel(String labelText, Panel panel) {
+		new Label(panel) => [text = labelText fontSize = 13 setForeground(Color.DARK_GRAY)]
 	}
 
 	def void grillaBasicaJugadores(Panel panelResultados, Jugador jugadorSeleccionado, List<Jugador> jugadores) {
