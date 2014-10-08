@@ -12,6 +12,7 @@ import org.apache.commons.collections15.Predicate;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.uqbar.commons.model.CollectionBasedHome;
+import strategyHandicap.HandicapStrategy;
 
 @SuppressWarnings("all")
 public class HomeJugadores extends CollectionBasedHome<Jugador> {
@@ -62,48 +63,41 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     boolean _and_3 = false;
     boolean _and_4 = false;
     boolean _and_5 = false;
-    boolean _and_6 = false;
     Jugador _jugadorEjemplo = modelo.getJugadorEjemplo();
     boolean _matcheaNombre = this.matcheaNombre(jugadorEnLista, _jugadorEjemplo);
     if (!_matcheaNombre) {
-      _and_6 = false;
+      _and_5 = false;
     } else {
       Jugador _jugadorEjemplo_1 = modelo.getJugadorEjemplo();
       boolean _matcheaApodo = this.matcheaApodo(jugadorEnLista, _jugadorEjemplo_1);
-      _and_6 = _matcheaApodo;
-    }
-    if (!_and_6) {
-      _and_5 = false;
-    } else {
-      Jugador _jugadorEjemplo_2 = modelo.getJugadorEjemplo();
-      boolean _matcheaFecha = this.matcheaFecha(jugadorEnLista, _jugadorEjemplo_2);
-      _and_5 = _matcheaFecha;
+      _and_5 = _matcheaApodo;
     }
     if (!_and_5) {
       _and_4 = false;
     } else {
-      int _handicapDesde = modelo.getHandicapDesde();
-      boolean _matcheaHandicapMin = this.matcheaHandicapMin(jugadorEnLista, _handicapDesde);
-      _and_4 = _matcheaHandicapMin;
+      Jugador _jugadorEjemplo_2 = modelo.getJugadorEjemplo();
+      boolean _matcheaFecha = this.matcheaFecha(jugadorEnLista, _jugadorEjemplo_2);
+      _and_4 = _matcheaFecha;
     }
     if (!_and_4) {
       _and_3 = false;
     } else {
-      int _handicapHasta = modelo.getHandicapHasta();
-      boolean _matcheaHandicapMax = this.matcheaHandicapMax(jugadorEnLista, _handicapHasta);
-      _and_3 = _matcheaHandicapMax;
+      HandicapStrategy _metodoHandicap = modelo.getMetodoHandicap();
+      Integer _handicap = modelo.getHandicap();
+      boolean _calcular = _metodoHandicap.calcular(jugadorEnLista, _handicap);
+      _and_3 = _calcular;
     }
     if (!_and_3) {
       _and_2 = false;
     } else {
-      int _promedioDesde = modelo.getPromedioDesde();
+      Integer _promedioDesde = modelo.getPromedioDesde();
       boolean _matcheaPromedioMin = this.matcheaPromedioMin(jugadorEnLista, _promedioDesde);
       _and_2 = _matcheaPromedioMin;
     }
     if (!_and_2) {
       _and_1 = false;
     } else {
-      int _promedioHasta = modelo.getPromedioHasta();
+      Integer _promedioHasta = modelo.getPromedioHasta();
       boolean _matcheaPromedioMax = this.matcheaPromedioMax(jugadorEnLista, _promedioHasta);
       _and_1 = _matcheaPromedioMax;
     }
@@ -166,28 +160,30 @@ public class HomeJugadores extends CollectionBasedHome<Jugador> {
     return _or;
   }
   
-  public boolean matcheaHandicapMin(final Jugador jugadorEnLista, final int handicapDesde) {
-    float _nivelDeJuego = jugadorEnLista.getNivelDeJuego();
-    int _round = Math.round(_nivelDeJuego);
-    return (_round >= handicapDesde);
+  public boolean matcheaPromedioMin(final Jugador jugadorEnLista, final Integer promedioDesde) {
+    boolean _xifexpression = false;
+    boolean _notEquals = (!Objects.equal(promedioDesde, null));
+    if (_notEquals) {
+      int _promedio = jugadorEnLista.getPromedio();
+      int _round = Math.round(_promedio);
+      _xifexpression = (_round >= (promedioDesde).intValue());
+    } else {
+      _xifexpression = true;
+    }
+    return _xifexpression;
   }
   
-  public boolean matcheaHandicapMax(final Jugador jugadorEnLista, final int handicapHasta) {
-    float _nivelDeJuego = jugadorEnLista.getNivelDeJuego();
-    int _round = Math.round(_nivelDeJuego);
-    return (_round <= handicapHasta);
-  }
-  
-  public boolean matcheaPromedioMin(final Jugador jugadorEnLista, final int promedioDesde) {
-    int _promedio = jugadorEnLista.getPromedio();
-    int _round = Math.round(_promedio);
-    return (_round >= promedioDesde);
-  }
-  
-  public boolean matcheaPromedioMax(final Jugador jugadorEnLista, final int promedioHasta) {
-    int _promedio = jugadorEnLista.getPromedio();
-    int _round = Math.round(_promedio);
-    return (_round <= promedioHasta);
+  public boolean matcheaPromedioMax(final Jugador jugadorEnLista, final Integer promedioHasta) {
+    boolean _xifexpression = false;
+    boolean _notEquals = (!Objects.equal(promedioHasta, null));
+    if (_notEquals) {
+      int _promedio = jugadorEnLista.getPromedio();
+      int _round = Math.round(_promedio);
+      _xifexpression = (_round <= (promedioHasta).intValue());
+    } else {
+      _xifexpression = true;
+    }
+    return _xifexpression;
   }
   
   public boolean matcheaInfracciones(final Jugador jugadorEnLista, final String infracciones) {

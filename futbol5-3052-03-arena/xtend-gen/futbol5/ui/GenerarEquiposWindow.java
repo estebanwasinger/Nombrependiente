@@ -28,6 +28,7 @@ import org.uqbar.arena.widgets.Selector;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
 import org.uqbar.arena.windows.Dialog;
+import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.commons.model.ObservableUtils;
 import org.uqbar.commons.utils.Observable;
@@ -38,7 +39,7 @@ import org.uqbar.lacar.ui.model.bindings.Binding;
 
 @Observable
 @SuppressWarnings("all")
-public class GenerarEquiposWindow extends Dialog<Partido> {
+public class GenerarEquiposWindow extends SimpleWindow<Partido> {
   private List<DivisionDeEquiposCommand> _listaCritDivision;
   
   public List<DivisionDeEquiposCommand> getListaCritDivision() {
@@ -237,20 +238,22 @@ public class GenerarEquiposWindow extends Dialog<Partido> {
     Column<Jugador> _column = new Column<Jugador>(tableListaInscriptos);
     Column<Jugador> _setTitle = _column.setTitle("Nombre");
     _setTitle.bindContentsToProperty("nombre");
-    final Table<Jugador> tableListaEquipoA = new Table<Jugador>(panelJugadores, Jugador.class);
-    tableListaEquipoA.setHeigth(200);
-    tableListaEquipoA.setWidth(285);
-    tableListaEquipoA.bindItemsToProperty("equipoA");
-    Column<Jugador> _column_1 = new Column<Jugador>(tableListaEquipoA);
-    Column<Jugador> _setTitle_1 = _column_1.setTitle("Nombre");
-    _setTitle_1.bindContentsToProperty("nombre");
-    Table<Jugador> tableListaEquipoB = new Table<Jugador>(panelJugadores, Jugador.class);
-    tableListaEquipoB.setHeigth(200);
-    tableListaEquipoB.setWidth(285);
-    tableListaEquipoB.bindItemsToProperty("equipoB");
-    Column<Jugador> _column_2 = new Column<Jugador>(tableListaEquipoB);
-    Column<Jugador> _setTitle_2 = _column_2.setTitle("Nombre");
-    _setTitle_2.bindContentsToProperty("nombre");
+    this.createTableEquipo(panelJugadores, "equipoA");
+    this.createTableEquipo(panelJugadores, "equipoB");
+  }
+  
+  private Column<Jugador> createTableEquipo(final Panel panelJugadores, final String teamToBind) {
+    Column<Jugador> _xblockexpression = null;
+    {
+      final Table<Jugador> tableListaEquipoA = new Table<Jugador>(panelJugadores, Jugador.class);
+      tableListaEquipoA.setHeigth(200);
+      tableListaEquipoA.setWidth(285);
+      tableListaEquipoA.bindItemsToProperty(teamToBind);
+      Column<Jugador> _column = new Column<Jugador>(tableListaEquipoA);
+      Column<Jugador> _setTitle = _column.setTitle("Nombre");
+      _xblockexpression = _setTitle.bindContentsToProperty("nombre");
+    }
+    return _xblockexpression;
   }
   
   public void buscarJugador() {

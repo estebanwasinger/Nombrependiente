@@ -8,7 +8,6 @@ import futbol5.ui.GenerarEquiposWindow;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.uqbar.arena.bindings.NotNullObservable;
-import org.uqbar.arena.layout.ColumnLayout;
 import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.layout.VerticalLayout;
 import org.uqbar.arena.widgets.Button;
@@ -16,7 +15,7 @@ import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
 import org.uqbar.arena.widgets.tables.Column;
 import org.uqbar.arena.widgets.tables.Table;
-import org.uqbar.arena.windows.Dialog;
+import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.commons.utils.Observable;
 import org.uqbar.lacar.ui.model.Action;
@@ -24,9 +23,9 @@ import org.uqbar.lacar.ui.model.ControlBuilder;
 
 @Observable
 @SuppressWarnings("all")
-public class PartidosView extends Dialog<PartidosAppModel> {
-  public PartidosView(final WindowOwner parent, final PartidosAppModel model) {
-    super(parent, model);
+public class PartidosView extends SimpleWindow<PartidosAppModel> {
+  public PartidosView(final WindowOwner parent) {
+    super(parent, new PartidosAppModel());
   }
   
   protected void addActions(final Panel panel) {
@@ -56,24 +55,20 @@ public class PartidosView extends Dialog<PartidosAppModel> {
     this.setTitle("Organizador de Futbol5");
     VerticalLayout _verticalLayout = new VerticalLayout();
     mainPanel.setLayout(_verticalLayout);
-    final Panel columnPanel = new Panel(mainPanel);
-    ColumnLayout _columnLayout = new ColumnLayout(2);
-    columnPanel.setLayout(_columnLayout);
-    Panel _panel = new Panel(columnPanel);
-    VerticalLayout _verticalLayout_1 = new VerticalLayout();
-    final Panel panelIzq = _panel.setLayout(_verticalLayout_1);
-    Panel _panel_1 = new Panel(columnPanel);
-    VerticalLayout _verticalLayout_2 = new VerticalLayout();
-    _panel_1.setLayout(_verticalLayout_2);
-    Label _label = new Label(panelIzq);
-    _label.setText("Futbol 5");
-    Label _label_1 = new Label(panelIzq);
+    Label _label = new Label(mainPanel);
+    final Procedure1<Label> _function = new Procedure1<Label>() {
+      public void apply(final Label it) {
+        it.setText("Futbol 5");
+        it.setFontSize(20);
+      }
+    };
+    ObjectExtensions.<Label>operator_doubleArrow(_label, _function);
+    Label _label_1 = new Label(mainPanel);
     _label_1.setText("Ultimos Partidos");
-    Table<Partido> _table = new Table<Partido>(panelIzq, Partido.class);
-    final Procedure1<Table<Partido>> _function = new Procedure1<Table<Partido>>() {
+    Table<Partido> _table = new Table<Partido>(mainPanel, Partido.class);
+    final Procedure1<Table<Partido>> _function_1 = new Procedure1<Table<Partido>>() {
       public void apply(final Table<Partido> it) {
         it.setHeigth(200);
-        it.setWidth(150);
         it.bindItemsToProperty("partidos");
         it.<ControlBuilder>bindValueToProperty("partidoSeleccionado");
         Column<Partido> _column = new Column<Partido>(it);
@@ -81,30 +76,23 @@ public class PartidosView extends Dialog<PartidosAppModel> {
         _setTitle.bindContentsToProperty("localidad");
       }
     };
-    ObjectExtensions.<Table<Partido>>operator_doubleArrow(_table, _function);
+    ObjectExtensions.<Table<Partido>>operator_doubleArrow(_table, _function_1);
   }
   
   public void generarEquipo() {
     PartidosAppModel _modelObject = this.getModelObject();
     Partido _partidoSeleccionado = _modelObject.getPartidoSeleccionado();
     GenerarEquiposWindow _generarEquiposWindow = new GenerarEquiposWindow(this, _partidoSeleccionado);
-    this.openDialog(_generarEquiposWindow);
+    this.openWindow(_generarEquiposWindow);
   }
   
-  public void openDialog(final Dialog<?> dialog) {
-    final Action _function = new Action() {
-      public void execute() {
-        PartidosAppModel _modelObject = PartidosView.this.getModelObject();
-        _modelObject.searchPartido();
-      }
-    };
-    dialog.onAccept(_function);
-    dialog.open();
+  public void openWindow(final SimpleWindow<?> ventana) {
+    ventana.open();
   }
   
   public void buscarJugador() {
     BusquedaJugadoresAppModel _busquedaJugadoresAppModel = new BusquedaJugadoresAppModel();
     BusquedaJugadoresWindow _busquedaJugadoresWindow = new BusquedaJugadoresWindow(this, _busquedaJugadoresAppModel);
-    this.openDialog(_busquedaJugadoresWindow);
+    this.openWindow(_busquedaJugadoresWindow);
   }
 }

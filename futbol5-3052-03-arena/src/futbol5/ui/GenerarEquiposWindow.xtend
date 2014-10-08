@@ -28,9 +28,10 @@ import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.ObservableUtils
 import org.uqbar.commons.utils.Observable
+import org.uqbar.arena.windows.SimpleWindow
 
 @Observable
-class GenerarEquiposWindow extends Dialog<Partido> {
+class GenerarEquiposWindow extends SimpleWindow<Partido> {
 	@Property List<DivisionDeEquiposCommand> listaCritDivision
 	@Property List<CriteriosCommand> listaCritOrdenamiento
 

@@ -1,12 +1,17 @@
 package futbol5.applicationModel;
 
+import com.google.common.collect.Lists;
 import futbol5.domain.Jugador;
 import futbol5.homes.HomeJugadores;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.uqbar.commons.utils.ApplicationContext;
 import org.uqbar.commons.utils.Observable;
+import strategyHandicap.HandicapDesde;
+import strategyHandicap.HandicapHasta;
+import strategyHandicap.HandicapStrategy;
 
 @Observable
 @SuppressWarnings("all")
@@ -41,43 +46,33 @@ public class BusquedaJugadoresAppModel implements Serializable {
     this._jugadorSeleccionado = jugadorSeleccionado;
   }
   
-  private int _handicapDesde;
+  private Integer _handicap;
   
-  public int getHandicapDesde() {
-    return this._handicapDesde;
+  public Integer getHandicap() {
+    return this._handicap;
   }
   
-  public void setHandicapDesde(final int handicapDesde) {
-    this._handicapDesde = handicapDesde;
+  public void setHandicap(final Integer handicap) {
+    this._handicap = handicap;
   }
   
-  private int _handicapHasta;
+  private Integer _promedioDesde;
   
-  public int getHandicapHasta() {
-    return this._handicapHasta;
-  }
-  
-  public void setHandicapHasta(final int handicapHasta) {
-    this._handicapHasta = handicapHasta;
-  }
-  
-  private int _promedioDesde;
-  
-  public int getPromedioDesde() {
+  public Integer getPromedioDesde() {
     return this._promedioDesde;
   }
   
-  public void setPromedioDesde(final int promedioDesde) {
+  public void setPromedioDesde(final Integer promedioDesde) {
     this._promedioDesde = promedioDesde;
   }
   
-  private int _promedioHasta;
+  private Integer _promedioHasta;
   
-  public int getPromedioHasta() {
+  public Integer getPromedioHasta() {
     return this._promedioHasta;
   }
   
-  public void setPromedioHasta(final int promedioHasta) {
+  public void setPromedioHasta(final Integer promedioHasta) {
     this._promedioHasta = promedioHasta;
   }
   
@@ -89,6 +84,16 @@ public class BusquedaJugadoresAppModel implements Serializable {
   
   public void setInfracciones(final String infracciones) {
     this._infracciones = infracciones;
+  }
+  
+  private HandicapStrategy _metodoHandicap;
+  
+  public HandicapStrategy getMetodoHandicap() {
+    return this._metodoHandicap;
+  }
+  
+  public void setMetodoHandicap(final HandicapStrategy metodoHandicap) {
+    this._metodoHandicap = metodoHandicap;
   }
   
   public BusquedaJugadoresAppModel() {
@@ -118,15 +123,23 @@ public class BusquedaJugadoresAppModel implements Serializable {
   public void iniciar() {
     Jugador _jugador = new Jugador();
     this.setJugadorEjemplo(_jugador);
-    this.setHandicapDesde(1);
-    this.setHandicapHasta(10);
-    this.setPromedioDesde(0);
-    this.setPromedioHasta(10);
+    this.setHandicap(null);
+    this.setPromedioDesde(null);
+    this.setPromedioHasta(null);
     this.setInfracciones("Todos");
+    List<? extends HandicapStrategy> _handicaps = this.getHandicaps();
+    HandicapStrategy _get = _handicaps.get(0);
+    this.setMetodoHandicap(_get);
   }
   
   public HomeJugadores getHomeJugadores() {
     ApplicationContext _instance = ApplicationContext.getInstance();
     return _instance.<HomeJugadores>getSingleton(Jugador.class);
+  }
+  
+  public List<? extends HandicapStrategy> getHandicaps() {
+    HandicapHasta _handicapHasta = new HandicapHasta();
+    HandicapDesde _handicapDesde = new HandicapDesde();
+    return Collections.<HandicapStrategy>unmodifiableList(Lists.<HandicapStrategy>newArrayList(_handicapHasta, _handicapDesde));
   }
 }

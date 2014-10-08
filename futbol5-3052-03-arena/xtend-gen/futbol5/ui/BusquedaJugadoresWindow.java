@@ -20,22 +20,25 @@ import org.uqbar.arena.layout.HorizontalLayout;
 import org.uqbar.arena.widgets.Button;
 import org.uqbar.arena.widgets.Label;
 import org.uqbar.arena.widgets.Panel;
+import org.uqbar.arena.widgets.RadioSelector;
 import org.uqbar.arena.widgets.Selector;
 import org.uqbar.arena.widgets.TextBox;
 import org.uqbar.arena.widgets.TextFilter;
 import org.uqbar.arena.widgets.TextInputEvent;
 import org.uqbar.arena.windows.Dialog;
-import org.uqbar.arena.windows.ErrorsPanel;
+import org.uqbar.arena.windows.SimpleWindow;
 import org.uqbar.arena.windows.WindowOwner;
 import org.uqbar.commons.utils.Observable;
 import org.uqbar.lacar.ui.model.Action;
 import org.uqbar.lacar.ui.model.ControlBuilder;
-import org.uqbar.lacar.ui.model.WindowBuilder;
 import org.uqbar.lacar.ui.model.bindings.Binding;
+import strategyHandicap.HandicapDesde;
+import strategyHandicap.HandicapHasta;
+import strategyHandicap.HandicapStrategy;
 
 @Observable
 @SuppressWarnings("all")
-public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
+public class BusquedaJugadoresWindow extends SimpleWindow<BusquedaJugadoresAppModel> {
   private Grilla _grilla;
   
   public Grilla getGrilla() {
@@ -48,15 +51,13 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
   
   public BusquedaJugadoresWindow(final WindowOwner parent, final BusquedaJugadoresAppModel modelObject) {
     super(parent, modelObject);
-    WindowBuilder _delegate = this.getDelegate();
-    _delegate.setErrorViewer(this);
     Grilla _grilla = new Grilla();
     this.setGrilla(_grilla);
   }
   
-  public void createContents(final Panel mainPanel) {
+  public void createMainTemplate(final Panel mainPanel) {
     this.setTitle("Busqueda de Jugadores");
-    new ErrorsPanel(mainPanel, "Busqueda OK");
+    this.setTaskDescription("Ingrese los parámetros de búsqueda");
     Panel _panel = new Panel(mainPanel);
     ColumnLayout _columnLayout = new ColumnLayout(2);
     _panel.setLayout(_columnLayout);
@@ -110,158 +111,62 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
     ObjectExtensions.<Button>operator_doubleArrow(_button, _function);
   }
   
+  public List<? extends HandicapStrategy> getHandicaps() {
+    HandicapHasta _handicapHasta = new HandicapHasta();
+    HandicapDesde _handicapDesde = new HandicapDesde();
+    return Collections.<HandicapStrategy>unmodifiableList(Lists.<HandicapStrategy>newArrayList(_handicapHasta, _handicapDesde));
+  }
+  
   public void createFormPanel(final Panel panelIzquierda) {
     this.setTitle("Busqueda Jugador");
     Panel _panel = new Panel(panelIzquierda);
     ColumnLayout _columnLayout = new ColumnLayout(2);
     Panel panelBusqueda = _panel.setLayout(_columnLayout);
-    Panel izquierda = new Panel(panelBusqueda);
-    Panel derecha = new Panel(panelBusqueda);
-    Label _label = new Label(izquierda);
-    final Procedure1<Label> _function = new Procedure1<Label>() {
-      public void apply(final Label it) {
-        it.setText("Nombre comienza con..");
-        it.setFontSize(11);
-        it.setForeground(Color.DARK_GRAY);
+    this.createLabel("Nombre comienza con:", panelBusqueda);
+    this.createTextBoxForNames(panelBusqueda, "jugadorEjemplo.nombre");
+    Label _label = new Label(panelIzquierda);
+    _label.setText("_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
+    this.createLabel("Apodo contiene:", panelBusqueda);
+    this.createTextBoxForNames(panelBusqueda, "jugadorEjemplo.apodo");
+    this.createLabel("Fecha de nacimiento menor a:", panelBusqueda);
+    TextBox _textBox = new TextBox(panelBusqueda);
+    final Procedure1<TextBox> _function = new Procedure1<TextBox>() {
+      public void apply(final TextBox it) {
+        DateTextFilter _dateTextFilter = new DateTextFilter();
+        it.withFilter(_dateTextFilter);
+        it.setWidth(250);
+        Binding<ControlBuilder> _bindValueToProperty = it.<ControlBuilder>bindValueToProperty("jugadorEjemplo.fechaNacimiento");
+        DateAdapter _dateAdapter = new DateAdapter();
+        _bindValueToProperty.setTransformer(_dateAdapter);
       }
     };
-    ObjectExtensions.<Label>operator_doubleArrow(_label, _function);
-    TextBox _textBox = new TextBox(derecha);
-    final TextFilter _function_1 = new TextFilter() {
-      public boolean accept(final TextInputEvent event) {
-        String _potentialTextResult = event.getPotentialTextResult();
-        return StringUtils.isAlpha(_potentialTextResult);
+    ObjectExtensions.<TextBox>operator_doubleArrow(_textBox, _function);
+    RadioSelector<Object> _radioSelector = new RadioSelector<Object>(panelBusqueda);
+    final Procedure1<RadioSelector<Object>> _function_1 = new Procedure1<RadioSelector<Object>>() {
+      public void apply(final RadioSelector<Object> it) {
+        it.bindItemsToProperty("handicaps");
+        it.<ControlBuilder>bindValueToProperty("metodoHandicap");
+        it.allowNull(true);
       }
     };
-    TextBox _withFilter = _textBox.withFilter(_function_1);
-    _withFilter.<ControlBuilder>bindValueToProperty("jugadorEjemplo.nombre");
-    Label _label_1 = new Label(panelIzquierda);
-    _label_1.setText("_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
-    Label _label_2 = new Label(izquierda);
-    final Procedure1<Label> _function_2 = new Procedure1<Label>() {
-      public void apply(final Label it) {
-        it.setText("Apodo contiene...");
-        it.setFontSize(11);
-        it.setForeground(Color.DARK_GRAY);
-      }
-    };
-    ObjectExtensions.<Label>operator_doubleArrow(_label_2, _function_2);
-    TextBox _textBox_1 = new TextBox(derecha);
-    final TextFilter _function_3 = new TextFilter() {
-      public boolean accept(final TextInputEvent event) {
-        String _potentialTextResult = event.getPotentialTextResult();
-        return StringUtils.isAlpha(_potentialTextResult);
-      }
-    };
-    TextBox _withFilter_1 = _textBox_1.withFilter(_function_3);
-    _withFilter_1.<ControlBuilder>bindValueToProperty("jugadorEjemplo.apodo");
-    Label _label_3 = new Label(izquierda);
-    final Procedure1<Label> _function_4 = new Procedure1<Label>() {
-      public void apply(final Label it) {
-        it.setText("Fecha de nacimiento menor a:");
-        it.setFontSize(11);
-        it.setForeground(Color.DARK_GRAY);
-      }
-    };
-    ObjectExtensions.<Label>operator_doubleArrow(_label_3, _function_4);
-    TextBox _textBox_2 = new TextBox(derecha);
-    DateTextFilter _dateTextFilter = new DateTextFilter();
-    TextBox _withFilter_2 = _textBox_2.withFilter(_dateTextFilter);
-    Binding<ControlBuilder> _bindValueToProperty = _withFilter_2.<ControlBuilder>bindValueToProperty("jugadorEjemplo.fechaNacimiento");
-    DateAdapter _dateAdapter = new DateAdapter();
-    _bindValueToProperty.setTransformer(_dateAdapter);
-    Label _label_4 = new Label(izquierda);
-    final Procedure1<Label> _function_5 = new Procedure1<Label>() {
-      public void apply(final Label it) {
-        it.setText("Handicap desde:");
-        it.setFontSize(11);
-        it.setForeground(Color.DARK_GRAY);
-      }
-    };
-    ObjectExtensions.<Label>operator_doubleArrow(_label_4, _function_5);
-    TextBox _textBox_3 = new TextBox(derecha);
-    final TextFilter _function_6 = new TextFilter() {
-      public boolean accept(final TextInputEvent event) {
-        String _potentialTextResult = event.getPotentialTextResult();
-        return StringUtils.isNumeric(_potentialTextResult);
-      }
-    };
-    TextBox _withFilter_3 = _textBox_3.withFilter(_function_6);
-    _withFilter_3.<ControlBuilder>bindValueToProperty("handicapDesde");
-    Label _label_5 = new Label(izquierda);
-    final Procedure1<Label> _function_7 = new Procedure1<Label>() {
-      public void apply(final Label it) {
-        it.setText("Handicap hasta:");
-        it.setFontSize(11);
-        it.setForeground(Color.DARK_GRAY);
-      }
-    };
-    ObjectExtensions.<Label>operator_doubleArrow(_label_5, _function_7);
-    TextBox _textBox_4 = new TextBox(derecha);
-    final TextFilter _function_8 = new TextFilter() {
-      public boolean accept(final TextInputEvent event) {
-        String _potentialTextResult = event.getPotentialTextResult();
-        return StringUtils.isNumeric(_potentialTextResult);
-      }
-    };
-    TextBox _withFilter_4 = _textBox_4.withFilter(_function_8);
-    _withFilter_4.<ControlBuilder>bindValueToProperty("handicapHasta");
-    Label _label_6 = new Label(izquierda);
-    final Procedure1<Label> _function_9 = new Procedure1<Label>() {
-      public void apply(final Label it) {
-        it.setText("Promedio desde:");
-        it.setFontSize(11);
-        it.setForeground(Color.DARK_GRAY);
-      }
-    };
-    ObjectExtensions.<Label>operator_doubleArrow(_label_6, _function_9);
-    TextBox _textBox_5 = new TextBox(derecha);
-    final TextFilter _function_10 = new TextFilter() {
-      public boolean accept(final TextInputEvent event) {
-        String _potentialTextResult = event.getPotentialTextResult();
-        return StringUtils.isNumeric(_potentialTextResult);
-      }
-    };
-    TextBox _withFilter_5 = _textBox_5.withFilter(_function_10);
-    _withFilter_5.<ControlBuilder>bindValueToProperty("promedioDesde");
-    Label _label_7 = new Label(izquierda);
-    final Procedure1<Label> _function_11 = new Procedure1<Label>() {
-      public void apply(final Label it) {
-        it.setText("Promedio hasta:");
-        it.setFontSize(11);
-        it.setForeground(Color.DARK_GRAY);
-      }
-    };
-    ObjectExtensions.<Label>operator_doubleArrow(_label_7, _function_11);
-    TextBox _textBox_6 = new TextBox(derecha);
-    final TextFilter _function_12 = new TextFilter() {
-      public boolean accept(final TextInputEvent event) {
-        String _potentialTextResult = event.getPotentialTextResult();
-        return StringUtils.isNumeric(_potentialTextResult);
-      }
-    };
-    TextBox _withFilter_6 = _textBox_6.withFilter(_function_12);
-    _withFilter_6.<ControlBuilder>bindValueToProperty("promedioHasta");
-    Label _label_8 = new Label(izquierda);
-    final Procedure1<Label> _function_13 = new Procedure1<Label>() {
-      public void apply(final Label it) {
-        it.setText("Infracciones");
-        it.setFontSize(11);
-        it.setForeground(Color.DARK_GRAY);
-      }
-    };
-    ObjectExtensions.<Label>operator_doubleArrow(_label_8, _function_13);
-    Selector<Object> _selector = new Selector<Object>(derecha);
-    final Procedure1<Selector<Object>> _function_14 = new Procedure1<Selector<Object>>() {
+    ObjectExtensions.<RadioSelector<Object>>operator_doubleArrow(_radioSelector, _function_1);
+    this.createTextBoxForNumerics(panelBusqueda, "handicap");
+    this.createLabel("Promedio desde:", panelBusqueda);
+    this.createTextBoxForNumerics(panelBusqueda, "promedioDesde");
+    this.createLabel("Promedio hasta:", panelBusqueda);
+    this.createTextBoxForNumerics(panelBusqueda, "promedioHasta");
+    this.createLabel("Infracciones:", panelBusqueda);
+    Selector<Object> _selector = new Selector<Object>(panelBusqueda);
+    final Procedure1<Selector<Object>> _function_2 = new Procedure1<Selector<Object>>() {
       public void apply(final Selector<Object> it) {
         ObservableProperty _observableProperty = new ObservableProperty(BusquedaJugadoresWindow.this, "eligeInfracciones");
         it.bindItems(_observableProperty);
         it.<ControlBuilder>bindValueToProperty("infracciones");
       }
     };
-    ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector, _function_14);
+    ObjectExtensions.<Selector<Object>>operator_doubleArrow(_selector, _function_2);
     Button _button = new Button(panelBusqueda);
-    final Procedure1<Button> _function_15 = new Procedure1<Button>() {
+    final Procedure1<Button> _function_3 = new Procedure1<Button>() {
       public void apply(final Button it) {
         it.setCaption("Buscar");
         final Action _function = new Action() {
@@ -276,9 +181,9 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
         it.setAsDefault();
       }
     };
-    ObjectExtensions.<Button>operator_doubleArrow(_button, _function_15);
+    ObjectExtensions.<Button>operator_doubleArrow(_button, _function_3);
     Button _button_1 = new Button(panelBusqueda);
-    final Procedure1<Button> _function_16 = new Procedure1<Button>() {
+    final Procedure1<Button> _function_4 = new Procedure1<Button>() {
       public void apply(final Button it) {
         it.setCaption("Limpiar");
         final Action _function = new Action() {
@@ -292,18 +197,62 @@ public class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
         it.setWidth(200);
       }
     };
-    ObjectExtensions.<Button>operator_doubleArrow(_button_1, _function_16);
+    ObjectExtensions.<Button>operator_doubleArrow(_button_1, _function_4);
   }
   
-  public Binding<ControlBuilder> crearTextBox(final Panel searchFormPanel, final String label, final String binding) {
-    Binding<ControlBuilder> _xblockexpression = null;
-    {
-      Label _label = new Label(searchFormPanel);
-      _label.setText(label);
-      TextBox _textBox = new TextBox(searchFormPanel);
-      _xblockexpression = _textBox.<ControlBuilder>bindValueToProperty(binding);
-    }
-    return _xblockexpression;
+  public TextBox createTextBoxForNumerics(final Panel panel, final String propertyName) {
+    TextBox _createTextBox = this.createTextBox(panel, propertyName);
+    final Procedure1<TextBox> _function = new Procedure1<TextBox>() {
+      public void apply(final TextBox it) {
+        final TextFilter _function = new TextFilter() {
+          public boolean accept(final TextInputEvent event) {
+            String _potentialTextResult = event.getPotentialTextResult();
+            return StringUtils.isNumeric(_potentialTextResult);
+          }
+        };
+        it.withFilter(_function);
+      }
+    };
+    return ObjectExtensions.<TextBox>operator_doubleArrow(_createTextBox, _function);
+  }
+  
+  public TextBox createTextBoxForNames(final Panel panel, final String propertyName) {
+    TextBox _createTextBox = this.createTextBox(panel, propertyName);
+    final Procedure1<TextBox> _function = new Procedure1<TextBox>() {
+      public void apply(final TextBox it) {
+        final TextFilter _function = new TextFilter() {
+          public boolean accept(final TextInputEvent event) {
+            String _potentialTextResult = event.getPotentialTextResult();
+            return StringUtils.isAlpha(_potentialTextResult);
+          }
+        };
+        it.withFilter(_function);
+      }
+    };
+    return ObjectExtensions.<TextBox>operator_doubleArrow(_createTextBox, _function);
+  }
+  
+  public TextBox createTextBox(final Panel panel, final String propertyName) {
+    TextBox _textBox = new TextBox(panel);
+    final Procedure1<TextBox> _function = new Procedure1<TextBox>() {
+      public void apply(final TextBox it) {
+        it.<ControlBuilder>bindValueToProperty(propertyName);
+        it.setWidth(250);
+      }
+    };
+    return ObjectExtensions.<TextBox>operator_doubleArrow(_textBox, _function);
+  }
+  
+  public void createLabel(final String labelText, final Panel panel) {
+    Label _label = new Label(panel);
+    final Procedure1<Label> _function = new Procedure1<Label>() {
+      public void apply(final Label it) {
+        it.setText(labelText);
+        it.setFontSize(13);
+        it.setForeground(Color.DARK_GRAY);
+      }
+    };
+    ObjectExtensions.<Label>operator_doubleArrow(_label, _function);
   }
   
   public void grillaBasicaJugadores(final Panel panelResultados, final Jugador jugadorSeleccionado, final List<Jugador> jugadores) {

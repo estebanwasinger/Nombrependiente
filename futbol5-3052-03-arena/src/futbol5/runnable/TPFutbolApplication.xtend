@@ -19,7 +19,7 @@ class TPFutbolApplication extends Application {
 	override protected Window<?> createMainWindow() {
 		ApplicationContext.instance.configureSingleton(typeof(Partido), new HomePartidos)
 		ApplicationContext.instance.configureSingleton(typeof(Jugador), new HomeJugadores)
-		return new PartidosView(this, new PartidosAppModel)
+		return new PartidosView(this)
 	}
 }
 	

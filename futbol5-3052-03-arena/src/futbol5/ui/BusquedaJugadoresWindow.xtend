@@ -24,24 +24,22 @@ import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.utils.Observable
 import strategyHandicap.HandicapDesde
 import strategyHandicap.HandicapHasta
+import org.uqbar.arena.windows.SimpleWindow
 
 @Observable
-class BusquedaJugadoresWindow extends Dialog<BusquedaJugadoresAppModel> {
+class BusquedaJugadoresWindow extends SimpleWindow<BusquedaJugadoresAppModel> {
 
 	@Property Grilla grilla
 
-	ErrorsPanel panelErrores
-
 	new(WindowOwner parent, BusquedaJugadoresAppModel modelObject) {
 		super(parent, modelObject)
-		this.delegate.setErrorViewer(this) //VER ESTO
+		//this.delegate.setErrorViewer(this)
 		grilla = new Grilla
 	}
 
-	override createContents(Panel mainPanel) {
+	override createMainTemplate(Panel mainPanel) {
 		title = "Busqueda de Jugadores"
-		panelErrores = new ErrorsPanel(mainPanel, "Busqueda OK") //VER ESTO
-		println(panelErrores.container.toString)
+		taskDescription ="Ingrese los parámetros de búsqueda"
 		new Panel(mainPanel).setLayout(new ColumnLayout(2))
 
 		var panelIzquierda = new Panel(mainPanel)

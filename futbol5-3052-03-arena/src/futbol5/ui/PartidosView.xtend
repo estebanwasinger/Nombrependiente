@@ -15,12 +15,15 @@ import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.utils.Observable
+import org.uqbar.arena.windows.SimpleWindow
+import org.uqbar.arena.windows.MainWindow
 
 @Observable
-class PartidosView extends Dialog<PartidosAppModel> {
+class PartidosView extends SimpleWindow<PartidosAppModel> {
 
-	new(WindowOwner parent, PartidosAppModel model) {
-		super(parent, model)
+	new(WindowOwner parent) {
+		super(parent, new PartidosAppModel)
+		//modelObject.search()
 	}
 
 	override protected addActions(Panel panel) {
@@ -50,16 +53,16 @@ class PartidosView extends Dialog<PartidosAppModel> {
 	}
 
 	def void generarEquipo() {
-		this.openDialog(new GenerarEquiposWindow(this, modelObject.partidoSeleccionado))
+		this.openWindow(new GenerarEquiposWindow(this, modelObject.partidoSeleccionado))
 	}
 
-	def openDialog(Dialog<?> dialog) {
-		dialog.onAccept[|modelObject.searchPartido]
-		dialog.open
+	def openWindow(SimpleWindow<?> ventana) {
+		//dialog.onAccept[|modelObject.searchPartido]
+		ventana.open
 	}
 
 	def void buscarJugador() {
-		this.openDialog(new BusquedaJugadoresWindow(this, new BusquedaJugadoresAppModel))
+		this.openWindow(new BusquedaJugadoresWindow(this, new BusquedaJugadoresAppModel))
 	}
 
 }
