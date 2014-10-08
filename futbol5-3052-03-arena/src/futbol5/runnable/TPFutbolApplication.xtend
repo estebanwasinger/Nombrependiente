@@ -1,6 +1,5 @@
 package futbol5.runnable
 
-import futbol5.applicationModel.PartidosAppModel
 import futbol5.domain.Jugador
 import futbol5.domain.Partido
 import futbol5.homes.HomeJugadores

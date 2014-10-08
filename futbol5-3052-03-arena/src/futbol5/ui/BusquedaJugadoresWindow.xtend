@@ -19,17 +19,18 @@ import org.uqbar.arena.widgets.RadioSelector
 import org.uqbar.arena.widgets.Selector
 import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.windows.Dialog
-import org.uqbar.arena.windows.ErrorsPanel
+import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.utils.Observable
 import strategyHandicap.HandicapDesde
 import strategyHandicap.HandicapHasta
-import org.uqbar.arena.windows.SimpleWindow
+import org.uqbar.arena.windows.ErrorsPanel
 
 @Observable
 class BusquedaJugadoresWindow extends SimpleWindow<BusquedaJugadoresAppModel> {
 
 	@Property Grilla grilla
+	ErrorsPanel panelErrores
 
 	new(WindowOwner parent, BusquedaJugadoresAppModel modelObject) {
 		super(parent, modelObject)
@@ -39,7 +40,9 @@ class BusquedaJugadoresWindow extends SimpleWindow<BusquedaJugadoresAppModel> {
 
 	override createMainTemplate(Panel mainPanel) {
 		title = "Busqueda de Jugadores"
-		taskDescription ="Ingrese los parámetros de búsqueda"
+		panelErrores = new ErrorsPanel(mainPanel, "Busqueda OK") //VER ESTO
+		println(panelErrores.container.toString)
+		//taskDescription ="Ingrese los parámetros de búsqueda"
 		new Panel(mainPanel).setLayout(new ColumnLayout(2))
 
 		var panelIzquierda = new Panel(mainPanel)
