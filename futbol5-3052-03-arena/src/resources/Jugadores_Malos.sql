@@ -1,4 +1,2 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `Jugadores_Malos`()
-BEGIN
+create view jugadores_malos as
 	select * from nombrependiente.jugadores where Handicap <= 5;
-END

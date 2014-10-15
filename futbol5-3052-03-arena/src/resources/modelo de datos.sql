@@ -1,3 +1,4 @@
+CREATE DATABASE  IF NOT EXISTS nombrependiente;
 use nombrependiente;
 
 CREATE TABLE Jugadores (
