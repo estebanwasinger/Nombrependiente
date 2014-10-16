@@ -6,7 +6,6 @@ CREATE TABLE Jugadores (
     Nombre varchar (20) NOT NULL,
     Apodo varchar (20) NOT NULL,
     Handicap int NOT NULL,
-    Edad int NOT NULL,
     Fecha_Nacimiento date NOT NULL,
     Id_Tipo_Inscripcion_Default int NOT NULL
 ) ;

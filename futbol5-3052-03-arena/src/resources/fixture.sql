@@ -36,15 +36,15 @@ SELECT ID_TIPO_INSCRIPCION
 
 INSERT INTO Jugadores
 (NOMBRE, APODO, HANDICAP, FECHA_NACIMIENTO, ID_TIPO_INSCRIPCION_DEFAULT)
-VALUES ('Paula', 'Pau', 3, '1990-08-27', @Tipoinscripcion1);
+VALUES ('Paula', 'Pau', 3, '1990-10-27', @Tipoinscripcion1);
 
 INSERT INTO Jugadores
 (NOMBRE, APODO, HANDICAP, FECHA_NACIMIENTO, ID_TIPO_INSCRIPCION_DEFAULT)
-VALUES ('Esteban', 'Estebanquito', 4, '1992-08-27', @Tipoinscripcion2);
+VALUES ('Esteban', 'Estebanquito', 4, '1992-10-27', @Tipoinscripcion2);
 
 INSERT INTO Jugadores
 (NOMBRE, APODO, HANDICAP, FECHA_NACIMIENTO, ID_TIPO_INSCRIPCION_DEFAULT)
-VALUES ('Carolina', 'Caro', 7, '1998-08-27', @Tipoinscripcion2);
+VALUES ('Carolina', 'Caro', 7, '1998-10-27', @Tipoinscripcion2);
 
 INSERT INTO Jugadores
 (NOMBRE, APODO, HANDICAP, FECHA_NACIMIENTO, ID_TIPO_INSCRIPCION_DEFAULT)
