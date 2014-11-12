@@ -9,8 +9,12 @@ import commands.DivisionDeEquiposCommand
 import org.uqbar.commons.model.Entity
 import org.uqbar.commons.utils.Observable
 import java.util.ArrayList
+import org.uqbar.commons.utils.TransactionalAndObservable
+import uqbar.arena.persistence.annotations.PersistentClass
+import uqbar.arena.persistence.annotations.PersistentField
 
-@Observable
+@TransactionalAndObservable
+@PersistentClass
 class Partido extends Entity {
 
 	@Property var String localidad
@@ -28,16 +32,26 @@ class Partido extends Entity {
 	@Property var CriteriosCommand AlgoritmoOrdenamiento
 	@Property var Jugador jugadorSeleccionado
 
+	@PersistentField
+	def String getLocalidad(){
+		_localidad
+	}
+	
+	def void setLocalidad(String localidad){
+		_localidad = localidad
+	}
+	
+	
 	/****************/
 	/*CONSTRUCTORES*/
 	/****************/
 	new(String localidad) {
 		this.localidad = localidad
-		init
+	//	init
 	}
 	
 	new() {
-		init
+	//	init
 	}
 	
 	def init(){

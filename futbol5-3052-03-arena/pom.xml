@@ -1,8 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>futbol5-3052-03-arena</groupId>
-  <artifactId>futbol5-3052-03-arena</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>futbol5-3052-03-arena</groupId>
+	<artifactId>futbol5-3052-03-arena</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<build>
 		<sourceDirectory>xtend-gen</sourceDirectory>
 		<resources>
@@ -40,6 +41,11 @@
 		<dependency>
 			<groupId>org.uqbar-project</groupId>
 			<artifactId>arena-jface</artifactId>
+			<version>3.3-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.uqbar-project</groupId>
+			<artifactId>arena-pers</artifactId>
 			<version>3.3-SNAPSHOT</version>
 		</dependency>
 

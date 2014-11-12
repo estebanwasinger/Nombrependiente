@@ -1,7 +1,7 @@
 package futbol5.applicationModel
 
 import futbol5.domain.Partido
-import futbol5.homes.HomePartidos
+import futbol5.homes.RepositorioPartidos
 import java.util.List
 import org.uqbar.commons.utils.ApplicationContext
 import org.uqbar.commons.utils.Observable
@@ -20,7 +20,7 @@ class PartidosAppModel {
 		partidos = getHomePartidos().allInstances
 	}
 	
-	def HomePartidos getHomePartidos() {
+	def RepositorioPartidos getHomePartidos() {
 		ApplicationContext.instance.getSingleton(typeof(Partido))
 	}
 

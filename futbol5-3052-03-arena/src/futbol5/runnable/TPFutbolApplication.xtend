@@ -8,6 +8,8 @@ import futbol5.ui.PartidosView
 import org.uqbar.arena.Application
 import org.uqbar.arena.windows.Window
 import org.uqbar.commons.utils.ApplicationContext
+import uqbar.arena.persistence.Configuration
+import futbol5.homes.RepositorioPartidos
 
 class TPFutbolApplication extends Application {
 	
@@ -16,7 +18,9 @@ class TPFutbolApplication extends Application {
 	}
 
 	override protected Window<?> createMainWindow() {
-		ApplicationContext.instance.configureSingleton(typeof(Partido), new HomePartidos)
+		Configuration.configure()
+		ApplicationContext.instance.configureSingleton(typeof(Partido), new RepositorioPartidos)
+		//ApplicationContext.instance.configureSingleton(typeof(Partido), new HomePartidos)
 		ApplicationContext.instance.configureSingleton(typeof(Jugador), new HomeJugadores)
 		return new PartidosView(this)
 	}
