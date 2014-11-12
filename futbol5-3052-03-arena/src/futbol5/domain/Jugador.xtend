@@ -14,9 +14,14 @@ import java.util.List
 import java.util.Set
 import org.uqbar.commons.model.Entity
 import org.uqbar.commons.model.UserException
+import org.uqbar.commons.utils.TransactionalAndObservable
+import uqbar.arena.persistence.annotations.PersistentClass
+import uqbar.arena.persistence.annotations.PersistentField
+import uqbar.arena.persistence.annotations.Relation
 import org.uqbar.commons.utils.Observable
 
 @Observable
+@PersistentClass
 class Jugador extends Entity{
 
 	@Property String nombre
@@ -32,6 +37,44 @@ class Jugador extends Entity{
 	@Property int criterioComparacion
 	@Property int cantidadPartidos
 	SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+	
+	@PersistentField
+	def getNombre(){
+		_nombre
+	}
+	
+	def setNombre(String nombre){
+		_nombre = nombre
+	}
+	
+	@PersistentField
+	def getApodo(){
+		_apodo
+	}
+	
+	def setApodo(String apodo){
+		_apodo = apodo
+	}
+	
+	@PersistentField
+	def getNivelDeJuego(){
+		_nivelDeJuego
+	}
+	
+	def setNivelDeJuego(float nivel){
+		_nivelDeJuego = nivel
+	}
+	
+//	@Relation
+//	def getCalificaciones(){
+//		_calificaciones
+//	}
+//	
+//	def setCalificaciones(ArrayList<Calificacion> cal){
+//		_calificaciones = cal
+//	}
+	
+	
 	
 	new() {
 		init
@@ -55,7 +98,7 @@ class Jugador extends Entity{
 		this.nombre = nombre
 		this.apodo = apodo
 		this.nivelDeJuego = handicap
-		this.calificaciones = calificaciones
+		//this.calificaciones = calificaciones
 	}
 	
 	def init(){

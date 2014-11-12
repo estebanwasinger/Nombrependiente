@@ -3,6 +3,10 @@ package futbol5.homes
 import futbol5.domain.Partido
 import org.uqbar.commons.utils.Observable
 import uqbar.arena.persistence.PersistentHome
+import futbol5.domain.Jugador
+import java.util.List
+import calificaciones.Calificacion
+import java.util.ArrayList
 
 @Observable
 class RepositorioPartidos  extends PersistentHome<Partido> {
@@ -23,14 +27,18 @@ class RepositorioPartidos  extends PersistentHome<Partido> {
 	}
 
 	def void init() {
-		this.createIfNotExists("Burzaco")
-		this.createIfNotExists("Adrogue")
-		this.createIfNotExists("Bandfiel")
-		this.createIfNotExists("Lomas de Zamora")
-		this.createIfNotExists("Quilmes")
-		this.createIfNotExists("Longchamps")
-		this.createIfNotExists("San Miguel")
+//		this.createIfNotExists("Burzaco")
+//		this.createIfNotExists("Adrogue")
+//		this.createIfNotExists("Bandfiel")
+//		this.createIfNotExists("Lomas de Zamora")
+//		this.createIfNotExists("Quilmes")
+//		this.createIfNotExists("Longchamps")
+//		this.createIfNotExists("San Miguel")
 		this.createIfNotExists("CABA")
+		var part = this.get(new Partido("CABA"));
+		part.agregarJugador(new Jugador("Esteban","El champ",5,new ArrayList<Calificacion>))
+		part.agregarJugador(new Jugador("Esteban","El champ",5,new ArrayList<Calificacion>))
+		part.agregarJugador(new Jugador("Esteban","El champ",5,new ArrayList<Calificacion>))
 	}
 
 	def create(String localidad) {

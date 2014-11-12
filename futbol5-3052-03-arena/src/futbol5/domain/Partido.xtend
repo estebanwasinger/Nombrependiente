@@ -1,19 +1,20 @@
 package futbol5.domain
 
-import java.util.List
-import java.util.LinkedList
-import excepciones.BusinessException
-import observers.PartidoObserver
 import commands.CriteriosCommand
 import commands.DivisionDeEquiposCommand
+import excepciones.BusinessException
+import java.util.ArrayList
+import java.util.LinkedList
+import java.util.List
+import observers.PartidoObserver
 import org.uqbar.commons.model.Entity
 import org.uqbar.commons.utils.Observable
-import java.util.ArrayList
 import org.uqbar.commons.utils.TransactionalAndObservable
 import uqbar.arena.persistence.annotations.PersistentClass
 import uqbar.arena.persistence.annotations.PersistentField
+import uqbar.arena.persistence.annotations.Relation
 
-@TransactionalAndObservable
+@Observable
 @PersistentClass
 class Partido extends Entity {
 
@@ -41,17 +42,26 @@ class Partido extends Entity {
 		_localidad = localidad
 	}
 	
+	@Relation
+	def List<Jugador> getJugadores(){
+		_jugadores
+	}
+	
+	def void setJugadores(List<Jugador> jugadores){
+		_jugadores = jugadores
+	}
+	
 	
 	/****************/
 	/*CONSTRUCTORES*/
 	/****************/
 	new(String localidad) {
 		this.localidad = localidad
-	//	init
+		init
 	}
 	
 	new() {
-	//	init
+		init
 	}
 	
 	def init(){

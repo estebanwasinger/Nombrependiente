@@ -2,7 +2,9 @@ package calificaciones
 
 import futbol5.domain.Jugador
 import futbol5.domain.Partido
+import uqbar.arena.persistence.annotations.PersistentClass
 
+@PersistentClass
 class Calificacion {
 	
 	@Property Jugador calificado
