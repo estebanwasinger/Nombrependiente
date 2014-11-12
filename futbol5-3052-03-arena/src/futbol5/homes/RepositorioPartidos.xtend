@@ -39,20 +39,9 @@ class RepositorioPartidos  extends PersistentHome<Partido> {
 		this.create(partido)
 	}
 
-	def getPartido(String partido) {
-	}
-
 	// ********************************************************
 	// ** Altas y bajas
 	// ********************************************************
-	override create(Partido partido) {
-		validarDuplicados(partido)
-		super.create(partido)
-	}
-
-	def void validarDuplicados(Partido partido) {
-	}
-
 	def createIfNotExists(String localidad) {
 		println("Creando si no existe partido con localidad: " + localidad)
 		var partido = new Partido(localidad)
@@ -71,9 +60,7 @@ class RepositorioPartidos  extends PersistentHome<Partido> {
 	// ********************************************************
 	// ** Búsquedas
 	// ********************************************************
-	/**
-	 * Devuelve un celular en base al número (que no puede repetirse)
-	 */
+
 	def Partido get(Partido partido) {
 		for (Partido partidoDB: this.allInstances){
 			if(partidoDB.localidad.equals(partido.localidad)){
@@ -82,31 +69,4 @@ class RepositorioPartidos  extends PersistentHome<Partido> {
 		}
 		return null 
 	}
-
-	/**
-	 * Hace la búsqueda de un celular únicamente por número
-	 */
-	def search(Integer numero) {
-		this.search(numero, null)
-	}
-
-	def search(Integer unNumero, String unNombre) {
-
-		//allInstances.filter[celular|this.match(numero, celular.numero) && this.match(nombre, celular.nombre)].toList
-//		searchByExample(
-//			new Celular => [
-//				numero = unNumero
-//				nombre = unNombre
-//			])
-	}
-
-//	def match(Object expectedValue, Object realValue) {
-//		if (expectedValue == null) {
-//			return true
-//		}
-//		if (realValue == null) {
-//			return false
-//		}
-//		realValue.toString().toLowerCase().contains(expectedValue.toString().toLowerCase())
-//	}
 }
