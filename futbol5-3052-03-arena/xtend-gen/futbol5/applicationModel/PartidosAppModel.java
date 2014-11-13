@@ -1,7 +1,7 @@
 package futbol5.applicationModel;
 
 import futbol5.domain.Partido;
-import futbol5.homes.HomePartidos;
+import futbol5.homes.RepositorioPartidos;
 import java.util.List;
 import org.uqbar.commons.utils.ApplicationContext;
 import org.uqbar.commons.utils.Observable;
@@ -34,13 +34,13 @@ public class PartidosAppModel {
   }
   
   public void searchPartido() {
-    HomePartidos _homePartidos = this.getHomePartidos();
+    RepositorioPartidos _homePartidos = this.getHomePartidos();
     List<Partido> _allInstances = _homePartidos.allInstances();
     this.setPartidos(_allInstances);
   }
   
-  public HomePartidos getHomePartidos() {
+  public RepositorioPartidos getHomePartidos() {
     ApplicationContext _instance = ApplicationContext.getInstance();
-    return _instance.<HomePartidos>getSingleton(Partido.class);
+    return _instance.<RepositorioPartidos>getSingleton(Partido.class);
   }
 }

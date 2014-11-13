@@ -7,6 +7,7 @@ import futbol5.domain.Jugador
 import java.util.List
 import calificaciones.Calificacion
 import java.util.ArrayList
+import org.uqbar.commons.utils.ApplicationContext
 
 @Observable
 class RepositorioPartidos  extends PersistentHome<Partido> {
@@ -27,20 +28,34 @@ class RepositorioPartidos  extends PersistentHome<Partido> {
 	}
 
 	def void init() {
-//		this.createIfNotExists("Burzaco")
-//		this.createIfNotExists("Adrogue")
-//		this.createIfNotExists("Bandfiel")
-//		this.createIfNotExists("Lomas de Zamora")
-//		this.createIfNotExists("Quilmes")
-//		this.createIfNotExists("Longchamps")
-//		this.createIfNotExists("San Miguel")
+		this.createIfNotExists("Quilmes")
+		this.createIfNotExists("Longchamps")
+		this.createIfNotExists("San Miguel")
 		this.createIfNotExists("CABA")
-		var part = this.get(new Partido("CABA"));
-		part.agregarJugador(new Jugador("Esteban","El champ",5,new ArrayList<Calificacion>))
-		part.agregarJugador(new Jugador("Esteban","El champ",5,new ArrayList<Calificacion>))
-		part.agregarJugador(new Jugador("Esteban","El champ",5,new ArrayList<Calificacion>))
+		this.get("CABA").agregarJugador(getJugador(1))
+		this.get("CABA").agregarJugador(getJugador(3))
+		this.get("CABA").agregarJugador(getJugador(6))
+		this.get("San Miguel").agregarJugador(getJugador(1))
+		this.get("San Miguel").agregarJugador(getJugador(2))
+		this.get("Longchamps").agregarJugador(getJugador(6))
+		this.get("Longchamps").agregarJugador(getJugador(8))
+		this.get("Quilmes").agregarJugador(getJugador(9)) // a Quilmes se le agregan 10 jugadores para poder ordenar
+		this.get("Quilmes").agregarJugador(getJugador(10))
+		this.get("Quilmes").agregarJugador(getJugador(1))
+		this.get("Quilmes").agregarJugador(getJugador(3))
+		this.get("Quilmes").agregarJugador(getJugador(6))
+		this.get("Quilmes").agregarJugador(getJugador(7))
+		this.get("Quilmes").agregarJugador(getJugador(8))
+		this.get("Quilmes").agregarJugador(getJugador(2))
+		this.get("Quilmes").agregarJugador(getJugador(5))
+		this.get("Quilmes").agregarJugador(getJugador(4))
+										
 	}
 
+	def getJugador(Integer id) {
+		(ApplicationContext.instance.getSingleton(typeof(Jugador)) as RepositorioJugadores).get(id)
+	}
+	
 	def create(String localidad) {
 		var partido = new Partido
 		partido.localidad = localidad
@@ -53,7 +68,7 @@ class RepositorioPartidos  extends PersistentHome<Partido> {
 	def createIfNotExists(String localidad) {
 		println("Creando si no existe partido con localidad: " + localidad)
 		var partido = new Partido(localidad)
-		var partidoDB = this.get(partido)
+		var partidoDB = this.get(localidad)
 		if (partidoDB == null){
 			this.create(partido)
 			partidoDB = partido
@@ -69,9 +84,9 @@ class RepositorioPartidos  extends PersistentHome<Partido> {
 	// ** Búsquedas
 	// ********************************************************
 
-	def Partido get(Partido partido) {
+	def Partido get(String localidad) {
 		for (Partido partidoDB: this.allInstances){
-			if(partidoDB.localidad.equals(partido.localidad)){
+			if(partidoDB.localidad.equals(localidad)){
 				return partidoDB;
 			}
 		}

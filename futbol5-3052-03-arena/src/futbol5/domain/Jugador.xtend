@@ -19,11 +19,13 @@ import uqbar.arena.persistence.annotations.PersistentClass
 import uqbar.arena.persistence.annotations.PersistentField
 import uqbar.arena.persistence.annotations.Relation
 import org.uqbar.commons.utils.Observable
+import org.uqbar.commons.utils.Transactional
 
 @Observable
 @PersistentClass
 class Jugador extends Entity{
 
+	@Property Integer id
 	@Property String nombre
 	@Property String apodo
 	@Property int edad
@@ -37,6 +39,15 @@ class Jugador extends Entity{
 	@Property int criterioComparacion
 	@Property int cantidadPartidos
 	SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+	
+	@PersistentField
+	override getId(){
+		_id
+	}
+	
+	override setId(Integer id){
+		_id = id
+	}
 	
 	@PersistentField
 	def getNombre(){
@@ -61,18 +72,18 @@ class Jugador extends Entity{
 		_nivelDeJuego
 	}
 	
-	def setNivelDeJuego(float nivel){
+	def setNivelDeJuego(Integer nivel){
 		_nivelDeJuego = nivel
 	}
 	
-//	@Relation
-//	def getCalificaciones(){
-//		_calificaciones
-//	}
-//	
-//	def setCalificaciones(ArrayList<Calificacion> cal){
-//		_calificaciones = cal
-//	}
+	@Relation
+	def getCalificaciones(){
+		_calificaciones
+	}
+	
+	def setCalificaciones(ArrayList<Calificacion> cal){
+		_calificaciones = cal
+	}
 	
 	
 	
@@ -80,7 +91,7 @@ class Jugador extends Entity{
 		init
 	}
 
-	new(String nombre,String apodo, int edad, String fechaDeNacimientoStr, int nivelDeJuego, List<Jugador> amigos, ArrayList <Calificacion> calificaciones, int cantidadPartidos){
+	new(String nombre,String apodo, int edad, String fechaDeNacimientoStr, float nivelDeJuego, List<Jugador> amigos, ArrayList <Calificacion> calificaciones, int cantidadPartidos){
 		init
 		this.nombre = nombre
 		this.apodo = apodo
@@ -93,12 +104,21 @@ class Jugador extends Entity{
 		this.cantidadPartidos=cantidadPartidos
 	}
 	
-	new(String nombre, String apodo, int handicap, List<Calificacion>calificaciones){
+	new(String nombre, String apodo, float handicap, List<Calificacion>calificaciones){
 		init
 		this.nombre = nombre
 		this.apodo = apodo
 		this.nivelDeJuego = handicap
 		//this.calificaciones = calificaciones
+	}
+	
+	new(Integer id, String nombre, String apodo, float handicap, List<Calificacion>calificaciones){
+		//init
+		this.id = id
+		this.nombre = nombre
+		this.apodo = apodo
+		this.nivelDeJuego = handicap
+		this.calificaciones = calificaciones
 	}
 	
 	def init(){

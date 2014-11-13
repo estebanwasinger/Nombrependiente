@@ -17,29 +17,17 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.uqbar.commons.model.Entity;
 import org.uqbar.commons.utils.Observable;
+import uqbar.arena.persistence.annotations.PersistentClass;
+import uqbar.arena.persistence.annotations.PersistentField;
+import uqbar.arena.persistence.annotations.Relation;
 
 @Observable
+@PersistentClass
 @SuppressWarnings("all")
 public class Partido extends Entity {
   private String _localidad;
   
-  public String getLocalidad() {
-    return this._localidad;
-  }
-  
-  public void setLocalidad(final String localidad) {
-    this._localidad = localidad;
-  }
-  
   private List<Jugador> _jugadores;
-  
-  public List<Jugador> getJugadores() {
-    return this._jugadores;
-  }
-  
-  public void setJugadores(final List<Jugador> jugadores) {
-    this._jugadores = jugadores;
-  }
   
   private List<Jugador> _jugadoresOrdenados;
   
@@ -159,6 +147,24 @@ public class Partido extends Entity {
   
   public void setJugadorSeleccionado(final Jugador jugadorSeleccionado) {
     this._jugadorSeleccionado = jugadorSeleccionado;
+  }
+  
+  @PersistentField
+  public String getLocalidad() {
+    return this._localidad;
+  }
+  
+  public void setLocalidad(final String localidad) {
+    this._localidad = localidad;
+  }
+  
+  @Relation
+  public List<Jugador> getJugadores() {
+    return this._jugadores;
+  }
+  
+  public void setJugadores(final List<Jugador> jugadores) {
+    this._jugadores = jugadores;
   }
   
   public Partido(final String localidad) {

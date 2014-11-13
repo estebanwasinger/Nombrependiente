@@ -22,29 +22,19 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.uqbar.commons.model.Entity;
 import org.uqbar.commons.model.UserException;
 import org.uqbar.commons.utils.Observable;
+import uqbar.arena.persistence.annotations.PersistentClass;
+import uqbar.arena.persistence.annotations.PersistentField;
+import uqbar.arena.persistence.annotations.Relation;
 
 @Observable
+@PersistentClass
 @SuppressWarnings("all")
 public class Jugador extends Entity {
+  private Integer _id;
+  
   private String _nombre;
   
-  public String getNombre() {
-    return this._nombre;
-  }
-  
-  public void setNombre(final String nombre) {
-    this._nombre = nombre;
-  }
-  
   private String _apodo;
-  
-  public String getApodo() {
-    return this._apodo;
-  }
-  
-  public void setApodo(final String apodo) {
-    this._apodo = apodo;
-  }
   
   private int _edad;
   
@@ -108,19 +98,11 @@ public class Jugador extends Entity {
   
   private List<Calificacion> _calificaciones;
   
-  public List<Calificacion> getCalificaciones() {
-    return this._calificaciones;
-  }
-  
   public void setCalificaciones(final List<Calificacion> calificaciones) {
     this._calificaciones = calificaciones;
   }
   
   private float _nivelDeJuego;
-  
-  public float getNivelDeJuego() {
-    return this._nivelDeJuego;
-  }
   
   public void setNivelDeJuego(final float nivelDeJuego) {
     this._nivelDeJuego = nivelDeJuego;
@@ -148,11 +130,56 @@ public class Jugador extends Entity {
   
   private SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
   
+  @PersistentField
+  public Integer getId() {
+    return this._id;
+  }
+  
+  public void setId(final Integer id) {
+    this._id = id;
+  }
+  
+  @PersistentField
+  public String getNombre() {
+    return this._nombre;
+  }
+  
+  public String setNombre(final String nombre) {
+    return this._nombre = nombre;
+  }
+  
+  @PersistentField
+  public String getApodo() {
+    return this._apodo;
+  }
+  
+  public String setApodo(final String apodo) {
+    return this._apodo = apodo;
+  }
+  
+  @PersistentField
+  public float getNivelDeJuego() {
+    return this._nivelDeJuego;
+  }
+  
+  public float setNivelDeJuego(final Integer nivel) {
+    return this._nivelDeJuego = (nivel).intValue();
+  }
+  
+  @Relation
+  public List<Calificacion> getCalificaciones() {
+    return this._calificaciones;
+  }
+  
+  public List<Calificacion> setCalificaciones(final ArrayList<Calificacion> cal) {
+    return this._calificaciones = cal;
+  }
+  
   public Jugador() {
     this.init();
   }
   
-  public Jugador(final String nombre, final String apodo, final int edad, final String fechaDeNacimientoStr, final int nivelDeJuego, final List<Jugador> amigos, final ArrayList<Calificacion> calificaciones, final int cantidadPartidos) {
+  public Jugador(final String nombre, final String apodo, final int edad, final String fechaDeNacimientoStr, final float nivelDeJuego, final List<Jugador> amigos, final ArrayList<Calificacion> calificaciones, final int cantidadPartidos) {
     try {
       this.init();
       this.setNombre(nombre);
@@ -172,8 +199,15 @@ public class Jugador extends Entity {
     }
   }
   
-  public Jugador(final String nombre, final String apodo, final int handicap, final List<Calificacion> calificaciones) {
+  public Jugador(final String nombre, final String apodo, final float handicap, final List<Calificacion> calificaciones) {
     this.init();
+    this.setNombre(nombre);
+    this.setApodo(apodo);
+    this.setNivelDeJuego(handicap);
+  }
+  
+  public Jugador(final Integer id, final String nombre, final String apodo, final float handicap, final List<Calificacion> calificaciones) {
+    this.setId(id);
     this.setNombre(nombre);
     this.setApodo(apodo);
     this.setNivelDeJuego(handicap);

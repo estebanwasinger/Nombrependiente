@@ -10,6 +10,7 @@ import org.uqbar.commons.utils.Observable
 import strategyHandicap.HandicapDesde
 import strategyHandicap.HandicapHasta
 import strategyHandicap.HandicapStrategy
+import futbol5.homes.RepositorioJugadores
 
 @Observable
 class BusquedaJugadoresAppModel implements Serializable {
@@ -71,5 +72,5 @@ class BusquedaJugadoresAppModel implements Serializable {
 	def getHandicaps() {
 		#[new HandicapHasta, new HandicapDesde]
 	}
-
+	
 }

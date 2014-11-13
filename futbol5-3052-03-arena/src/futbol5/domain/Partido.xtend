@@ -13,6 +13,7 @@ import org.uqbar.commons.utils.TransactionalAndObservable
 import uqbar.arena.persistence.annotations.PersistentClass
 import uqbar.arena.persistence.annotations.PersistentField
 import uqbar.arena.persistence.annotations.Relation
+import org.uqbar.commons.utils.Transactional
 
 @Observable
 @PersistentClass

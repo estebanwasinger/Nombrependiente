@@ -3,11 +3,13 @@ package futbol5.runnable;
 import futbol5.domain.Jugador;
 import futbol5.domain.Partido;
 import futbol5.homes.HomeJugadores;
-import futbol5.homes.HomePartidos;
+import futbol5.homes.RepositorioJugadores;
+import futbol5.homes.RepositorioPartidos;
 import futbol5.ui.PartidosView;
 import org.uqbar.arena.Application;
 import org.uqbar.arena.windows.Window;
 import org.uqbar.commons.utils.ApplicationContext;
+import uqbar.arena.persistence.Configuration;
 
 @SuppressWarnings("all")
 public class TPFutbolApplication extends Application {
@@ -17,12 +19,16 @@ public class TPFutbolApplication extends Application {
   }
   
   protected Window<?> createMainWindow() {
+    Configuration.configure();
     ApplicationContext _instance = ApplicationContext.getInstance();
-    HomePartidos _homePartidos = new HomePartidos();
-    _instance.<HomePartidos>configureSingleton(Partido.class, _homePartidos);
+    RepositorioJugadores _repositorioJugadores = new RepositorioJugadores();
+    _instance.<RepositorioJugadores>configureSingleton(Jugador.class, _repositorioJugadores);
     ApplicationContext _instance_1 = ApplicationContext.getInstance();
+    RepositorioPartidos _repositorioPartidos = new RepositorioPartidos();
+    _instance_1.<RepositorioPartidos>configureSingleton(Partido.class, _repositorioPartidos);
+    ApplicationContext _instance_2 = ApplicationContext.getInstance();
     HomeJugadores _homeJugadores = new HomeJugadores();
-    _instance_1.<HomeJugadores>configureSingleton(Jugador.class, _homeJugadores);
+    _instance_2.<HomeJugadores>configureSingleton(Jugador.class, _homeJugadores);
     return new PartidosView(this);
   }
 }
