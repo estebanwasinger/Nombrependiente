@@ -32,24 +32,28 @@ class RepositorioPartidos  extends PersistentHome<Partido> {
 		this.createIfNotExists("Longchamps")
 		this.createIfNotExists("San Miguel")
 		this.createIfNotExists("CABA")
-		this.get("CABA").agregarJugador(getJugador(1))
-		this.get("CABA").agregarJugador(getJugador(3))
-		this.get("CABA").agregarJugador(getJugador(6))
-		this.get("San Miguel").agregarJugador(getJugador(1))
-		this.get("San Miguel").agregarJugador(getJugador(2))
-		this.get("Longchamps").agregarJugador(getJugador(6))
-		this.get("Longchamps").agregarJugador(getJugador(8))
-		this.get("Quilmes").agregarJugador(getJugador(9)) // a Quilmes se le agregan 10 jugadores para poder ordenar
-		this.get("Quilmes").agregarJugador(getJugador(10))
-		this.get("Quilmes").agregarJugador(getJugador(1))
-		this.get("Quilmes").agregarJugador(getJugador(3))
-		this.get("Quilmes").agregarJugador(getJugador(6))
-		this.get("Quilmes").agregarJugador(getJugador(7))
-		this.get("Quilmes").agregarJugador(getJugador(8))
-		this.get("Quilmes").agregarJugador(getJugador(2))
-		this.get("Quilmes").agregarJugador(getJugador(5))
-		this.get("Quilmes").agregarJugador(getJugador(4))
-										
+//		this.get("CABA").agregarJugador(getJugador(1))
+//		this.get("CABA").agregarJugador(getJugador(3))
+//		this.get("CABA").agregarJugador(getJugador(6))
+//		this.get("San Miguel").agregarJugador(getJugador(1))
+//		this.get("San Miguel").agregarJugador(getJugador(2))
+//		this.get("Longchamps").agregarJugador(getJugador(6))
+//		this.get("Longchamps").agregarJugador(getJugador(8))
+//		this.get("Quilmes").agregarJugador(getJugador(9)) // a Quilmes se le agregan 10 jugadores para poder ordenar
+//		this.get("Quilmes").agregarJugador(getJugador(10))
+//		this.get("Quilmes").agregarJugador(getJugador(1))
+//		this.get("Quilmes").agregarJugador(getJugador(3))
+//		this.get("Quilmes").agregarJugador(getJugador(6))
+//		this.get("Quilmes").agregarJugador(getJugador(7))
+//		this.get("Quilmes").agregarJugador(getJugador(8))
+//		this.get("Quilmes").agregarJugador(getJugador(2))
+//		this.get("Quilmes").agregarJugador(getJugador(5))
+//		this.get("Quilmes").agregarJugador(getJugador(4))
+//		this.get("Quilmes").update
+//		this.get("CABA").update
+//		this.get("Longchamps").update
+//		this.get("San Miguel").update
+		
 	}
 
 	def getJugador(Integer id) {
@@ -78,6 +82,20 @@ class RepositorioPartidos  extends PersistentHome<Partido> {
 		}
 		partidoDB
 	}
+	
+	// REFACTORIZAR
+	def createIfNotExists(Partido partido){
+		println("Creando si no existe partido con localidad: " + partido.localidad)
+		var partidoDB = this.get(partido.localidad)
+		if (partidoDB == null){
+			this.create(partido)
+			partidoDB = partido
+			println("Partido en "+partido.localidad+" fue creado")
+		}else{
+			println("Partido ya existente")
+		}
+		partidoDB
+	}
 
 
 	// ********************************************************
@@ -92,4 +110,9 @@ class RepositorioPartidos  extends PersistentHome<Partido> {
 		}
 		return null 
 	}
+	
+	def updateMe(Partido partido) {
+		this.get(partido.localidad).update
+	}
+	
 }

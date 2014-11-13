@@ -14,6 +14,8 @@ import uqbar.arena.persistence.annotations.PersistentClass
 import uqbar.arena.persistence.annotations.PersistentField
 import uqbar.arena.persistence.annotations.Relation
 import org.uqbar.commons.utils.Transactional
+import futbol5.homes.RepositorioPartidos
+import org.uqbar.commons.utils.ApplicationContext
 
 @Observable
 @PersistentClass
@@ -50,6 +52,24 @@ class Partido extends Entity {
 	
 	def void setJugadores(List<Jugador> jugadores){
 		_jugadores = jugadores
+	}
+	
+	@Relation
+		def List<Jugador> getEquipoA(){
+		_equipoA
+	}
+	
+	def void setEquipoA(List<Jugador> jugadores){
+		_equipoA = jugadores
+	}
+	
+	@Relation
+		def List<Jugador> getEquipoB(){
+		_equipoB
+	}
+	
+	def void setEquipoB(List<Jugador> jugadores){
+		_equipoB = jugadores
 	}
 	
 	
@@ -199,11 +219,16 @@ class Partido extends Entity {
 		}
 		equipoB = new ArrayList<Jugador>
 		algoritmoDivision.dividir(jugadoresOrdenados, equipoA, equipoB)
+		homePartidos.updateMe(this)
 		cantEquipoA = equipoA.size
 	}
 
 	def confirmarEquipos(boolean confirmacion) {
 		estaConfirmado = confirmacion
+	}
+	
+		def RepositorioPartidos getHomePartidos() {
+		ApplicationContext.instance.getSingleton(typeof(Partido))
 	}
 
 }

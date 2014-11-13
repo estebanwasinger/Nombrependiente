@@ -54,7 +54,7 @@ class Jugador extends Entity{
 		_nombre
 	}
 	
-	def setNombre(String nombre){
+	def void setNombre(String nombre){
 		_nombre = nombre
 	}
 	
@@ -63,7 +63,11 @@ class Jugador extends Entity{
 		_apodo
 	}
 	
-	def setApodo(String apodo){
+	def void setApodo(String apodo){
+		_apodo = apodo
+	}
+	
+	def setapodo(String apodo){
 		_apodo = apodo
 	}
 	

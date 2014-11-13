@@ -11,6 +11,7 @@ import strategyHandicap.HandicapDesde
 import strategyHandicap.HandicapHasta
 import strategyHandicap.HandicapStrategy
 import futbol5.homes.RepositorioJugadores
+import futbol5.homes.RepositorioPartidos
 
 @Observable
 class BusquedaJugadoresAppModel implements Serializable {
@@ -27,7 +28,7 @@ class BusquedaJugadoresAppModel implements Serializable {
 	new() {
 		iniciar()
 		jugadores = new ArrayList<Jugador>
-		jugadores = getHomeJugadores().jugadoresAceptados
+		jugadores = getHomeJugadores().allInstances
 	}
 
 	def void search() {
@@ -35,7 +36,8 @@ class BusquedaJugadoresAppModel implements Serializable {
 		//validarHandicapYPromedio(handicap, promedioDesde, promedioHasta)
 		jugadorSeleccionado = null
 		jugadores = new ArrayList<Jugador>
-		jugadores = getHomeJugadores().search(this)
+		jugadores = homeJugadores.allInstances
+		//jugadores = getHomeJugadores().search(this)
 	}
 
 	def void clear() {
@@ -65,7 +67,7 @@ class BusquedaJugadoresAppModel implements Serializable {
 		}
 	}*/
 
-	def HomeJugadores getHomeJugadores() {
+	def RepositorioJugadores getHomeJugadores() {
 		ApplicationContext.instance.getSingleton(typeof(Jugador))
 	}
 
