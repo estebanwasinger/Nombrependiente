@@ -38,23 +38,11 @@ public class Jugador extends Entity {
   
   private int _edad;
   
-  public int getEdad() {
-    return this._edad;
-  }
-  
   public void setEdad(final int edad) {
     this._edad = edad;
   }
   
   private Date _fechaNacimiento;
-  
-  public Date getFechaNacimiento() {
-    return this._fechaNacimiento;
-  }
-  
-  public void setFechaNacimiento(final Date fechaNacimiento) {
-    this._fechaNacimiento = fechaNacimiento;
-  }
   
   private String _email;
   
@@ -78,19 +66,11 @@ public class Jugador extends Entity {
   
   private List<Infraccion> _infracciones;
   
-  public List<Infraccion> getInfracciones() {
-    return this._infracciones;
-  }
-  
   public void setInfracciones(final List<Infraccion> infracciones) {
     this._infracciones = infracciones;
   }
   
   private List<Jugador> _amigos;
-  
-  public List<Jugador> getAmigos() {
-    return this._amigos;
-  }
   
   public void setAmigos(final List<Jugador> amigos) {
     this._amigos = amigos;
@@ -120,10 +100,6 @@ public class Jugador extends Entity {
   
   private int _cantidadPartidos;
   
-  public int getCantidadPartidos() {
-    return this._cantidadPartidos;
-  }
-  
   public void setCantidadPartidos(final int cantidadPartidos) {
     this._cantidadPartidos = cantidadPartidos;
   }
@@ -144,8 +120,8 @@ public class Jugador extends Entity {
     return this._nombre;
   }
   
-  public String setNombre(final String nombre) {
-    return this._nombre = nombre;
+  public void setNombre(final String nombre) {
+    this._nombre = nombre;
   }
   
   @PersistentField
@@ -153,8 +129,8 @@ public class Jugador extends Entity {
     return this._apodo;
   }
   
-  public String setApodo(final String apodo) {
-    return this._apodo = apodo;
+  public void setApodo(final String apodo) {
+    this._apodo = apodo;
   }
   
   @PersistentField
@@ -167,6 +143,42 @@ public class Jugador extends Entity {
   }
   
   @Relation
+  public List<Infraccion> getInfracciones() {
+    return this._infracciones;
+  }
+  
+  public List<Infraccion> setInfracciones(final ArrayList<Infraccion> infraccion) {
+    return this._infracciones = infraccion;
+  }
+  
+  @PersistentField
+  public Date getFechaNacimiento() {
+    return this._fechaNacimiento;
+  }
+  
+  public Date setFechaNacimiento(final Date fecha) {
+    return this._fechaNacimiento = fecha;
+  }
+  
+  @PersistentField
+  public int getEdad() {
+    return this._edad;
+  }
+  
+  public int setEdad(final Integer edad) {
+    return this._edad = (edad).intValue();
+  }
+  
+  @Relation
+  public List<Jugador> getAmigos() {
+    return this._amigos;
+  }
+  
+  public List<Jugador> setAmigos(final ArrayList<Jugador> amigo) {
+    return this._amigos = amigo;
+  }
+  
+  @Relation
   public List<Calificacion> getCalificaciones() {
     return this._calificaciones;
   }
@@ -175,8 +187,38 @@ public class Jugador extends Entity {
     return this._calificaciones = cal;
   }
   
+  @PersistentField
+  public int getCantidadPartidos() {
+    return this._cantidadPartidos;
+  }
+  
+  public int setCantidadPartidos(final Integer cantidad) {
+    return this._cantidadPartidos = (cantidad).intValue();
+  }
+  
   public Jugador() {
     this.init();
+  }
+  
+  public Jugador(final Integer id, final String nombre, final String apodo, final int edad, final String fechaDeNacimientoStr, final float nivelDeJuego, final List<Jugador> amigos, final ArrayList<Calificacion> calificaciones, final int cantidadPartidos) {
+    try {
+      this.init();
+      this.setId(id);
+      this.setNombre(nombre);
+      this.setApodo(apodo);
+      this.setEdad(edad);
+      boolean _notEquals = (!Objects.equal(fechaDeNacimientoStr, null));
+      if (_notEquals) {
+        Date _parse = this.formateador.parse(fechaDeNacimientoStr);
+        this.setFechaNacimiento(_parse);
+      }
+      this.setNivelDeJuego(nivelDeJuego);
+      this.setAmigos(amigos);
+      this.setCalificaciones(calificaciones);
+      this.setCantidadPartidos(cantidadPartidos);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   public Jugador(final String nombre, final String apodo, final int edad, final String fechaDeNacimientoStr, final float nivelDeJuego, final List<Jugador> amigos, final ArrayList<Calificacion> calificaciones, final int cantidadPartidos) {
@@ -204,14 +246,6 @@ public class Jugador extends Entity {
     this.setNombre(nombre);
     this.setApodo(apodo);
     this.setNivelDeJuego(handicap);
-  }
-  
-  public Jugador(final Integer id, final String nombre, final String apodo, final float handicap, final List<Calificacion> calificaciones) {
-    this.setId(id);
-    this.setNombre(nombre);
-    this.setApodo(apodo);
-    this.setNivelDeJuego(handicap);
-    this.setCalificaciones(calificaciones);
   }
   
   public void init() {
@@ -393,10 +427,10 @@ public class Jugador extends Entity {
     return this.formateador.format(_fechaNacimiento);
   }
   
-  public void setFechaNacimientoString(final String fecha) {
+  public Date setFechaNacimientoString(final String fecha) {
     try {
       Date _parse = this.formateador.parse(fecha);
-      this.setFechaNacimiento(_parse);
+      return this.setFechaNacimiento(_parse);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

@@ -2,7 +2,6 @@ package futbol5.runnable;
 
 import futbol5.domain.Jugador;
 import futbol5.domain.Partido;
-import futbol5.homes.HomeJugadores;
 import futbol5.homes.RepositorioJugadores;
 import futbol5.homes.RepositorioPartidos;
 import futbol5.ui.PartidosView;
@@ -26,9 +25,6 @@ public class TPFutbolApplication extends Application {
     ApplicationContext _instance_1 = ApplicationContext.getInstance();
     RepositorioPartidos _repositorioPartidos = new RepositorioPartidos();
     _instance_1.<RepositorioPartidos>configureSingleton(Partido.class, _repositorioPartidos);
-    ApplicationContext _instance_2 = ApplicationContext.getInstance();
-    HomeJugadores _homeJugadores = new HomeJugadores();
-    _instance_2.<HomeJugadores>configureSingleton(Jugador.class, _homeJugadores);
     return new PartidosView(this);
   }
 }

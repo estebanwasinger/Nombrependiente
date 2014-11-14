@@ -67,10 +67,6 @@ class Jugador extends Entity{
 		_apodo = apodo
 	}
 	
-	def setapodo(String apodo){
-		_apodo = apodo
-	}
-	
 	@PersistentField
 	def getNivelDeJuego(){
 		_nivelDeJuego
@@ -78,6 +74,43 @@ class Jugador extends Entity{
 	
 	def setNivelDeJuego(Integer nivel){
 		_nivelDeJuego = nivel
+	}
+	
+		@Relation
+	def getInfracciones(){
+		_infracciones
+	}
+	
+	def setInfracciones
+	(ArrayList<Infraccion>infraccion){
+		_infracciones = infraccion
+	}
+	
+		@PersistentField
+	def getFechaNacimiento(){
+		_fechaNacimiento
+	}
+	
+	def setFechaNacimiento(Date fecha){
+		_fechaNacimiento = fecha
+	}
+	
+		@PersistentField
+	def getEdad(){
+		_edad
+	}
+	
+	def setEdad(Integer edad){
+		_edad = edad
+	}
+	
+		@Relation
+	def getAmigos(){
+		_amigos
+	}
+	
+	def setAmigos(ArrayList<Jugador> amigo){
+		_amigos = amigo
 	}
 	
 	@Relation
@@ -89,10 +122,32 @@ class Jugador extends Entity{
 		_calificaciones = cal
 	}
 	
+		@PersistentField
+	def getCantidadPartidos(){
+		_cantidadPartidos
+	}
 	
-	
+	def setCantidadPartidos(Integer cantidad){
+		_cantidadPartidos = cantidad
+	}
+		
 	new() {
 		init
+	}
+			
+	new(Integer id,String nombre,String apodo, int edad, String fechaDeNacimientoStr, float nivelDeJuego, List<Jugador> amigos, 
+			ArrayList <Calificacion> calificaciones, int cantidadPartidos){
+		init
+		this.id = id
+		this.nombre = nombre
+		this.apodo = apodo
+		this.edad = edad
+		if(fechaDeNacimientoStr!= null){
+		this.fechaNacimiento = formateador.parse(fechaDeNacimientoStr)}
+		this.nivelDeJuego= nivelDeJuego
+		this.amigos=amigos
+		this.calificaciones= calificaciones
+		this.cantidadPartidos=cantidadPartidos
 	}
 
 	new(String nombre,String apodo, int edad, String fechaDeNacimientoStr, float nivelDeJuego, List<Jugador> amigos, ArrayList <Calificacion> calificaciones, int cantidadPartidos){
@@ -114,15 +169,6 @@ class Jugador extends Entity{
 		this.apodo = apodo
 		this.nivelDeJuego = handicap
 		//this.calificaciones = calificaciones
-	}
-	
-	new(Integer id, String nombre, String apodo, float handicap, List<Calificacion>calificaciones){
-		//init
-		this.id = id
-		this.nombre = nombre
-		this.apodo = apodo
-		this.nivelDeJuego = handicap
-		this.calificaciones = calificaciones
 	}
 	
 	def init(){

@@ -81,6 +81,14 @@ public class RepositorioPartidos extends PersistentHome<Partido> {
     Partido _get_16 = this.get("Quilmes");
     Jugador _jugador_16 = this.getJugador(Integer.valueOf(4));
     _get_16.agregarJugador(_jugador_16);
+    Partido _get_17 = this.get("Quilmes");
+    this.update(_get_17);
+    Partido _get_18 = this.get("CABA");
+    this.update(_get_18);
+    Partido _get_19 = this.get("Longchamps");
+    this.update(_get_19);
+    Partido _get_20 = this.get("San Miguel");
+    this.update(_get_20);
   }
   
   public Jugador getJugador(final Integer id) {
@@ -114,6 +122,30 @@ public class RepositorioPartidos extends PersistentHome<Partido> {
     return _xblockexpression;
   }
   
+  public Partido createIfNotExists(final Partido partido) {
+    Partido _xblockexpression = null;
+    {
+      String _localidad = partido.getLocalidad();
+      String _plus = ("Creando si no existe partido con localidad: " + _localidad);
+      InputOutput.<String>println(_plus);
+      String _localidad_1 = partido.getLocalidad();
+      Partido partidoDB = this.get(_localidad_1);
+      boolean _equals = Objects.equal(partidoDB, null);
+      if (_equals) {
+        this.create(partido);
+        partidoDB = partido;
+        String _localidad_2 = partido.getLocalidad();
+        String _plus_1 = ("Partido en " + _localidad_2);
+        String _plus_2 = (_plus_1 + " fue creado");
+        InputOutput.<String>println(_plus_2);
+      } else {
+        InputOutput.<String>println("Partido ya existente");
+      }
+      _xblockexpression = partidoDB;
+    }
+    return _xblockexpression;
+  }
+  
   public Partido get(final String localidad) {
     List<Partido> _allInstances = this.allInstances();
     for (final Partido partidoDB : _allInstances) {
@@ -124,5 +156,11 @@ public class RepositorioPartidos extends PersistentHome<Partido> {
       }
     }
     return null;
+  }
+  
+  public void updateMe(final Partido partido) {
+    String _localidad = partido.getLocalidad();
+    Partido _get = this.get(_localidad);
+    this.update(_get);
   }
 }

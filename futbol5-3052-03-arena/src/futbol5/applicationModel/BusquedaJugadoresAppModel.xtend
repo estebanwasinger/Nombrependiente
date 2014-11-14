@@ -36,8 +36,8 @@ class BusquedaJugadoresAppModel implements Serializable {
 		//validarHandicapYPromedio(handicap, promedioDesde, promedioHasta)
 		jugadorSeleccionado = null
 		jugadores = new ArrayList<Jugador>
-		jugadores = homeJugadores.allInstances
-		//jugadores = getHomeJugadores().search(this)
+		//jugadores = homeJugadores.allInstances
+		jugadores = getHomeJugadores().search(this)
 	}
 
 	def void clear() {

@@ -6,6 +6,7 @@ import commands.DivisionDeEquiposCommand;
 import excepciones.BusinessException;
 import futbol5.domain.Administrador;
 import futbol5.domain.Jugador;
+import futbol5.homes.RepositorioPartidos;
 import inscripciones.TipoInscripcion;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -16,6 +17,7 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.uqbar.commons.model.Entity;
+import org.uqbar.commons.utils.ApplicationContext;
 import org.uqbar.commons.utils.Observable;
 import uqbar.arena.persistence.annotations.PersistentClass;
 import uqbar.arena.persistence.annotations.PersistentField;
@@ -41,23 +43,7 @@ public class Partido extends Entity {
   
   private List<Jugador> _equipoA;
   
-  public List<Jugador> getEquipoA() {
-    return this._equipoA;
-  }
-  
-  public void setEquipoA(final List<Jugador> equipoA) {
-    this._equipoA = equipoA;
-  }
-  
   private List<Jugador> _equipoB;
-  
-  public List<Jugador> getEquipoB() {
-    return this._equipoB;
-  }
-  
-  public void setEquipoB(final List<Jugador> equipoB) {
-    this._equipoB = equipoB;
-  }
   
   private List<Jugador> _equipoC;
   
@@ -165,6 +151,24 @@ public class Partido extends Entity {
   
   public void setJugadores(final List<Jugador> jugadores) {
     this._jugadores = jugadores;
+  }
+  
+  @Relation
+  public List<Jugador> getEquipoA() {
+    return this._equipoA;
+  }
+  
+  public void setEquipoA(final List<Jugador> jugadores) {
+    this._equipoA = jugadores;
+  }
+  
+  @Relation
+  public List<Jugador> getEquipoB() {
+    return this._equipoB;
+  }
+  
+  public void setEquipoB(final List<Jugador> jugadores) {
+    this._equipoB = jugadores;
   }
   
   public Partido(final String localidad) {
@@ -390,6 +394,8 @@ public class Partido extends Entity {
       List<Jugador> _equipoA = this.getEquipoA();
       List<Jugador> _equipoB = this.getEquipoB();
       algoritmoDivision.dividir(_jugadoresOrdenados_1, _equipoA, _equipoB);
+      RepositorioPartidos _homePartidos = this.getHomePartidos();
+      _homePartidos.updateMe(this);
       List<Jugador> _equipoA_1 = this.getEquipoA();
       int _size_1 = _equipoA_1.size();
       this.setCantEquipoA(_size_1);
@@ -400,5 +406,10 @@ public class Partido extends Entity {
   
   public void confirmarEquipos(final boolean confirmacion) {
     this.setEstaConfirmado(Boolean.valueOf(confirmacion));
+  }
+  
+  public RepositorioPartidos getHomePartidos() {
+    ApplicationContext _instance = ApplicationContext.getInstance();
+    return _instance.<RepositorioPartidos>getSingleton(Partido.class);
   }
 }
