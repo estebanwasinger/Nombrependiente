@@ -1,16 +1,16 @@
 package futbol5.runnable
 
+import calificaciones.Calificacion
 import futbol5.domain.Jugador
 import futbol5.domain.Partido
-import futbol5.homes.HomeJugadores
-import futbol5.homes.HomePartidos
+import futbol5.homes.RepositorioCalificaciones
+import futbol5.homes.RepositorioJugadores
+import futbol5.homes.RepositorioPartidos
 import futbol5.ui.PartidosView
 import org.uqbar.arena.Application
 import org.uqbar.arena.windows.Window
 import org.uqbar.commons.utils.ApplicationContext
 import uqbar.arena.persistence.Configuration
-import futbol5.homes.RepositorioPartidos
-import futbol5.homes.RepositorioJugadores
 
 class TPFutbolApplication extends Application {
 	
@@ -20,6 +20,7 @@ class TPFutbolApplication extends Application {
 
 	override protected Window<?> createMainWindow() {
 		Configuration.configure()
+		ApplicationContext.instance.configureSingleton(typeof(Calificacion), new RepositorioCalificaciones)
 		ApplicationContext.instance.configureSingleton(typeof(Jugador), new RepositorioJugadores)
 		ApplicationContext.instance.configureSingleton(typeof(Partido), new RepositorioPartidos)
 		//ApplicationContext.instance.configureSingleton(typeof(Partido), new HomePartidos)

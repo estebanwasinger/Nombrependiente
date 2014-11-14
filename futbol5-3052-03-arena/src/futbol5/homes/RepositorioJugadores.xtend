@@ -6,6 +6,7 @@ import futbol5.domain.Jugador
 import java.util.ArrayList
 import calificaciones.Calificacion
 import java.util.List
+import org.uqbar.commons.utils.ApplicationContext
 
 @Observable
 class RepositorioJugadores extends PersistentHome<Jugador> {
@@ -15,29 +16,49 @@ class RepositorioJugadores extends PersistentHome<Jugador> {
 	}
 
 	def void init() {
-		this.createIfNotExists(1, "Esteban", "El champ", 5, new ArrayList<Calificacion>)
-		this.createIfNotExists(2, "Carolina", "Caro", 8, new ArrayList<Calificacion>)
-		this.createIfNotExists(3, "Paula", "Pau", 2, new ArrayList<Calificacion>)
-		this.createIfNotExists(4, "Juan", "Fantasma", 1, new ArrayList<Calificacion>)
-		this.createIfNotExists(5, "Alejandro", "Ale", 9, new ArrayList<Calificacion>)
-		this.createIfNotExists(6, "Juan", "L", 1, new ArrayList<Calificacion>)
-		this.createIfNotExists(7, "Alejandro", "Pepep", 9, new ArrayList<Calificacion>)
-		this.createIfNotExists(8, "Pedro", "El loco", 1, new ArrayList<Calificacion>)
-		this.createIfNotExists(9, "Maria", "La Mary", 9, new ArrayList<Calificacion>)
-		this.createIfNotExists(10, "Alberto", "Perro", 1, new ArrayList<Calificacion>)
-		this.createIfNotExists(11, "Santiago", "Santi", 9, new ArrayList<Calificacion>)
-		this.createIfNotExists(12, "Florencia", "Florcita", 1, new ArrayList<Calificacion>)
-		this.createIfNotExists(13, "Martin", "Tin", 9, new ArrayList<Calificacion>)
+		this.createIfNotExists(new Jugador("Paula","Pau",9,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
+		this.createIfNotExists(new Jugador("Esteban","quito",6,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
+		this.createIfNotExists(new Jugador("Carolina","Caro",10,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
+		this.createIfNotExists(new Jugador("Juan","Fantasma",5,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
+		this.createIfNotExists(new Jugador("Alejandro","Pepe",2,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
+		this.createIfNotExists(new Jugador("Pedro","El Loco",5,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
+		this.createIfNotExists(new Jugador("Maria","La Mary",4,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
+		this.createIfNotExists(new Jugador("Alberto","Perro",5,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
+		this.createIfNotExists(new Jugador("Santiago","Santi",3,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
+		this.createIfNotExists(new Jugador("Florencia","Florcita",5,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
+		this.createIfNotExists(new Jugador("Martin","Tin",5,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
+		
+		var jugadores = this.allInstances
+		for (Jugador jugador : jugadores){
+			jugador.update
+		}
 	}
 
-	def createIfNotExists(Integer idJ, String nombreJ, String apodoJ, float nivelDeJuegoJ, ArrayList<Calificacion> calificacionesJ) {
-		println("Creando si no existe jugador con id: " + idJ)
-		var jugador = new Jugador (idJ, nombreJ, apodoJ, nivelDeJuegoJ, calificacionesJ)
-		var jugadorDB = this.get(idJ)
+		def repoCal(){
+		ApplicationContext.instance.getSingleton(typeof(Calificacion)) as RepositorioCalificaciones
+	}
+
+	def createIfNotExists(String nombreJ, String apodoJ, float nivelDeJuegoJ, ArrayList<Calificacion> calificacionesJ) {
+		println("Creando si no existe jugador con id: "+nombreJ)
+		var jugador = new Jugador ( nombreJ, apodoJ, nivelDeJuegoJ, calificacionesJ)
+		var jugadorDB = this.get(nombreJ)
 		if (jugadorDB== null) {
 					this.create(jugador)
 					jugadorDB =jugador
-					println("Jugador con id "+idJ+" fue creado")
+					println("Jugador con id "+nombreJ+" fue creado")
+		}else{
+				println("Jugador ya existente")
+		}
+		jugadorDB
+	}
+	
+	def createIfNotExists(Jugador jugador) {
+		println("Creando si no existe jugador con id: "+jugador.nombre)
+		var jugadorDB = this.get(jugador.nombre)
+		if (jugadorDB== null) {
+					this.create(jugador)
+					jugadorDB =jugador
+					println("Jugador con id "+jugador.nombre+" fue creado")
 		}else{
 				println("Jugador ya existente")
 		}
@@ -48,9 +69,18 @@ class RepositorioJugadores extends PersistentHome<Jugador> {
 		allInstances
 	}
 
-	def Jugador get(Integer id) {
+	def Jugador get(String nombre) {
 		for (Jugador jugadorDB: this.allInstances){
-			if(jugadorDB.id.equals(id)){
+			if(jugadorDB.nombre.equals(nombre)){
+				return jugadorDB;
+			}
+		}
+		return null 
+	}
+	
+	def Jugador get(int id) {
+		for (Jugador jugadorDB: this.allInstances){
+			if(jugadorDB.nombre.equals(id)){
 				return jugadorDB;
 			}
 		}

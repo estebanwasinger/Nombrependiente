@@ -28,37 +28,55 @@ class RepositorioPartidos  extends PersistentHome<Partido> {
 	}
 
 	def void init() {
-		this.createIfNotExists("Quilmes")
-		this.createIfNotExists("Longchamps")
-		this.createIfNotExists("San Miguel")
-		this.createIfNotExists("CABA")
-//		this.get("CABA").agregarJugador(getJugador(1))
-//		this.get("CABA").agregarJugador(getJugador(3))
-//		this.get("CABA").agregarJugador(getJugador(6))
-//		this.get("San Miguel").agregarJugador(getJugador(1))
-//		this.get("San Miguel").agregarJugador(getJugador(2))
-//		this.get("Longchamps").agregarJugador(getJugador(6))
-//		this.get("Longchamps").agregarJugador(getJugador(8))
-//		this.get("Quilmes").agregarJugador(getJugador(9)) // a Quilmes se le agregan 10 jugadores para poder ordenar
-//		this.get("Quilmes").agregarJugador(getJugador(10))
-//		this.get("Quilmes").agregarJugador(getJugador(1))
-//		this.get("Quilmes").agregarJugador(getJugador(3))
-//		this.get("Quilmes").agregarJugador(getJugador(6))
-//		this.get("Quilmes").agregarJugador(getJugador(7))
-//		this.get("Quilmes").agregarJugador(getJugador(8))
-//		this.get("Quilmes").agregarJugador(getJugador(2))
-//		this.get("Quilmes").agregarJugador(getJugador(5))
-//		this.get("Quilmes").agregarJugador(getJugador(4))
-//		this.get("Quilmes").update
-//		this.get("CABA").update
-//		this.get("Longchamps").update
-//		this.get("San Miguel").update
-		
+		this.createIfNotExists(new Partido("Quilmes") => [
+			agregarJugador(getJugador("Carolina"))
+			agregarJugador(getJugador("Paula"))
+			agregarJugador(getJugador("Esteban"))
+			agregarJugador(getJugador("Juan"))
+			agregarJugador(getJugador("Alejandro"))
+			agregarJugador(getJugador("Pedro"))
+			agregarJugador(getJugador("Maria"))
+			agregarJugador(getJugador("Paula"))
+			agregarJugador(getJugador("Carolina"))
+			agregarJugador(getJugador("Alejandro"))
+		])
+		this.createIfNotExists(new Partido("Longchamps") => [
+			agregarJugador(getJugador("Maria"))
+			agregarJugador(getJugador("Esteban"))
+		])
+		this.createIfNotExists(new Partido("San Miguel")=> [
+			agregarJugador(getJugador("Alejandro"))
+			agregarJugador(getJugador("Pedro"))
+		])
+		this.createIfNotExists(new Partido("CABA") => [
+			agregarJugador(getJugador("Esteban"))
+			agregarJugador(getJugador("Paula"))
+			agregarJugador(getJugador("Carolina"))
+		])
+		var jugadores = repoJugadores.allInstances
+		for(Jugador jugador: jugadores){
+			println(jugador.id + jugador.nombre)
+		}
+
+		var partidos = this.allInstances
+		for (Partido partido : partidos){
+			partido.update
+		}
 	}
 
-	def getJugador(Integer id) {
+	def getJugador(int id) {
 		(ApplicationContext.instance.getSingleton(typeof(Jugador)) as RepositorioJugadores).get(id)
 	}
+	
+	def repoJugadores(){
+		(ApplicationContext.instance.getSingleton(typeof(Jugador)) as RepositorioJugadores)
+	}
+	
+	def getJugador(String nombre) {
+		(ApplicationContext.instance.getSingleton(typeof(Jugador)) as RepositorioJugadores).get(nombre)
+	}
+	
+
 	
 	def create(String localidad) {
 		var partido = new Partido

@@ -25,7 +25,6 @@ import org.uqbar.commons.utils.Transactional
 @PersistentClass
 class Jugador extends Entity{
 
-	@Property Integer id
 	@Property String nombre
 	@Property String apodo
 	@Property int edad
@@ -39,15 +38,6 @@ class Jugador extends Entity{
 	@Property int criterioComparacion
 	@Property int cantidadPartidos
 	SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
-	
-	@PersistentField
-	override getId(){
-		_id
-	}
-	
-	override setId(Integer id){
-		_id = id
-	}
 	
 	@PersistentField
 	def getNombre(){
@@ -85,8 +75,8 @@ class Jugador extends Entity{
 		_calificaciones
 	}
 	
-	def setCalificaciones(ArrayList<Calificacion> cal){
-		_calificaciones = cal
+	def setCalificaciones(ArrayList<Calificacion> calificaciones){
+		_calificaciones = calificaciones
 	}
 	
 	
@@ -130,7 +120,6 @@ class Jugador extends Entity{
 		amigos = new ArrayList<Jugador>
 		infracciones = new ArrayList<Infraccion>
 		calificaciones = new LinkedList<Calificacion>
-		//nivelDeJuego = 0
 	}
 	
 	def validarNombre() {
