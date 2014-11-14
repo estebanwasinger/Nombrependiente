@@ -7,6 +7,7 @@ import java.util.ArrayList
 import calificaciones.Calificacion
 import java.util.List
 import org.uqbar.commons.utils.ApplicationContext
+import infracciones.Infraccion
 
 @Observable
 class RepositorioJugadores extends PersistentHome<Jugador> {
@@ -16,17 +17,17 @@ class RepositorioJugadores extends PersistentHome<Jugador> {
 	}
 
 	def void init() {
-		this.createIfNotExists(new Jugador("Paula","Pau",9,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
-		this.createIfNotExists(new Jugador("Esteban","quito",6,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
-		this.createIfNotExists(new Jugador("Carolina","Caro",10,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
-		this.createIfNotExists(new Jugador("Juan","Fantasma",5,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
-		this.createIfNotExists(new Jugador("Alejandro","Pepe",2,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
-		this.createIfNotExists(new Jugador("Pedro","El Loco",5,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
-		this.createIfNotExists(new Jugador("Maria","La Mary",4,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
-		this.createIfNotExists(new Jugador("Alberto","Perro",5,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
-		this.createIfNotExists(new Jugador("Santiago","Santi",3,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
-		this.createIfNotExists(new Jugador("Florencia","Florcita",5,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
-		this.createIfNotExists(new Jugador("Martin","Tin",5,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9)))])
+		this.createIfNotExists(new Jugador("Paula","Pau",9,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9))) infracciones.add(repoInf.createInfraccion(new Infraccion))])
+		this.createIfNotExists(new Jugador("Esteban","quito",6,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9))) infracciones.add(repoInf.createInfraccion(new Infraccion))])
+		this.createIfNotExists(new Jugador("Carolina","Caro",10,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9))) infracciones.add(repoInf.createInfraccion(new Infraccion))])
+		this.createIfNotExists(new Jugador("Juan","Fantasma",5,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9))) infracciones.add(repoInf.createInfraccion(new Infraccion))])
+		this.createIfNotExists(new Jugador("Alejandro","Pepe",2,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9))) infracciones.add(repoInf.createInfraccion(new Infraccion))])
+		this.createIfNotExists(new Jugador("Pedro","El Loco",5,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9))) infracciones.add(repoInf.createInfraccion(new Infraccion))])
+		this.createIfNotExists(new Jugador("Maria","La Mary",4,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9))) infracciones.add(repoInf.createInfraccion(new Infraccion))])
+		this.createIfNotExists(new Jugador("Alberto","Perro",5,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9))) infracciones.add(repoInf.createInfraccion(new Infraccion))])
+		this.createIfNotExists(new Jugador("Santiago","Santi",3,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9))) infracciones.add(repoInf.createInfraccion(new Infraccion))])
+		this.createIfNotExists(new Jugador("Florencia","Florcita",5,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9))) infracciones.add(repoInf.createInfraccion(new Infraccion))])
+		this.createIfNotExists(new Jugador("Martin","Tin",5,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9))) infracciones.add(repoInf.createInfraccion(new Infraccion))])
 		
 		var jugadores = this.allInstances
 		for (Jugador jugador : jugadores){
@@ -34,8 +35,12 @@ class RepositorioJugadores extends PersistentHome<Jugador> {
 		}
 	}
 
-		def repoCal(){
+	def repoCal(){
 		ApplicationContext.instance.getSingleton(typeof(Calificacion)) as RepositorioCalificaciones
+	}
+	
+	def repoInf(){
+		ApplicationContext.instance.getSingleton(typeof(Infraccion)) as RepositorioInfracciones
 	}
 
 	def createIfNotExists(String nombreJ, String apodoJ, float nivelDeJuegoJ, ArrayList<Calificacion> calificacionesJ) {

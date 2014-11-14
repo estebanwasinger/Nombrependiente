@@ -79,6 +79,15 @@ class Jugador extends Entity{
 		_calificaciones = calificaciones
 	}
 	
+	@Relation
+	def getInfracciones(){
+		_infracciones
+	}
+	
+	def setInfracciones(ArrayList<Infraccion> infracciones){
+		_infracciones = infracciones
+	}
+	
 	
 	
 	new() {
