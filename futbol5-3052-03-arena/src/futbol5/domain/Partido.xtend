@@ -3,19 +3,20 @@ package futbol5.domain
 import commands.CriteriosCommand
 import commands.DivisionDeEquiposCommand
 import excepciones.BusinessException
+import futbol5.homes.RepositorioPartidos
 import java.util.ArrayList
 import java.util.LinkedList
 import java.util.List
 import observers.PartidoObserver
 import org.uqbar.commons.model.Entity
+import org.uqbar.commons.utils.ApplicationContext
 import org.uqbar.commons.utils.Observable
+import org.uqbar.commons.utils.Transactional
 import org.uqbar.commons.utils.TransactionalAndObservable
 import uqbar.arena.persistence.annotations.PersistentClass
 import uqbar.arena.persistence.annotations.PersistentField
 import uqbar.arena.persistence.annotations.Relation
-import org.uqbar.commons.utils.Transactional
-import futbol5.homes.RepositorioPartidos
-import org.uqbar.commons.utils.ApplicationContext
+import org.uqbar.commons.model.UserException
 
 @Observable
 @PersistentClass
@@ -35,6 +36,19 @@ class Partido extends Entity {
 	@Property var DivisionDeEquiposCommand AlgoritmoDivision
 	@Property var CriteriosCommand AlgoritmoOrdenamiento
 	@Property var Jugador jugadorSeleccionado
+
+	@PersistentField
+	def getEstaConfirmado(){
+		_estaConfirmado
+	}
+	
+	def getEstado(){
+		!_estaConfirmado
+	}
+	
+	def void setEstaConfirmado(Boolean estaConfirmado){
+		_estaConfirmado = estaConfirmado
+	}
 
 	@PersistentField
 	def String getLocalidad(){
@@ -214,20 +228,33 @@ class Partido extends Entity {
 		if (estaConfirmado) {
 			throw new BusinessException("Los equipos estan confirmados, no se puede dividir")
 		}
-		if (jugadoresOrdenados.size < 10) {
-			throw new BusinessException("No se pueden armar los dos equipos porque no hay 10 jugadores ordenados aun.")
-		}
+		hay10Jugadores()
 		equipoB = new ArrayList<Jugador>
 		algoritmoDivision.dividir(jugadoresOrdenados, equipoA, equipoB)
 		homePartidos.updateMe(this)
 		cantEquipoA = equipoA.size
 	}
-
-	def confirmarEquipos(boolean confirmacion) {
-		estaConfirmado = confirmacion
+	
+	def hay10Jugadores() {
+		if (jugadoresOrdenados.size < 10) {
+			throw new UserException("No se pueden armar los dos equipos porque no hay 10 jugadores inscriptos aun.")
+		}
 	}
 	
-		def RepositorioPartidos getHomePartidos() {
+	def losEquiposEstanLlenos(){
+		if(equipoA.size < 5 || equipoB.size < 5){
+			throw new UserException("No se pueden confirmar los equipos porque aun no han sido dividos.")
+		}
+	}
+
+	def confirmarEquipos(Boolean confirmacion) {
+		hay10Jugadores()
+		losEquiposEstanLlenos()
+		estaConfirmado = confirmacion
+		homePartidos.updateMe(this)
+	}
+	
+	def RepositorioPartidos getHomePartidos() {
 		ApplicationContext.instance.getSingleton(typeof(Partido))
 	}
 
