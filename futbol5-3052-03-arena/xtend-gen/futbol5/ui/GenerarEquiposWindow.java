@@ -97,13 +97,27 @@ public class GenerarEquiposWindow extends SimpleWindow<Partido> {
     Button _setAsDefault = _onClick.setAsDefault();
     _setAsDefault.disableOnError();
     Button _button_1 = new Button(actionPanel);
-    Button _setCaption_1 = _button_1.setCaption("Buscar Jugador");
+    Button _setCaption_1 = _button_1.setCaption("Confirmar Equipos");
     final Action _function_1 = new Action() {
+      public void execute() {
+        Partido _modelObject = GenerarEquiposWindow.this.getModelObject();
+        _modelObject.confirmarEquipos(Boolean.valueOf(true));
+        Partido _modelObject_1 = GenerarEquiposWindow.this.getModelObject();
+        Partido _modelObject_2 = GenerarEquiposWindow.this.getModelObject();
+        boolean _estado = _modelObject_2.getEstado();
+        ObservableUtils.firePropertyChanged(_modelObject_1, "estado", Boolean.valueOf(_estado));
+      }
+    };
+    Button _onClick_1 = _setCaption_1.onClick(_function_1);
+    _onClick_1.<ControlBuilder>bindEnabledToProperty("estado");
+    Button _button_2 = new Button(actionPanel);
+    Button _setCaption_2 = _button_2.setCaption("Buscar Jugador");
+    final Action _function_2 = new Action() {
       public void execute() {
         GenerarEquiposWindow.this.buscarJugador();
       }
     };
-    Button buscar = _setCaption_1.onClick(_function_1);
+    Button buscar = _setCaption_2.onClick(_function_2);
     NotNullObservable elementSelected = new NotNullObservable("jugadorSeleccionado");
     buscar.<ControlBuilder>bindEnabled(elementSelected);
   }
@@ -138,6 +152,7 @@ public class GenerarEquiposWindow extends SimpleWindow<Partido> {
       public void apply(final Button it) {
         it.setWidth(200);
         it.setHeigth(45);
+        it.<ControlBuilder>bindEnabledToProperty("estado");
         it.setCaption("Generar Equipos");
         final Action _function = new Action() {
           public void execute() {

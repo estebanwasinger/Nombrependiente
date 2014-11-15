@@ -5,9 +5,6 @@ import ar.edu.materias.homes.HomeMaterias;
 import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.ListExtensions;
 
 @SuppressWarnings("all")
 public class HomeMateriasImpl implements HomeMaterias {
@@ -49,21 +46,11 @@ public class HomeMateriasImpl implements HomeMaterias {
   }
   
   public int getUltimoIdUtilizado() {
-    boolean _isEmpty = this.materias.isEmpty();
-    if (_isEmpty) {
-      return 1;
-    }
-    final Function1<Materia,Long> _function = new Function1<Materia,Long>() {
-      public Long apply(final Materia it) {
-        Long _id = it.getId();
-        return Long.valueOf((-(_id).longValue()));
-      }
-    };
-    List<Materia> _sortBy = IterableExtensions.<Materia, Long>sortBy(this.materias, _function);
-    List<Materia> _list = IterableExtensions.<Materia>toList(_sortBy);
-    Materia _get = _list.get(0);
-    Long _id = _get.getId();
-    return _id.intValue();
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method id is undefined for the type HomeMateriasImpl"
+      + "\nThe method id is undefined for the type HomeMateriasImpl"
+      + "\n- cannot be resolved"
+      + "\nintValue cannot be resolved");
   }
   
   public void actualizarMateria(final Materia materiaActualizado) {
@@ -91,28 +78,14 @@ public class HomeMateriasImpl implements HomeMaterias {
   }
   
   public Materia getMateria(final Long id) {
-    final Function1<Materia,Boolean> _function = new Function1<Materia,Boolean>() {
-      public Boolean apply(final Materia materia) {
-        Long _id = materia.getId();
-        return Boolean.valueOf(_id.equals(id));
-      }
-    };
-    return IterableExtensions.<Materia>findFirst(this.materias, _function);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method id is undefined for the type HomeMateriasImpl"
+      + "\nequals cannot be resolved");
   }
   
   public List<Materia> getMaterias(final Materia materiaBusqueda) {
-    final Function1<Materia,Boolean> _function = new Function1<Materia,Boolean>() {
-      public Boolean apply(final Materia materia) {
-        return Boolean.valueOf(materia.matchea(materiaBusqueda));
-      }
-    };
-    Iterable<Materia> _filter = IterableExtensions.<Materia>filter(this.materias, _function);
-    List<Materia> _list = IterableExtensions.<Materia>toList(_filter);
-    final Function1<Materia,Materia> _function_1 = new Function1<Materia,Materia>() {
-      public Materia apply(final Materia it) {
-        return it.copy();
-      }
-    };
-    return ListExtensions.<Materia, Materia>map(_list, _function_1);
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe method matchea is undefined for the type HomeMateriasImpl"
+      + "\nThe method copy is undefined for the type HomeMateriasImpl");
   }
 }

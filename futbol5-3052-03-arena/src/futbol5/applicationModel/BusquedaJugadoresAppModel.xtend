@@ -1,7 +1,7 @@
 package futbol5.applicationModel
 
 import futbol5.domain.Jugador
-import futbol5.homes.HomeJugadores
+import futbol5.homes.RepositorioJugadores
 import java.io.Serializable
 import java.util.ArrayList
 import java.util.List
@@ -26,21 +26,19 @@ class BusquedaJugadoresAppModel implements Serializable {
 	new() {
 		iniciar()
 		jugadores = new ArrayList<Jugador>
-		jugadores = getHomeJugadores().jugadoresAceptados
+		jugadores = getHomeJugadores().allInstances
 	}
 
 	def void search() {
-		//validarNombreYApodo(jugadorEjemplo)
-		//validarHandicapYPromedio(handicap, promedioDesde, promedioHasta)
 		jugadorSeleccionado = null
 		jugadores = new ArrayList<Jugador>
+		//jugadores = homeJugadores.allInstances
 		jugadores = getHomeJugadores().search(this)
 	}
 
 	def void clear() {
 		iniciar()
 		jugadorSeleccionado = null
-		search()
 	}
 
 	def void iniciar() {
@@ -52,24 +50,12 @@ class BusquedaJugadoresAppModel implements Serializable {
 		metodoHandicap = handicaps.get(0)
 	}
 	
-	/*def validarNombreYApodo (Jugador jugador){
-		if(!StringUtils.isAlpha(jugadorEjemplo.nombre) || StringUtils.isAlpha(jugadorEjemplo.apodo)){ 
-			throw new UserException("El nombre y el apodo del jugador no pueden ser números ni carácteres especiales. Intente de nuevo")
-		}
-	}
-	
-	def validarHandicapYPromedio (Integer handicap, Integer promedioDesde, Integer  promedioHasta){
-		if(!StringUtils.isNumeric(handicap.toString) || !StringUtils.isNumeric(promedioDesde.toString) || !StringUtils.isNumeric(promedioHasta.toString)){ 
-			throw new UserException("El handicap y promedio del jugador no pueden ser carácteres. Intente de nuevo")
-		}
-	}*/
-
-	def HomeJugadores getHomeJugadores() {
+	def RepositorioJugadores getHomeJugadores() {
 		ApplicationContext.instance.getSingleton(typeof(Jugador))
 	}
 
 	def getHandicaps() {
 		#[new HandicapHasta, new HandicapDesde]
 	}
-
+	
 }

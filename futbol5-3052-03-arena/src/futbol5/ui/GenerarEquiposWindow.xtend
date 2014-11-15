@@ -52,7 +52,14 @@ class GenerarEquiposWindow extends SimpleWindow<Partido> {
 
 	override protected addActions(Panel actionPanel) {
 		actionPanel.layout = new HorizontalLayout
-		new Button(actionPanel).setCaption("Aceptar").onClick[|this.close].setAsDefault.disableOnError
+		new Button(actionPanel).setCaption("Aceptar").onClick[|
+			this.close
+		].setAsDefault.disableOnError
+		
+		new Button(actionPanel).setCaption("Confirmar Equipos").onClick[|
+			modelObject.confirmarEquipos(true)
+			ObservableUtils.firePropertyChanged(modelObject, "estado", modelObject.estado)
+		].bindEnabledToProperty("estado")
 
 		var buscar = new Button(actionPanel).setCaption("Buscar Jugador").onClick[|this.buscarJugador]
 
@@ -88,6 +95,7 @@ class GenerarEquiposWindow extends SimpleWindow<Partido> {
 		new Button(panelSelector3) => [
 			width = 200
 			heigth = 45
+			bindEnabledToProperty("estado")
 			caption = "Generar Equipos"
 			onClick[ |
 				modelObject.equipoA = new ArrayList<Jugador>

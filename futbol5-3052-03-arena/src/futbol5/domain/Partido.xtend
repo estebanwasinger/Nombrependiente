@@ -1,16 +1,25 @@
 package futbol5.domain
 
-import java.util.List
-import java.util.LinkedList
-import excepciones.BusinessException
-import observers.PartidoObserver
 import commands.CriteriosCommand
 import commands.DivisionDeEquiposCommand
-import org.uqbar.commons.model.Entity
-import org.uqbar.commons.utils.Observable
+import excepciones.BusinessException
+import futbol5.homes.RepositorioPartidos
 import java.util.ArrayList
+import java.util.LinkedList
+import java.util.List
+import observers.PartidoObserver
+import org.uqbar.commons.model.Entity
+import org.uqbar.commons.utils.ApplicationContext
+import org.uqbar.commons.utils.Observable
+import org.uqbar.commons.utils.Transactional
+import org.uqbar.commons.utils.TransactionalAndObservable
+import uqbar.arena.persistence.annotations.PersistentClass
+import uqbar.arena.persistence.annotations.PersistentField
+import uqbar.arena.persistence.annotations.Relation
+import org.uqbar.commons.model.UserException
 
 @Observable
+@PersistentClass
 class Partido extends Entity {
 
 	@Property var String localidad
@@ -28,6 +37,56 @@ class Partido extends Entity {
 	@Property var CriteriosCommand AlgoritmoOrdenamiento
 	@Property var Jugador jugadorSeleccionado
 
+	@PersistentField
+	def getEstaConfirmado(){
+		_estaConfirmado
+	}
+	
+	def getEstado(){
+		!_estaConfirmado
+	}
+	
+	def void setEstaConfirmado(Boolean estaConfirmado){
+		_estaConfirmado = estaConfirmado
+	}
+
+	@PersistentField
+	def String getLocalidad(){
+		_localidad
+	}
+	
+	def void setLocalidad(String localidad){
+		_localidad = localidad
+	}
+	
+	@Relation
+	def List<Jugador> getJugadores(){
+		_jugadores
+	}
+	
+	def void setJugadores(List<Jugador> jugadores){
+		_jugadores = jugadores
+	}
+	
+	@Relation
+		def List<Jugador> getEquipoA(){
+		_equipoA
+	}
+	
+	def void setEquipoA(List<Jugador> jugadores){
+		_equipoA = jugadores
+	}
+	
+	@Relation
+		def List<Jugador> getEquipoB(){
+		_equipoB
+	}
+	
+	def void setEquipoB(List<Jugador> jugadores){
+		_equipoB = jugadores
+	}
+	
+	
 	/****************/
 	/*CONSTRUCTORES*/
 	/****************/
@@ -128,13 +187,13 @@ class Partido extends Entity {
 	/**************************************/
 	def inscribir(Jugador jugador) {
 		if (estaConfirmado) {
-			throw new BusinessException("Los equipos estan confirmados, no se puede inscribir")
+			throw new UserException("Los equipos estan confirmados, no se puede inscribir")
 		}
 		if (this.estaInscripto(jugador)) {
-			throw new BusinessException("El jugador ya se inscribio")
+			throw new UserException("El jugador ya se inscribio")
 		}
 		if (!jugador.tipoInscripcion.cumpleCondicion(jugador, this)) {
-			throw new BusinessException("El jugador no cumple con la condicion, no se puede inscribir")
+			throw new UserException("El jugador no cumple con la condicion, no se puede inscribir")
 		}
 		if (this.cantJugadores < 10) {
 			this.agregarJugador(jugador)
@@ -142,7 +201,7 @@ class Partido extends Entity {
 			return
 		}
 		if (!this.jugadores.exists[inscripto|jugador.tieneMasPrioridadQue(inscripto)]) {
-			throw new BusinessException("No hay mas cupo")
+			throw new UserException("No hay mas cupo")
 		}
 
 		val quien = this.jugadores.filter[unJugador|unJugador.prioridad > jugador.prioridad].head
@@ -157,10 +216,14 @@ class Partido extends Entity {
 	@Observable
 	def ordenarJugadores(CriteriosCommand criterioOrdenamiento) {
 		if (estaConfirmado) {
-			throw new BusinessException("Los equipos estan confirmados, no se puede ordenar")
+			throw new UserException("Los equipos estan confirmados, no se puede ordenar")
 		}
 		if (cantJugadores < 10) {
-			throw new BusinessException("No se puede ordenar la lista porque no hay 10 jugadores inscriptos aun.")
+			throw new UserException("No se puede ordenar la lista porque no hay 10 jugadores inscriptos aun.")
+		}
+		
+		if (criterioOrdenamiento == null){
+			throw new UserException("No se ha seleccionado criterio de ordenamiento")
 		}
 		this.jugadoresOrdenados = criterioOrdenamiento.ordenar(jugadores);
 	}
@@ -169,16 +232,39 @@ class Partido extends Entity {
 		if (estaConfirmado) {
 			throw new BusinessException("Los equipos estan confirmados, no se puede dividir")
 		}
-		if (jugadoresOrdenados.size < 10) {
-			throw new BusinessException("No se pueden armar los dos equipos porque no hay 10 jugadores ordenados aun.")
-		}
+		hay10Jugadores()
 		equipoB = new ArrayList<Jugador>
+		
+		if(algoritmoDivision == null){
+			throw new UserException("No se ha seleccionado criterio de division")
+		}
+		
 		algoritmoDivision.dividir(jugadoresOrdenados, equipoA, equipoB)
+		homePartidos.updateMe(this)
 		cantEquipoA = equipoA.size
 	}
+	
+	def hay10Jugadores() {
+		if (jugadoresOrdenados.size < 10) {
+			throw new UserException("No se pueden armar los dos equipos porque no hay 10 jugadores inscriptos aun.")
+		}
+	}
+	
+	def losEquiposEstanLlenos(){
+		if(equipoA.size < 5 || equipoB.size < 5){
+			throw new UserException("No se pueden confirmar los equipos porque aun no han sido dividos.")
+		}
+	}
 
-	def confirmarEquipos(boolean confirmacion) {
+	def confirmarEquipos(Boolean confirmacion) {
+		hay10Jugadores()
+		losEquiposEstanLlenos()
 		estaConfirmado = confirmacion
+		homePartidos.updateMe(this)
+	}
+	
+	def RepositorioPartidos getHomePartidos() {
+		ApplicationContext.instance.getSingleton(typeof(Partido))
 	}
 
 }

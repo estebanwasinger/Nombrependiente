@@ -2,7 +2,7 @@ package futbol5.applicationModel;
 
 import com.google.common.collect.Lists;
 import futbol5.domain.Jugador;
-import futbol5.homes.HomeJugadores;
+import futbol5.homes.RepositorioJugadores;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -100,16 +100,16 @@ public class BusquedaJugadoresAppModel implements Serializable {
     this.iniciar();
     ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
     this.setJugadores(_arrayList);
-    HomeJugadores _homeJugadores = this.getHomeJugadores();
-    List<Jugador> _jugadoresAceptados = _homeJugadores.getJugadoresAceptados();
-    this.setJugadores(_jugadoresAceptados);
+    RepositorioJugadores _homeJugadores = this.getHomeJugadores();
+    List<Jugador> _allInstances = _homeJugadores.allInstances();
+    this.setJugadores(_allInstances);
   }
   
   public void search() {
     this.setJugadorSeleccionado(null);
     ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
     this.setJugadores(_arrayList);
-    HomeJugadores _homeJugadores = this.getHomeJugadores();
+    RepositorioJugadores _homeJugadores = this.getHomeJugadores();
     List<Jugador> _search = _homeJugadores.search(this);
     this.setJugadores(_search);
   }
@@ -132,22 +132,9 @@ public class BusquedaJugadoresAppModel implements Serializable {
     this.setMetodoHandicap(_get);
   }
   
-  /**
-   * def validarNombreYApodo (Jugador jugador){
-   * if(!StringUtils.isAlpha(jugadorEjemplo.nombre) || StringUtils.isAlpha(jugadorEjemplo.apodo)){
-   * throw new UserException("El nombre y el apodo del jugador no pueden ser números ni carácteres especiales. Intente de nuevo")
-   * }
-   * }
-   * 
-   * def validarHandicapYPromedio (Integer handicap, Integer promedioDesde, Integer  promedioHasta){
-   * if(!StringUtils.isNumeric(handicap.toString) || !StringUtils.isNumeric(promedioDesde.toString) || !StringUtils.isNumeric(promedioHasta.toString)){
-   * throw new UserException("El handicap y promedio del jugador no pueden ser carácteres. Intente de nuevo")
-   * }
-   * }
-   */
-  public HomeJugadores getHomeJugadores() {
+  public RepositorioJugadores getHomeJugadores() {
     ApplicationContext _instance = ApplicationContext.getInstance();
-    return _instance.<HomeJugadores>getSingleton(Jugador.class);
+    return _instance.<RepositorioJugadores>getSingleton(Jugador.class);
   }
   
   public List<? extends HandicapStrategy> getHandicaps() {

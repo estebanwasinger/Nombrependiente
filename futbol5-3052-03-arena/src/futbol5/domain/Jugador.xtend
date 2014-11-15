@@ -15,8 +15,12 @@ import java.util.Set
 import org.uqbar.commons.model.Entity
 import org.uqbar.commons.model.UserException
 import org.uqbar.commons.utils.Observable
+import uqbar.arena.persistence.annotations.PersistentClass
+import uqbar.arena.persistence.annotations.PersistentField
+import uqbar.arena.persistence.annotations.Relation
 
 @Observable
+@PersistentClass
 class Jugador extends Entity{
 
 	@Property String nombre
@@ -31,13 +35,82 @@ class Jugador extends Entity{
 	@Property float nivelDeJuego 
 	@Property int criterioComparacion
 	@Property int cantidadPartidos
-	SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+	
+	@PersistentField
+	def getNombre(){
+		_nombre
+	}
+	
+	def void setNombre(String nombre){
+		_nombre = nombre
+	}
+	
+	@PersistentField
+	def getApodo(){
+		_apodo
+	}
+	
+	def void setApodo(String apodo){
+		_apodo = apodo
+	}
+	
+	def setapodo(String apodo){
+		_apodo = apodo
+	}
+	
+	@PersistentField
+	def getNivelDeJuego(){
+		_nivelDeJuego
+	}
+	
+	def setNivelDeJuego(Integer nivel){
+		_nivelDeJuego = nivel
+	}
+	
+	@Relation
+	def getCalificaciones(){
+		_calificaciones
+	}
+	
+	def setCalificaciones(ArrayList<Calificacion> calificaciones){
+		_calificaciones = calificaciones
+	}
+	
+	@Relation
+	def getAmigos(){
+		_amigos
+	}
+	
+	def setAmigos(ArrayList<Jugador> amigos){
+		_amigos = amigos
+	}
+	
+	@Relation
+	def getInfracciones(){
+		_infracciones
+	}
+	
+	def setInfracciones(ArrayList<Infraccion> infracciones){
+		_infracciones = infracciones
+	}
+	
+	@PersistentField
+	def getFechaNacimiento(){
+		_fechaNacimiento
+	}
+	
+	def void setFechaNacimiento(Date fecha){
+		_fechaNacimiento = fecha
+	}
+	
+	
 	
 	new() {
 		init
 	}
 
-	new(String nombre,String apodo, int edad, String fechaDeNacimientoStr, int nivelDeJuego, List<Jugador> amigos, ArrayList <Calificacion> calificaciones, int cantidadPartidos){
+	new(String nombre,String apodo, int edad, String fechaDeNacimientoStr, float nivelDeJuego, List<Jugador> amigos, ArrayList <Calificacion> calificaciones, int cantidadPartidos){
 		init
 		this.nombre = nombre
 		this.apodo = apodo
@@ -50,8 +123,17 @@ class Jugador extends Entity{
 		this.cantidadPartidos=cantidadPartidos
 	}
 	
-	new(String nombre, String apodo, int handicap, List<Calificacion>calificaciones){
+	new(String nombre, String apodo, float handicap, List<Calificacion>calificaciones){
 		init
+		this.nombre = nombre
+		this.apodo = apodo
+		this.nivelDeJuego = handicap
+		//this.calificaciones = calificaciones
+	}
+	
+	new(Integer id, String nombre, String apodo, float handicap, List<Calificacion>calificaciones){
+		//init
+		this.id = id
 		this.nombre = nombre
 		this.apodo = apodo
 		this.nivelDeJuego = handicap
@@ -63,7 +145,6 @@ class Jugador extends Entity{
 		amigos = new ArrayList<Jugador>
 		infracciones = new ArrayList<Infraccion>
 		calificaciones = new LinkedList<Calificacion>
-		//nivelDeJuego = 0
 	}
 	
 	def validarNombre() {
@@ -123,14 +204,18 @@ class Jugador extends Entity{
 		return (sumaCalificaciones / calificacionesUltimoPartido.size);
 	}
 	
-	def getPromedio(){
+	def getPromedio() {
 		var int promedio
 		var i = 0
-		while(i < calificaciones.size){
+		while (i < calificaciones.size) {
 			promedio = calificaciones.get(0).nota
-			i = i+1
+			i = i + 1
 		}
-		promedio = promedio/calificaciones.size
+		try {
+			return promedio = promedio / calificaciones.size
+		} catch (ArithmeticException e) {
+			return 0
+		}
 	}
 	
 	def getPromedioUltimoPartido(){

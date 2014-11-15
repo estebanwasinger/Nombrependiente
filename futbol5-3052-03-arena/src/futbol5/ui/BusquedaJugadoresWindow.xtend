@@ -113,10 +113,12 @@ class BusquedaJugadoresWindow extends SimpleWindow<BusquedaJugadoresAppModel> {
 		new Selector(panelBusqueda) => [bindItems(new ObservableProperty(this, "eligeInfracciones"))
 			bindValueToProperty("infracciones")]
 
-		new Button(panelBusqueda) => [setCaption("Buscar")
-			onClick [ |
-				modelObject.search()
-			] setFontSize(12) setWidth = 200 setAsDefault]
+		new Button(panelBusqueda) => [
+			setCaption("Buscar")
+			onClick [ |modelObject.search()] 
+			setFontSize(12) 
+			setWidth = 200 
+			setAsDefault]
 
 		new Button(panelBusqueda) => [setCaption("Limpiar") onClick [|modelObject.clear] setFontSize(12)
 			setWidth = 200]
