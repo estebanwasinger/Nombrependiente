@@ -6,6 +6,7 @@ import commands.DivisionDeEquiposCommand;
 import excepciones.BusinessException;
 import futbol5.domain.Administrador;
 import futbol5.domain.Jugador;
+import futbol5.homes.RepositorioPartidos;
 import inscripciones.TipoInscripcion;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -16,6 +17,8 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.uqbar.commons.model.Entity;
+import org.uqbar.commons.model.UserException;
+import org.uqbar.commons.utils.ApplicationContext;
 import org.uqbar.commons.utils.Observable;
 import uqbar.arena.persistence.annotations.PersistentClass;
 import uqbar.arena.persistence.annotations.PersistentField;
@@ -41,23 +44,7 @@ public class Partido extends Entity {
   
   private List<Jugador> _equipoA;
   
-  public List<Jugador> getEquipoA() {
-    return this._equipoA;
-  }
-  
-  public void setEquipoA(final List<Jugador> equipoA) {
-    this._equipoA = equipoA;
-  }
-  
   private List<Jugador> _equipoB;
-  
-  public List<Jugador> getEquipoB() {
-    return this._equipoB;
-  }
-  
-  public void setEquipoB(final List<Jugador> equipoB) {
-    this._equipoB = equipoB;
-  }
   
   private List<Jugador> _equipoC;
   
@@ -101,14 +88,6 @@ public class Partido extends Entity {
   
   private Boolean _estaConfirmado = Boolean.valueOf(false);
   
-  public Boolean getEstaConfirmado() {
-    return this._estaConfirmado;
-  }
-  
-  public void setEstaConfirmado(final Boolean estaConfirmado) {
-    this._estaConfirmado = estaConfirmado;
-  }
-  
   private Administrador _administrador;
   
   public Administrador getAdministrador() {
@@ -150,6 +129,19 @@ public class Partido extends Entity {
   }
   
   @PersistentField
+  public Boolean getEstaConfirmado() {
+    return this._estaConfirmado;
+  }
+  
+  public boolean getEstado() {
+    return (!(this._estaConfirmado).booleanValue());
+  }
+  
+  public void setEstaConfirmado(final Boolean estaConfirmado) {
+    this._estaConfirmado = estaConfirmado;
+  }
+  
+  @PersistentField
   public String getLocalidad() {
     return this._localidad;
   }
@@ -165,6 +157,24 @@ public class Partido extends Entity {
   
   public void setJugadores(final List<Jugador> jugadores) {
     this._jugadores = jugadores;
+  }
+  
+  @Relation
+  public List<Jugador> getEquipoA() {
+    return this._equipoA;
+  }
+  
+  public void setEquipoA(final List<Jugador> jugadores) {
+    this._equipoA = jugadores;
+  }
+  
+  @Relation
+  public List<Jugador> getEquipoB() {
+    return this._equipoB;
+  }
+  
+  public void setEquipoB(final List<Jugador> jugadores) {
+    this._equipoB = jugadores;
   }
   
   public Partido(final String localidad) {
@@ -361,7 +371,7 @@ public class Partido extends Entity {
       int _cantJugadores = this.cantJugadores();
       boolean _lessThan = (_cantJugadores < 10);
       if (_lessThan) {
-        throw new BusinessException("No se puede ordenar la lista porque no hay 10 jugadores inscriptos aun.");
+        throw new UserException("No se puede ordenar la lista porque no hay 10 jugadores inscriptos aun.");
       }
       List<Jugador> _jugadores = this.getJugadores();
       List<Jugador> _ordenar = criterioOrdenamiento.ordenar(_jugadores);
@@ -378,27 +388,60 @@ public class Partido extends Entity {
       if ((_estaConfirmado).booleanValue()) {
         throw new BusinessException("Los equipos estan confirmados, no se puede dividir");
       }
-      List<Jugador> _jugadoresOrdenados = this.getJugadoresOrdenados();
-      int _size = _jugadoresOrdenados.size();
-      boolean _lessThan = (_size < 10);
-      if (_lessThan) {
-        throw new BusinessException("No se pueden armar los dos equipos porque no hay 10 jugadores ordenados aun.");
-      }
+      this.hay10Jugadores();
       ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
       this.setEquipoB(_arrayList);
-      List<Jugador> _jugadoresOrdenados_1 = this.getJugadoresOrdenados();
+      List<Jugador> _jugadoresOrdenados = this.getJugadoresOrdenados();
       List<Jugador> _equipoA = this.getEquipoA();
       List<Jugador> _equipoB = this.getEquipoB();
-      algoritmoDivision.dividir(_jugadoresOrdenados_1, _equipoA, _equipoB);
+      algoritmoDivision.dividir(_jugadoresOrdenados, _equipoA, _equipoB);
+      RepositorioPartidos _homePartidos = this.getHomePartidos();
+      _homePartidos.updateMe(this);
       List<Jugador> _equipoA_1 = this.getEquipoA();
-      int _size_1 = _equipoA_1.size();
-      this.setCantEquipoA(_size_1);
+      int _size = _equipoA_1.size();
+      this.setCantEquipoA(_size);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
-  public void confirmarEquipos(final boolean confirmacion) {
-    this.setEstaConfirmado(Boolean.valueOf(confirmacion));
+  public void hay10Jugadores() {
+    List<Jugador> _jugadoresOrdenados = this.getJugadoresOrdenados();
+    int _size = _jugadoresOrdenados.size();
+    boolean _lessThan = (_size < 10);
+    if (_lessThan) {
+      throw new UserException("No se pueden armar los dos equipos porque no hay 10 jugadores inscriptos aun.");
+    }
+  }
+  
+  public void losEquiposEstanLlenos() {
+    boolean _or = false;
+    List<Jugador> _equipoA = this.getEquipoA();
+    int _size = _equipoA.size();
+    boolean _lessThan = (_size < 5);
+    if (_lessThan) {
+      _or = true;
+    } else {
+      List<Jugador> _equipoB = this.getEquipoB();
+      int _size_1 = _equipoB.size();
+      boolean _lessThan_1 = (_size_1 < 5);
+      _or = _lessThan_1;
+    }
+    if (_or) {
+      throw new UserException("No se pueden confirmar los equipos porque aun no han sido dividos.");
+    }
+  }
+  
+  public void confirmarEquipos(final Boolean confirmacion) {
+    this.hay10Jugadores();
+    this.losEquiposEstanLlenos();
+    this.setEstaConfirmado(confirmacion);
+    RepositorioPartidos _homePartidos = this.getHomePartidos();
+    _homePartidos.updateMe(this);
+  }
+  
+  public RepositorioPartidos getHomePartidos() {
+    ApplicationContext _instance = ApplicationContext.getInstance();
+    return _instance.<RepositorioPartidos>getSingleton(Partido.class);
   }
 }

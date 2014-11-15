@@ -30,8 +30,6 @@ import uqbar.arena.persistence.annotations.Relation;
 @PersistentClass
 @SuppressWarnings("all")
 public class Jugador extends Entity {
-  private Integer _id;
-  
   private String _nombre;
   
   private String _apodo;
@@ -47,14 +45,6 @@ public class Jugador extends Entity {
   }
   
   private Date _fechaNacimiento;
-  
-  public Date getFechaNacimiento() {
-    return this._fechaNacimiento;
-  }
-  
-  public void setFechaNacimiento(final Date fechaNacimiento) {
-    this._fechaNacimiento = fechaNacimiento;
-  }
   
   private String _email;
   
@@ -77,10 +67,6 @@ public class Jugador extends Entity {
   }
   
   private List<Infraccion> _infracciones;
-  
-  public List<Infraccion> getInfracciones() {
-    return this._infracciones;
-  }
   
   public void setInfracciones(final List<Infraccion> infracciones) {
     this._infracciones = infracciones;
@@ -128,24 +114,15 @@ public class Jugador extends Entity {
     this._cantidadPartidos = cantidadPartidos;
   }
   
-  private SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
-  
-  @PersistentField
-  public Integer getId() {
-    return this._id;
-  }
-  
-  public void setId(final Integer id) {
-    this._id = id;
-  }
+  private SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
   
   @PersistentField
   public String getNombre() {
     return this._nombre;
   }
   
-  public String setNombre(final String nombre) {
-    return this._nombre = nombre;
+  public void setNombre(final String nombre) {
+    this._nombre = nombre;
   }
   
   @PersistentField
@@ -153,7 +130,11 @@ public class Jugador extends Entity {
     return this._apodo;
   }
   
-  public String setApodo(final String apodo) {
+  public void setApodo(final String apodo) {
+    this._apodo = apodo;
+  }
+  
+  public String setapodo(final String apodo) {
     return this._apodo = apodo;
   }
   
@@ -171,8 +152,26 @@ public class Jugador extends Entity {
     return this._calificaciones;
   }
   
-  public List<Calificacion> setCalificaciones(final ArrayList<Calificacion> cal) {
-    return this._calificaciones = cal;
+  public List<Calificacion> setCalificaciones(final ArrayList<Calificacion> calificaciones) {
+    return this._calificaciones = calificaciones;
+  }
+  
+  @Relation
+  public List<Infraccion> getInfracciones() {
+    return this._infracciones;
+  }
+  
+  public List<Infraccion> setInfracciones(final ArrayList<Infraccion> infracciones) {
+    return this._infracciones = infracciones;
+  }
+  
+  @PersistentField
+  public Date getFechaNacimiento() {
+    return this._fechaNacimiento;
+  }
+  
+  public void setFechaNacimiento(final Date fecha) {
+    this._fechaNacimiento = fecha;
   }
   
   public Jugador() {

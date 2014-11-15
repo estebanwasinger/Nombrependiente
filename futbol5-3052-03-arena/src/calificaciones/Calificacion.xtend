@@ -27,6 +27,7 @@ class Calificacion extends Entity{
 	
 	new(){
 	}
+	
 	@PersistentField
 	def getNota(){
 		_nota
@@ -35,4 +36,5 @@ class Calificacion extends Entity{
 	def void setNota(int nota){
 		_nota = nota
 	}
+	
 }

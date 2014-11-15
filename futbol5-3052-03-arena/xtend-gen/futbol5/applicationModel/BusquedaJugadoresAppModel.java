@@ -2,7 +2,7 @@ package futbol5.applicationModel;
 
 import com.google.common.collect.Lists;
 import futbol5.domain.Jugador;
-import futbol5.homes.HomeJugadores;
+import futbol5.homes.RepositorioJugadores;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -100,18 +100,18 @@ public class BusquedaJugadoresAppModel implements Serializable {
     this.iniciar();
     ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
     this.setJugadores(_arrayList);
-    HomeJugadores _homeJugadores = this.getHomeJugadores();
-    List<Jugador> _jugadoresAceptados = _homeJugadores.getJugadoresAceptados();
-    this.setJugadores(_jugadoresAceptados);
+    RepositorioJugadores _homeJugadores = this.getHomeJugadores();
+    List<Jugador> _allInstances = _homeJugadores.allInstances();
+    this.setJugadores(_allInstances);
   }
   
   public void search() {
     this.setJugadorSeleccionado(null);
     ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
     this.setJugadores(_arrayList);
-    HomeJugadores _homeJugadores = this.getHomeJugadores();
-    List<Jugador> _search = _homeJugadores.search(this);
-    this.setJugadores(_search);
+    RepositorioJugadores _homeJugadores = this.getHomeJugadores();
+    List<Jugador> _allInstances = _homeJugadores.allInstances();
+    this.setJugadores(_allInstances);
   }
   
   public void clear() {
@@ -145,9 +145,9 @@ public class BusquedaJugadoresAppModel implements Serializable {
    * }
    * }
    */
-  public HomeJugadores getHomeJugadores() {
+  public RepositorioJugadores getHomeJugadores() {
     ApplicationContext _instance = ApplicationContext.getInstance();
-    return _instance.<HomeJugadores>getSingleton(Jugador.class);
+    return _instance.<RepositorioJugadores>getSingleton(Jugador.class);
   }
   
   public List<? extends HandicapStrategy> getHandicaps() {
