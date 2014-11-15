@@ -26,8 +26,6 @@ class TPFutbolApplication extends Application {
 		ApplicationContext.instance.configureSingleton(typeof(Calificacion), new RepositorioCalificaciones)
 		ApplicationContext.instance.configureSingleton(typeof(Jugador), new RepositorioJugadores)
 		ApplicationContext.instance.configureSingleton(typeof(Partido), new RepositorioPartidos)
-		//ApplicationContext.instance.configureSingleton(typeof(Partido), new HomePartidos)
-		//ApplicationContext.instance.configureSingleton(typeof(Jugador), new HomeJugadores)
 		return new PartidosView(this)
 	}
 }
