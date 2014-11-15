@@ -187,13 +187,13 @@ class Partido extends Entity {
 	/**************************************/
 	def inscribir(Jugador jugador) {
 		if (estaConfirmado) {
-			throw new BusinessException("Los equipos estan confirmados, no se puede inscribir")
+			throw new UserException("Los equipos estan confirmados, no se puede inscribir")
 		}
 		if (this.estaInscripto(jugador)) {
-			throw new BusinessException("El jugador ya se inscribio")
+			throw new UserException("El jugador ya se inscribio")
 		}
 		if (!jugador.tipoInscripcion.cumpleCondicion(jugador, this)) {
-			throw new BusinessException("El jugador no cumple con la condicion, no se puede inscribir")
+			throw new UserException("El jugador no cumple con la condicion, no se puede inscribir")
 		}
 		if (this.cantJugadores < 10) {
 			this.agregarJugador(jugador)
@@ -201,7 +201,7 @@ class Partido extends Entity {
 			return
 		}
 		if (!this.jugadores.exists[inscripto|jugador.tieneMasPrioridadQue(inscripto)]) {
-			throw new BusinessException("No hay mas cupo")
+			throw new UserException("No hay mas cupo")
 		}
 
 		val quien = this.jugadores.filter[unJugador|unJugador.prioridad > jugador.prioridad].head
@@ -216,10 +216,14 @@ class Partido extends Entity {
 	@Observable
 	def ordenarJugadores(CriteriosCommand criterioOrdenamiento) {
 		if (estaConfirmado) {
-			throw new BusinessException("Los equipos estan confirmados, no se puede ordenar")
+			throw new UserException("Los equipos estan confirmados, no se puede ordenar")
 		}
 		if (cantJugadores < 10) {
 			throw new UserException("No se puede ordenar la lista porque no hay 10 jugadores inscriptos aun.")
+		}
+		
+		if (criterioOrdenamiento == null){
+			throw new UserException("No se ha seleccionado criterio de ordenamiento")
 		}
 		this.jugadoresOrdenados = criterioOrdenamiento.ordenar(jugadores);
 	}
@@ -230,6 +234,11 @@ class Partido extends Entity {
 		}
 		hay10Jugadores()
 		equipoB = new ArrayList<Jugador>
+		
+		if(algoritmoDivision == null){
+			throw new UserException("No se ha seleccionado criterio de division")
+		}
+		
 		algoritmoDivision.dividir(jugadoresOrdenados, equipoA, equipoB)
 		homePartidos.updateMe(this)
 		cantEquipoA = equipoA.size

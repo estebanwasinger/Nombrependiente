@@ -204,14 +204,18 @@ class Jugador extends Entity{
 		return (sumaCalificaciones / calificacionesUltimoPartido.size);
 	}
 	
-	def getPromedio(){
+	def getPromedio() {
 		var int promedio
 		var i = 0
-		while(i < calificaciones.size){
+		while (i < calificaciones.size) {
 			promedio = calificaciones.get(0).nota
-			i = i+1
+			i = i + 1
 		}
-		promedio = promedio/calificaciones.size
+		try {
+			return promedio = promedio / calificaciones.size
+		} catch (ArithmeticException e) {
+			return 0
+		}
 	}
 	
 	def getPromedioUltimoPartido(){
