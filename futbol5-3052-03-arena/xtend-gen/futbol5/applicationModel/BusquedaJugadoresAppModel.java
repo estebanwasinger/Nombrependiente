@@ -110,8 +110,8 @@ public class BusquedaJugadoresAppModel implements Serializable {
     ArrayList<Jugador> _arrayList = new ArrayList<Jugador>();
     this.setJugadores(_arrayList);
     RepositorioJugadores _homeJugadores = this.getHomeJugadores();
-    List<Jugador> _allInstances = _homeJugadores.allInstances();
-    this.setJugadores(_allInstances);
+    List<Jugador> _search = _homeJugadores.search(this);
+    this.setJugadores(_search);
   }
   
   public void clear() {
@@ -132,19 +132,6 @@ public class BusquedaJugadoresAppModel implements Serializable {
     this.setMetodoHandicap(_get);
   }
   
-  /**
-   * def validarNombreYApodo (Jugador jugador){
-   * if(!StringUtils.isAlpha(jugadorEjemplo.nombre) || StringUtils.isAlpha(jugadorEjemplo.apodo)){
-   * throw new UserException("El nombre y el apodo del jugador no pueden ser números ni carácteres especiales. Intente de nuevo")
-   * }
-   * }
-   * 
-   * def validarHandicapYPromedio (Integer handicap, Integer promedioDesde, Integer  promedioHasta){
-   * if(!StringUtils.isNumeric(handicap.toString) || !StringUtils.isNumeric(promedioDesde.toString) || !StringUtils.isNumeric(promedioHasta.toString)){
-   * throw new UserException("El handicap y promedio del jugador no pueden ser carácteres. Intente de nuevo")
-   * }
-   * }
-   */
   public RepositorioJugadores getHomeJugadores() {
     ApplicationContext _instance = ApplicationContext.getInstance();
     return _instance.<RepositorioJugadores>getSingleton(Jugador.class);

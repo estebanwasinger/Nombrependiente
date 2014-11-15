@@ -8,6 +8,7 @@ import calificaciones.Calificacion
 import java.util.List
 import org.uqbar.commons.utils.ApplicationContext
 import infracciones.Infraccion
+import futbol5.applicationModel.BusquedaJugadoresAppModel
 
 @Observable
 class RepositorioJugadores extends PersistentHome<Jugador> {
@@ -111,6 +112,56 @@ class RepositorioJugadores extends PersistentHome<Jugador> {
 		searchByExample(
 			new Jugador => [
 				id = unId])
+	}
+	
+	def search(BusquedaJugadoresAppModel modelo) {
+		allInstances.filter[jugador|this.match(jugador, modelo)].toList
+	}
+
+	def match(Jugador jugadorEnLista, BusquedaJugadoresAppModel modelo) {
+		matcheaNombre(jugadorEnLista, modelo.jugadorEjemplo) && matcheaApodo(jugadorEnLista, modelo.jugadorEjemplo) &&
+			matcheaFecha(jugadorEnLista, modelo.jugadorEjemplo) &&
+			modelo.metodoHandicap.calcular(jugadorEnLista, modelo.handicap) &&
+			matcheaPromedioMin(jugadorEnLista, modelo.promedioDesde) &&
+			matcheaPromedioMax(jugadorEnLista, modelo.promedioHasta) &&
+			matcheaInfracciones(jugadorEnLista, modelo.infracciones)
+	}
+
+	def matcheaNombre(Jugador jugadorEnLista, Jugador jugadorBuscado) {
+		jugadorBuscado.nombre == null || jugadorEnLista.nombre.toLowerCase.startsWith(jugadorBuscado.nombre.toLowerCase)
+	}
+
+	def matcheaApodo(Jugador jugadorEnLista, Jugador jugadorBuscado) {
+		jugadorBuscado.apodo == null || jugadorEnLista.apodo.toLowerCase.contains(jugadorBuscado.apodo.toLowerCase)
+	}
+
+	def matcheaFecha(Jugador jugadorEnLista, Jugador jugadorBuscado) {
+		jugadorBuscado.fechaNacimiento == null || jugadorBuscado.fechaNacimiento >= jugadorEnLista.fechaNacimiento
+	}
+
+	def matcheaPromedioMin(Jugador jugadorEnLista, Integer promedioDesde) {
+		if (promedioDesde != null) {
+			Math.round(jugadorEnLista.promedio) >= promedioDesde
+		} else {
+			true
+		}
+	}
+
+	def matcheaPromedioMax(Jugador jugadorEnLista, Integer promedioHasta) {
+		if (promedioHasta != null) {
+			Math.round(jugadorEnLista.promedio) <= promedioHasta
+		} else {
+			true
+		}
+	}
+
+	def matcheaInfracciones(Jugador jugadorEnLista, String infracciones) {
+		if (infracciones == "Todos") {
+			return true
+		} else if (infracciones == "Con Infracciones") {
+			!jugadorEnLista.infracciones.empty
+		} else
+			jugadorEnLista.infracciones.empty
 	}
 
 	override def getEntityType() {
