@@ -38,6 +38,27 @@ public class RepositorioJugadores extends PersistentHome<Jugador> {
         Infraccion _createInfraccion = _repoInf.createInfraccion(_infraccion);
         _infracciones.add(_createInfraccion);
         it.setFechaNacimientoString("18/12/2013");
+        List<Jugador> _amigos = it.getAmigos();
+        ArrayList<Calificacion> _arrayList = new ArrayList<Calificacion>();
+        Jugador _jugador = new Jugador("Amigo", "Amigote", 5, _arrayList);
+        final Procedure1<Jugador> _function = new Procedure1<Jugador>() {
+          public void apply(final Jugador it) {
+            List<Calificacion> _calificaciones = it.getCalificaciones();
+            RepositorioCalificaciones _repoCal = RepositorioJugadores.this.repoCal();
+            Calificacion _calificacion = new Calificacion(10);
+            Calificacion _createCal = _repoCal.createCal(_calificacion);
+            _calificaciones.add(_createCal);
+            List<Infraccion> _infracciones = it.getInfracciones();
+            RepositorioInfracciones _repoInf = RepositorioJugadores.this.repoInf();
+            Infraccion _infraccion = new Infraccion("Faul");
+            Infraccion _createInfraccion = _repoInf.createInfraccion(_infraccion);
+            _infracciones.add(_createInfraccion);
+            it.setFechaNacimientoString("18/12/2005");
+          }
+        };
+        Jugador _doubleArrow = ObjectExtensions.<Jugador>operator_doubleArrow(_jugador, _function);
+        Jugador _createIfNotExists = RepositorioJugadores.this.createIfNotExists(_doubleArrow);
+        _amigos.add(_createIfNotExists);
       }
     };
     Jugador _doubleArrow = ObjectExtensions.<Jugador>operator_doubleArrow(_jugador, _function);
@@ -57,6 +78,27 @@ public class RepositorioJugadores extends PersistentHome<Jugador> {
         Infraccion _createInfraccion = _repoInf.createInfraccion(_infraccion);
         _infracciones.add(_createInfraccion);
         it.setFechaNacimientoString("18/12/2000");
+        List<Jugador> _amigos = it.getAmigos();
+        ArrayList<Calificacion> _arrayList = new ArrayList<Calificacion>();
+        Jugador _jugador = new Jugador("Amigo2", "Amigote", 5, _arrayList);
+        final Procedure1<Jugador> _function = new Procedure1<Jugador>() {
+          public void apply(final Jugador it) {
+            List<Calificacion> _calificaciones = it.getCalificaciones();
+            RepositorioCalificaciones _repoCal = RepositorioJugadores.this.repoCal();
+            Calificacion _calificacion = new Calificacion(10);
+            Calificacion _createCal = _repoCal.createCal(_calificacion);
+            _calificaciones.add(_createCal);
+            List<Infraccion> _infracciones = it.getInfracciones();
+            RepositorioInfracciones _repoInf = RepositorioJugadores.this.repoInf();
+            Infraccion _infraccion = new Infraccion("Faul");
+            Infraccion _createInfraccion = _repoInf.createInfraccion(_infraccion);
+            _infracciones.add(_createInfraccion);
+            it.setFechaNacimientoString("18/12/2005");
+          }
+        };
+        Jugador _doubleArrow = ObjectExtensions.<Jugador>operator_doubleArrow(_jugador, _function);
+        Jugador _createIfNotExists = RepositorioJugadores.this.createIfNotExists(_doubleArrow);
+        _amigos.add(_createIfNotExists);
       }
     };
     Jugador _doubleArrow_1 = ObjectExtensions.<Jugador>operator_doubleArrow(_jugador_1, _function_1);

@@ -78,6 +78,15 @@ class Jugador extends Entity{
 	}
 	
 	@Relation
+	def getAmigos(){
+		_amigos
+	}
+	
+	def setAmigos(ArrayList<Jugador> amigos){
+		_amigos = amigos
+	}
+	
+	@Relation
 	def getInfracciones(){
 		_infracciones
 	}

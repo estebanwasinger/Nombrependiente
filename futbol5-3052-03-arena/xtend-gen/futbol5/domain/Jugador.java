@@ -74,10 +74,6 @@ public class Jugador extends Entity {
   
   private List<Jugador> _amigos;
   
-  public List<Jugador> getAmigos() {
-    return this._amigos;
-  }
-  
   public void setAmigos(final List<Jugador> amigos) {
     this._amigos = amigos;
   }
@@ -154,6 +150,15 @@ public class Jugador extends Entity {
   
   public List<Calificacion> setCalificaciones(final ArrayList<Calificacion> calificaciones) {
     return this._calificaciones = calificaciones;
+  }
+  
+  @Relation
+  public List<Jugador> getAmigos() {
+    return this._amigos;
+  }
+  
+  public List<Jugador> setAmigos(final ArrayList<Jugador> amigos) {
+    return this._amigos = amigos;
   }
   
   @Relation

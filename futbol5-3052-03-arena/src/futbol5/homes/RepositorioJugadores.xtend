@@ -17,8 +17,23 @@ class RepositorioJugadores extends PersistentHome<Jugador> {
 	}
 
 	def void init() {
-		this.createIfNotExists(new Jugador("Paula","Pau",9,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9))) infracciones.add(repoInf.createInfraccion(new Infraccion("Llego tarde"))) setFechaNacimientoString("18/12/2013")])
-		this.createIfNotExists(new Jugador("Esteban","quito",6,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(6))) infracciones.add(repoInf.createInfraccion(new Infraccion("Insulto al arbitro"))) setFechaNacimientoString("18/12/2000")])
+		//se crean unicamente dos jugadores con todos los datos completos, "Paula" y "Esteban" el resto no tiene amigos.
+		this.createIfNotExists(new Jugador("Paula","Pau",9,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9))) 
+																																													infracciones.add(repoInf.createInfraccion(new Infraccion("Llego tarde"))) 
+																																													setFechaNacimientoString("18/12/2013") 
+																																													amigos.add(this.createIfNotExists(new Jugador("Amigo","Amigote",5,new ArrayList<Calificacion>) => [
+																																																calificaciones.add(repoCal.createCal(new Calificacion(10))) 
+																																																infracciones.add(repoInf.createInfraccion(new Infraccion("Faul"))) 
+																																																setFechaNacimientoString("18/12/2005")
+																																													]))])
+		this.createIfNotExists(new Jugador("Esteban","quito",6,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(6))) 
+																																													infracciones.add(repoInf.createInfraccion(new Infraccion("Insulto al arbitro"))) 
+																																													setFechaNacimientoString("18/12/2000")
+																																													amigos.add(this.createIfNotExists(new Jugador("Amigo2","Amigote",5,new ArrayList<Calificacion>) => [
+																																																calificaciones.add(repoCal.createCal(new Calificacion(10))) 
+																																																infracciones.add(repoInf.createInfraccion(new Infraccion("Faul"))) 
+																																																setFechaNacimientoString("18/12/2005")
+																																													]))])
 		this.createIfNotExists(new Jugador("Carolina","Caro",10,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(7))) infracciones.add(repoInf.createInfraccion(new Infraccion("Faul"))) setFechaNacimientoString("18/12/1989")])
 		this.createIfNotExists(new Jugador("Juan","Fantasma",5,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(10))) infracciones.add(repoInf.createInfraccion(new Infraccion("Faul"))) setFechaNacimientoString("18/12/2005")])
 		this.createIfNotExists(new Jugador("Alejandro","Pepe",2,new ArrayList<Calificacion>) => [calificaciones.add(repoCal.createCal(new Calificacion(9))) infracciones.add(repoInf.createInfraccion(new Infraccion("Faul"))) setFechaNacimientoString("18/12/1992")])
