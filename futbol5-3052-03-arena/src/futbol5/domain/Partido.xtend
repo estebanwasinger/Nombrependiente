@@ -219,7 +219,7 @@ class Partido extends Entity {
 			throw new BusinessException("Los equipos estan confirmados, no se puede ordenar")
 		}
 		if (cantJugadores < 10) {
-			throw new BusinessException("No se puede ordenar la lista porque no hay 10 jugadores inscriptos aun.")
+			throw new UserException("No se puede ordenar la lista porque no hay 10 jugadores inscriptos aun.")
 		}
 		this.jugadoresOrdenados = criterioOrdenamiento.ordenar(jugadores);
 	}

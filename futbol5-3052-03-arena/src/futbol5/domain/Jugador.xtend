@@ -14,12 +14,10 @@ import java.util.List
 import java.util.Set
 import org.uqbar.commons.model.Entity
 import org.uqbar.commons.model.UserException
-import org.uqbar.commons.utils.TransactionalAndObservable
+import org.uqbar.commons.utils.Observable
 import uqbar.arena.persistence.annotations.PersistentClass
 import uqbar.arena.persistence.annotations.PersistentField
 import uqbar.arena.persistence.annotations.Relation
-import org.uqbar.commons.utils.Observable
-import org.uqbar.commons.utils.Transactional
 
 @Observable
 @PersistentClass
@@ -37,7 +35,7 @@ class Jugador extends Entity{
 	@Property float nivelDeJuego 
 	@Property int criterioComparacion
 	@Property int cantidadPartidos
-	SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	
 	@PersistentField
 	def getNombre(){
@@ -86,6 +84,15 @@ class Jugador extends Entity{
 	
 	def setInfracciones(ArrayList<Infraccion> infracciones){
 		_infracciones = infracciones
+	}
+	
+	@PersistentField
+	def getFechaNacimiento(){
+		_fechaNacimiento
+	}
+	
+	def void setFechaNacimiento(Date fecha){
+		_fechaNacimiento = fecha
 	}
 	
 	
